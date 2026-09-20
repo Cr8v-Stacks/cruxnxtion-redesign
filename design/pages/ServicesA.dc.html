@@ -1,0 +1,297 @@
+
+
+
+<meta charset="utf-8">
+<title>Home — Option A1: Events</title>
+<script src="./support.js"></script>
+
+
+<x-dc>
+<helmet>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Space Grotesk', system-ui, sans-serif; background: #0A0F26; color: #F4F5FA; }
+  a { color: #5B8DEF; text-decoration: none; }
+  a:hover { color: #E5383B; }
+  .bebas { font-family: 'Bebas Neue', 'Arial Narrow', sans-serif; letter-spacing: 0.5px; line-height: 0.9; text-transform: uppercase; }
+  .eyebrow { font-weight: 600; letter-spacing: 3px; text-transform: uppercase; font-size: 11px; color: #5B8DEF; }
+  .ticket-stub { position: relative; }
+  .ticket-stub::before, .ticket-stub::after { content: ''; position: absolute; right: -11px; width: 20px; height: 20px; border-radius: 50%; background: #0A0F26; z-index: 2; }
+  .ticket-stub::before { top: -10px; }
+  .ticket-stub::after { bottom: -10px; }
+  @keyframes rc-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes rc-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  /* Micro-animations */
+  body { animation: rcFadeIn .5s ease-out; }
+  @keyframes rcFadeIn { from { opacity: 0; } to { opacity: 1; } }
+  img { transition: transform .5s ease; }
+  a:hover img { transform: scale(1.05); }
+  a { transition: color .2s ease, filter .3s ease, box-shadow .3s ease, border-color .25s ease; }
+  a:hover { filter: brightness(1.08); }
+  a:active { filter: brightness(0.94); }
+  .ticket { transition: box-shadow .3s ease, filter .3s ease; }
+  .ticket:hover { box-shadow: 0 18px 34px rgba(0,0,0,0.22); }
+  header nav a { position: relative; }
+  header nav a::after { content: ''; position: absolute; left: 0; bottom: -6px; width: 0; height: 2px; background: currentColor; transition: width .3s ease; }
+  header nav a:hover::after { width: 100%; }
+  a[style*="border-radius:999px"], a[style*="clip-path:polygon"] { transition: transform .25s ease, box-shadow .25s ease, filter .25s ease; }
+  a[style*="border-radius:999px"]:hover, a[style*="clip-path:polygon"]:hover { transform: translateY(-3px); box-shadow: 0 14px 26px rgba(0,0,0,0.22); }
+  .tilt-ticket { transition: transform .3s ease, box-shadow .3s ease; }
+  .tilt-ticket:hover { transform: rotate(calc(var(--r) * 1.8)) translateY(-4px) !important; box-shadow: 0 18px 34px rgba(0,0,0,0.22); }
+  .tilt-straighten { transition: transform .35s ease; }
+  .tilt-straighten:hover { transform: rotate(0deg) scale(1.04) !important; }
+  .tilt-in { transition: transform .35s ease; }
+  .tilt-in:hover { transform: rotate(var(--r, 3deg)) scale(1.03) !important; }
+  .pill { border:1.5px solid #1E2B5E; color:#D5D9EA; font-weight:600; font-size:12.5px; padding:10px 20px; border-radius:999px; }
+  .pill.on { background:#F4F5FA; color:#0A0F26; border-color:#F4F5FA; }
+  .strip-stub { position: relative; }
+  .strip-stub::before, .strip-stub::after { content: ''; position: absolute; bottom: -11px; width: 22px; height: 22px; border-radius: 50%; background: #0A0F26; z-index: 2; }
+  .strip-stub::before { left: 24%; }
+  .strip-stub::after { left: 68%; }
+
+  .mega-panel { display:none; position:absolute; left:0; right:0; top:100%; z-index:40; }
+  .mega:hover .mega-panel, .mega.open .mega-panel { display:block; }
+  .mega > a::after { display:none; }
+  .mega-panel a { transition: transform .2s ease, background .2s ease; }
+  .mega-panel a.mrow:hover { transform: translateX(4px); }
+  /* ---- motion ---- */
+  @property --p { syntax:'<integer>'; inherits:false; initial-value:0; }
+  @keyframes apT4 { 0%,20% { background:transparent; border-color:#FF2E3D; } 28%,86% { background:#8C7AE6; border-color:#8C7AE6; } 94%,100% { background:transparent; border-color:#FF2E3D; } }
+  @keyframes apT5 { 0%,44% { background:transparent; border-color:#FF2E3D; } 52%,86% { background:#8C7AE6; border-color:#8C7AE6; } 94%,100% { background:transparent; border-color:#FF2E3D; } }
+  @keyframes apBar { 0%,18% { width:55%; } 30% { width:78%; } 54% { width:100%; } 86% { width:100%; } 96%,100% { width:55%; } }
+  .ap4 { animation:apT4 7s ease infinite; } .ap5 { animation:apT5 7s ease infinite; } .apbar { animation:apBar 7s ease infinite; }
+  @keyframes opSweep { 0%,10% { background-size:0% 3px; } 45%,85% { background-size:100% 3px; } 100% { background-size:0% 3px; } }
+  .ophl { background-image:linear-gradient(#8C7AE6,#8C7AE6); background-repeat:no-repeat; background-position:0 100%; background-size:0% 3px; padding-bottom:3px; animation:opSweep 4.5s ease infinite; }
+  @keyframes swUp { 0%,100% { transform:scaleY(1); } 30% { transform:scaleY(1.45); } 60% { transform:scaleY(1); } }
+  .sw1, .sw2, .sw3 { transform-origin:bottom; animation:swUp 3.2s ease-in-out infinite; } .sw2 { animation-delay:.25s; } .sw3 { animation-delay:.5s; }
+  @keyframes rmA { 0%,6% { transform:scaleX(0); } 26%,88% { transform:scaleX(1); } 100% { transform:scaleX(0); } }
+  @keyframes rmB { 0%,22% { transform:scaleX(0); } 42%,88% { transform:scaleX(1); } 100% { transform:scaleX(0); } }
+  @keyframes rmC { 0%,38% { transform:scaleX(0); } 58%,88% { transform:scaleX(1); } 100% { transform:scaleX(0); } }
+  .rm1, .rm2, .rm3 { transform-origin:left; animation:rmA 6s ease infinite; } .rm2 { animation-name:rmB; } .rm3 { animation-name:rmC; }
+  @keyframes nowPulse { 0%,100% { box-shadow:0 0 0 0 rgba(140,122,230,.55); } 50% { box-shadow:0 0 0 7px rgba(140,122,230,0); } }
+  .nowp { animation:nowPulse 2s ease infinite; }
+  @keyframes ring72 { 0%,6% { --p:0; } 30%,88% { --p:72; } 100% { --p:0; } }
+  @keyframes ring45 { 0%,6% { --p:0; } 30%,88% { --p:45; } 100% { --p:0; } }
+  @keyframes ring88 { 0%,6% { --p:0; } 30%,88% { --p:88; } 100% { --p:0; } }
+  .rg { animation-duration:6s; animation-timing-function:ease-out; animation-iteration-count:infinite; counter-reset:n var(--p); }
+  .rg72 { animation-name:ring72; } .rg45 { animation-name:ring45; } .rg88 { animation-name:ring88; }
+  .rgn::after { content:counter(n); }
+  @keyframes revealUp { from { opacity:0; transform:translateY(26px); } to { opacity:1; transform:none; } }
+  @supports (animation-timeline: view()) { .reveal { animation:revealUp linear both; animation-timeline:view(); animation-range:entry 0% cover 28%; } }
+  @keyframes drift { from { transform:scale(1.02); } to { transform:scale(1.09) translate(-1%,-1%); } }
+  .drift { animation:drift 18s ease-in-out infinite alternate; }
+  @keyframes sheen { 0% { transform:translateX(-120%); } 60%,100% { transform:translateX(220%); } }
+  /* ---- one button shape ---- */
+  .bx { position:relative; clip-path:polygon(var(--sl,10px) 0, 100% 0, calc(100% - var(--sl,10px)) 100%, 0 100%); border:0 !important; border-radius:0 !important; --bw:1.5px; text-align:center; }
+  .bx::before { content:''; position:absolute; inset:0; background:var(--bc,transparent); pointer-events:none; clip-path:polygon(evenodd, var(--sl,10px) 0, 100% 0, calc(100% - var(--sl,10px)) 100%, 0 100%, var(--sl,10px) 0, calc(var(--sl,10px) + var(--bw)) var(--bw), calc(100% - var(--bw)) var(--bw), calc(100% - var(--sl,10px) - var(--bw)) calc(100% - var(--bw)), var(--bw) calc(100% - var(--bw)), calc(var(--sl,10px) + var(--bw)) var(--bw), var(--sl,10px) 0); }
+  .bx:hover { filter:brightness(1.1); transform:translateY(-2px); }
+  .bx:active { transform:none; filter:brightness(.95); }
+  .bx { transition:transform .2s ease, filter .2s ease; }
+</style>
+</helmet>
+
+<div style="width:1440px; background:#0A0F26; overflow:hidden;">
+
+  <!-- SHOUT-OUT BAR -->
+  <div style="background:#002671; padding:10px 64px; display:flex; align-items:center; justify-content:center; gap:10px;">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3 11l18-7-7 18-2-8-9-3z" stroke="#FFFFFF" stroke-width="1.8" stroke-linejoin="round"></path></svg>
+    <span style="font-size:12.5px; font-weight:700; color:#FFFFFF; letter-spacing:0.3px;">Now booking 2026/2027 across the UK — <a href="ContactS.dc.html" style="color:#FFFFFF; font-weight:800; border-bottom:1px solid #FFFFFF;">get in touch →</a></span>
+  </div>
+
+  <!-- HEADER -->
+  <header style="position:relative; z-index:30; display:flex; align-items:center; justify-content:space-between; padding:0 64px; border-bottom:1px solid #1E2B5E; background:#0A0F26;">
+    <a href="HomeA.dc.html" style="display:flex; align-items:center;"><img src="/_blob/e4d72651b77d4c3cc1c086d9f6031149" alt="Crux Nxtion Events" style="height:42px; width:auto; display:block; background:#FFFFFF; padding:4px 12px; border-radius:8px;"></a>
+    <nav style="display:flex; align-items:center; gap:30px;">
+      <a href="HomeA.dc.html" style="color:#F4F5FA; font-size:13px; font-weight:600;">Home</a>
+      <div class="mega" style="position:static; padding:22px 0;"><a href="ServicesA.dc.html" style="color:#5B8DEF; font-size:13px; font-weight:600; border-bottom:1.5px solid #5B8DEF;">Services ▾</a>
+        <div class="mega-panel" style="background:#111838; border-top:1px solid #1E2B5E; border-bottom:1px solid #1E2B5E; box-shadow:0 30px 50px rgba(0,0,0,0.25); padding:36px 64px 40px;">
+          <div style="display:grid; grid-template-columns:1fr 1fr 0.9fr; gap:48px;">
+            <div><div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;"><span class="bebas" style="font-size:26px; color:#F4F5FA;">EVENTS</span><span style="font-size:11px; letter-spacing:1.5px; font-weight:700; color:#5B8DEF;">FOR YOUR NIGHT</span></div><a class="mrow" href="ServicesA.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0; color:#F4F5FA;"><span style="width:8px; height:8px; border-radius:50%; background:#5B8DEF; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#F4F5FA;">Event Management &amp; Planning</span><span style="display:block; font-size:12px; color:#A3A9C8; margin-top:2px;">Private and corporate events</span></span></a><a class="mrow" href="ServicesA.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0; color:#F4F5FA;"><span style="width:8px; height:8px; border-radius:50%; background:#5B8DEF; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#F4F5FA;">Entertainment Booking &amp; Talent</span><span style="display:block; font-size:12px; color:#A3A9C8; margin-top:2px;">Star power for your bill</span></span></a><a class="mrow" href="ServicesA.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0; color:#F4F5FA;"><span style="width:8px; height:8px; border-radius:50%; background:#5B8DEF; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#F4F5FA;">Event Designs &amp; Production</span><span style="display:block; font-size:12px; color:#A3A9C8; margin-top:2px;">Weddings, birthdays, launches</span></span></a><a class="mrow" href="ServicesA.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0; color:#F4F5FA;"><span style="width:8px; height:8px; border-radius:50%; background:#5B8DEF; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#F4F5FA;">Event Marketing &amp; Promotion</span><span style="display:block; font-size:12px; color:#A3A9C8; margin-top:2px;">Buzz that fills the room</span></span></a><a class="mrow" href="ServicesA.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0; color:#F4F5FA;"><span style="width:8px; height:8px; border-radius:50%; background:#5B8DEF; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#F4F5FA;">On-Site Coordination</span><span style="display:block; font-size:12px; color:#A3A9C8; margin-top:2px;">Day-of logistics and support</span></span></a></div>
+            <div><div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;"><span class="bebas" style="font-size:26px; color:#F4F5FA;">CONSULTANCY</span><span style="font-size:11px; letter-spacing:1.5px; font-weight:700; color:#B7A6FF;">FOR YOUR BUSINESS</span></div><a class="mrow" href="ServicesA2a.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0; color:#F4F5FA;"><span style="width:8px; height:8px; border-radius:50%; background:#8C7AE6; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#F4F5FA;">Business Setup &amp; Strategy</span><span style="display:block; font-size:12px; color:#A3A9C8; margin-top:2px;">From idea to a plan</span></span></a><a class="mrow" href="ServicesA2a.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0; color:#F4F5FA;"><span style="width:8px; height:8px; border-radius:50%; background:#8C7AE6; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#F4F5FA;">Branding &amp; Marketing</span><span style="display:block; font-size:12px; color:#A3A9C8; margin-top:2px;">Say what you do</span></span></a><a class="mrow" href="ServicesA2a.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0; color:#F4F5FA;"><span style="width:8px; height:8px; border-radius:50%; background:#8C7AE6; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#F4F5FA;">Business Growth</span><span style="display:block; font-size:12px; color:#A3A9C8; margin-top:2px;">More customers, more revenue</span></span></a><a class="mrow" href="ServicesA2a.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0; color:#F4F5FA;"><span style="width:8px; height:8px; border-radius:50%; background:#8C7AE6; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#F4F5FA;">Activation Growth</span><span style="display:block; font-size:12px; color:#A3A9C8; margin-top:2px;">Turn attention into action</span></span></a><a class="mrow" href="ServicesA2a.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0; color:#F4F5FA;"><span style="width:8px; height:8px; border-radius:50%; background:#8C7AE6; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#F4F5FA;">Business Audit &amp; Advisory</span><span style="display:block; font-size:12px; color:#A3A9C8; margin-top:2px;">An honest second opinion</span></span></a></div>
+            <div style="position:relative; border-radius:18px; overflow:hidden; min-height:260px;"><img src="/_blob/f269f7683bdb441b9b45df1336cd1485" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"><div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(10,15,38,0.95) 0%, rgba(10,15,38,0.2) 70%);"></div><div style="position:absolute; left:0; right:0; bottom:0; padding:22px;"><span class="bebas" style="font-size:26px; color:#FFFFFF; display:block; margin-bottom:8px;">NOT SURE WHICH?</span><a href="ContactS.dc.html" style="display:inline-block; background:#BA0000; color:#FFFFFF; font-weight:700; font-size:13px; padding:11px 20px; --sl:8px;" class="bx">Book A Call</a></div></div>
+          </div>
+        </div></div>
+      <a href="EventsA.dc.html" style="color:#F4F5FA; font-size:13px; font-weight:600;">Events</a>
+      <a href="GalleryA.dc.html" style="color:#F4F5FA; font-size:13px; font-weight:600;">Gallery</a>
+      <a href="AboutS.dc.html" style="color:#F4F5FA; font-size:13px; font-weight:600;">About</a>
+      <a href="BlogA.dc.html" style="color:#F4F5FA; font-size:13px; font-weight:600;">Blog</a>
+      <a href="ContactS.dc.html" style="color:#F4F5FA; font-size:13px; font-weight:600;">Contact</a>
+    </nav>
+    <div style="display:flex; align-items:center; gap:16px;">
+      <div style="display:flex; gap:6px;"><a href="EventsA.dc.html" style="font-size:12px; font-weight:700; padding:8px 16px; background:#1E48B0; color:#FFFFFF; --sl:7px;" class="bx">Events</a><a href="HomeA2a.dc.html" style="font-size:12px; font-weight:700; padding:8px 16px; color:#A3A9C8; --sl:8px; --bc:#A3A9C855;" class="bx">Consultancy</a></div>
+      <a href="ContactS.dc.html" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:13px; padding:12px 22px; --sl:8px;" class="bx">Book The Room</a>
+    </div>
+  </header>
+
+  <!-- PAGE HEADING -->
+  <section style="padding:80px 64px 50px; display:grid; grid-template-columns:1.2fr 0.8fr; gap:60px; align-items:end;">
+    <div class="reveal"><span class="eyebrow">Event Services</span><h1 class="bebas" style="font-size:96px; margin:16px 0 0; color:#F4F5FA;">FIVE SERVICES.<br><span style="color:#E5383B;">ONE CREW.</span></h1></div>
+    <p style="font-size:16px; line-height:1.75; color:#C5CADF; margin:0;" class="reveal">Everything your event needs, from the first brief to the last guest leaving. Pick the one that sounds like your week — or tell us the date and we will work out the rest.</p>
+  </section>
+
+  <!-- SERVICE ROWS -->
+  <section style="min-height:560px; display:flex; flex-direction:column; justify-content:center; padding:20px 64px 100px;"><div style="display:flex; flex-direction:column; gap:28px;" class="reveal">
+      <div style="display:grid; grid-template-columns:0.9fr 1fr; background:#111838; border:1.5px solid #1E2B5E; border-radius:22px; overflow:hidden;">
+        <div style="order:1; position:relative; min-height:400px;" class="reveal">
+          <img src="/_blob/c5afda4fc4e4d4b0682377d6eb272c90" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.85);">
+          <div style="position:absolute; inset:0; background:linear-gradient(160deg, rgba(0,38,113,0.35) 0%, rgba(10,15,38,0.55) 100%);"></div>
+          <div class="ticket-stub" style="position:absolute; left:0; top:36px; background:#002671; padding:14px 22px 14px 26px; border-radius:0 10px 10px 0;"><span class="bebas" style="font-size:30px; color:#FFFFFF;">01</span></div>
+        </div>
+        <div style="order:2; padding:44px 46px;" class="reveal">
+          <h3 class="bebas" style="font-size:46px; margin:0 0 18px; color:#F4F5FA;">EVENT MANAGEMENT &amp; PLANNING</h3>
+          <div style="background:#0A0F26; border:1.5px solid #1E2B5E; border-radius:14px 14px 14px 4px; padding:16px 18px; margin-bottom:12px;"><span style="font-size:10.5px; letter-spacing:1.5px; text-transform:uppercase; color:#5B8DEF; font-weight:700;">You might be planning</span><p style="font-size:16px; font-weight:600; margin:6px 0 0; color:#F4F5FA;">A corporate function, a wedding celebration or a music festival — and no idea where to start.</p></div>
+          <div style="background:#002671; border-radius:14px 14px 4px 14px; padding:16px 18px; margin-bottom:22px;"><span style="font-size:10.5px; letter-spacing:1.5px; text-transform:uppercase; color:#FFFFFF; font-weight:800;">We'll handle</span><p style="font-size:14.5px; line-height:1.6; font-weight:600; margin:6px 0 0; color:#FFFFFF;">We coordinate every detail from concept to execution, so you are a guest at your own event.</p></div>
+          <span class="eyebrow">You leave with</span>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin:12px 0 18px;"><span style="color:#D5D9EA; font-size:12px; font-weight:600; padding:8px 16px; --sl:6px; --bc:#2C3C78;" class="bx">A run of show</span><span style="color:#D5D9EA; font-size:12px; font-weight:600; padding:8px 16px; --sl:6px; --bc:#2C3C78;" class="bx">Vendors sorted</span><span style="color:#D5D9EA; font-size:12px; font-weight:600; padding:8px 16px; --sl:6px; --bc:#2C3C78;" class="bx">One point of contact</span></div>
+          <p style="font-size:12.5px; color:#A3A9C8; margin:0;"><b style="letter-spacing:1.3px; color:#5B8DEF;">GOOD FOR</b> &nbsp;Conferences, seminars, product launches, weddings, birthdays, brand activations and galas.</p>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 0.9fr; background:#111838; border:1.5px solid #1E2B5E; border-radius:22px; overflow:hidden;">
+        <div style="order:2; position:relative; min-height:400px;">
+          <img src="/_blob/2fe0208788cf2d50763c85dd2a44de66" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.85);">
+          <div style="position:absolute; inset:0; background:linear-gradient(160deg, rgba(0,38,113,0.35) 0%, rgba(10,15,38,0.55) 100%);"></div>
+          <div class="ticket-stub" style="position:absolute; left:0; top:36px; background:#BA0000; padding:14px 22px 14px 26px; border-radius:0 10px 10px 0;"><span class="bebas" style="font-size:30px; color:#FFFFFF;">02</span></div>
+        </div>
+        <div style="order:1; padding:44px 46px;">
+          <h3 class="bebas" style="font-size:46px; margin:0 0 18px; color:#F4F5FA;">ENTERTAINMENT BOOKING &amp; TALENT MANAGEMENT</h3>
+          <div style="background:#0A0F26; border:1.5px solid #1E2B5E; border-radius:14px 14px 14px 4px; padding:16px 18px; margin-bottom:12px;"><span style="font-size:10.5px; letter-spacing:1.5px; text-transform:uppercase; color:#5B8DEF; font-weight:700;">You might be planning</span><p style="font-size:16px; font-weight:600; margin:6px 0 0; color:#F4F5FA;">You want the night to feel like a show.</p></div>
+          <div style="background:#002671; border-radius:14px 14px 4px 14px; padding:16px 18px; margin-bottom:22px;"><span style="font-size:10.5px; letter-spacing:1.5px; text-transform:uppercase; color:#FFFFFF; font-weight:800;">We'll handle</span><p style="font-size:14.5px; line-height:1.6; font-weight:600; margin:6px 0 0; color:#FFFFFF;">We book performers, artists and entertainers who match your vibe — and keep an eye on who is current.</p></div>
+          <span class="eyebrow">You leave with</span>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin:12px 0 18px;"><span style="color:#D5D9EA; font-size:12px; font-weight:600; padding:8px 16px; --sl:6px; --bc:#2C3C78;" class="bx">A shortlist of acts</span><span style="color:#D5D9EA; font-size:12px; font-weight:600; padding:8px 16px; --sl:6px; --bc:#2C3C78;" class="bx">Bookings &amp; logistics</span><span style="color:#D5D9EA; font-size:12px; font-weight:600; padding:8px 16px; --sl:6px; --bc:#2C3C78;" class="bx">Run-of-show timings</span></div>
+          <p style="font-size:12.5px; color:#A3A9C8; margin:0;"><b style="letter-spacing:1.3px; color:#5B8DEF;">GOOD FOR</b> &nbsp;Private and corporate events, music concerts and festivals.</p>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:0.9fr 1fr; background:#111838; border:1.5px solid #1E2B5E; border-radius:22px; overflow:hidden;">
+        <div style="order:1; position:relative; min-height:400px;">
+          <img src="/_blob/8f947f32de7fe00cf711036348e00351" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.85);">
+          <div style="position:absolute; inset:0; background:linear-gradient(160deg, rgba(0,38,113,0.35) 0%, rgba(10,15,38,0.55) 100%);"></div>
+          <div class="ticket-stub" style="position:absolute; left:0; top:36px; background:#8C7AE6; padding:14px 22px 14px 26px; border-radius:0 10px 10px 0;"><span class="bebas" style="font-size:30px; color:#0A0F26;">03</span></div>
+        </div>
+        <div style="order:2; padding:44px 46px;">
+          <h3 class="bebas" style="font-size:46px; margin:0 0 18px; color:#F4F5FA;">EVENT DESIGNS &amp; PRODUCTION</h3>
+          <div style="background:#0A0F26; border:1.5px solid #1E2B5E; border-radius:14px 14px 14px 4px; padding:16px 18px; margin-bottom:12px;"><span style="font-size:10.5px; letter-spacing:1.5px; text-transform:uppercase; color:#5B8DEF; font-weight:700;">You might be planning</span><p style="font-size:16px; font-weight:600; margin:6px 0 0; color:#F4F5FA;">You can picture it — you just cannot build it.</p></div>
+          <div style="background:#002671; border-radius:14px 14px 4px 14px; padding:16px 18px; margin-bottom:22px;"><span style="font-size:10.5px; letter-spacing:1.5px; text-transform:uppercase; color:#FFFFFF; font-weight:800;">We'll handle</span><p style="font-size:14.5px; line-height:1.6; font-weight:600; margin:6px 0 0; color:#FFFFFF;">We turn the vision into a themed, styled space: concept, décor, staging and lighting.</p></div>
+          <span class="eyebrow">You leave with</span>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin:12px 0 18px;"><span style="color:#D5D9EA; font-size:12px; font-weight:600; padding:8px 16px; --sl:6px; --bc:#2C3C78;" class="bx">Concept &amp; mood</span><span style="color:#D5D9EA; font-size:12px; font-weight:600; padding:8px 16px; --sl:6px; --bc:#2C3C78;" class="bx">Décor &amp; styling</span><span style="color:#D5D9EA; font-size:12px; font-weight:600; padding:8px 16px; --sl:6px; --bc:#2C3C78;" class="bx">Staging</span></div>
+          <p style="font-size:12.5px; color:#A3A9C8; margin:0;"><b style="letter-spacing:1.3px; color:#5B8DEF;">GOOD FOR</b> &nbsp;Weddings, engagement celebrations and birthday parties.</p>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 0.9fr; background:#111838; border:1.5px solid #1E2B5E; border-radius:22px; overflow:hidden;">
+        <div style="order:2; position:relative; min-height:400px;">
+          <img src="/_blob/2b696c907bf5b4d0dc14a80e8cd60e15" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.85);">
+          <div style="position:absolute; inset:0; background:linear-gradient(160deg, rgba(0,38,113,0.35) 0%, rgba(10,15,38,0.55) 100%);"></div>
+          <div class="ticket-stub" style="position:absolute; left:0; top:36px; background:#002671; padding:14px 22px 14px 26px; border-radius:0 10px 10px 0;"><span class="bebas" style="font-size:30px; color:#FFFFFF;">04</span></div>
+        </div>
+        <div style="order:1; padding:44px 46px;">
+          <h3 class="bebas" style="font-size:46px; margin:0 0 18px; color:#F4F5FA;">EVENT MARKETING &amp; PROMOTION</h3>
+          <div style="background:#0A0F26; border:1.5px solid #1E2B5E; border-radius:14px 14px 14px 4px; padding:16px 18px; margin-bottom:12px;"><span style="font-size:10.5px; letter-spacing:1.5px; text-transform:uppercase; color:#5B8DEF; font-weight:700;">You might be planning</span><p style="font-size:16px; font-weight:600; margin:6px 0 0; color:#F4F5FA;">The event is great. Nobody knows about it yet.</p></div>
+          <div style="background:#002671; border-radius:14px 14px 4px 14px; padding:16px 18px; margin-bottom:22px;"><span style="font-size:10.5px; letter-spacing:1.5px; text-transform:uppercase; color:#FFFFFF; font-weight:800;">We'll handle</span><p style="font-size:14.5px; line-height:1.6; font-weight:600; margin:6px 0 0; color:#FFFFFF;">Social campaigns, influencer partnerships, listings and offline promotion that build buzz and fill the room.</p></div>
+          <span class="eyebrow">You leave with</span>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin:12px 0 18px;"><span style="color:#D5D9EA; font-size:12px; font-weight:600; padding:8px 16px; --sl:6px; --bc:#2C3C78;" class="bx">A campaign plan</span><span style="color:#D5D9EA; font-size:12px; font-weight:600; padding:8px 16px; --sl:6px; --bc:#2C3C78;" class="bx">Social &amp; influencer</span><span style="color:#D5D9EA; font-size:12px; font-weight:600; padding:8px 16px; --sl:6px; --bc:#2C3C78;" class="bx">Listings &amp; SEO</span></div>
+          <p style="font-size:12.5px; color:#A3A9C8; margin:0;"><b style="letter-spacing:1.3px; color:#5B8DEF;">GOOD FOR</b> &nbsp;Music concerts, festivals and ticketed nights.</p>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:0.9fr 1fr; background:#111838; border:1.5px solid #1E2B5E; border-radius:22px; overflow:hidden;">
+        <div style="order:1; position:relative; min-height:400px;">
+          <img src="/_blob/e6e06da1a649b213d8dd573ea6511302" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.85);">
+          <div style="position:absolute; inset:0; background:linear-gradient(160deg, rgba(0,38,113,0.35) 0%, rgba(10,15,38,0.55) 100%);"></div>
+          <div class="ticket-stub" style="position:absolute; left:0; top:36px; background:#BA0000; padding:14px 22px 14px 26px; border-radius:0 10px 10px 0;"><span class="bebas" style="font-size:30px; color:#FFFFFF;">05</span></div>
+        </div>
+        <div style="order:2; padding:44px 46px;">
+          <h3 class="bebas" style="font-size:46px; margin:0 0 18px; color:#F4F5FA;">ON-SITE COORDINATION</h3>
+          <div style="background:#0A0F26; border:1.5px solid #1E2B5E; border-radius:14px 14px 14px 4px; padding:16px 18px; margin-bottom:12px;"><span style="font-size:10.5px; letter-spacing:1.5px; text-transform:uppercase; color:#5B8DEF; font-weight:700;">You might be planning</span><p style="font-size:16px; font-weight:600; margin:6px 0 0; color:#F4F5FA;">On the day, everything needs to just work.</p></div>
+          <div style="background:#002671; border-radius:14px 14px 4px 14px; padding:16px 18px; margin-bottom:22px;"><span style="font-size:10.5px; letter-spacing:1.5px; text-transform:uppercase; color:#FFFFFF; font-weight:800;">We'll handle</span><p style="font-size:14.5px; line-height:1.6; font-weight:600; margin:6px 0 0; color:#FFFFFF;">Real-time support, venue logistics and vendor management, start to close.</p></div>
+          <span class="eyebrow">You leave with</span>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin:12px 0 18px;"><span style="color:#D5D9EA; font-size:12px; font-weight:600; padding:8px 16px; --sl:6px; --bc:#2C3C78;" class="bx">A floor team</span><span style="color:#D5D9EA; font-size:12px; font-weight:600; padding:8px 16px; --sl:6px; --bc:#2C3C78;" class="bx">Vendor management</span><span style="color:#D5D9EA; font-size:12px; font-weight:600; padding:8px 16px; --sl:6px; --bc:#2C3C78;" class="bx">Day-of management</span></div>
+          <p style="font-size:12.5px; color:#A3A9C8; margin:0;"><b style="letter-spacing:1.3px; color:#5B8DEF;">GOOD FOR</b> &nbsp;Destination-packed events, large guest lists and multi-vendor productions.</p>
+        </div>
+      </div></div></section>
+
+  <!-- PROCESS — how we run your event -->
+  <section style="min-height:560px; display:flex; flex-direction:column; justify-content:center; padding:90px 64px;">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:46px;" class="reveal">
+      <div><span class="eyebrow">How We Run Your Event</span><h2 class="bebas" style="font-size:56px; margin:12px 0 0; color:#F4F5FA;">FOUR STEPS. ONE CREW. NO STRESS.</h2></div>
+      <p style="max-width:340px; font-size:14px; line-height:1.7; color:#A3A9C8; margin:0;">From the first message to the last guest leaving, the same people are with you.</p>
+    </div>
+    <div style="position:relative; display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:26px;" class="reveal">
+      <div class="tilt-ticket reveal" style="display:flex; flex-direction:column; background:#111838; border:1.5px solid #1E2B5E; border-radius:14px; overflow:hidden; --r:-1deg; transform:rotate(var(--r));">
+        <div style="height:190px; overflow:hidden;"><img src="/_blob/fbd294c148cb8e1a55a31856bc061a40" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
+        <div class="strip-stub" style="background:#8C7AE6; padding:12px 18px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; font-weight:800; color:#0A0F26;">STEP 01</span><span class="bebas" style="font-size:18px; color:#0A0F26;">BRIEF</span></div>
+        <div style="padding:24px 22px 26px;"><p style="font-size:14px; line-height:1.7; color:#A3A9C8; margin:0;">You tell us the date, the room and what you are celebrating. We ask the right questions.</p></div>
+      </div>
+      <div class="tilt-ticket reveal" style="display:flex; flex-direction:column; background:#111838; border:1.5px solid #1E2B5E; border-radius:14px; overflow:hidden; --r:0.8deg; transform:rotate(var(--r));">
+        <div style="height:190px; overflow:hidden;"><img src="/_blob/4170d6b6009c07e37d83bae48a68917b" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
+        <div class="strip-stub" style="background:#002671; padding:12px 18px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; font-weight:800; color:#FFFFFF;">STEP 02</span><span class="bebas" style="font-size:18px; color:#FFFFFF;">DESIGN</span></div>
+        <div style="padding:24px 22px 26px;"><p style="font-size:14px; line-height:1.7; color:#A3A9C8; margin:0;">We shape the concept, the entertainment and every vendor involved.</p></div>
+      </div>
+      <div class="tilt-ticket reveal" style="display:flex; flex-direction:column; background:#111838; border:1.5px solid #1E2B5E; border-radius:14px; overflow:hidden; --r:-0.8deg; transform:rotate(var(--r));">
+        <div style="height:190px; overflow:hidden;"><img src="/_blob/1d5292715423e2e83b56b3330a94b3b8" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
+        <div class="strip-stub" style="background:#BA0000; padding:12px 18px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; font-weight:800; color:#FFFFFF;">STEP 03</span><span class="bebas" style="font-size:18px; color:#FFFFFF;">PRODUCE</span></div>
+        <div style="padding:24px 22px 26px;"><p style="font-size:14px; line-height:1.7; color:#A3A9C8; margin:0;">Staging, sound, décor and promotion — handled by one crew.</p></div>
+      </div>
+      <div class="tilt-ticket reveal" style="display:flex; flex-direction:column; background:#111838; border:1.5px solid #1E2B5E; border-radius:14px; overflow:hidden; --r:1deg; transform:rotate(var(--r));">
+        <div style="height:190px; overflow:hidden;"><img src="/_blob/deb078ab60ebeff4781926f148155e63" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
+        <div class="strip-stub" style="background:#8C7AE6; padding:12px 18px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; font-weight:800; color:#0A0F26;">STEP 04</span><span class="bebas" style="font-size:18px; color:#0A0F26;">DELIVER</span></div>
+        <div style="padding:24px 22px 26px;"><p style="font-size:14px; line-height:1.7; color:#A3A9C8; margin:0;">We are on site through the last guest, so you can enjoy your own event.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PREFOOTER CTA — cinematic band -->
+  <section style="position:relative; height:560px; overflow:hidden;">
+    <img src="/_blob/1ebf529508af3e82c1e2c01b3a050fe1" alt="A Crux Nxtion Events crowd" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+    <div style="position:absolute; inset:0; background:linear-gradient(100deg, rgba(10,15,38,0.97) 0%, rgba(10,15,38,0.78) 52%, rgba(10,15,38,0.4) 100%);"></div>
+    <div style="position:absolute; left:0; right:0; top:0; height:26px; background:#05081A; background-image:repeating-linear-gradient(90deg, transparent 0 18px, rgba(244,245,250,0.16) 18px 34px, transparent 34px 52px); background-size:52px 12px; background-repeat:repeat-x; background-position:0 7px; z-index:2;"></div><div style="position:absolute; left:0; right:0; bottom:0; height:26px; background:#05081A; background-image:repeating-linear-gradient(90deg, transparent 0 18px, rgba(244,245,250,0.16) 18px 34px, transparent 34px 52px); background-size:52px 12px; background-repeat:repeat-x; background-position:0 7px; z-index:2;"></div>
+    <div style="position:relative; z-index:1; height:100%; display:flex; flex-direction:column; justify-content:center; padding:0 64px;" class="reveal">
+      <span class="eyebrow" style="color:#A9C0F5 !important;">Ready When You Are</span>
+      <h2 class="bebas" style="font-size:84px; margin:16px 0 18px; color:#FFFFFF; max-width:820px;">GOT A DATE, OR JUST A DIRECTION?</h2>
+      <p style="font-size:16px; line-height:1.7; color:#C5CADF; max-width:520px; margin:0 0 32px;">Planning an event or building a business — tell us what you have in mind and a real person will come back to you.</p>
+      <div style="display:flex; gap:16px;">
+        <a href="ContactS.dc.html" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:15px; padding:17px 32px; --sl:10px;" class="bx">Plan An Event →</a>
+        <a href="ContactS.dc.html" style="background:#8C7AE6; color:#0A0F26; font-weight:700; font-size:15px; padding:17px 32px; --sl:10px;" class="bx">Talk Business Strategy →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- COLOSSAL FOOTER -->
+  <footer id="contact" style="background:#0A0F26; padding:90px 24px 44px; text-align:center; position:relative; overflow:hidden;">
+    <div style="position:relative; margin-bottom:40px;">
+      <span class="bebas" style="font-size:clamp(80px,17vw,220px); line-height:0.82; display:block; background:linear-gradient(180deg, #F4F5FA 0%, #A9C0F5 25%, #1E2B5E 65%, transparent 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; position:relative;">CRUX</span>
+      <span class="bebas" style="font-size:clamp(30px,6.4vw,82px); line-height:1; display:block; background:linear-gradient(180deg, #F4F5FA 0%, #A9C0F5 25%, #1E2B5E 65%, transparent 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; position:relative; letter-spacing:0.5em; margin-top:10px; padding-left:0.5em;">NXTION</span>
+    </div>
+    <div style="display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:32px; margin-bottom:32px;">
+      <a href="HomeA.dc.html" style="font-size:14px; color:#A3A9C8;">Home</a>
+      <a href="ServicesA.dc.html" style="font-size:14px; color:#A3A9C8;">Services</a>
+      <a href="EventsA.dc.html" style="font-size:14px; color:#A3A9C8;">Events</a>
+      <a href="GalleryA.dc.html" style="font-size:14px; color:#A3A9C8;">Gallery</a>
+      <a href="AboutS.dc.html" style="font-size:14px; color:#A3A9C8;">About</a>
+      <a href="FAQS.dc.html" style="font-size:14px; color:#A3A9C8;">FAQ</a>
+      <a href="BlogA.dc.html" style="font-size:14px; color:#A3A9C8;">Blog</a>
+      <a href="SponsorsA.dc.html" style="font-size:14px; color:#A3A9C8;">Sponsors</a>
+    </div>
+    <div style="display:flex; justify-content:center; gap:14px; margin-bottom:44px;">
+      <a href="#" aria-label="Instagram" style="display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; background:rgba(244,245,250,0.05); color:#F4F5FA; --sl:7px; --bc:rgba(244,245,250,0.12);" class="bx"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.5"></rect><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"></circle><circle cx="17.4" cy="6.6" r="1" fill="currentColor"></circle></svg></a>
+      <a href="#" aria-label="TikTok" style="display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; background:rgba(244,245,250,0.05); color:#F4F5FA; --sl:7px; --bc:rgba(244,245,250,0.12);" class="bx"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M14 3v10.5a3.5 3.5 0 1 1-3-3.46" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path><path d="M14 3c.4 2.6 2.2 4.4 4.8 4.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></a>
+      <a href="#" aria-label="WhatsApp" style="display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; background:rgba(244,245,250,0.05); color:#F4F5FA; --sl:7px; --bc:rgba(244,245,250,0.12);" class="bx"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 20l1.4-4.1A8 8 0 1 1 9 19.5L4 20Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path><path d="M8.5 9.5c0 3.5 3 6.5 6.5 6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></a>
+    </div>
+    <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:8px 26px; margin-bottom:20px;">
+      <a href="PrivacyS.dc.html" style="font-size:12.5px; color:#8E96BB;">Privacy Policy</a>
+      <a href="CookiesS.dc.html" style="font-size:12.5px; color:#8E96BB;">Cookie Policy</a>
+      <a href="TermsS.dc.html" style="font-size:12.5px; color:#8E96BB;">Terms &amp; Conditions</a>
+    </div>
+    <div style="width:100%; max-width:900px; height:1px; background:#1E2B5E; margin:0 auto 24px;"></div>
+    <p style="font-size:13px; color:#7A82A8; margin:0;">© 2026 Crux Nxtion Events • Sheffield, United Kingdom • All Rights Reserved</p>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:4800}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+
+

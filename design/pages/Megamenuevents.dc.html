@@ -1,0 +1,106 @@
+
+
+
+<meta charset="utf-8">
+<title>Mega menu events</title>
+<script src="./support.js"></script>
+
+
+<x-dc>
+<helmet>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Space Grotesk', system-ui, sans-serif; background: #0A0F26; color: #F4F5FA; }
+  a { color: #5B8DEF; text-decoration: none; }
+  a:hover { color: #E5383B; }
+  .bebas { font-family: 'Bebas Neue', 'Arial Narrow', sans-serif; letter-spacing: 0.5px; line-height: 0.9; text-transform: uppercase; }
+  .eyebrow { font-weight: 600; letter-spacing: 3px; text-transform: uppercase; font-size: 11px; color: #5B8DEF; }
+  .ticket-stub { position: relative; }
+  .ticket-stub::before, .ticket-stub::after { content: ''; position: absolute; right: -11px; width: 20px; height: 20px; border-radius: 50%; background: #0A0F26; z-index: 2; }
+  .ticket-stub::before { top: -10px; }
+  .ticket-stub::after { bottom: -10px; }
+  @keyframes rc-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes rc-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  /* Micro-animations */
+  body { animation: rcFadeIn .5s ease-out; }
+  @keyframes rcFadeIn { from { opacity: 0; } to { opacity: 1; } }
+  img { transition: transform .5s ease; }
+  a:hover img { transform: scale(1.05); }
+  a { transition: color .2s ease, filter .3s ease, box-shadow .3s ease, border-color .25s ease; }
+  a:hover { filter: brightness(1.08); }
+  a:active { filter: brightness(0.94); }
+  .ticket { transition: box-shadow .3s ease, filter .3s ease; }
+  .ticket:hover { box-shadow: 0 18px 34px rgba(0,0,0,0.22); }
+  header nav a { position: relative; }
+  header nav a::after { content: ''; position: absolute; left: 0; bottom: -6px; width: 0; height: 2px; background: currentColor; transition: width .3s ease; }
+  header nav a:hover::after { width: 100%; }
+  a[style*="border-radius:999px"], a[style*="clip-path:polygon"] { transition: transform .25s ease, box-shadow .25s ease, filter .25s ease; }
+  a[style*="border-radius:999px"]:hover, a[style*="clip-path:polygon"]:hover { transform: translateY(-3px); box-shadow: 0 14px 26px rgba(0,0,0,0.22); }
+  .tilt-ticket { transition: transform .3s ease, box-shadow .3s ease; }
+  .tilt-ticket:hover { transform: rotate(calc(var(--r) * 1.8)) translateY(-4px) !important; box-shadow: 0 18px 34px rgba(0,0,0,0.22); }
+  .tilt-straighten { transition: transform .35s ease; }
+  .tilt-straighten:hover { transform: rotate(0deg) scale(1.04) !important; }
+  .tilt-in { transition: transform .35s ease; }
+  .tilt-in:hover { transform: rotate(var(--r, 3deg)) scale(1.03) !important; }
+
+  .mega-panel { display:none; position:absolute; left:0; right:0; top:100%; z-index:40; }
+  .mega:hover .mega-panel, .mega.open .mega-panel { display:block; }
+  .mega > a::after { display:none; }
+  .mega-panel a { transition: transform .2s ease, background .2s ease; }
+  .mega-panel a.mrow:hover { transform: translateX(4px); }
+  /* ---- one button shape ---- */
+  .bx { position:relative; clip-path:polygon(var(--sl,10px) 0, 100% 0, calc(100% - var(--sl,10px)) 100%, 0 100%); border:0 !important; border-radius:0 !important; --bw:1.5px; text-align:center; }
+  .bx::before { content:''; position:absolute; inset:0; background:var(--bc,transparent); pointer-events:none; clip-path:polygon(evenodd, var(--sl,10px) 0, 100% 0, calc(100% - var(--sl,10px)) 100%, 0 100%, var(--sl,10px) 0, calc(var(--sl,10px) + var(--bw)) var(--bw), calc(100% - var(--bw)) var(--bw), calc(100% - var(--sl,10px) - var(--bw)) calc(100% - var(--bw)), var(--bw) calc(100% - var(--bw)), calc(var(--sl,10px) + var(--bw)) var(--bw), var(--sl,10px) 0); }
+  .bx:hover { filter:brightness(1.1); transform:translateY(-2px); }
+  .bx:active { transform:none; filter:brightness(.95); }
+  .bx { transition:transform .2s ease, filter .2s ease; }
+</style>
+</helmet>
+
+<div style="width:1440px; background:#0A0F26; overflow:hidden;">
+
+  <!-- SHOUT-OUT BAR -->
+  <div style="background:#002671; padding:10px 64px; display:flex; align-items:center; justify-content:center; gap:10px;">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3 11l18-7-7 18-2-8-9-3z" stroke="#FFFFFF" stroke-width="1.8" stroke-linejoin="round"></path></svg>
+    <span style="font-size:12.5px; font-weight:700; color:#FFFFFF; letter-spacing:0.3px;">Now booking 2026/2027 across the UK — <a href="ContactS.dc.html" style="color:#FFFFFF; font-weight:800; border-bottom:1px solid #FFFFFF;">get in touch →</a></span>
+  </div>
+
+  <!-- HEADER -->
+  <header style="position:relative; z-index:30; display:flex; align-items:center; justify-content:space-between; padding:0 64px; border-bottom:1px solid #1E2B5E; background:#0A0F26;">
+    <a href="HomeA.dc.html" style="display:flex; align-items:center;"><img src="/_blob/e4d72651b77d4c3cc1c086d9f6031149" alt="Crux Nxtion Events" style="height:42px; width:auto; display:block; background:#FFFFFF; padding:4px 12px; border-radius:8px;"></a>
+    <nav style="display:flex; align-items:center; gap:30px;">
+      <a href="HomeA.dc.html" style="color:#5B8DEF; font-size:13px; font-weight:600; border-bottom:1.5px solid #5B8DEF;">Home</a>
+      <div class="mega open" style="position:static; padding:22px 0;"><a href="ServicesA.dc.html" style="color:#F4F5FA; font-size:13px; font-weight:600;">Services ▾</a>
+        <div class="mega-panel" style="background:#111838; border-top:1px solid #1E2B5E; border-bottom:1px solid #1E2B5E; box-shadow:0 30px 50px rgba(0,0,0,0.25); padding:36px 64px 40px;">
+          <div style="display:grid; grid-template-columns:1fr 1fr 0.9fr; gap:48px;">
+            <div><div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;"><span class="bebas" style="font-size:26px; color:#F4F5FA;">EVENTS</span><span style="font-size:11px; letter-spacing:1.5px; font-weight:700; color:#5B8DEF;">FOR YOUR NIGHT</span></div><a class="mrow" href="ServicesA.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0; color:#F4F5FA;"><span style="width:8px; height:8px; border-radius:50%; background:#5B8DEF; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#F4F5FA;">Event Management &amp; Planning</span><span style="display:block; font-size:12px; color:#A3A9C8; margin-top:2px;">Private and corporate events</span></span></a><a class="mrow" href="ServicesA.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0; color:#F4F5FA;"><span style="width:8px; height:8px; border-radius:50%; background:#5B8DEF; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#F4F5FA;">Entertainment Booking &amp; Talent</span><span style="display:block; font-size:12px; color:#A3A9C8; margin-top:2px;">Star power for your bill</span></span></a><a class="mrow" href="ServicesA.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0; color:#F4F5FA;"><span style="width:8px; height:8px; border-radius:50%; background:#5B8DEF; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#F4F5FA;">Event Designs &amp; Production</span><span style="display:block; font-size:12px; color:#A3A9C8; margin-top:2px;">Weddings, birthdays, launches</span></span></a><a class="mrow" href="ServicesA.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0; color:#F4F5FA;"><span style="width:8px; height:8px; border-radius:50%; background:#5B8DEF; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#F4F5FA;">Event Marketing &amp; Promotion</span><span style="display:block; font-size:12px; color:#A3A9C8; margin-top:2px;">Buzz that fills the room</span></span></a><a class="mrow" href="ServicesA.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0; color:#F4F5FA;"><span style="width:8px; height:8px; border-radius:50%; background:#5B8DEF; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#F4F5FA;">On-Site Coordination</span><span style="display:block; font-size:12px; color:#A3A9C8; margin-top:2px;">Day-of logistics and support</span></span></a></div>
+            <div><div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;"><span class="bebas" style="font-size:26px; color:#F4F5FA;">CONSULTANCY</span><span style="font-size:11px; letter-spacing:1.5px; font-weight:700; color:#B7A6FF;">FOR YOUR BUSINESS</span></div><a class="mrow" href="ServicesA2a.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0; color:#F4F5FA;"><span style="width:8px; height:8px; border-radius:50%; background:#8C7AE6; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#F4F5FA;">Business Setup &amp; Strategy</span><span style="display:block; font-size:12px; color:#A3A9C8; margin-top:2px;">From idea to a plan</span></span></a><a class="mrow" href="ServicesA2a.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0; color:#F4F5FA;"><span style="width:8px; height:8px; border-radius:50%; background:#8C7AE6; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#F4F5FA;">Branding &amp; Marketing</span><span style="display:block; font-size:12px; color:#A3A9C8; margin-top:2px;">Say what you do</span></span></a><a class="mrow" href="ServicesA2a.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0; color:#F4F5FA;"><span style="width:8px; height:8px; border-radius:50%; background:#8C7AE6; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#F4F5FA;">Business Growth</span><span style="display:block; font-size:12px; color:#A3A9C8; margin-top:2px;">More customers, more revenue</span></span></a><a class="mrow" href="ServicesA2a.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0; color:#F4F5FA;"><span style="width:8px; height:8px; border-radius:50%; background:#8C7AE6; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#F4F5FA;">Activation Growth</span><span style="display:block; font-size:12px; color:#A3A9C8; margin-top:2px;">Turn attention into action</span></span></a><a class="mrow" href="ServicesA2a.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0; color:#F4F5FA;"><span style="width:8px; height:8px; border-radius:50%; background:#8C7AE6; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#F4F5FA;">Business Audit &amp; Advisory</span><span style="display:block; font-size:12px; color:#A3A9C8; margin-top:2px;">An honest second opinion</span></span></a></div>
+            <div style="position:relative; border-radius:18px; overflow:hidden; min-height:260px;"><img src="/_blob/f269f7683bdb441b9b45df1336cd1485" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"><div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(10,15,38,0.95) 0%, rgba(10,15,38,0.2) 70%);"></div><div style="position:absolute; left:0; right:0; bottom:0; padding:22px;"><span class="bebas" style="font-size:26px; color:#FFFFFF; display:block; margin-bottom:8px;">NOT SURE WHICH?</span><a href="ContactS.dc.html" style="display:inline-block; background:#BA0000; color:#FFFFFF; font-weight:700; font-size:13px; padding:11px 20px; --sl:8px;" class="bx">Book A Call</a></div></div>
+          </div>
+        </div></div>
+      <a href="EventsA.dc.html" style="color:#F4F5FA; font-size:13px; font-weight:600;">Events</a>
+      <a href="GalleryA.dc.html" style="color:#F4F5FA; font-size:13px; font-weight:600;">Gallery</a>
+      <a href="AboutS.dc.html" style="color:#F4F5FA; font-size:13px; font-weight:600;">About</a>
+      <a href="BlogA.dc.html" style="color:#F4F5FA; font-size:13px; font-weight:600;">Blog</a>
+      <a href="ContactS.dc.html" style="color:#F4F5FA; font-size:13px; font-weight:600;">Contact</a>
+    </nav>
+    <div style="display:flex; align-items:center; gap:16px;">
+      <div style="display:flex; gap:6px;"><a href="EventsA.dc.html" style="font-size:12px; font-weight:700; padding:8px 16px; background:#1E48B0; color:#FFFFFF; --sl:7px;" class="bx">Events</a><a href="HomeA2a.dc.html" style="font-size:12px; font-weight:700; padding:8px 16px; color:#A3A9C8; --sl:8px; --bc:#A3A9C855;" class="bx">Consultancy</a></div>
+      <a href="ContactS.dc.html" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:13px; padding:12px 22px; --sl:8px;" class="bx">Book The Room</a>
+    </div>
+  </header>
+
+  <div style="height:360px;"></div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:690}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+
+

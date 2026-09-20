@@ -1,0 +1,565 @@
+
+
+
+<meta charset="utf-8">
+<title>Consultancy — Option A2a — Mobile</title>
+<script src="./support.js"></script>
+
+
+<x-dc>
+<helmet>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Space Grotesk', system-ui, sans-serif; background:#FFFFFF; color:#10142E; }
+  a { color: #FF2E3D; text-decoration: none; }
+  a:hover { color: #8C7AE6; }
+  .bebas { font-family: 'Bebas Neue', 'Arial Narrow', sans-serif; letter-spacing: 0.5px; line-height: 0.9; text-transform: uppercase; }
+  .eyebrow { font-weight: 600; letter-spacing: 3px; text-transform: uppercase; font-size: 11px; color: #FF2E3D; }
+  .ticket-stub { position: relative; }
+  .ticket-stub::before, .ticket-stub::after { content: ''; position: absolute; right: -11px; width: 20px; height: 20px; border-radius: 50%; background: #10142E; z-index: 2; }
+  .ticket-stub::before { top: -10px; }
+  .ticket-stub::after { bottom: -10px; }
+  @keyframes rc-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes rc-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  /* Micro-animations */
+  body { animation: rcFadeIn .5s ease-out; }
+  @keyframes rcFadeIn { from { opacity: 0; } to { opacity: 1; } }
+  img { transition: transform .5s ease; }
+  a:hover img { transform: scale(1.05); }
+  a { transition: color .2s ease, filter .3s ease, box-shadow .3s ease, border-color .25s ease; }
+  a:hover { filter: brightness(1.08); }
+  a:active { filter: brightness(0.94); }
+  .ticket { transition: box-shadow .3s ease, filter .3s ease; }
+  .ticket:hover { box-shadow: 0 18px 34px rgba(0,0,0,0.22); }
+  header nav a { position: relative; }
+  header nav a::after { content: ''; position: absolute; left: 0; bottom: -6px; width: 0; height: 2px; background: currentColor; transition: width .3s ease; }
+  header nav a:hover::after { width: 100%; }
+  a[style*="border-radius:999px"], a[style*="clip-path:polygon"] { transition: transform .25s ease, box-shadow .25s ease, filter .25s ease; }
+  a[style*="border-radius:999px"]:hover, a[style*="clip-path:polygon"]:hover { transform: translateY(-3px); box-shadow: 0 14px 26px rgba(0,0,0,0.22); }
+  .tilt-ticket { transition: transform .3s ease, box-shadow .3s ease; }
+  .tilt-ticket:hover { transform: rotate(calc(var(--r) * 1.8)) translateY(-4px) !important; box-shadow: 0 18px 34px rgba(0,0,0,0.22); }
+  .tilt-straighten { transition: transform .35s ease; }
+  .tilt-straighten:hover { transform: rotate(0deg) scale(1.04) !important; }
+  .tilt-in { transition: transform .35s ease; }
+  .tilt-in:hover { transform: rotate(var(--r, 3deg)) scale(1.03) !important; }
+
+  .bento-tile { transition: transform .3s ease, box-shadow .3s ease; }
+  .bento-tile:hover { transform: translateY(-4px); box-shadow: 0 18px 34px rgba(0,0,0,0.28); }
+  .bubble-in { animation: rcFadeIn .6s ease-out both; }
+  @keyframes rise { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:none; } }
+  @keyframes floaty { 0%,100% { transform: translateY(0) rotate(var(--r,0deg)); } 50% { transform: translateY(-8px) rotate(var(--r,0deg)); } }
+  @keyframes pulse { 0% { box-shadow:0 0 0 0 rgba(61,220,132,.6); } 70% { box-shadow:0 0 0 8px rgba(61,220,132,0); } 100% { box-shadow:0 0 0 0 rgba(61,220,132,0); } }
+  h1, .eyebrow { animation: rise .8s ease both; }
+  h1 { animation-delay: .12s; }
+  section h2 { animation: rise .7s ease both; }
+  .bento-tile img { transition: transform .6s ease; }
+  .bento-tile:hover img { transform: scale(1.06); }
+  button { transition: transform .2s ease, background .2s ease, opacity .2s ease; }
+  button:hover { transform: scale(1.08); }
+  .float { animation: floaty 5s ease-in-out infinite; }
+  .pulse-dot { animation: pulse 2s infinite; }
+  a[style*="clip-path"]:active { transform: translateY(0) scale(.98); }
+  body { background:#FFFFFF; color:#10142E; }
+  .eyebrow { color:#6C58DB !important; }
+  .ticket-stub::before, .ticket-stub::after { background:#FFFFFF !important; }
+
+  .mega-panel { display:none; position:absolute; left:0; right:0; top:100%; z-index:40; }
+  .mega:hover .mega-panel, .mega.open .mega-panel { display:block; }
+  .mega > a::after { display:none; }
+  .mega-panel a { transition: transform .2s ease, background .2s ease; }
+  .mega-panel a.mrow:hover { transform: translateX(4px); }
+  .cb { opacity:0; animation-duration:8s; animation-iteration-count:infinite; animation-timing-function:ease; animation-fill-mode:both; }
+  .cb1 { animation-name:cb1; } .cb2 { animation-name:cb2; } .cb3 { animation-name:cb3; } .cb4 { animation-name:cb4; } .cbt { animation-name:cbt; }
+  @keyframes cb1 { 0%,2% { opacity:0; transform:translateY(12px); } 6%,93% { opacity:1; transform:none; } 98%,100% { opacity:0; transform:none; } }
+  @keyframes cb2 { 0%,17% { opacity:0; transform:translateY(12px); } 21%,93% { opacity:1; transform:none; } 98%,100% { opacity:0; transform:none; } }
+  @keyframes cb3 { 0%,34% { opacity:0; transform:translateY(12px); } 38%,93% { opacity:1; transform:none; } 98%,100% { opacity:0; transform:none; } }
+  @keyframes cb4 { 0%,51% { opacity:0; transform:translateY(12px); } 55%,93% { opacity:1; transform:none; } 98%,100% { opacity:0; transform:none; } }
+  @keyframes cbt { 0%,10%,15%,28%,32%,44%,48%,60% { opacity:0; } 11%,14%,29%,31%,45%,47%,62%,90% { opacity:1; } 96%,100% { opacity:0; } }
+  .cdot { animation:cdot .8s ease-in-out infinite; } .cdot2 { animation-delay:.16s; } .cdot3 { animation-delay:.32s; }
+  @keyframes cdot { 0%,70%,100% { transform:translateY(0); opacity:.45; } 35% { transform:translateY(-4px); opacity:1; } }
+  /* ---- motion ---- */
+  @property --p { syntax:'<integer>'; inherits:false; initial-value:0; }
+  @keyframes apT4 { 0%,20% { background:transparent; border-color:#FF2E3D; } 28%,86% { background:#8C7AE6; border-color:#8C7AE6; } 94%,100% { background:transparent; border-color:#FF2E3D; } }
+  @keyframes apT5 { 0%,44% { background:transparent; border-color:#FF2E3D; } 52%,86% { background:#8C7AE6; border-color:#8C7AE6; } 94%,100% { background:transparent; border-color:#FF2E3D; } }
+  @keyframes apBar { 0%,18% { width:55%; } 30% { width:78%; } 54% { width:100%; } 86% { width:100%; } 96%,100% { width:55%; } }
+  .ap4 { animation:apT4 7s ease infinite; } .ap5 { animation:apT5 7s ease infinite; } .apbar { animation:apBar 7s ease infinite; }
+  @keyframes opSweep { 0%,10% { background-size:0% 3px; } 45%,85% { background-size:100% 3px; } 100% { background-size:0% 3px; } }
+  .ophl { background-image:linear-gradient(#8C7AE6,#8C7AE6); background-repeat:no-repeat; background-position:0 100%; background-size:0% 3px; padding-bottom:3px; animation:opSweep 4.5s ease infinite; }
+  @keyframes swUp { 0%,100% { transform:scaleY(1); } 30% { transform:scaleY(1.45); } 60% { transform:scaleY(1); } }
+  .sw1, .sw2, .sw3 { transform-origin:bottom; animation:swUp 3.2s ease-in-out infinite; } .sw2 { animation-delay:.25s; } .sw3 { animation-delay:.5s; }
+  @keyframes rmA { 0%,6% { transform:scaleX(0); } 26%,88% { transform:scaleX(1); } 100% { transform:scaleX(0); } }
+  @keyframes rmB { 0%,22% { transform:scaleX(0); } 42%,88% { transform:scaleX(1); } 100% { transform:scaleX(0); } }
+  @keyframes rmC { 0%,38% { transform:scaleX(0); } 58%,88% { transform:scaleX(1); } 100% { transform:scaleX(0); } }
+  .rm1, .rm2, .rm3 { transform-origin:left; animation:rmA 6s ease infinite; } .rm2 { animation-name:rmB; } .rm3 { animation-name:rmC; }
+  @keyframes nowPulse { 0%,100% { box-shadow:0 0 0 0 rgba(140,122,230,.55); } 50% { box-shadow:0 0 0 7px rgba(140,122,230,0); } }
+  .nowp { animation:nowPulse 2s ease infinite; }
+  @keyframes ring72 { 0%,6% { --p:0; } 30%,88% { --p:72; } 100% { --p:0; } }
+  @keyframes ring45 { 0%,6% { --p:0; } 30%,88% { --p:45; } 100% { --p:0; } }
+  @keyframes ring88 { 0%,6% { --p:0; } 30%,88% { --p:88; } 100% { --p:0; } }
+  .rg { animation-duration:6s; animation-timing-function:ease-out; animation-iteration-count:infinite; counter-reset:n var(--p); }
+  .rg72 { animation-name:ring72; } .rg45 { animation-name:ring45; } .rg88 { animation-name:ring88; }
+  .rgn::after { content:counter(n); }
+  @keyframes revealUp { from { opacity:0; transform:translateY(26px); } to { opacity:1; transform:none; } }
+  @supports (animation-timeline: view()) { .reveal { animation:revealUp linear both; animation-timeline:view(); animation-range:entry 0% cover 28%; } }
+  @keyframes drift { from { transform:scale(1.02); } to { transform:scale(1.09) translate(-1%,-1%); } }
+  .drift { animation:drift 18s ease-in-out infinite alternate; }
+  @keyframes sheen { 0% { transform:translateX(-120%); } 60%,100% { transform:translateX(220%); } }
+  /* ---- one button shape ---- */
+  .bx { position:relative; clip-path:polygon(var(--sl,10px) 0, 100% 0, calc(100% - var(--sl,10px)) 100%, 0 100%); border:0 !important; border-radius:0 !important; --bw:1.5px; text-align:center; }
+  .bx::before { content:''; position:absolute; inset:0; background:var(--bc,transparent); pointer-events:none; clip-path:polygon(evenodd, var(--sl,10px) 0, 100% 0, calc(100% - var(--sl,10px)) 100%, 0 100%, var(--sl,10px) 0, calc(var(--sl,10px) + var(--bw)) var(--bw), calc(100% - var(--bw)) var(--bw), calc(100% - var(--sl,10px) - var(--bw)) calc(100% - var(--bw)), var(--bw) calc(100% - var(--bw)), calc(var(--sl,10px) + var(--bw)) var(--bw), var(--sl,10px) 0); }
+  .bx:hover { filter:brightness(1.1); transform:translateY(-2px); }
+  .bx:active { transform:none; filter:brightness(.95); }
+  .bx { transition:transform .2s ease, filter .2s ease; }
+
+  html, body { overflow-x:hidden; }
+  img { max-width:100%; }
+  [data-m~=root] { width:390px !important; max-width:390px !important; position:relative; }
+  [data-m~=g1] { display:grid !important; grid-template-columns:minmax(0,1fr) !important; grid-template-rows:none !important; grid-auto-rows:auto !important; gap:18px !important; }
+  [data-m~=g2] { display:grid !important; grid-template-columns:repeat(2,minmax(0,1fr)) !important; grid-template-rows:none !important; grid-auto-rows:auto !important; gap:12px !important; }
+  [data-m~=span] { grid-column:auto !important; grid-row:auto !important; }
+  [data-m~=tile] { min-height:260px; }
+  [data-m~=g1] > *:not([data-m~=tile]):not([data-m~=herovis]):not([data-m~=collage]), [data-m~=g2] > *:not([data-m~=tile]):not([data-m~=herovis]):not([data-m~=collage]) { height:auto !important; min-height:0 !important; }
+  [data-m~=imgfirst] { order:-1; }
+  [data-m~=stack] { display:flex !important; flex-direction:column !important; align-items:flex-start !important; justify-content:flex-start !important; gap:16px !important; }
+  [data-m~=stack] > * { text-align:left !important; max-width:100% !important; }
+  [data-m~=ctas] { display:flex !important; flex-direction:column !important; align-items:stretch !important; gap:12px !important; }
+  [data-m~=ctas] > * { text-align:center !important; }
+  [data-m~=wrap] { flex-wrap:wrap !important; gap:10px !important; }
+  [data-m~=full] { width:100% !important; max-width:100% !important; min-width:0 !important; flex:none !important; }
+  [data-m~=nomin] { min-height:0 !important; }
+  [data-m~=hide] { display:none !important; }
+  [data-m~=static] { position:static !important; }
+  [data-m~=scroller] { overflow-x:auto !important; padding-left:20px !important; scroll-snap-type:x mandatory; scrollbar-width:none; }
+  [data-m~=track] { transform:none !important; padding-right:20px; gap:14px !important; }
+  [data-m~=track] > * { flex:0 0 290px !important; height:430px !important; scroll-snap-align:start; }
+  [data-m~=svcrow] { display:grid !important; grid-template-columns:auto minmax(0,1fr) auto !important; column-gap:14px !important; row-gap:14px !important; align-items:center !important; flex-wrap:nowrap !important; padding:16px 0 !important; }
+  [data-m~=svcrow] > img { grid-column:1 / -1; grid-row:1; width:100% !important; height:150px !important; flex:none !important; border-radius:12px !important; }
+  [data-m~=svcrow] > *:not(img) { grid-row:2; min-width:0; flex:none !important; }
+  [data-m~=ovl] { background:linear-gradient(180deg, rgba(10,15,38,.5) 0%, rgba(10,15,38,.9) 55%, rgba(10,15,38,.96) 100%) !important; }
+  [data-m~=collage] { width:167% !important; max-width:none !important; transform:scale(.6); transform-origin:0 0; margin-bottom:-256px !important; }
+  [data-m~=herovis] { height:auto !important; display:block !important; position:relative; border-radius:24px; overflow:hidden; background:linear-gradient(160deg,#F3F1FC,#E6E0FA); padding:64px 14px 16px; }
+  [data-m~=hv-img] { display:none !important; }
+  [data-m~=hv-chat] { position:relative !important; left:auto !important; right:auto !important; bottom:auto !important; top:auto !important; width:100% !important; }
+  [data-m~=hv-chat] .cb { font-size:13px !important; padding:10px 14px !important; }
+  [data-m~=hv-badge] { position:absolute !important; top:12px !important; right:12px !important; left:auto !important; }
+  [data-m~=imgtop] { flex-direction:column !important; align-items:stretch !important; gap:14px !important; }
+  [data-m~=imgtop] > img { width:100% !important; height:220px !important; flex:none !important; }
+  [data-m~=imgtop] > * { flex:none !important; max-width:100% !important; }
+  [data-m~=hero] { min-height:520px !important; }
+  h1 { line-height:.95 !important; }
+  .mega-panel { display:none !important; }
+  header { padding:10px 20px !important; }
+  header > nav, header > div { display:none !important; }
+  .mnav-btn { display:flex !important; }
+  input.mnav { display:none; }
+  .mdrawer { display:none; position:absolute; left:0; right:0; z-index:200; padding:8px 20px 28px; }
+  input.mnav:checked ~ .mdrawer { display:block; animation:mslide .3s ease both; }
+  @keyframes mslide { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:none; } }
+  .mdrawer a.mlink { display:block; font-family:'Bebas Neue','Arial Narrow',sans-serif; font-size:34px; letter-spacing:.5px; text-transform:uppercase; padding:12px 0; }
+  .mdrawer details summary { list-style:none; cursor:pointer; }
+  .mdrawer details summary::-webkit-details-marker { display:none; }
+  .mdrawer .msub { display:block; padding:9px 0 9px 14px; font-size:14.5px; }
+  .msw { position:absolute; top:764px; left:0; right:0; height:80px; z-index:90; display:flex; justify-content:center; align-items:center; pointer-events:none; background:linear-gradient(180deg, rgba(10,15,38,0) 0%, rgba(10,15,38,.55) 100%); }
+  .msw > div { pointer-events:auto; display:flex; padding:4px; gap:8px; }
+</style>
+</helmet>
+
+<div style="height:5570px; overflow:hidden; width:390px;"><div style="margin-top:-5600px; width:390px;"><div style="width:1440px; background:#FFFFFF; overflow:hidden;" data-m="root">
+
+  <!-- SHOUT-OUT BAR -->
+  <div style="background:#8C7AE6; padding:10px 20px 10px 20px; display:flex; align-items:center; justify-content:center;">
+    <span style="font-size:12.5px; font-weight:700; color:#10142E; letter-spacing:0.3px;">Crux Nxtion Consultancy — now booking discovery calls — <a href="#contact" style="color:#10142E; font-weight:800; border-bottom:1px solid #10142E;">tell us where you're stuck →</a></span>
+  </div>
+  <!-- HEADER -->
+  <input type="checkbox" id="mnav" class="mnav"><header style="position:relative; z-index:30; display:flex; align-items:center; justify-content:space-between; padding:0px 20px 0px 20px; border-bottom:1px solid #E1DEF3; background:#FFFFFF;">
+    <a href="HomeA2a.dc.html" style="display:flex; align-items:center;"><img src="/_blob/e4d72651b77d4c3cc1c086d9f6031149" alt="Crux Nxtion Events" style="height:42px; width:auto; display:block; background:#FFFFFF; padding:4px 12px 4px 12px; border-radius:8px;"></a>
+    <nav style="display:flex; align-items:center; gap:30px;">
+      <a href="HomeA2a.dc.html" style="color:#6C58DB; font-size:13px; font-weight:600; border-bottom:1.5px solid #6C58DB;">Home</a>
+      <div class="mega" style="position:static; padding:22px 0px 22px 0px;"><a href="ServicesA2a.dc.html" style="color:#10142E; font-size:13px; font-weight:600;">Services ▾</a>
+        <div class="mega-panel" style="background:#FFFFFF; border-top:1px solid #E1DEF3; border-bottom:1px solid #E1DEF3; box-shadow:0 30px 50px rgba(0,0,0,0.25); padding:36px 20px 40px 20px;">
+          <div style="display:grid; grid-template-columns:1fr 1fr 0.9fr; gap:48px;">
+            <div><div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;"><span class="bebas" style="font-size:26px; color:#10142E;">EVENTS</span><span style="font-size:11px; letter-spacing:1.5px; font-weight:700; color:#002671;">FOR YOUR NIGHT</span></div><a class="mrow" href="ServicesA.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0px 10px 0px; color:#10142E;"><span style="width:8px; height:8px; border-radius:50%; background:#002671; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#10142E;">Event Management &amp; Planning</span><span style="display:block; font-size:12px; color:#5A5F86; margin-top:2px;">Private and corporate events</span></span></a><a class="mrow" href="ServicesA.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0px 10px 0px; color:#10142E;"><span style="width:8px; height:8px; border-radius:50%; background:#002671; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#10142E;">Entertainment Booking &amp; Talent</span><span style="display:block; font-size:12px; color:#5A5F86; margin-top:2px;">Star power for your bill</span></span></a><a class="mrow" href="ServicesA.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0px 10px 0px; color:#10142E;"><span style="width:8px; height:8px; border-radius:50%; background:#002671; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#10142E;">Event Designs &amp; Production</span><span style="display:block; font-size:12px; color:#5A5F86; margin-top:2px;">Weddings, birthdays, launches</span></span></a><a class="mrow" href="ServicesA.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0px 10px 0px; color:#10142E;"><span style="width:8px; height:8px; border-radius:50%; background:#002671; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#10142E;">Event Marketing &amp; Promotion</span><span style="display:block; font-size:12px; color:#5A5F86; margin-top:2px;">Buzz that fills the room</span></span></a><a class="mrow" href="ServicesA.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0px 10px 0px; color:#10142E;"><span style="width:8px; height:8px; border-radius:50%; background:#002671; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#10142E;">On-Site Coordination</span><span style="display:block; font-size:12px; color:#5A5F86; margin-top:2px;">Day-of logistics and support</span></span></a></div>
+            <div><div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;"><span class="bebas" style="font-size:26px; color:#10142E;">CONSULTANCY</span><span style="font-size:11px; letter-spacing:1.5px; font-weight:700; color:#6C58DB;">FOR YOUR BUSINESS</span></div><a class="mrow" href="ServicesA2a.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0px 10px 0px; color:#10142E;"><span style="width:8px; height:8px; border-radius:50%; background:#8C7AE6; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#10142E;">Business Setup &amp; Strategy</span><span style="display:block; font-size:12px; color:#5A5F86; margin-top:2px;">From idea to a plan</span></span></a><a class="mrow" href="ServicesA2a.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0px 10px 0px; color:#10142E;"><span style="width:8px; height:8px; border-radius:50%; background:#8C7AE6; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#10142E;">Branding &amp; Marketing</span><span style="display:block; font-size:12px; color:#5A5F86; margin-top:2px;">Say what you do</span></span></a><a class="mrow" href="ServicesA2a.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0px 10px 0px; color:#10142E;"><span style="width:8px; height:8px; border-radius:50%; background:#8C7AE6; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#10142E;">Business Growth</span><span style="display:block; font-size:12px; color:#5A5F86; margin-top:2px;">More customers, more revenue</span></span></a><a class="mrow" href="ServicesA2a.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0px 10px 0px; color:#10142E;"><span style="width:8px; height:8px; border-radius:50%; background:#8C7AE6; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#10142E;">Activation Growth</span><span style="display:block; font-size:12px; color:#5A5F86; margin-top:2px;">Turn attention into action</span></span></a><a class="mrow" href="ServicesA2a.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0px 10px 0px; color:#10142E;"><span style="width:8px; height:8px; border-radius:50%; background:#8C7AE6; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#10142E;">Business Audit &amp; Advisory</span><span style="display:block; font-size:12px; color:#5A5F86; margin-top:2px;">An honest second opinion</span></span></a></div>
+            <div style="position:relative; border-radius:18px; overflow:hidden; min-height:260px;"><img src="/_blob/f269f7683bdb441b9b45df1336cd1485" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"><div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(10,15,38,0.95) 0%, rgba(10,15,38,0.2) 70%);"></div><div style="position:absolute; left:0; right:0; bottom:0; padding:22px 22px 22px 22px;"><span class="bebas" style="font-size:26px; color:#FFFFFF; display:block; margin-bottom:8px;">NOT SURE WHICH?</span><a href="ContactS.dc.html" style="display:inline-block; background:#8C7AE6; color:#0A0F26; font-weight:700; font-size:13px; padding:11px 20px 11px 20px; --sl:8px;" class="bx">Book A Call</a></div></div>
+          </div>
+        </div></div>
+      <a href="EventsA.dc.html" style="color:#10142E; font-size:13px; font-weight:600;">Events</a>
+      <a href="GalleryA.dc.html" style="color:#10142E; font-size:13px; font-weight:600;">Gallery</a>
+      <a href="AboutS.dc.html" style="color:#10142E; font-size:13px; font-weight:600;">About</a>
+      <a href="BlogA.dc.html" style="color:#10142E; font-size:13px; font-weight:600;">Blog</a>
+      <a href="ContactS.dc.html" style="color:#10142E; font-size:13px; font-weight:600;">Contact</a>
+    </nav>
+    <div style="display:flex; align-items:center; gap:16px;">
+      <div style="display:flex; gap:6px;"><a href="EventsA.dc.html" style="font-size:12px; font-weight:700; padding:8px 16px 8px 16px; color:#5A5F86; --sl:8px; --bc:#5A5F8655;" class="bx">Events</a><a href="HomeA2a.dc.html" style="font-size:12px; font-weight:700; padding:8px 16px 8px 16px; background:#8C7AE6; color:#0A0F26; --sl:7px;" class="bx">Consultancy</a></div>
+      <a href="ContactS.dc.html" style="background:#8C7AE6; color:#0A0F26; font-weight:700; font-size:13px; padding:12px 22px 12px 22px; --sl:8px;" class="bx">Book A Discovery Call</a>
+    </div>
+  <label for="mnav" class="mnav-btn" style="display:none; flex-direction:column; gap:5px; padding:10px; cursor:pointer;"><i style="display:block; width:24px; height:2px; background:#10142E;"></i><i style="display:block; width:24px; height:2px; background:#10142E;"></i><i style="display:block; width:16px; height:2px; align-self:flex-end; background:#10142E;"></i></label></header><div class="mdrawer" style="background:#FFFFFF; border-bottom:1px solid #E1DEF3; box-shadow:0 24px 40px rgba(0,0,0,.35);">
+    <div style="display:flex; gap:2px; margin:8px 0 10px; gap:6px;"><a href="HomeA.dc.html" style="flex:1; text-align:center; padding:11px 0; font-size:13px; font-weight:700; color:#5A5FA0; --sl:8px; --bc:#5A5FA055;" class="bx">Events</a><a href="HomeA2a.dc.html" style="flex:1; text-align:center; padding:11px 0; font-size:13px; font-weight:700; background:#8C7AE6; color:#10142E; --sl:7px;" class="bx">Consultancy</a></div>
+    <a class="mlink" href="HomeA2a.dc.html" style="color:#10142E; border-bottom:1px solid #E1DEF3;">Home</a>
+    <details style="border-bottom:1px solid #E1DEF3;"><summary><span class="mlink" style="display:flex; justify-content:space-between; color:#10142E;">Services <span style="color:#6C58DB;">+</span></span></summary>
+      <div style="padding-bottom:14px;"><div style="font-size:11px; letter-spacing:2px; font-weight:700; color:#6C58DB; margin:4px 0 2px;">EVENTS</div><a class="msub" href="ServicesA.dc.html" style="color:#10142E; border-left:2px solid #5B8DEF; margin-left:6px;">Event Management &amp; Planning</a><a class="msub" href="ServicesA.dc.html" style="color:#10142E; border-left:2px solid #5B8DEF; margin-left:6px;">Entertainment Booking &amp; Talent</a><a class="msub" href="ServicesA.dc.html" style="color:#10142E; border-left:2px solid #5B8DEF; margin-left:6px;">Event Designs &amp; Production</a><a class="msub" href="ServicesA.dc.html" style="color:#10142E; border-left:2px solid #5B8DEF; margin-left:6px;">Event Marketing &amp; Promotion</a><a class="msub" href="ServicesA.dc.html" style="color:#10142E; border-left:2px solid #5B8DEF; margin-left:6px;">On-Site Coordination</a><div style="font-size:11px; letter-spacing:2px; font-weight:700; color:#8C7AE6; margin:14px 0 2px;">CONSULTANCY</div><a class="msub" href="ServicesA2a.dc.html" style="color:#10142E; border-left:2px solid #8C7AE6; margin-left:6px;">Business Setup &amp; Strategy</a><a class="msub" href="ServicesA2a.dc.html" style="color:#10142E; border-left:2px solid #8C7AE6; margin-left:6px;">Branding &amp; Marketing</a><a class="msub" href="ServicesA2a.dc.html" style="color:#10142E; border-left:2px solid #8C7AE6; margin-left:6px;">Business Growth</a><a class="msub" href="ServicesA2a.dc.html" style="color:#10142E; border-left:2px solid #8C7AE6; margin-left:6px;">Activation Growth</a><a class="msub" href="ServicesA2a.dc.html" style="color:#10142E; border-left:2px solid #8C7AE6; margin-left:6px;">Business Audit &amp; Advisory</a></div></details>
+    <a class="mlink" href="EventsA.dc.html" style="color:#10142E; border-bottom:1px solid #E1DEF3;">Events</a><a class="mlink" href="GalleryA.dc.html" style="color:#10142E; border-bottom:1px solid #E1DEF3;">Gallery</a><a class="mlink" href="AboutS.dc.html" style="color:#10142E; border-bottom:1px solid #E1DEF3;">About</a><a class="mlink" href="BlogA.dc.html" style="color:#10142E; border-bottom:1px solid #E1DEF3;">Blog</a><a class="mlink" href="ContactS.dc.html" style="color:#10142E; border-bottom:1px solid #E1DEF3;">Contact</a>
+    <a href="ContactS.dc.html" style="display:block; text-align:center; margin-top:20px; background:#8C7AE6; color:#10142E; font-weight:700; font-size:14.5px; padding:16px 20px; --sl:10px;" class="bx">Book A Discovery Call</a>
+  </div>
+
+  <!-- 1 HERO -->
+  <section style="min-height:624px; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; padding:44px 20px 44px 20px;" data-m="g1 nomin">
+    <div class="reveal"><span class="eyebrow">Crux Nxtion Consultancy • Sheffield</span>
+      <h1 class="bebas" style="font-size:40px; line-height:0.98; white-space:nowrap; margin:18px 0px 22px 0px; color:#10142E;">YOU'VE GOT THE IDEA.<br><span style="color:#6C58DB;">LET'S BUILD THE BUSINESS.</span></h1>
+      <p style="font-size:17px; line-height:1.7; color:#3A3F66; max-width:540px; margin:0px 0px 32px 0px;">Whether you're starting from scratch, trying to grow, or just need a clearer direction — sit down with us. We'll talk it through, then turn it into a plan you can actually follow.</p>
+      <div style="display:flex; gap:16px;">
+        <a href="ContactS.dc.html" style="background:#8C7AE6; color:#10142E; font-weight:700; font-size:15px; padding:16px 30px 16px 30px; --sl:10px;" class="bx">Book A Discovery Call</a>
+        <a href="#how" style="color:#10142E; font-weight:700; font-size:15px; padding:14.5px 28px 14.5px 28px; --sl:10px; --bc:#10142E;" class="bx">See How We Work</a>
+      </div></div>
+    <div style="position:relative; height:660px;" class="reveal" data-m="herovis">
+      <div style="position:absolute; inset:0 0 0 40px; border-radius:32px; overflow:hidden;" data-m="hv-img"><img src="/_blob/5b1a6ab37f0230a96cac807ce57c7983" alt="Consultants working with clients" style="width:100%; height:100%; object-fit:cover; object-position:35% center;"></div>
+      <div style="position:absolute; left:-30px; bottom:12px; width:400px;" data-m="hv-chat full"><div class="tilt-straighten" style="--r:-2deg; transform:rotate(var(--r)); background:rgba(16,20,46,0.86); border:1.5px solid #3A3F72; border-radius:24px; padding:26px 26px 26px 26px; display:flex; flex-direction:column; gap:12px;">
+        <div style="display:flex; align-items:center; gap:10px; padding-bottom:14px; border-bottom:2px dashed #2A2F5C;" data-m="wrap"><span class="pulse-dot" style="width:10px; height:10px; border-radius:50%; background:#3DDC84;"></span><span style="font-size:13px; font-weight:700; color:#F2F1F8;">Discovery call</span><span style="font-size:12px; color:#9A9AC0; margin-left:auto;">with Crux Nxtion</span></div>
+        <div class="bubble-in cb cb1" style="align-self:flex-end; max-width:80%; background:#2A2F5C; color:#F2F1F8; font-size:14px; line-height:1.5; padding:13px 17px 13px 17px; border-radius:18px 18px 4px 18px; ">I've got an idea. I just don't know where to start.</div>
+        <div class="bubble-in cb cb2" style="align-self:flex-start; max-width:80%; background:#8C7AE6; color:#10142E; font-size:14px; font-weight:600; line-height:1.5; padding:13px 17px 13px 17px; border-radius:18px 18px 18px 4px; ">Good — that's the right place to start. Tell us about it.</div>
+        <div class="bubble-in cb cb3" style="align-self:flex-end; max-width:80%; background:#2A2F5C; color:#F2F1F8; font-size:14px; line-height:1.5; padding:13px 17px 13px 17px; border-radius:18px 18px 4px 18px; ">Also… we're busy, but the business isn't really growing.</div>
+        <div class="bubble-in cb cb4" style="align-self:flex-start; max-width:80%; background:#8C7AE6; color:#10142E; font-size:14px; font-weight:600; line-height:1.5; padding:13px 17px 13px 17px; border-radius:18px 18px 18px 4px; ">We'll look at both. First: what does a good year look like for you?</div>
+        <div class="cb cbt" style="align-self:flex-start; display:flex; gap:5px; padding:12px 16px 12px 16px; background:#2A2F5C; border-radius:14px;" data-m="wrap"><span class="cdot cdot1" style="width:7px; height:7px; border-radius:50%; background:#9A9AC0;"></span><span class="cdot cdot2" style="width:7px; height:7px; border-radius:50%; background:#9A9AC0;"></span><span class="cdot cdot3" style="width:7px; height:7px; border-radius:50%; background:#9A9AC0;"></span></div>
+      </div></div>
+      <div class="float" style="--r:6deg; position:absolute; top:24px; right:-6px; background:#8C7AE6; color:#10142E; padding:12px 18px 12px 18px; border-radius:10px;" data-m="hv-badge"><span class="bebas" style="font-size:20px;">ACTION PLANS,<br>NOT JUST IDEAS.</span></div>
+    </div>
+  </section>
+
+  <!-- 2 SOUND FAMILIAR -->
+  <section style="min-height:671px; padding:44px 0px 56px 0px; background:#FFFFFF;" data-m="nomin">
+    <div style=" padding:0px 20px 0px 20px; display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:40px;" class="reveal">
+      <div><span class="eyebrow">Sound Familiar?</span><h2 class="bebas" style="font-size:40px; margin:12px 0px 0px 0px; color:#10142E;">THINGS FOUNDERS SAY<br>BEFORE THEY CALL US.</h2></div>
+      <div style="display:flex; gap:12px;" data-m="hide"><button onclick="{{prev}}" aria-label="Previous" style="{{prevStyle}}" class="bx">←</button><button onclick="{{next}}" aria-label="Next" style="{{nextStyle}}" class="bx">→</button></div>
+    </div>
+    <div style="overflow:hidden; padding-left:64px;" class="reveal" data-m="scroller"><div style="{{trackStyle}}" data-m="track">
+        <div class="bento-tile" style="flex:0 0 400px; height:500px; position:relative; border-radius:22px; overflow:hidden; border:1.5px solid #E1DEF3;">
+          <img src="/_blob/19a249fe66d9d8620a7283402ecde11e" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:top;">
+          <div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(16,20,46,0.97) 0%, rgba(16,20,46,0.55) 48%, rgba(16,20,46,0.05) 100%);"></div>
+          <span class="bebas" style="position:absolute; left:26px; top:22px; font-size:40px; color:#FF2E3D; line-height:1;">“</span>
+          <div style="position:absolute; left:0; right:0; bottom:0; padding:28px 28px 28px 28px;">
+            <p style="font-size:24px; line-height:1.28; font-weight:700; color:#F2F1F8; margin:0px 0px 20px 0px;">I have an idea… I just don't know where to start.</p>
+            <div style="border-top:2px dashed #3A3F72; padding-top:14px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; color:#9A9AC0;">We help with</span><span style="color:#8C7AE6; font-size:11px; font-weight:700; letter-spacing:1.3px; padding:6px 13px 6px 13px; --sl:6px; --bc:#8C7AE6;" class="bx">SETUP &amp; STRATEGY</span></div>
+          </div>
+        </div>
+        <div class="bento-tile" style="flex:0 0 400px; height:500px; position:relative; border-radius:22px; overflow:hidden; border:1.5px solid #E1DEF3;">
+          <img src="/_blob/53d4feb181f3c6e0619a155bc4be2bf5" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center;">
+          <div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(16,20,46,0.97) 0%, rgba(16,20,46,0.55) 48%, rgba(16,20,46,0.05) 100%);"></div>
+          <span class="bebas" style="position:absolute; left:26px; top:22px; font-size:40px; color:#FF2E3D; line-height:1;">“</span>
+          <div style="position:absolute; left:0; right:0; bottom:0; padding:28px 28px 28px 28px;">
+            <p style="font-size:24px; line-height:1.28; font-weight:700; color:#F2F1F8; margin:0px 0px 20px 0px;">We're busy, but the business isn't really growing.</p>
+            <div style="border-top:2px dashed #3A3F72; padding-top:14px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; color:#9A9AC0;">We help with</span><span style="color:#8C7AE6; font-size:11px; font-weight:700; letter-spacing:1.3px; padding:6px 13px 6px 13px; --sl:6px; --bc:#8C7AE6;" class="bx">BUSINESS GROWTH</span></div>
+          </div>
+        </div>
+        <div class="bento-tile" style="flex:0 0 400px; height:500px; position:relative; border-radius:22px; overflow:hidden; border:1.5px solid #E1DEF3;">
+          <img src="/_blob/a4f578a4b1ff3c642674f670e1eaa25b" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:top;">
+          <div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(16,20,46,0.97) 0%, rgba(16,20,46,0.55) 48%, rgba(16,20,46,0.05) 100%);"></div>
+          <span class="bebas" style="position:absolute; left:26px; top:22px; font-size:40px; color:#FF2E3D; line-height:1;">“</span>
+          <div style="position:absolute; left:0; right:0; bottom:0; padding:28px 28px 28px 28px;">
+            <p style="font-size:24px; line-height:1.28; font-weight:700; color:#F2F1F8; margin:0px 0px 20px 0px;">Our brand doesn't say what we actually do.</p>
+            <div style="border-top:2px dashed #3A3F72; padding-top:14px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; color:#9A9AC0;">We help with</span><span style="color:#8C7AE6; font-size:11px; font-weight:700; letter-spacing:1.3px; padding:6px 13px 6px 13px; --sl:6px; --bc:#8C7AE6;" class="bx">BRANDING &amp; MARKETING</span></div>
+          </div>
+        </div>
+        <div class="bento-tile" style="flex:0 0 400px; height:500px; position:relative; border-radius:22px; overflow:hidden; border:1.5px solid #E1DEF3;">
+          <img src="/_blob/8f4495361437a1d1961471650d55c60a" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center;">
+          <div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(16,20,46,0.97) 0%, rgba(16,20,46,0.55) 48%, rgba(16,20,46,0.05) 100%);"></div>
+          <span class="bebas" style="position:absolute; left:26px; top:22px; font-size:40px; color:#FF2E3D; line-height:1;">“</span>
+          <div style="position:absolute; left:0; right:0; bottom:0; padding:28px 28px 28px 28px;">
+            <p style="font-size:24px; line-height:1.28; font-weight:700; color:#F2F1F8; margin:0px 0px 20px 0px;">People know us — they just don't buy.</p>
+            <div style="border-top:2px dashed #3A3F72; padding-top:14px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; color:#9A9AC0;">We help with</span><span style="color:#8C7AE6; font-size:11px; font-weight:700; letter-spacing:1.3px; padding:6px 13px 6px 13px; --sl:6px; --bc:#8C7AE6;" class="bx">ACTIVATION GROWTH</span></div>
+          </div>
+        </div>
+        <div class="bento-tile" style="flex:0 0 400px; height:500px; position:relative; border-radius:22px; overflow:hidden; border:1.5px solid #E1DEF3;">
+          <img src="/_blob/44b7a98d85fefb8a03f8b8e625e3bcdc" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center;">
+          <div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(16,20,46,0.97) 0%, rgba(16,20,46,0.55) 48%, rgba(16,20,46,0.05) 100%);"></div>
+          <span class="bebas" style="position:absolute; left:26px; top:22px; font-size:40px; color:#FF2E3D; line-height:1;">“</span>
+          <div style="position:absolute; left:0; right:0; bottom:0; padding:28px 28px 28px 28px;">
+            <p style="font-size:24px; line-height:1.28; font-weight:700; color:#F2F1F8; margin:0px 0px 20px 0px;">I need someone honest to look at the whole thing.</p>
+            <div style="border-top:2px dashed #3A3F72; padding-top:14px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; color:#9A9AC0;">We help with</span><span style="color:#8C7AE6; font-size:11px; font-weight:700; letter-spacing:1.3px; padding:6px 13px 6px 13px; --sl:6px; --bc:#8C7AE6;" class="bx">AUDIT &amp; ADVISORY</span></div>
+          </div>
+        </div>
+    </div></div>
+  </section>
+
+  <!-- 3 START WHERE YOU ARE -->
+  <section style="min-height:593px; padding:44px 20px 50px 20px;" data-m="nomin">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:40px;" class="reveal" data-m="stack">
+      <h2 class="bebas" style="font-size:40px; margin:0px 0px 0px 0px; color:#10142E;">START WHERE YOU ARE</h2>
+      <p style="max-width:380px; font-size:14px; color:#5A5F86; margin:0px 0px 0px 0px;">We don't just give you ideas — we help you turn them into actionable plans.</p>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:24px;" class="reveal" data-m="g1">
+
+      <a href="#" class="tilt-ticket reveal" style="display:flex; background:#F3F1FC; border:1.5px solid #E1DEF3; border-radius:12px; min-height:300px; --r:-1deg; transform:rotate(var(--r)); overflow:hidden;">
+        <div class="ticket-stub" style="flex:0 0 90px; background:#8C7AE6; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;"><span class="bebas" style="font-size:38px; color:#10142E; line-height:1;">01</span><span style="font-size:10px; font-weight:800; letter-spacing:1.5px; color:#10142E;">START</span></div>
+        <div style="flex:1; padding:28px 24px 28px 24px; display:flex; flex-direction:column; justify-content:flex-end;">
+          <span class="eyebrow">Where are you?</span>
+          <h3 style="font-size:20px; margin:8px 0px 10px 0px; font-weight:700; color:#10142E;">Starting from scratch</h3>
+          <p style="font-size:13px; line-height:1.65; color:#5A5F86; margin:0px 0px 0px 0px;">Business setup and strategy: structure, positioning and a launch plan.</p>
+        </div>
+      </a>
+
+      <a href="#" class="tilt-ticket reveal" style="display:flex; background:#F3F1FC; border:1.5px solid #E1DEF3; border-radius:12px; min-height:300px; --r:0.8deg; transform:rotate(var(--r)); overflow:hidden;">
+        <div class="ticket-stub" style="flex:0 0 90px; background:#8C7AE6; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;"><span class="bebas" style="font-size:38px; color:#10142E; line-height:1;">02</span><span style="font-size:10px; font-weight:800; letter-spacing:1.5px; color:#10142E;">GROW</span></div>
+        <div style="flex:1; padding:28px 24px 28px 24px; display:flex; flex-direction:column; justify-content:flex-end;">
+          <span class="eyebrow">Where are you?</span>
+          <h3 style="font-size:20px; margin:8px 0px 10px 0px; font-weight:700; color:#10142E;">Trying to grow</h3>
+          <p style="font-size:13px; line-height:1.65; color:#5A5F86; margin:0px 0px 0px 0px;">Business growth and activation growth: the plan and the campaigns behind it.</p>
+        </div>
+      </a>
+
+      <a href="#" class="tilt-ticket reveal" style="display:flex; background:#F3F1FC; border:1.5px solid #E1DEF3; border-radius:12px; min-height:300px; --r:-0.8deg; transform:rotate(var(--r)); overflow:hidden;">
+        <div class="ticket-stub" style="flex:0 0 90px; background:#8C7AE6; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;"><span class="bebas" style="font-size:38px; color:#10142E; line-height:1;">03</span><span style="font-size:10px; font-weight:800; letter-spacing:1.5px; color:#10142E;">CLEAR</span></div>
+        <div style="flex:1; padding:28px 24px 28px 24px; display:flex; flex-direction:column; justify-content:flex-end;">
+          <span class="eyebrow">Where are you?</span>
+          <h3 style="font-size:20px; margin:8px 0px 10px 0px; font-weight:700; color:#10142E;">Need a clearer direction</h3>
+          <p style="font-size:13px; line-height:1.65; color:#5A5F86; margin:0px 0px 0px 0px;">A business audit and advisory session, ending in an action plan you can follow.</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- 4 WHAT WE DO -->
+  <section id="services" style="min-height:671px; padding:44px 20px 44px 20px; background:#FFFFFF;" data-m="nomin">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:34px;" class="reveal" data-m="stack">
+      <div><span class="eyebrow">What We Do</span><h2 class="bebas" style="font-size:40px; margin:12px 0px 0px 0px; color:#10142E;">FIVE WAYS WE HELP.</h2></div>
+      <p style="max-width:340px; font-size:13.5px; color:#5A5F86; margin:0px 0px 0px 0px;">Hover or tap a panel to open it.</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px; height:auto;" class="reveal">
+      <sc-for list="{{panels}}" as="p" hint-placeholder-count="5">
+        <div onclick="{{p.pick}}" onmouseenter="{{p.pick}}" style="{{p.panelStyle}}">
+          <img src="{{p.img}}" alt="" style="{{p.imgStyle}}">
+          <div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(16,20,46,0.96) 0%, rgba(16,20,46,0.35) 60%, rgba(16,20,46,0.55) 100%);"></div>
+          <span class="bebas" style="{{p.numStyle}}">{{p.num}}</span>
+          <span class="bebas" style="{{p.labelStyle}}">{{p.short}}</span>
+          <div style="{{p.bodyStyle}}"><h3 class="bebas" style="font-size:34px; margin:0px 0px 10px 0px; color:#F2F1F8;">{{p.title}}</h3><p style="font-size:14.5px; line-height:1.65; color:#C7C7DA; margin:0px 0px 14px 0px; max-width:460px;">{{p.blurb}}</p><div style="display:flex; gap:8px; flex-wrap:wrap;" data-m="wrap"><span style="color:#D6D6E8; font-size:11.5px; font-weight:600; padding:6px 13px 6px 13px; --sl:6px; --bc:#5A5FA0;" class="bx">{{p.t1}}</span><span style="color:#D6D6E8; font-size:11.5px; font-weight:600; padding:6px 13px 6px 13px; --sl:6px; --bc:#5A5FA0;" class="bx">{{p.t2}}</span><span style="color:#D6D6E8; font-size:11.5px; font-weight:600; padding:6px 13px 6px 13px; --sl:6px; --bc:#5A5FA0;" class="bx">{{p.t3}}</span></div></div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- 5 HOW IT WORKS — the climb -->
+  <section id="how" style="min-height:702px; padding:44px 20px 44px 20px; background:#F3F1FC;" data-m="nomin">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:64px;" class="reveal" data-m="stack">
+      <div><span class="eyebrow">How It Works</span><h2 class="bebas" style="font-size:40px; margin:12px 0px 0px 0px; color:#10142E;">FIVE STEPS.<br>ONE CLIMB. WE'RE ON THE ROPE WITH YOU.</h2></div>
+      <p style="max-width:330px; font-size:14px; line-height:1.7; color:#5A5F86; margin:0px 0px 0px 0px;">No jargon, no 90-page deck. Every step builds on the last, and you always know what's next.</p>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(5, minmax(0, 1fr)); gap:16px; align-items:end;" class="reveal" data-m="g1">
+      <div style="position:relative; height:270px; background:#FFFFFF; border:1.5px solid #E1DEF3; border-radius:20px; padding:0px 0px 0px 0px; overflow:visible; display:flex; flex-direction:column;" class="reveal">
+        <div style="position:absolute; left:20px; top:-28px; width:56px; height:56px; border-radius:50%; background:#F3F1FC; border:2px dashed #6C58DB; display:flex; align-items:center; justify-content:center; z-index:2;" data-m="hide"><span class="bebas" style="font-size:22px; color:#6C58DB;">01</span></div>
+        <div style="height:86px; margin:0px 0px 0px 0px; border-radius:18px 18px 0 0; overflow:hidden; position:relative;"><img src="/_blob/50cb2790126aab1196125a6f09c951bf" alt="" style="width:100%; height:100%; object-fit:cover;"><div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(16,20,46,0.55) 0%, rgba(16,20,46,0.05) 100%);"></div></div>
+        <div style=" padding:16px 20px 20px 20px; flex:1; display:flex; flex-direction:column;">
+          <h3 class="bebas" style="font-size:26px; margin:6px 0px 8px 0px; color:#10142E;">WE TALK.</h3>
+          <p style="font-size:13px; line-height:1.6; color:#3A3F66; margin:0 0 auto;">A relaxed first conversation. Tell us the idea, the mess or the goal — we ask the awkward questions.</p>
+          <div style="border-top:1.5px dashed #D2CEEA; padding-top:10px; margin-top:12px; display:flex; flex-direction:column; gap:4px;"><span style="font-size:11px; color:#5A5F86;"><b style="letter-spacing:1px; color:#6C58DB;">YOU BRING</b> the story so far</span><span style="font-size:11px; color:#5A5F86;"><b style="letter-spacing:1px; color:#D9182A;">WE BRING</b> honest questions</span></div>
+        </div>
+      </div>
+      <div style="position:relative; height:308px; background:#FFFFFF; border:1.5px solid #E1DEF3; border-radius:20px; padding:0px 0px 0px 0px; overflow:visible; display:flex; flex-direction:column;" class="reveal">
+        <div style="position:absolute; left:20px; top:-28px; width:56px; height:56px; border-radius:50%; background:#F3F1FC; border:2px dashed #6C58DB; display:flex; align-items:center; justify-content:center; z-index:2;" data-m="hide"><span class="bebas" style="font-size:22px; color:#6C58DB;">02</span></div>
+        <div style="height:86px; margin:0px 0px 0px 0px; border-radius:18px 18px 0 0; overflow:hidden; position:relative;"><img src="/_blob/052d83d28ee851b93069420ea3c10f8f" alt="" style="width:100%; height:100%; object-fit:cover;"><div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(16,20,46,0.55) 0%, rgba(16,20,46,0.05) 100%);"></div></div>
+        <div style=" padding:16px 20px 20px 20px; flex:1; display:flex; flex-direction:column;">
+          <h3 class="bebas" style="font-size:26px; margin:6px 0px 8px 0px; color:#10142E;">WE DIG IN.</h3>
+          <p style="font-size:13px; line-height:1.6; color:#3A3F66; margin:0 0 auto;">We look at your numbers, your market and your brand, and find what is really holding things back.</p>
+          <div style="border-top:1.5px dashed #D2CEEA; padding-top:10px; margin-top:12px; display:flex; flex-direction:column; gap:4px;"><span style="font-size:11px; color:#5A5F86;"><b style="letter-spacing:1px; color:#6C58DB;">YOU BRING</b> numbers &amp; access</span><span style="font-size:11px; color:#5A5F86;"><b style="letter-spacing:1px; color:#D9182A;">WE BRING</b> a clear diagnosis</span></div>
+        </div>
+      </div>
+      <div style="position:relative; height:346px; background:#FFFFFF; border:1.5px solid #E1DEF3; border-radius:20px; padding:0px 0px 0px 0px; overflow:visible; display:flex; flex-direction:column;" class="reveal">
+        <div style="position:absolute; left:20px; top:-28px; width:56px; height:56px; border-radius:50%; background:#F3F1FC; border:2px dashed #6C58DB; display:flex; align-items:center; justify-content:center; z-index:2;" data-m="hide"><span class="bebas" style="font-size:22px; color:#6C58DB;">03</span></div>
+        <div style="height:100px; margin:0px 0px 0px 0px; border-radius:18px 18px 0 0; overflow:hidden; position:relative;"><img src="/_blob/e56c3376aee5c9f5027ad93a6f335536" alt="" style="width:100%; height:100%; object-fit:cover;"><div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(16,20,46,0.55) 0%, rgba(16,20,46,0.05) 100%);"></div></div>
+        <div style=" padding:16px 20px 20px 20px; flex:1; display:flex; flex-direction:column;">
+          <h3 class="bebas" style="font-size:26px; margin:6px 0px 8px 0px; color:#10142E;">WE SHAPE THE PLAN.</h3>
+          <p style="font-size:13px; line-height:1.6; color:#3A3F66; margin:0 0 auto;">Priorities, in order, with owners and dates. Something you can actually follow.</p>
+          <div style="border-top:1.5px dashed #D2CEEA; padding-top:10px; margin-top:12px; display:flex; flex-direction:column; gap:4px;"><span style="font-size:11px; color:#5A5F86;"><b style="letter-spacing:1px; color:#6C58DB;">YOU BRING</b> decisions</span><span style="font-size:11px; color:#5A5F86;"><b style="letter-spacing:1px; color:#D9182A;">WE BRING</b> the action plan</span></div>
+        </div>
+      </div>
+      <div style="position:relative; height:384px; background:#FFFFFF; border:1.5px solid #E1DEF3; border-radius:20px; padding:0px 0px 0px 0px; overflow:visible; display:flex; flex-direction:column;" class="reveal">
+        <div style="position:absolute; left:20px; top:-28px; width:56px; height:56px; border-radius:50%; background:#F3F1FC; border:2px dashed #6C58DB; display:flex; align-items:center; justify-content:center; z-index:2;" data-m="hide"><span class="bebas" style="font-size:22px; color:#6C58DB;">04</span></div>
+        <div style="height:100px; margin:0px 0px 0px 0px; border-radius:18px 18px 0 0; overflow:hidden; position:relative;"><img src="/_blob/97f6e11f46029a4f9812d43722c1bcf4" alt="" style="width:100%; height:100%; object-fit:cover;"><div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(16,20,46,0.55) 0%, rgba(16,20,46,0.05) 100%);"></div></div>
+        <div style=" padding:16px 20px 20px 20px; flex:1; display:flex; flex-direction:column;">
+          <h3 class="bebas" style="font-size:26px; margin:6px 0px 8px 0px; color:#10142E;">WE PUT IT IN MOTION.</h3>
+          <p style="font-size:13px; line-height:1.6; color:#3A3F66; margin:0 0 auto;">Launch, campaign, activation — we help you start, not just advise.</p>
+          <div style="border-top:1.5px dashed #D2CEEA; padding-top:10px; margin-top:12px; display:flex; flex-direction:column; gap:4px;"><span style="font-size:11px; color:#5A5F86;"><b style="letter-spacing:1px; color:#6C58DB;">YOU BRING</b> your time</span><span style="font-size:11px; color:#5A5F86;"><b style="letter-spacing:1px; color:#D9182A;">WE BRING</b> hands-on help</span></div>
+        </div>
+      </div>
+      <div style="position:relative; height:422px; background:#8C7AE6; border:1.5px solid #8C7AE6; border-radius:20px; padding:0px 0px 0px 0px; overflow:visible; display:flex; flex-direction:column;" class="reveal">
+        <div style="position:absolute; left:20px; top:-28px; width:56px; height:56px; border-radius:50%; background:#F3F1FC; border:2px dashed #6C58DB; display:flex; align-items:center; justify-content:center; z-index:2;" data-m="hide"><span class="bebas" style="font-size:22px; color:#6C58DB;">05</span></div>
+        <div style="height:120px; margin:0px 0px 0px 0px; border-radius:18px 18px 0 0; overflow:hidden; position:relative;"><img src="/_blob/263030a5b7aa9f782aeddd3e7f44cb13" alt="" style="width:100%; height:100%; object-fit:cover;"><div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(140,122,230,0.5) 0%, rgba(16,20,46,0.05) 100%);"></div></div>
+        <div style=" padding:16px 20px 20px 20px; flex:1; display:flex; flex-direction:column;">
+          <h3 class="bebas" style="font-size:26px; margin:6px 0px 8px 0px; color:#10142E;">WE STAY CLOSE.</h3>
+          <p style="font-size:13px; line-height:1.6; color:#10142E; margin:0 0 auto;">We check in, adjust and stay close while the plan meets real life.</p>
+          <div style="border-top:1.5px dashed rgba(16,20,46,0.4); padding-top:10px; margin-top:12px; display:flex; flex-direction:column; gap:4px;"><span style="font-size:11px; color:#10142E;"><b style="letter-spacing:1px; color:#10142E;">YOU BRING</b> feedback</span><span style="font-size:11px; color:#10142E;"><b style="letter-spacing:1px; color:#10142E;">WE BRING</b> ongoing support</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 WHAT YOU WALK AWAY WITH -->
+  <section style=" padding:44px 20px 44px 20px; background:#FFFFFF;">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:40px;" class="reveal" data-m="stack">
+      <div><span class="eyebrow">What You Walk Away With</span><h2 class="bebas" style="font-size:40px; margin:12px 0px 0px 0px; color:#10142E;">THINGS YOU CAN ACTUALLY USE.</h2></div>
+      <p style="max-width:340px; font-size:13.5px; color:#5A5F86; margin:0px 0px 0px 0px;">Samples shown for illustration.</p>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(12, minmax(0, 1fr)); grid-template-rows:repeat(2, 330px); gap:16px;" class="reveal" data-m="g1">
+
+      <div class="bento-tile reveal" style="position:relative; overflow:hidden; border-radius:24px; border:1.5px solid rgba(242,241,248,0.14); grid-column:span 5; grid-row:span 2;" data-m="span tile">
+        <img src="/_blob/8cbbf8075ea65369e575c4f2b9fd9e4c" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center;">
+        <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(16,20,46,0.3) 0%, rgba(16,20,46,0.9) 58%, rgba(16,20,46,0.96) 100%);"></div>
+        <div style="position:relative; height:100%; padding:22px 22px 22px 22px; display:flex; flex-direction:column; justify-content:flex-end; gap:16px;"><div style="background:rgba(16,20,46,0.86); border:1.5px solid #3A3F72; border-radius:14px; padding:16px 16px 16px 16px;"><span style="font-size:9.5px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#8C7AE6;">Action plan</span><div style="display:flex; align-items:center; gap:10px; margin-top:9px;"><span style="width:16px; height:16px; border-radius:5px; background:#8C7AE6;"></span><span style="font-size:12.5px; color:#F2F1F8;">Define the offer</span></div><div style="display:flex; align-items:center; gap:10px; margin-top:9px;"><span style="width:16px; height:16px; border-radius:5px; background:#8C7AE6;"></span><span style="font-size:12.5px; color:#F2F1F8;">Fix the pricing</span></div><div style="display:flex; align-items:center; gap:10px; margin-top:9px;"><span style="width:16px; height:16px; border-radius:5px; background:#8C7AE6;"></span><span style="font-size:12.5px; color:#F2F1F8;">Choose the first channel</span></div><div style="display:flex; align-items:center; gap:10px; margin-top:9px;"><span class="ap4" style="width:16px; height:16px; border-radius:5px; border:1.5px solid #FF2E3D;"></span><span style="font-size:12.5px; color:#9A9AC0;">Launch the first campaign</span></div><div style="display:flex; align-items:center; gap:10px; margin-top:9px;"><span class="ap5" style="width:16px; height:16px; border-radius:5px; border:1.5px solid #FF2E3D;"></span><span style="font-size:12.5px; color:#9A9AC0;">Review and adjust</span></div><div style="height:6px; background:#3A3F72; border-radius:3px; margin-top:16px; overflow:hidden;"><div class="apbar" style="width:55%; height:100%; background:#8C7AE6;"></div></div></div><div><h3 class="bebas" style="font-size:30px; margin:0px 0px 6px 0px; color:#F2F1F8;">THE ACTION PLAN</h3><p style="font-size:13px; line-height:1.6; color:#C7C7DA; margin:0px 0px 10px 0px;">A prioritised checklist with owners and dates — what to do this month, and what comes next.</p><span style="font-size:11px; letter-spacing:1.3px; font-weight:700; color:#8C7AE6;">YOU GET: A PLAN TO FOLLOW</span></div></div>
+      </div>
+
+      <div class="bento-tile reveal" style="position:relative; overflow:hidden; border-radius:24px; background:#8C7AE6; border:1.5px solid #8C7AE6; grid-column:span 4;" data-m="span">
+        <div style="position:relative; height:100%; padding:22px 22px 22px 22px; display:flex; flex-direction:column; justify-content:flex-end; gap:16px;"><div style="background:#10142E; border:1.5px solid #10142E; border-radius:14px; padding:16px 16px 16px 16px;"><span style="font-size:9.5px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#8C7AE6;">One-page strategy</span><p class="bebas" style="font-size:22px; margin:8px 0px 0px 0px; color:#F2F1F8; line-height:1;">WHO YOU SERVE. WHAT YOU SELL. <span class="ophl" style="color:#8C7AE6;">HOW YOU WIN.</span></p></div><div><h3 class="bebas" style="font-size:30px; margin:0px 0px 6px 0px; color:#10142E;">THE ONE-PAGER</h3><p style="font-size:13px; line-height:1.6; color:#1E2350; margin:0px 0px 10px 0px;">Your strategy on a single page, so anyone on your team can explain it.</p><span style="font-size:11px; letter-spacing:1.3px; font-weight:700; color:#10142E;">YOU GET: CLARITY</span></div></div>
+      </div>
+
+      <div class="bento-tile reveal" style="position:relative; overflow:hidden; border-radius:24px; background:#10142E; border:1.5px solid #2A2F5C; grid-column:span 3;" data-m="span">
+        <div style="position:relative; height:100%; padding:22px 22px 22px 22px; display:flex; flex-direction:column; justify-content:flex-end; gap:16px;"><div style="background:#1B2048; border:1.5px solid #3A3F72; border-radius:14px; padding:16px 16px 16px 16px;"><span style="font-size:9.5px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#8C7AE6;">Brand direction</span><div style="display:flex; gap:6px; margin:10px 0px 8px 0px;" data-m="wrap"><span class="sw1" style="flex:1; height:26px; border-radius:7px; background:#10142E; border:1px solid #3A3F72;"></span><span class="sw2" style="flex:1; height:26px; border-radius:7px; background:#8C7AE6;"></span><span class="sw3" style="flex:1; height:26px; border-radius:7px; background:#FF2E3D;"></span></div><span class="bebas" style="font-size:20px; color:#F2F1F8;">Aa — voice &amp; look</span></div><div><h3 class="bebas" style="font-size:30px; margin:0px 0px 6px 0px; color:#F2F1F8;">THE BRAND DIRECTION</h3><p style="font-size:13px; line-height:1.6; color:#C7C7DA; margin:0px 0px 10px 0px;">Look, voice and message — enough to brief any designer.</p><span style="font-size:11px; letter-spacing:1.3px; font-weight:700; color:#8C7AE6;">YOU GET: A BRAND TO BRIEF</span></div></div>
+      </div>
+
+      <div class="bento-tile reveal" style="position:relative; overflow:hidden; border-radius:24px; background:#E9E5FB; border:1.5px solid #D6D0F5; grid-column:span 3;" data-m="span">
+        <div style="position:relative; height:100%; padding:22px 22px 22px 22px; display:flex; flex-direction:column; justify-content:flex-end; gap:16px;"><div style="background:#FFFFFF; border:1.5px solid #D6D0F5; border-radius:14px; padding:16px 16px 16px 16px;"><span style="font-size:9.5px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#5B45C8;">Growth roadmap</span><div style="display:flex; align-items:center; gap:8px; margin-top:10px;"><span class="nowp bx" style="background:#8C7AE6; color:#10142E; font-size:9.5px; font-weight:800; padding:4px 9px 4px 9px; --sl:6px;">NOW</span><span class="rm1" style="display:block; height:7px; width:70%; background:#DAD6F0; border-radius:4px;"></span></div><div style="display:flex; align-items:center; gap:8px; margin-top:8px;"><span style="color:#5B45C8; font-size:9.5px; font-weight:800; padding:3px 8px 3px 8px; --sl:6px; --bc:#5B45C8;" class="bx">NEXT</span><span class="rm2" style="display:block; height:7px; width:48%; background:#DAD6F0; border-radius:4px;"></span></div><div style="display:flex; align-items:center; gap:8px; margin-top:8px;"><span style="color:#5A5F86; font-size:9.5px; font-weight:800; padding:3px 8px 3px 8px; --sl:6px; --bc:#9A9AC0;" class="bx">LATER</span><span class="rm3" style="display:block; height:7px; width:30%; background:#DAD6F0; border-radius:4px;"></span></div></div><div><h3 class="bebas" style="font-size:30px; margin:0px 0px 6px 0px; color:#10142E;">THE GROWTH ROADMAP</h3><p style="font-size:13px; line-height:1.6; color:#3A3F66; margin:0px 0px 10px 0px;">Now, next, later: the sequence that gets you more customers.</p><span style="font-size:11px; letter-spacing:1.3px; font-weight:700; color:#5B45C8;">YOU GET: A ROUTE TO GROWTH</span></div></div>
+      </div>
+
+      <div class="bento-tile reveal" style="position:relative; overflow:hidden; border-radius:24px; border:1.5px solid rgba(242,241,248,0.14); grid-column:span 4;" data-m="span tile">
+        <img src="/_blob/d7ec7e8129482dec3e004a136575df53" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center;">
+        <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(16,20,46,0.3) 0%, rgba(16,20,46,0.9) 58%, rgba(16,20,46,0.96) 100%);"></div>
+        <div style="position:relative; height:100%; padding:22px 22px 22px 22px; display:flex; flex-direction:column; justify-content:flex-end; gap:16px;"><div style="background:rgba(16,20,46,0.86); border:1.5px solid #3A3F72; border-radius:14px; padding:16px 16px 16px 16px;"><span style="font-size:9.5px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#8C7AE6;">Audit scorecard</span><div style="display:flex; justify-content:space-around; margin-top:12px;" data-m="wrap"><div style="text-align:center;"><div class="rg rg72" style="--p:72; width:58px; height:58px; border-radius:50%; background:conic-gradient(#8C7AE6 calc(var(--p) * 1%), #3A3F72 0); display:flex; align-items:center; justify-content:center;"><span class="rgn" style="width:42px; height:42px; border-radius:50%; background:#10142E; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:#F2F1F8;"></span></div><span style="font-size:10.5px; color:#9A9AC0; display:block; margin-top:5px;">Offer</span></div><div style="text-align:center;"><div class="rg rg45" style="--p:45; width:58px; height:58px; border-radius:50%; background:conic-gradient(#FF2E3D calc(var(--p) * 1%), #3A3F72 0); display:flex; align-items:center; justify-content:center;"><span class="rgn" style="width:42px; height:42px; border-radius:50%; background:#10142E; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:#F2F1F8;"></span></div><span style="font-size:10.5px; color:#9A9AC0; display:block; margin-top:5px;">Brand</span></div><div style="text-align:center;"><div class="rg rg88" style="--p:88; width:58px; height:58px; border-radius:50%; background:conic-gradient(#8C7AE6 calc(var(--p) * 1%), #3A3F72 0); display:flex; align-items:center; justify-content:center;"><span class="rgn" style="width:42px; height:42px; border-radius:50%; background:#10142E; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:#F2F1F8;"></span></div><span style="font-size:10.5px; color:#9A9AC0; display:block; margin-top:5px;">Sales</span></div></div></div><div><h3 class="bebas" style="font-size:30px; margin:0px 0px 6px 0px; color:#F2F1F8;">THE AUDIT REPORT</h3><p style="font-size:13px; line-height:1.6; color:#C7C7DA; margin:0px 0px 10px 0px;">An honest read on what's working, what isn't, and what to fix first.</p><span style="font-size:11px; letter-spacing:1.3px; font-weight:700; color:#8C7AE6;">YOU GET: THE TRUTH, KINDLY</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 WHY US -->
+  <section style="min-height:577px; padding:44px 20px 44px 20px; display:grid; grid-template-columns:1fr 1fr; gap:70px; align-items:center;" data-m="g1 nomin">
+    <div class="reveal">
+      <span class="eyebrow">Why Us</span>
+      <h2 class="bebas" style="font-size:40px; margin:14px 0px 22px 0px; color:#10142E;">WE LEARNED TO BUILD BUSINESSES BY RUNNING ROOMS.</h2>
+      <p style="font-size:15.5px; line-height:1.8; color:#3A3F66; margin:0px 0px 16px 0px;">Crux Nxtion started as an events crew in Sheffield. Every event is a small business with a deadline: a budget, a brand, a launch, a crowd to win over. Do that enough times and you learn what makes a plan hold up under pressure.</p>
+      <p style="font-size:15.5px; line-height:1.8; color:#3A3F66; margin:0px 0px 26px 0px;">Consultancy is what happened when founders started asking for the same thinking behind their business, not just their party.</p>
+      <a href="HomeA.dc.html" style="font-weight:700; font-size:14px; color:#6C58DB; border-bottom:1.5px solid #6C58DB; padding-bottom:2px;">See the events side →</a>
+    </div>
+    <div style="position:relative; height:480px;" class="reveal" data-m="tile collage">
+      <img class="tilt-straighten" src="/_blob/c8b6670f9dac6a75357ccbce7f844cd1" alt="" style="--r:-6deg; transform:rotate(var(--r)); position:absolute; left:0; top:30px; width:250px; height:310px; object-fit:cover; border-radius:14px; border:2px solid #E1DEF3;">
+      <img src="/_blob/5d2ff88df9e44a1a073b23c7eb8ac29d" alt="" style="position:absolute; left:190px; top:90px; width:290px; height:350px; object-fit:cover; border-radius:14px; border:2px solid #8C7AE6; z-index:1;">
+      <img class="tilt-straighten" src="/_blob/b1e68ef21b53acd6fc513694c97d58cd" alt="" style="--r:6deg; transform:rotate(var(--r)); position:absolute; right:0; top:0; width:220px; height:290px; object-fit:cover; border-radius:14px; border:2px solid #E1DEF3;">
+    </div>
+  </section>
+
+  <!-- 8 FOUNDER TEASER -->
+  <section id="founder" style=" padding:44px 20px 44px 20px; background:#FFFFFF; display:grid; grid-template-columns:auto 1fr auto; gap:48px; align-items:center; border-top:1px solid #E1DEF3; border-bottom:1px solid #E1DEF3;" data-m="g1">
+    <div style="width:170px; height:210px; border-radius:16px; overflow:hidden; border:2px solid #8C7AE6;" class="reveal"><img src="/_blob/a67d85c16f6df90ab7a657160bee9088" alt="Bambad, founder of Crux Nxtion" style="width:100%; height:100%; object-fit:cover; object-position:58% 12%;"></div>
+    <div class="reveal"><span class="eyebrow">Who You'll Work With</span><h2 class="bebas" style="font-size:32px; margin:12px 0px 10px 0px; color:#10142E;">A PRODUCER WHO LEARNED BY FILLING ROOMS.</h2><p style="font-size:15px; line-height:1.7; color:#3A3F66; margin:0px 0px 0px 0px; max-width:640px;">Consultancy at Crux Nxtion is led by the founder who built the events side from nothing. Read how that experience shapes the way we advise.</p></div>
+    <a href="FounderS.dc.html" style="background:#8C7AE6; color:#10142E; font-weight:700; font-size:14px; padding:15px 28px 15px 28px; white-space:nowrap; --sl:10px;" class="reveal bx">Meet The Founder →</a>
+  </section>
+
+  <!-- 9 FAQ -->
+  <section style="min-height:640px; padding:44px 20px 44px 20px; background:#F3F1FC; display:grid; grid-template-columns:0.8fr 1.2fr; gap:70px; align-items:start;" data-m="g1 nomin">
+    <div style="position:relative; border-radius:24px; overflow:hidden; height:640px;" class="reveal" data-m="tile">
+      <img src="/_blob/de1f229044e51fea8eef0e8e07331cbe" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+      <div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(16,20,46,0.96) 0%, rgba(16,20,46,0.25) 65%);"></div>
+      <div style="position:absolute; left:0; right:0; bottom:0; padding:32px 32px 32px 32px;">
+        <span class="eyebrow" style="color:#8C7AE6 !important;">Good To Know</span>
+        <h2 class="bebas" style="font-size:34px; margin:10px 0px 14px 0px; color:#F2F1F8;">STILL WONDERING?</h2>
+        <a href="ContactS.dc.html" style="background:#8C7AE6; color:#10142E; font-weight:700; font-size:14px; padding:14px 26px 14px 26px; display:inline-block; --sl:10px;" class="bx">Ask us directly</a>
+      </div>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px; padding-top:6px;" class="reveal">
+      <sc-for list="{{faqs}}" as="f" hint-placeholder-count="6">
+        <div onclick="{{f.pick}}" style="{{f.rowStyle}}">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:20px;"><h3 style="font-size:18px; margin:0px 0px 0px 0px; font-weight:700; color:#10142E;">{{f.q}}</h3><span class="bebas" style="font-size:30px; color:#6C58DB; line-height:1;">{{f.sign}}</span></div>
+          <sc-if value="{{f.open}}" hint-placeholder-val="{{false}}"><p style="font-size:14.5px; line-height:1.75; color:#3A3F66; margin:14px 0px 0px 0px; max-width:560px;">{{f.a}}</p></sc-if>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+
+  <div style="background:#10142E;">
+  <!-- PREFOOTER CTA — cinematic band -->
+  <section style="position:relative; height:560px; overflow:hidden;">
+    <img src="/_blob/bf598dabf623c991f65ec61b98d88a5a" alt="A Crux Nxtion Events crowd" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+    <div style="position:absolute; inset:0; background:linear-gradient(100deg, rgba(10,15,38,0.97) 0%, rgba(10,15,38,0.78) 52%, rgba(10,15,38,0.4) 100%);"></div>
+    <div style="position:absolute; left:0; right:0; top:0; height:26px; background:#05081A; background-image:repeating-linear-gradient(90deg, transparent 0 18px, rgba(244,245,250,0.16) 18px 34px, transparent 34px 52px); background-size:52px 12px; background-repeat:repeat-x; background-position:0 7px; z-index:2;"></div><div style="position:absolute; left:0; right:0; bottom:0; height:26px; background:#05081A; background-image:repeating-linear-gradient(90deg, transparent 0 18px, rgba(244,245,250,0.16) 18px 34px, transparent 34px 52px); background-size:52px 12px; background-repeat:repeat-x; background-position:0 7px; z-index:2;"></div>
+    <div style="position:relative; z-index:1; height:100%; display:flex; flex-direction:column; justify-content:center; padding:0px 20px 0px 20px;" class="reveal">
+      <span class="eyebrow" style="color:#A9C0F5 !important;">Ready When You Are</span>
+      <h2 class="bebas" style="font-size:44px; margin:16px 0px 18px 0px; color:#FFFFFF; max-width:820px;">GOT A DATE, OR JUST A DIRECTION?</h2>
+      <p style="font-size:16px; line-height:1.7; color:#C5CADF; max-width:520px; margin:0px 0px 32px 0px;">Planning an event or building a business — tell us what you have in mind and a real person will come back to you.</p>
+      <div style="display:flex; gap:16px;" data-m="ctas">
+        <a href="ContactS.dc.html" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:15px; padding:17px 32px 17px 32px; --sl:10px;" class="bx">Plan An Event →</a>
+        <a href="ContactS.dc.html" style="background:#8C7AE6; color:#0A0F26; font-weight:700; font-size:15px; padding:17px 32px 17px 32px; --sl:10px;" class="bx">Talk Business Strategy →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- COLOSSAL FOOTER -->
+  <footer id="contact" style="background:#10142E; padding:44px 24px 44px 24px; text-align:center; position:relative; overflow:hidden;">
+    <div style="position:relative; margin-bottom:40px;">
+      <span class="bebas" style="font-size:clamp(80px,17vw,220px); line-height:0.82; display:block; background:linear-gradient(180deg, #F2F1F8 0%, #B9AFF0 25%, #2A2F5C 65%, transparent 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; position:relative;">CRUX</span>
+      <span class="bebas" style="font-size:clamp(30px,6.4vw,82px); line-height:1; display:block; background:linear-gradient(180deg, #F2F1F8 0%, #B9AFF0 25%, #2A2F5C 65%, transparent 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; position:relative; letter-spacing:0.5em; margin-top:10px; padding-left:0.5em;">NXTION</span>
+    </div>
+    <div style="display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:32px; margin-bottom:32px;" data-m="wrap">
+      <a href="HomeA2a.dc.html" style="font-size:14px; color:#9A9AC0;">Home</a>
+      <a href="ServicesA2a.dc.html" style="font-size:14px; color:#9A9AC0;">Services</a>
+      <a href="EventsA.dc.html" style="font-size:14px; color:#9A9AC0;">Events</a>
+      <a href="GalleryA.dc.html" style="font-size:14px; color:#9A9AC0;">Gallery</a>
+      <a href="AboutS.dc.html" style="font-size:14px; color:#9A9AC0;">About</a>
+      <a href="FAQS.dc.html" style="font-size:14px; color:#9A9AC0;">FAQ</a>
+      <a href="BlogA.dc.html" style="font-size:14px; color:#9A9AC0;">Blog</a>
+      <a href="SponsorsA.dc.html" style="font-size:14px; color:#9A9AC0;">Sponsors</a>
+    </div>
+    <div style="display:flex; justify-content:center; gap:14px; margin-bottom:44px;" data-m="wrap">
+      <a href="#" aria-label="Instagram" style="display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; background:rgba(242,241,248,0.05); color:#F2F1F8; --sl:7px; --bc:rgba(242,241,248,0.12);" class="bx"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.5"></rect><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"></circle><circle cx="17.4" cy="6.6" r="1" fill="currentColor"></circle></svg></a>
+      <a href="#" aria-label="TikTok" style="display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; background:rgba(242,241,248,0.05); color:#F2F1F8; --sl:7px; --bc:rgba(242,241,248,0.12);" class="bx"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M14 3v10.5a3.5 3.5 0 1 1-3-3.46" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path><path d="M14 3c.4 2.6 2.2 4.4 4.8 4.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></a>
+      <a href="#" aria-label="WhatsApp" style="display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; background:rgba(242,241,248,0.05); color:#F2F1F8; --sl:7px; --bc:rgba(242,241,248,0.12);" class="bx"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 20l1.4-4.1A8 8 0 1 1 9 19.5L4 20Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path><path d="M8.5 9.5c0 3.5 3 6.5 6.5 6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></a>
+    </div>
+    <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:8px 26px; margin-bottom:20px;" data-m="wrap">
+      <a href="PrivacyS.dc.html" style="font-size:12.5px; color:#8E96BB;">Privacy Policy</a>
+      <a href="CookiesS.dc.html" style="font-size:12.5px; color:#8E96BB;">Cookie Policy</a>
+      <a href="TermsS.dc.html" style="font-size:12.5px; color:#8E96BB;">Terms &amp; Conditions</a>
+    </div>
+    <div style="width:100%; max-width:900px; height:1px; background:#2A2F5C; margin:0 auto 24px;"></div>
+    <p style="font-size:13px; color:#6E6E9A; margin:0px 0px 0px 0px;">© 2026 Crux Nxtion Events • Sheffield, United Kingdom • All Rights Reserved</p>
+  </footer>
+  </div>
+
+<div class="msw"><div style="background:rgba(10,15,38,.94); border:1px solid #1E2B5E;"><a href="HomeA.dc.html" style="padding:12px 22px; border-radius:999px; font-size:13px; font-weight:700; color:#A3A9C8;">Events</a><a href="HomeA2a.dc.html" style="padding:12px 22px; font-size:13px; font-weight:700; background:#8C7AE6; color:#10142E; --sl:7px;" class="bx">Consultancy</a></div></div></div></div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:9000}}">
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { idx: 0, panel: 0, faq: 0 }; }
+  renderVals() {
+    const max = 2, i = this.state.idx, open = this.state.panel;
+    const btn = 'width:48px; height:48px; --sl:9px; font-size:18px; cursor:pointer; font-family:inherit; ';
+    const BD = '#E1DEF3', TXT = '#10142E', OFF = '#D2CEEA';
+    const PANELS = [["01","Setup & Strategy","Business Setup & Strategy","Structure, positioning and a clear operating plan — so the idea has something solid to stand on.","Business model","Positioning","Launch plan","/_blob/4f18304ff3dad6215b2bb23021322a98"],["02","Branding & Marketing","Branding & Marketing","An identity and a marketing plan that say what you do and fit the budget you actually have.","Identity","Messaging","Go-to-market","/_blob/ca942693739cdc74700f9c8d65278358"],["03","Business Growth","Business Growth","A realistic route to more customers and more revenue for a business that is ready to grow.","Growth plan","Offer design","Pipeline","/_blob/62f016a3e0b0dc275a615ae5af6b3b69"],["04","Activation Growth","Activation Growth","Campaigns and live activations that get the audience you have moving and buying.","Campaigns","Activations","Partnerships","/_blob/b7834baeaf5a08921ea7b06e7153a0e4"],["05","Audit & Advisory","Business Audit & Advisory","An honest look at the whole business — what is working, what is not, and the next move.","Audit","Advisory","Action plan","/_blob/3238a37a61a05d3d68a477d3353ed318"]];
+    const panels = PANELS.map((p, k) => {
+      const on = k === open;
+      return {
+        num: p[0], short: p[1], title: p[2], blurb: p[3], t1: p[4], t2: p[5], t3: p[6], img: p[7],
+        pick: () => this.setState({ panel: k }),
+        panelStyle: 'position:relative; overflow:hidden; border-radius:22px; border:1.5px solid ' + (on ? '#8C7AE6' : BD) + '; cursor:pointer; transition:height .45s ease; height:' + (on ? '420px' : '88px') + '; flex:none; min-width:0;',
+        imgStyle: 'position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:filter .4s ease; filter:brightness(' + (on ? '0.85' : '0.5') + ');',
+        numStyle: 'position:absolute; left:22px; top:20px; font-size:' + (on ? '30px' : '26px') + '; color:#8C7AE6;',
+        labelStyle: 'position:absolute; left:64px; top:26px; font-size:26px; color:#F2F1F8; white-space:nowrap; transition:opacity .3s ease; opacity:' + (on ? '0' : '1') + ';',
+        bodyStyle: 'position:absolute; left:0; right:0; bottom:0; padding:22px; transition:opacity .4s ease; opacity:' + (on ? '1' : '0') + '; pointer-events:none;',
+      };
+    });
+    const FAQ = [["What if I only have an idea?","That is a fine place to start. Business Setup & Strategy is built for exactly that."],["Is this only for new businesses?","No. Whether you are starting, growing or just need direction, we meet you where you are."],["What happens on the discovery call?","We listen, ask questions, and tell you honestly whether and how we can help."],["Do you just advise, or help do it?","Both. We turn ideas into actionable plans and help you start on them."],["Do you work outside Sheffield?","Yes — we are Sheffield-based and work with businesses across the UK."],["How do I book?","Book a discovery call and tell us where you are stuck."]];
+    const faqs = FAQ.map((q, k) => {
+      const on = k === this.state.faq;
+      return {
+        q: q[0], a: q[1], open: on, sign: on ? '−' : '+',
+        pick: () => this.setState({ faq: on ? -1 : k }),
+        rowStyle: 'background:#FFFFFF; border:1.5px solid ' + (on ? '#8C7AE6' : BD) + '; border-radius:16px; padding:22px 26px; cursor:pointer;',
+      };
+    });
+    return {
+      trackStyle: 'display:flex; gap:24px; transition:transform .5s ease; transform:translateX(-' + (i * 424) + 'px);',
+      prevStyle: btn + (i === 0 ? 'background:transparent; --bc:' + OFF + '; color:' + OFF + ';' : 'background:transparent; --bc:' + TXT + '; color:' + TXT + ';'),
+      nextStyle: btn + (i === max ? 'background:#8C7AE6; --bc:' + OFF + '; color:#10142E; opacity:.35;' : 'background:#8C7AE6; --bc:#8C7AE6; color:#10142E;'),
+      prev: () => this.setState({ idx: Math.max(0, i - 1) }),
+      next: () => this.setState({ idx: Math.min(max, i + 1) }),
+      panels, faqs,
+    };
+  }
+}
+</script>
+
+

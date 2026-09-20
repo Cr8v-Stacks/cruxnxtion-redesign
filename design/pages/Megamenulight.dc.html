@@ -1,0 +1,124 @@
+
+
+
+<meta charset="utf-8">
+<title>Mega menu light</title>
+<script src="./support.js"></script>
+
+
+<x-dc>
+<helmet>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Space Grotesk', system-ui, sans-serif; background:#FFFFFF; color:#10142E; }
+  a { color: #FF2E3D; text-decoration: none; }
+  a:hover { color: #8C7AE6; }
+  .bebas { font-family: 'Bebas Neue', 'Arial Narrow', sans-serif; letter-spacing: 0.5px; line-height: 0.9; text-transform: uppercase; }
+  .eyebrow { font-weight: 600; letter-spacing: 3px; text-transform: uppercase; font-size: 11px; color: #FF2E3D; }
+  .ticket-stub { position: relative; }
+  .ticket-stub::before, .ticket-stub::after { content: ''; position: absolute; right: -11px; width: 20px; height: 20px; border-radius: 50%; background: #10142E; z-index: 2; }
+  .ticket-stub::before { top: -10px; }
+  .ticket-stub::after { bottom: -10px; }
+  @keyframes rc-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes rc-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  /* Micro-animations */
+  body { animation: rcFadeIn .5s ease-out; }
+  @keyframes rcFadeIn { from { opacity: 0; } to { opacity: 1; } }
+  img { transition: transform .5s ease; }
+  a:hover img { transform: scale(1.05); }
+  a { transition: color .2s ease, filter .3s ease, box-shadow .3s ease, border-color .25s ease; }
+  a:hover { filter: brightness(1.08); }
+  a:active { filter: brightness(0.94); }
+  .ticket { transition: box-shadow .3s ease, filter .3s ease; }
+  .ticket:hover { box-shadow: 0 18px 34px rgba(0,0,0,0.22); }
+  header nav a { position: relative; }
+  header nav a::after { content: ''; position: absolute; left: 0; bottom: -6px; width: 0; height: 2px; background: currentColor; transition: width .3s ease; }
+  header nav a:hover::after { width: 100%; }
+  a[style*="border-radius:999px"], a[style*="clip-path:polygon"] { transition: transform .25s ease, box-shadow .25s ease, filter .25s ease; }
+  a[style*="border-radius:999px"]:hover, a[style*="clip-path:polygon"]:hover { transform: translateY(-3px); box-shadow: 0 14px 26px rgba(0,0,0,0.22); }
+  .tilt-ticket { transition: transform .3s ease, box-shadow .3s ease; }
+  .tilt-ticket:hover { transform: rotate(calc(var(--r) * 1.8)) translateY(-4px) !important; box-shadow: 0 18px 34px rgba(0,0,0,0.22); }
+  .tilt-straighten { transition: transform .35s ease; }
+  .tilt-straighten:hover { transform: rotate(0deg) scale(1.04) !important; }
+  .tilt-in { transition: transform .35s ease; }
+  .tilt-in:hover { transform: rotate(var(--r, 3deg)) scale(1.03) !important; }
+
+  .bento-tile { transition: transform .3s ease, box-shadow .3s ease; }
+  .bento-tile:hover { transform: translateY(-4px); box-shadow: 0 18px 34px rgba(0,0,0,0.28); }
+  .bubble-in { animation: rcFadeIn .6s ease-out both; }
+  @keyframes rise { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:none; } }
+  @keyframes floaty { 0%,100% { transform: translateY(0) rotate(var(--r,0deg)); } 50% { transform: translateY(-8px) rotate(var(--r,0deg)); } }
+  @keyframes pulse { 0% { box-shadow:0 0 0 0 rgba(61,220,132,.6); } 70% { box-shadow:0 0 0 8px rgba(61,220,132,0); } 100% { box-shadow:0 0 0 0 rgba(61,220,132,0); } }
+  h1, .eyebrow { animation: rise .8s ease both; }
+  h1 { animation-delay: .12s; }
+  section h2 { animation: rise .7s ease both; }
+  .bento-tile img { transition: transform .6s ease; }
+  .bento-tile:hover img { transform: scale(1.06); }
+  button { transition: transform .2s ease, background .2s ease, opacity .2s ease; }
+  button:hover { transform: scale(1.08); }
+  .float { animation: floaty 5s ease-in-out infinite; }
+  .pulse-dot { animation: pulse 2s infinite; }
+  a[style*="clip-path"]:active { transform: translateY(0) scale(.98); }
+  body { background:#FFFFFF; color:#10142E; }
+  .eyebrow { color:#6C58DB !important; }
+  .ticket-stub::before, .ticket-stub::after { background:#FFFFFF !important; }
+
+  .mega-panel { display:none; position:absolute; left:0; right:0; top:100%; z-index:40; }
+  .mega:hover .mega-panel, .mega.open .mega-panel { display:block; }
+  .mega > a::after { display:none; }
+  .mega-panel a { transition: transform .2s ease, background .2s ease; }
+  .mega-panel a.mrow:hover { transform: translateX(4px); }
+  /* ---- one button shape ---- */
+  .bx { position:relative; clip-path:polygon(var(--sl,10px) 0, 100% 0, calc(100% - var(--sl,10px)) 100%, 0 100%); border:0 !important; border-radius:0 !important; --bw:1.5px; text-align:center; }
+  .bx::before { content:''; position:absolute; inset:0; background:var(--bc,transparent); pointer-events:none; clip-path:polygon(evenodd, var(--sl,10px) 0, 100% 0, calc(100% - var(--sl,10px)) 100%, 0 100%, var(--sl,10px) 0, calc(var(--sl,10px) + var(--bw)) var(--bw), calc(100% - var(--bw)) var(--bw), calc(100% - var(--sl,10px) - var(--bw)) calc(100% - var(--bw)), var(--bw) calc(100% - var(--bw)), calc(var(--sl,10px) + var(--bw)) var(--bw), var(--sl,10px) 0); }
+  .bx:hover { filter:brightness(1.1); transform:translateY(-2px); }
+  .bx:active { transform:none; filter:brightness(.95); }
+  .bx { transition:transform .2s ease, filter .2s ease; }
+</style>
+</helmet>
+
+<div style="width:1440px; background:#FFFFFF; overflow:hidden;">
+
+  <!-- SHOUT-OUT BAR -->
+  <div style="background:#8C7AE6; padding:10px 64px; display:flex; align-items:center; justify-content:center;">
+    <span style="font-size:12.5px; font-weight:700; color:#10142E; letter-spacing:0.3px;">Now booking 2026/2027 — Events &amp; Business Consultancy — <a href="ContactS.dc.html" style="color:#10142E; font-weight:800; border-bottom:1px solid #10142E;">get in touch →</a></span>
+  </div>
+  <!-- HEADER -->
+  <header style="position:relative; z-index:30; display:flex; align-items:center; justify-content:space-between; padding:0 64px; border-bottom:1px solid #E1DEF3; background:#FFFFFF;">
+    <a href="HomeA.dc.html" style="display:flex; align-items:center;"><img src="/_blob/e4d72651b77d4c3cc1c086d9f6031149" alt="Crux Nxtion Events" style="height:42px; width:auto; display:block; background:#FFFFFF; padding:4px 12px; border-radius:8px;"></a>
+    <nav style="display:flex; align-items:center; gap:30px;">
+      <a href="HomeA.dc.html" style="color:#10142E; font-size:13px; font-weight:600;">Home</a>
+      <div class="mega open" style="position:static; padding:22px 0;"><a href="ServicesA.dc.html" style="color:#10142E; font-size:13px; font-weight:600;">Services ▾</a>
+        <div class="mega-panel" style="background:#FFFFFF; border-top:1px solid #E1DEF3; border-bottom:1px solid #E1DEF3; box-shadow:0 30px 50px rgba(0,0,0,0.25); padding:36px 64px 40px;">
+          <div style="display:grid; grid-template-columns:1fr 1fr 0.9fr; gap:48px;">
+            <div><div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;"><span class="bebas" style="font-size:26px; color:#10142E;">EVENTS</span><span style="font-size:11px; letter-spacing:1.5px; font-weight:700; color:#002671;">FOR YOUR NIGHT</span></div><a class="mrow" href="ServicesA.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0; color:#10142E;"><span style="width:8px; height:8px; border-radius:50%; background:#002671; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#10142E;">Event Management &amp; Planning</span><span style="display:block; font-size:12px; color:#5A5F86; margin-top:2px;">Private and corporate events</span></span></a><a class="mrow" href="ServicesA.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0; color:#10142E;"><span style="width:8px; height:8px; border-radius:50%; background:#002671; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#10142E;">Entertainment Booking &amp; Talent</span><span style="display:block; font-size:12px; color:#5A5F86; margin-top:2px;">Star power for your bill</span></span></a><a class="mrow" href="ServicesA.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0; color:#10142E;"><span style="width:8px; height:8px; border-radius:50%; background:#002671; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#10142E;">Event Designs &amp; Production</span><span style="display:block; font-size:12px; color:#5A5F86; margin-top:2px;">Weddings, birthdays, launches</span></span></a><a class="mrow" href="ServicesA.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0; color:#10142E;"><span style="width:8px; height:8px; border-radius:50%; background:#002671; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#10142E;">Event Marketing &amp; Promotion</span><span style="display:block; font-size:12px; color:#5A5F86; margin-top:2px;">Buzz that fills the room</span></span></a><a class="mrow" href="ServicesA.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0; color:#10142E;"><span style="width:8px; height:8px; border-radius:50%; background:#002671; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#10142E;">On-Site Coordination</span><span style="display:block; font-size:12px; color:#5A5F86; margin-top:2px;">Day-of logistics and support</span></span></a></div>
+            <div><div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;"><span class="bebas" style="font-size:26px; color:#10142E;">CONSULTANCY</span><span style="font-size:11px; letter-spacing:1.5px; font-weight:700; color:#6C58DB;">FOR YOUR BUSINESS</span></div><a class="mrow" href="ServicesA2a.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0; color:#10142E;"><span style="width:8px; height:8px; border-radius:50%; background:#8C7AE6; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#10142E;">Business Setup &amp; Strategy</span><span style="display:block; font-size:12px; color:#5A5F86; margin-top:2px;">From idea to a plan</span></span></a><a class="mrow" href="ServicesA2a.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0; color:#10142E;"><span style="width:8px; height:8px; border-radius:50%; background:#8C7AE6; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#10142E;">Branding &amp; Marketing</span><span style="display:block; font-size:12px; color:#5A5F86; margin-top:2px;">Say what you do</span></span></a><a class="mrow" href="ServicesA2a.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0; color:#10142E;"><span style="width:8px; height:8px; border-radius:50%; background:#8C7AE6; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#10142E;">Business Growth</span><span style="display:block; font-size:12px; color:#5A5F86; margin-top:2px;">More customers, more revenue</span></span></a><a class="mrow" href="ServicesA2a.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0; color:#10142E;"><span style="width:8px; height:8px; border-radius:50%; background:#8C7AE6; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#10142E;">Activation Growth</span><span style="display:block; font-size:12px; color:#5A5F86; margin-top:2px;">Turn attention into action</span></span></a><a class="mrow" href="ServicesA2a.dc.html" style="display:flex; gap:14px; align-items:flex-start; padding:10px 0; color:#10142E;"><span style="width:8px; height:8px; border-radius:50%; background:#8C7AE6; margin-top:6px; flex:0 0 8px;"></span><span><span style="display:block; font-size:14px; font-weight:700; color:#10142E;">Business Audit &amp; Advisory</span><span style="display:block; font-size:12px; color:#5A5F86; margin-top:2px;">An honest second opinion</span></span></a></div>
+            <div style="position:relative; border-radius:18px; overflow:hidden; min-height:260px;"><img src="/_blob/f269f7683bdb441b9b45df1336cd1485" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"><div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(10,15,38,0.95) 0%, rgba(10,15,38,0.2) 70%);"></div><div style="position:absolute; left:0; right:0; bottom:0; padding:22px;"><span class="bebas" style="font-size:26px; color:#FFFFFF; display:block; margin-bottom:8px;">NOT SURE WHICH?</span><a href="ContactS.dc.html" style="display:inline-block; background:#8C7AE6; color:#0A0F26; font-weight:700; font-size:13px; padding:11px 20px; --sl:8px;" class="bx">Book A Call</a></div></div>
+          </div>
+        </div></div>
+      <a href="EventsA.dc.html" style="color:#10142E; font-size:13px; font-weight:600;">Events</a>
+      <a href="GalleryA.dc.html" style="color:#10142E; font-size:13px; font-weight:600;">Gallery</a>
+      <a href="AboutS.dc.html" style="color:#6C58DB; font-size:13px; font-weight:600; border-bottom:1.5px solid #6C58DB;">About</a>
+      <a href="BlogA.dc.html" style="color:#10142E; font-size:13px; font-weight:600;">Blog</a>
+      <a href="ContactS.dc.html" style="color:#10142E; font-size:13px; font-weight:600;">Contact</a>
+    </nav>
+    <div style="display:flex; align-items:center; gap:16px;">
+      <div style="display:flex; gap:6px;"><a href="EventsA.dc.html" style="font-size:12px; font-weight:700; padding:8px 16px; color:#5A5F86; --sl:8px; --bc:#5A5F8655;" class="bx">Events</a><a href="HomeA2a.dc.html" style="font-size:12px; font-weight:700; padding:8px 16px; color:#5A5F86; --sl:8px; --bc:#5A5F8655;" class="bx">Consultancy</a></div>
+      <a href="ContactS.dc.html" style="background:#8C7AE6; color:#0A0F26; font-weight:700; font-size:13px; padding:12px 22px; --sl:8px;" class="bx">Get In Touch</a>
+    </div>
+  </header>
+
+  <div style="height:360px;"></div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:690}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+
+

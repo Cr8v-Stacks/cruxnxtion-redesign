@@ -1,0 +1,609 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "AboutS.dc.html": {
+      "h": 6228,
+      "is_interactive": true,
+      "title": "About",
+      "w": 1440,
+      "x": 0,
+      "y": 32593
+    },
+    "BlogA.dc.html": {
+      "h": 2992,
+      "is_interactive": true,
+      "title": "Blog",
+      "w": 1440,
+      "x": 0,
+      "y": 74262
+    },
+    "ContactS.dc.html": {
+      "h": 2981,
+      "is_interactive": true,
+      "title": "Contact",
+      "w": 1440,
+      "x": 0,
+      "y": 44681
+    },
+    "CookieBanner.dc.html": {
+      "h": 780,
+      "is_interactive": true,
+      "title": "Cookie banner",
+      "w": 1440,
+      "x": 0,
+      "y": 101694
+    },
+    "CookiesS.dc.html": {
+      "h": 2612,
+      "is_interactive": true,
+      "title": "Cookie policy",
+      "w": 1440,
+      "x": 0,
+      "y": 94386
+    },
+    "DesignSystem.dc.html": {
+      "h": 3046,
+      "is_interactive": true,
+      "title": "Design System — Events (A1) & Consultancy (A2a)",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "Error404A.dc.html": {
+      "h": 2402,
+      "is_interactive": true,
+      "title": "404 — page not found",
+      "w": 1440,
+      "x": 0,
+      "y": 81829
+    },
+    "EventsA.dc.html": {
+      "h": 3024,
+      "is_interactive": true,
+      "title": "Events",
+      "w": 1440,
+      "x": 0,
+      "y": 53698
+    },
+    "EventsArchiveA.dc.html": {
+      "h": 3398,
+      "is_interactive": true,
+      "title": "Past events (archive)",
+      "w": 1440,
+      "x": 0,
+      "y": 67920
+    },
+    "FAQS.dc.html": {
+      "h": 4479,
+      "is_interactive": true,
+      "title": "FAQ",
+      "w": 1440,
+      "x": 0,
+      "y": 48659
+    },
+    "GalleryA.dc.html": {
+      "h": 3499,
+      "is_interactive": true,
+      "title": "Gallery",
+      "w": 1440,
+      "x": 0,
+      "y": 63650
+    },
+    "HomeA.dc.html": {
+      "h": 8000,
+      "is_interactive": true,
+      "title": "Home — Events (A1)",
+      "w": 1440,
+      "x": 0,
+      "y": 3306
+    },
+    "HomeA2a.dc.html": {
+      "h": 7812,
+      "is_interactive": true,
+      "title": "Home — Consultancy (A2a)",
+      "w": 1440,
+      "x": 0,
+      "y": 11566
+    },
+    "M_AboutS.dc.html": {
+      "h": 7701,
+      "is_interactive": true,
+      "title": "Mobile — About",
+      "w": 390,
+      "x": 1520,
+      "y": 32593
+    },
+    "M_BlogA.dc.html": {
+      "h": 3787,
+      "is_interactive": true,
+      "title": "Mobile — Blog",
+      "w": 390,
+      "x": 1520,
+      "y": 74262
+    },
+    "M_ContactS.dc.html": {
+      "h": 3718,
+      "is_interactive": true,
+      "title": "Mobile — Contact",
+      "w": 390,
+      "x": 1520,
+      "y": 44681
+    },
+    "M_CookieBanner.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "title": "Mobile — Cookie banner",
+      "w": 390,
+      "x": 1520,
+      "y": 101694
+    },
+    "M_CookiesS.dc.html": {
+      "h": 3038,
+      "is_interactive": true,
+      "title": "Mobile — Cookie policy",
+      "w": 390,
+      "x": 1520,
+      "y": 94386
+    },
+    "M_Error404A.dc.html": {
+      "h": 2429,
+      "is_interactive": true,
+      "title": "Mobile — 404 — page not found",
+      "w": 390,
+      "x": 1520,
+      "y": 81829
+    },
+    "M_EventsA.dc.html": {
+      "h": 5130,
+      "is_interactive": true,
+      "title": "Mobile — Events",
+      "w": 390,
+      "x": 1520,
+      "y": 53698
+    },
+    "M_EventsArchiveA.dc.html": {
+      "h": 6082,
+      "is_interactive": true,
+      "title": "Mobile — Past events (archive)",
+      "w": 390,
+      "x": 1520,
+      "y": 67920
+    },
+    "M_FAQS.dc.html": {
+      "h": 4779,
+      "is_interactive": true,
+      "title": "Mobile — FAQ",
+      "w": 390,
+      "x": 1520,
+      "y": 48659
+    },
+    "M_GalleryA.dc.html": {
+      "h": 4010,
+      "is_interactive": true,
+      "title": "Mobile — Gallery",
+      "w": 390,
+      "x": 1520,
+      "y": 63650
+    },
+    "M_HomeA.dc.html": {
+      "h": 6500,
+      "is_interactive": true,
+      "title": "Mobile — Home — Events (A1) (1/2)",
+      "w": 390,
+      "x": 1520,
+      "y": 3306
+    },
+    "M_HomeA2a.dc.html": {
+      "h": 5600,
+      "is_interactive": true,
+      "title": "Mobile — Home — Consultancy (A2a) (1/2)",
+      "w": 390,
+      "x": 1520,
+      "y": 11566
+    },
+    "M_HomeA2a_2.dc.html": {
+      "h": 5590,
+      "is_interactive": true,
+      "title": "Mobile — Home — Consultancy (A2a) (2/2)",
+      "w": 390,
+      "x": 1990,
+      "y": 11566
+    },
+    "M_HomeA_2.dc.html": {
+      "h": 6640,
+      "is_interactive": true,
+      "title": "Mobile — Home — Events (A1) (2/2)",
+      "w": 390,
+      "x": 1990,
+      "y": 3306
+    },
+    "M_PrivacyS.dc.html": {
+      "h": 4174,
+      "is_interactive": true,
+      "title": "Mobile — Privacy policy",
+      "w": 390,
+      "x": 1520,
+      "y": 89952
+    },
+    "M_ServicesA.dc.html": {
+      "h": 4200,
+      "is_interactive": true,
+      "title": "Mobile — Services — Events (A1) (1/2)",
+      "w": 390,
+      "x": 1520,
+      "y": 19638
+    },
+    "M_ServicesA2a.dc.html": {
+      "h": 7401,
+      "is_interactive": true,
+      "title": "Mobile — Services — Consultancy (A2a)",
+      "w": 390,
+      "x": 1520,
+      "y": 24932
+    },
+    "M_ServicesA_2.dc.html": {
+      "h": 4200,
+      "is_interactive": true,
+      "title": "Mobile — Services — Events (A1) (2/2)",
+      "w": 390,
+      "x": 1990,
+      "y": 19638
+    },
+    "M_SingleBlogA.dc.html": {
+      "h": 3260,
+      "is_interactive": true,
+      "title": "Mobile — Single blog post",
+      "w": 390,
+      "x": 1520,
+      "y": 78309
+    },
+    "M_SingleEventA.dc.html": {
+      "h": 4302,
+      "is_interactive": true,
+      "title": "Mobile — Single event",
+      "w": 390,
+      "x": 1520,
+      "y": 59088
+    },
+    "M_SponsorsA.dc.html": {
+      "h": 5174,
+      "is_interactive": true,
+      "title": "Mobile — Sponsors & partners",
+      "w": 390,
+      "x": 1520,
+      "y": 84518
+    },
+    "M_TermsS.dc.html": {
+      "h": 3750,
+      "is_interactive": true,
+      "title": "Mobile — Terms & conditions",
+      "w": 390,
+      "x": 1520,
+      "y": 97684
+    },
+    "Megamenuevents.dc.html": {
+      "h": 660,
+      "is_interactive": true,
+      "title": "Mega menu open — Events pages",
+      "w": 1440,
+      "x": 1520,
+      "y": 0
+    },
+    "Megamenulight.dc.html": {
+      "h": 660,
+      "is_interactive": true,
+      "title": "Mega menu open — light pages",
+      "w": 1440,
+      "x": 3040,
+      "y": 0
+    },
+    "PrivacyS.dc.html": {
+      "h": 3220,
+      "is_interactive": true,
+      "title": "Privacy policy",
+      "w": 1440,
+      "x": 0,
+      "y": 89952
+    },
+    "ServicesA.dc.html": {
+      "h": 5034,
+      "is_interactive": true,
+      "title": "Services — Events (A1)",
+      "w": 1440,
+      "x": 0,
+      "y": 19638
+    },
+    "ServicesA2a.dc.html": {
+      "h": 4805,
+      "is_interactive": true,
+      "title": "Services — Consultancy (A2a)",
+      "w": 1440,
+      "x": 0,
+      "y": 24932
+    },
+    "SingleBlogA.dc.html": {
+      "h": 2888,
+      "is_interactive": true,
+      "title": "Single blog post",
+      "w": 1440,
+      "x": 0,
+      "y": 78309
+    },
+    "SingleEventA.dc.html": {
+      "h": 2961,
+      "is_interactive": true,
+      "title": "Single event",
+      "w": 1440,
+      "x": 0,
+      "y": 59088
+    },
+    "SponsorsA.dc.html": {
+      "h": 4612,
+      "is_interactive": true,
+      "title": "Sponsors & partners",
+      "w": 1440,
+      "x": 0,
+      "y": 84518
+    },
+    "TermsS.dc.html": {
+      "h": 2990,
+      "is_interactive": true,
+      "title": "Terms & conditions",
+      "w": 1440,
+      "x": 0,
+      "y": 97684
+    },
+    "FounderS.dc.html": {
+      "h": 3500,
+      "is_interactive": true,
+      "title": "Founder",
+      "w": 1440,
+      "x": 0,
+      "y": 40554
+    },
+    "M_FounderS.dc.html": {
+      "h": 3867,
+      "is_interactive": true,
+      "title": "Mobile — Founder",
+      "w": 390,
+      "x": 1520,
+      "y": 40554
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-09-18T18:40:00Z",
+    "v": 1
+  },
+  "designSystems": [],
+  "launch": {
+    "view": "canvas"
+  },
+  "notes": {
+    "note-1": {
+      "color": "purple",
+      "text": "Each row: desktop page, then its mobile version(s) to the right. Events pages are dark; Consultancy and shared pages are light. Long mobile pages continue on the next board (1/2, 2/2).",
+      "w": 240,
+      "x": 0,
+      "y": -460
+    },
+    "row-0": {
+      "kind": "title1",
+      "maxW": 5960,
+      "text": "DESIGN SYSTEM & MEGA MENU",
+      "w": 240,
+      "x": 0,
+      "y": -140
+    },
+    "row-1": {
+      "kind": "title1",
+      "maxW": 5960,
+      "text": "HOME — EVENTS",
+      "w": 240,
+      "x": 0,
+      "y": 3166
+    },
+    "row-10": {
+      "kind": "title1",
+      "maxW": 5960,
+      "text": "GALLERY",
+      "w": 240,
+      "x": 0,
+      "y": 63510
+    },
+    "row-11": {
+      "kind": "title1",
+      "maxW": 5960,
+      "text": "PAST EVENTS (ARCHIVE)",
+      "w": 240,
+      "x": 0,
+      "y": 67780
+    },
+    "row-12": {
+      "kind": "title1",
+      "maxW": 5960,
+      "text": "BLOG",
+      "w": 240,
+      "x": 0,
+      "y": 74122
+    },
+    "row-13": {
+      "kind": "title1",
+      "maxW": 5960,
+      "text": "SINGLE BLOG POST",
+      "w": 240,
+      "x": 0,
+      "y": 78169
+    },
+    "row-14": {
+      "kind": "title1",
+      "maxW": 5960,
+      "text": "404",
+      "w": 240,
+      "x": 0,
+      "y": 81689
+    },
+    "row-15": {
+      "kind": "title1",
+      "maxW": 5960,
+      "text": "SPONSORS & PARTNERS",
+      "w": 240,
+      "x": 0,
+      "y": 84378
+    },
+    "row-16": {
+      "kind": "title1",
+      "maxW": 5960,
+      "text": "PRIVACY POLICY",
+      "w": 240,
+      "x": 0,
+      "y": 89812
+    },
+    "row-17": {
+      "kind": "title1",
+      "maxW": 5960,
+      "text": "COOKIE POLICY",
+      "w": 240,
+      "x": 0,
+      "y": 94246
+    },
+    "row-18": {
+      "kind": "title1",
+      "maxW": 5960,
+      "text": "TERMS & CONDITIONS",
+      "w": 240,
+      "x": 0,
+      "y": 97544
+    },
+    "row-19": {
+      "kind": "title1",
+      "maxW": 5960,
+      "text": "COOKIE CONSENT — SMALL CARD, NO SCRIM, DISMISSIBLE (CLICK TO TRY)",
+      "w": 240,
+      "x": 0,
+      "y": 101554
+    },
+    "row-2": {
+      "kind": "title1",
+      "maxW": 5960,
+      "text": "HOME — CONSULTANCY",
+      "w": 240,
+      "x": 0,
+      "y": 11426
+    },
+    "row-3": {
+      "kind": "title1",
+      "maxW": 5960,
+      "text": "SERVICES — EVENTS",
+      "w": 240,
+      "x": 0,
+      "y": 19498
+    },
+    "row-4": {
+      "kind": "title1",
+      "maxW": 5960,
+      "text": "SERVICES — CONSULTANCY",
+      "w": 240,
+      "x": 0,
+      "y": 24792
+    },
+    "row-5": {
+      "kind": "title1",
+      "maxW": 5960,
+      "text": "ABOUT",
+      "w": 240,
+      "x": 0,
+      "y": 32453
+    },
+    "row-6": {
+      "kind": "title1",
+      "maxW": 5960,
+      "text": "CONTACT",
+      "w": 240,
+      "x": 0,
+      "y": 44541
+    },
+    "row-7": {
+      "kind": "title1",
+      "maxW": 5960,
+      "text": "FAQ",
+      "w": 240,
+      "x": 0,
+      "y": 48519
+    },
+    "row-8": {
+      "kind": "title1",
+      "maxW": 5960,
+      "text": "EVENTS",
+      "w": 240,
+      "x": 0,
+      "y": 53558
+    },
+    "row-9": {
+      "kind": "title1",
+      "maxW": 5960,
+      "text": "SINGLE EVENT",
+      "w": 240,
+      "x": 0,
+      "y": 58948
+    },
+    "row-founder": {
+      "kind": "title1",
+      "maxW": 5960,
+      "text": "FOUNDER",
+      "w": 240,
+      "x": 0,
+      "y": 40414
+    }
+  },
+  "order": [
+    "DesignSystem.dc.html",
+    "Megamenuevents.dc.html",
+    "Megamenulight.dc.html",
+    "HomeA.dc.html",
+    "M_HomeA.dc.html",
+    "M_HomeA_2.dc.html",
+    "HomeA2a.dc.html",
+    "M_HomeA2a.dc.html",
+    "M_HomeA2a_2.dc.html",
+    "ServicesA.dc.html",
+    "M_ServicesA.dc.html",
+    "M_ServicesA_2.dc.html",
+    "ServicesA2a.dc.html",
+    "M_ServicesA2a.dc.html",
+    "AboutS.dc.html",
+    "M_AboutS.dc.html",
+    "FounderS.dc.html",
+    "M_FounderS.dc.html",
+    "ContactS.dc.html",
+    "M_ContactS.dc.html",
+    "FAQS.dc.html",
+    "M_FAQS.dc.html",
+    "EventsA.dc.html",
+    "M_EventsA.dc.html",
+    "SingleEventA.dc.html",
+    "M_SingleEventA.dc.html",
+    "GalleryA.dc.html",
+    "M_GalleryA.dc.html",
+    "EventsArchiveA.dc.html",
+    "M_EventsArchiveA.dc.html",
+    "BlogA.dc.html",
+    "M_BlogA.dc.html",
+    "SingleBlogA.dc.html",
+    "M_SingleBlogA.dc.html",
+    "Error404A.dc.html",
+    "M_Error404A.dc.html",
+    "SponsorsA.dc.html",
+    "M_SponsorsA.dc.html",
+    "PrivacyS.dc.html",
+    "M_PrivacyS.dc.html",
+    "CookiesS.dc.html",
+    "M_CookiesS.dc.html",
+    "TermsS.dc.html",
+    "M_TermsS.dc.html",
+    "CookieBanner.dc.html",
+    "M_CookieBanner.dc.html"
+  ],
+  "pages": [],
+  "title": "Crux Nxtion Events — Option Redesign"
+}
