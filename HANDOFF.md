@@ -88,7 +88,7 @@ Global shell on every page: call-out bar → header (logo, nav, Services mega me
 **Confirmed (taken from the live site, see `design/content/site.json`):** address, both phone numbers, email, social links, the five event services and their live URLs, the eight events (dates, times, Eventbrite links, flyers), the partner/vendor list and images, the events services copy themes.
 
 **NOT confirmed — needs the owner before launch:**
-- Founder claims: "Oba of Events", 76+ events sold out, Naija Food Carnival 400+ guests, founder of Nxtion Food Market (Abbeydale Road). Came from a web search, not from the client.
+- Founder facts. Provided by the owner's team in chat on 2026-09-24 (treat as confirmed): he is also a **business strategist and dynamic serial entrepreneur**, owns **Nxtion Food Market** in Sheffield (https://nxtionfoodmarket.com/), and is **expanding into franchising and similar ventures** (which business is franchising was not specified; the copy says "expanding into franchising and related ventures"). Still UNCONFIRMED (from a web search): "Oba of Events", 76+ events sold out, Naija Food Carnival 400+ guests.
 - All FAQ answers (written from live-site copy but not approved); consultancy client claim "retail, food, hospitality and services"; "now booking 2026/2027".
 - Legal pages (Privacy, Cookies, Terms) are draft UK-GDPR-style text: **solicitor review required.**
 - Blog posts are samples. Sponsor packages were removed (invented); the sponsor page now only shows real partners.
