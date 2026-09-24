@@ -8,6 +8,8 @@ Design prototypes for cruxnxtion.co.uk: Events (dark, logo blue/red/purple) and 
 - `design/runtime/support.js` — the canvas runtime the pages load (`<script src="./support.js">`).
 - `design/generators/` — the Node scripts that built the pages. Reference only: they depend on my original working folder (absolute paths, original prototypes) and will not run as-is.
 
+Handing this to another developer or AI agent? Read HANDOFF.md first.
+
 Notes: legal copy is a draft for solicitor review; founder facts (76+ events, "Oba of Events", Naija Food Carnival 400+ guests) need confirming.
 
 ## View the design on any machine

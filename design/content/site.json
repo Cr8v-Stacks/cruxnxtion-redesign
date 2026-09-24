@@ -1,0 +1,237 @@
+{
+  "brand": {
+    "name": "Crux Nxtion Events",
+    "consultancy": "Crux Nxtion Consultancy",
+    "tagline_events": "We plan it. We book it. We run it.",
+    "tagline_consultancy": "Turning business ideas into businesses that work.",
+    "domain": "cruxnxtion.co.uk"
+  },
+  "contact": {
+    "address": "29 Dun Work, Sheffield S3 8FB, United Kingdom",
+    "phones": [
+      "+44 7762 278076",
+      "+44 7341 366400"
+    ],
+    "email": "infoandsales@cruxnxtionevents.net",
+    "social": {
+      "x": "https://x.com/cruxnxtionevent",
+      "instagram": "https://instagram.com/cruxnxtioneventsuk",
+      "whatsapp_community": "https://chat.whatsapp.com/Cepre7ilaT55B6NMmZzUgk"
+    }
+  },
+  "services": {
+    "events": [
+      {
+        "name": "Event Management & Planning",
+        "live_url": "/services/event-management-planning/"
+      },
+      {
+        "name": "Entertainment Booking & Talent Management",
+        "live_url": "/services/entertainment-booking-talent-management/"
+      },
+      {
+        "name": "Event Designs & Production",
+        "live_url": "/services/event-designs-production/"
+      },
+      {
+        "name": "Event Marketing & Promotion",
+        "live_url": "/services/event-marketing-promotion/"
+      },
+      {
+        "name": "On-Site Coordination",
+        "live_url": "/services/on-site-coordination-service/"
+      }
+    ],
+    "consultancy": [
+      "Business Setup & Strategy",
+      "Branding & Marketing",
+      "Business Growth",
+      "Activation Growth",
+      "Business Audit & Advisory"
+    ]
+  },
+  "events": [
+    {
+      "title": "Becoming Mr & Mrs Crux Pt.3",
+      "date": "2025-04-23",
+      "eventbrite": "https://www.eventbrite.co.uk/"
+    },
+    {
+      "title": "LASGIDI Mainland Party (IJGB Edition)",
+      "date": "2025-01-25",
+      "eventbrite": "https://www.eventbrite.co.uk/e/lasgidi-mainland-party-ijgb-edition-tickets-1134178371039"
+    },
+    {
+      "title": "Ankara Festival",
+      "date": "2024-11-30",
+      "time": "14:00",
+      "eventbrite": "https://www.eventbrite.co.uk/e/ankara-festival-tickets-1070427991939"
+    },
+    {
+      "title": "Dance OUT 2023 With Crux Nxtion Events",
+      "date": "2023-12-16",
+      "eventbrite": "https://www.eventbrite.co.uk/e/dance-out-2023-with-crux-nxtion-events-tickets-769718547897"
+    },
+    {
+      "title": "YAGI Awards",
+      "date": "2023-04-28",
+      "time": "14:30",
+      "eventbrite": "https://www.eventbrite.co.uk/e/yagi-awards-tickets-623479482917"
+    },
+    {
+      "title": "Millennials vs Gen Z",
+      "date": "2023-01-29",
+      "time": "17:00",
+      "eventbrite": "https://www.eventbrite.co.uk/e/millenials-vs-gen-z-tickets-494953558417"
+    },
+    {
+      "title": "The Wedding Party",
+      "date": "2022-08-27",
+      "time": "15:00",
+      "eventbrite": "https://www.eventbrite.co.uk/e/the-wedding-party-tickets-356808492807"
+    },
+    {
+      "title": "Crux Nxtion Hangout Out",
+      "date": "2021-09-25",
+      "time": "18:00",
+      "eventbrite": "https://www.eventbrite.co.uk/e/crux-nxtion-hangout-out-tickets-168482853751"
+    }
+  ],
+  "events_note": "Dates/times/URLs come from the live site (cruxnxtion.co.uk/events). The Becoming Mr & Mrs Crux Pt.3 ticket URL was not captured (live site links to cruxnxtionevents.com/weddingparty3/). Flyers are in design/images/live-site/ev_*.jpg.",
+  "sponsors_named": [
+    "ML",
+    "Phemzy Studios",
+    "Dotun Omiyale",
+    "DJ03",
+    "D20 Pasties",
+    "Livingbangel Beauty Lounge",
+    "Food Emporium UK",
+    "Sokid Photography",
+    "Zee Jewels",
+    "Rosella's Wonder",
+    "Eminence by ctx",
+    "Aya",
+    "Gem Glamour",
+    "Final Kurt Films"
+  ],
+  "sponsors_note": "From cruxnxtion.co.uk/sponsor. Images in design/images/live-site/sp_*.jpg (17 of ~22 downloaded).",
+  "founder": {
+    "name": "Olabamidele \"Bambad\" Badmos",
+    "claims_UNCONFIRMED": [
+      "Sheffield event producer known as the \"Oba of Events\"",
+      "Sold out 76+ events across the UK",
+      "Naija Food Carnival: 400+ guests",
+      "Founder of Nxtion Food Market (Abbeydale Road)"
+    ]
+  },
+  "faq": {
+    "events": [
+      {
+        "q": "What kinds of events do you plan and manage?",
+        "a": "Private and corporate events, conferences, weddings, birthday parties, brand activations, concerts, festivals, charity galas, tournaments, inaugurations, workshops, trade shows, and online or hybrid events."
+      },
+      {
+        "q": "What are your event services?",
+        "a": "Five: Event Management & Planning, Entertainment Booking & Talent Management, Event Designs & Production, Event Marketing & Promotion, and On-Site Coordination. Use one or combine them."
+      },
+      {
+        "q": "Where are you based, and do you work outside Sheffield?",
+        "a": "Our office is at 29 Dun Work, Sheffield S3 8FB. We plan and run events across the UK, and our on-site coordination covers destination weddings and corporate retreats too."
+      },
+      {
+        "q": "How do I get started?",
+        "a": "Send us a brief through the contact page, or email infoandsales@cruxnxtionevents.net or call +44 7341 366400. Tell us the type of event, the date and roughly how many guests, and we will take it from there."
+      },
+      {
+        "q": "How far ahead should I get in touch?",
+        "a": "As early as you can. We are booking 2026 and 2027 now, and the earlier we know the date, the more options we have for venues, talent and vendors."
+      },
+      {
+        "q": "Do you book DJs, artists and performers?",
+        "a": "Yes. Entertainment Booking & Talent Management connects you with top-tier performers, artists and entertainers, and we work with talent agencies."
+      },
+      {
+        "q": "Can you design and style the event?",
+        "a": "Yes. That covers themed events, wedding design, corporate stage productions, lighting design, audio-visual production, event branding and signage, furniture and layout design, and virtual or hybrid production."
+      },
+      {
+        "q": "Can you help us promote the event?",
+        "a": "Yes. Event Marketing & Promotion covers social media campaigns, influencer partnerships, content marketing, SEO, partnership marketing, event listings and directories, offline marketing, referral programmes and community engagement."
+      },
+      {
+        "q": "What does on-site coordination include?",
+        "a": "Someone from our crew on the day handling vendor management, logistics, the run of the show and real-time problem solving, so you can enjoy your event."
+      },
+      {
+        "q": "Can you work with a venue we have already chosen?",
+        "a": "Yes. Tell us the room and we will plan around it."
+      },
+      {
+        "q": "Do you run your own events, and how do I get tickets?",
+        "a": "Yes. Events like the Ankara Festival, YAGI Awards and the Becoming Mr & Mrs Crux series are ours. Tickets are sold through Eventbrite, and each event page links there."
+      },
+      {
+        "q": "Do you plan weddings?",
+        "a": "Yes, from traditional and cultural celebrations to destination weddings. Have a look at The Wedding Party and Becoming Mr & Mrs Crux on our Events page."
+      },
+      {
+        "q": "Can my business sponsor an event or become a vendor?",
+        "a": "Yes. See the Sponsors page for the partners and vendors we already work with, then get in touch to join them."
+      },
+      {
+        "q": "Where can I see your past events?",
+        "a": "On the Events and Gallery pages, which show flyers, dates and photos from the nights we have run."
+      }
+    ],
+    "consultancy": [
+      {
+        "q": "What is Crux Nxtion Consultancy?",
+        "a": "Business consultancy for people turning ideas into businesses that work. Five services: Business Setup & Strategy, Branding & Marketing, Business Growth, Activation Growth, and Business Audit & Advisory."
+      },
+      {
+        "q": "What if I only have an idea?",
+        "a": "That is a fine place to start. Business Setup & Strategy is built for exactly that: the model, the positioning and a launch plan."
+      },
+      {
+        "q": "Is consultancy only for new businesses?",
+        "a": "No. Whether you are starting, growing or just need direction, we meet you where you are."
+      },
+      {
+        "q": "What happens on the discovery call?",
+        "a": "We listen, ask questions, and tell you honestly whether and how we can help. You leave knowing your next step."
+      },
+      {
+        "q": "What will I walk away with?",
+        "a": "Something you can use: an action plan, a one-page strategy, brand direction, a growth roadmap or an audit report, depending on what you need."
+      },
+      {
+        "q": "Do you just advise, or help do it?",
+        "a": "Both. We turn ideas into actionable plans and help you start on them."
+      },
+      {
+        "q": "Can you help with my brand and marketing?",
+        "a": "Yes. Branding & Marketing sharpens your identity and message, then builds a go-to-market plan sized to your real budget."
+      },
+      {
+        "q": "What is the difference between Business Growth and Activation Growth?",
+        "a": "Business Growth finds what is capping your revenue and builds a plan to fix it. Activation Growth turns attention into customers through campaigns, live activations and partnerships."
+      },
+      {
+        "q": "What is a business audit?",
+        "a": "An honest second opinion. We look at what is working, what is not and what to fix first, and give you a clear scorecard and report."
+      },
+      {
+        "q": "Is it only for events businesses?",
+        "a": "No. We work with founders and brands across retail, food, hospitality and services."
+      },
+      {
+        "q": "Can I book consultancy and events together?",
+        "a": "Yes. Many people need both, for example a launch event alongside a brand and marketing plan. Choose both on the contact form."
+      },
+      {
+        "q": "How do I book?",
+        "a": "Send a brief through the contact page and tell us where you are stuck."
+      }
+    ]
+  }
+}
