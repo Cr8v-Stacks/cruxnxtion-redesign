@@ -375,13 +375,15 @@ if ( ! defined( 'ABSPATH' ) ) {
       from { opacity: 0; transform: translateY(-8px); }
       to { opacity: 1; transform: none; }
     }
-    .mdrawer a.mlink {
+    .mdrawer a.mlink, .mdrawer span.mlink, .mdrawer .mlink {
       display: block;
-      font-family: 'Bebas Neue', 'Arial Narrow', sans-serif;
-      font-size: 32px;
-      letter-spacing: .5px;
-      text-transform: uppercase;
+      font-family: 'Bebas Neue', 'Arial Narrow', sans-serif !important;
+      font-size: 32px !important;
+      letter-spacing: .5px !important;
+      text-transform: uppercase !important;
       padding: 12px 0;
+      opacity: 1 !important;
+      -webkit-text-fill-color: initial !important;
     }
     .mdrawer details summary {
       list-style: none;
@@ -760,9 +762,9 @@ if ( ! defined( 'ABSPATH' ) ) {
       <a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="color:#F4F5FA; font-size:14px; font-weight:600; letter-spacing:0.2px;">Contact</a>
     </nav>
         <div class="header-desktop-actions" style="display:flex; align-items:center; gap:16px;">
-      <div style="background:rgba(10,15,38,0.92); border:1.5px solid #1E2B5E; box-shadow:0 4px 16px rgba(0,0,0,0.3); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); display:flex; padding:4px 6px; gap:6px; border-radius:4px;">
-        <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="font-size:12px; font-weight:700; padding:8px 16px; background:#1E48B0; color:#FFFFFF; --sl:7px;" class="bx">Events</a>
-        <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="font-size:12px; font-weight:700; padding:8px 16px; color:#A3A9C8; --sl:8px; --bc:#A3A9C855;" class="bx">Consultancy</a>
+      <div class="site-wing-toggle" style="display:inline-flex; align-items:center; background:rgba(10,15,38,0.7); border:1px solid #1E2B5E; border-radius:999px; padding:3px; gap:2px;">
+        <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="padding:6px 16px; border-radius:999px; font-size:12px; font-weight:700; text-decoration:none; transition:all .2s ease; line-height:1.2; background:#1E48B0; color:#FFFFFF;">Events</a>
+        <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="padding:6px 16px; border-radius:999px; font-size:12px; font-weight:700; text-decoration:none; transition:all .2s ease; line-height:1.2; color:#A3A9C8; background:transparent;">Consultancy</a>
       </div>
       <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:13px; padding:12px 22px; --sl:8px;" class="bx">Plan An Event</a>
     </div>
@@ -788,11 +790,6 @@ if ( ! defined( 'ABSPATH' ) ) {
     </div>
     
     <div class="mdrawer-body">
-                  <!-- Quick Wing Switcher -->
-      <div style="display:flex; gap:6px; margin:4px 0 18px;">
-        <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="font-size:12px; font-weight:700; padding:8px 18px; background:#1E48B0; color:#FFFFFF; --sl:6px;" class="bx">Events</a>
-        <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="font-size:12px; font-weight:700; padding:8px 18px; color:#A3A9C8; --sl:6px; --bc:#A3A9C855;" class="bx">Consultancy</a>
-      </div>
 
       <!-- Navigation Links -->
       <div class="mdrawer-nav-links">
@@ -801,7 +798,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <!-- Accordion Services -->
         <details class="mdrawer-acc" style="border-bottom:1px solid #1E2B5E;">
           <summary style="display:flex; align-items:center; justify-content:space-between; cursor:pointer; padding:14px 0;">
-            <span class="mlink" style="color:#F4F5FA;">Services</span>
+            <span class="mlink" style="color:#F4F5FA !important; opacity:1 !important;">Services</span>
             <span class="acc-icon" style="color:#FF2E3D; font-size:22px; font-weight:700; transition:transform .2s ease;">▾</span>
           </summary>
           <div style="padding:4px 0 16px;">
@@ -958,9 +955,15 @@ if ( ! defined( 'ABSPATH' ) ) {
   </footer>
 
 <div class="msw">
-  <div style="background:rgba(10,15,38,0.95); border:1.5px solid #1E2B5E; box-shadow:0 12px 30px rgba(0,0,0,0.55); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); display:flex; padding:5px 6px; gap:6px;">
-    <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="padding:11px 22px; font-size:13px; font-weight:700; background:#1E48B0; color:#FFFFFF; --sl:7px;" class="bx">Events</a>
-    <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="padding:11px 22px; font-size:13px; font-weight:700; color:#A3A9C8; --sl:7px; --bc:#A3A9C855;" class="bx">Consultancy</a>
+  <div style="pointer-events:auto; display:inline-flex; align-items:center; background:rgba(10,15,38,0.94); border:1.5px solid #1E2B5E; border-radius:999px; padding:4px; gap:4px; box-shadow:0 14px 36px rgba(0,0,0,0.6); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);">
+    <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:11px 22px; min-width:130px; border-radius:999px; font-size:13px; font-weight:700; text-decoration:none; transition:all .2s ease; background:#1E48B0; color:#FFFFFF;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+      <span>Events</span>
+    </a>
+    <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:11px 22px; min-width:130px; border-radius:999px; font-size:13px; font-weight:700; text-decoration:none; transition:all .2s ease; color:#A3A9C8; background:transparent;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+      <span>Consultancy</span>
+    </a>
   </div>
 </div></div></div>
 

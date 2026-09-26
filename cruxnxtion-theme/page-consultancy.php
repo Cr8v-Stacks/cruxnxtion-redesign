@@ -351,13 +351,76 @@ if ( ! defined( 'ABSPATH' ) ) {
       line-height: 0.92 !important;
     }
     .consultancy-hero-main {
-      font-size: clamp(48px, 5.6vw, 68px) !important;
+      font-size: clamp(40px, 4.6vw, 56px) !important;
       line-height: 0.92 !important;
     }
     .consultancy-hero-sub {
-      font-size: clamp(68px, 8.5vw, 98px) !important;
+      font-size: clamp(70px, 9.2vw, 104px) !important;
       line-height: 0.92 !important;
     }
+  }
+
+  /* Option 2: Desktop Hero Split Showcase */
+  .opt2-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    max-width: 540px;
+    position: relative;
+  }
+  .opt2-cards-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    position: relative;
+    padding-top: 14px;
+  }
+  .opt2-card {
+    background: #FFFFFF;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 14px 32px rgba(16,20,46,0.12);
+    transition: transform .3s ease, box-shadow .3s ease;
+  }
+  .opt2-card.before {
+    border: 2px solid #E1DEF3;
+    transform: rotate(-1.8deg);
+  }
+  .opt2-card.before:hover {
+    transform: rotate(0deg) translateY(-4px);
+    box-shadow: 0 18px 40px rgba(16,20,46,0.18);
+  }
+  .opt2-card.after {
+    border: 2.5px solid #8C7AE6;
+    box-shadow: 0 16px 38px rgba(140,122,230,0.25);
+    transform: rotate(1.8deg);
+  }
+  .opt2-card.after:hover {
+    transform: rotate(0deg) translateY(-4px);
+    box-shadow: 0 20px 45px rgba(140,122,230,0.35);
+  }
+  .badge-blueprint {
+    background: #8C7AE6;
+    color: #10142E;
+    padding: 10px 16px;
+    border-radius: 10px;
+    box-shadow: 0 10px 24px rgba(140,122,230,0.35);
+  }
+  .opt2-badge {
+    position: absolute;
+    top: -12px;
+    right: -8px;
+    transform: rotate(4deg);
+    z-index: 6;
+  }
+  .opt2-chat {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  .mobile-hero-grid {
+    display: none;
   }
 
   /* Mobile Viewport / Minimized Browser (<= 900px) */
@@ -428,13 +491,15 @@ if ( ! defined( 'ABSPATH' ) ) {
       from { opacity: 0; transform: translateY(-8px); }
       to { opacity: 1; transform: none; }
     }
-    .mdrawer a.mlink {
+    .mdrawer a.mlink, .mdrawer span.mlink, .mdrawer .mlink {
       display: block;
-      font-family: 'Bebas Neue', 'Arial Narrow', sans-serif;
-      font-size: 32px;
-      letter-spacing: .5px;
-      text-transform: uppercase;
+      font-family: 'Bebas Neue', 'Arial Narrow', sans-serif !important;
+      font-size: 32px !important;
+      letter-spacing: .5px !important;
+      text-transform: uppercase !important;
       padding: 12px 0;
+      opacity: 1 !important;
+      -webkit-text-fill-color: initial !important;
     }
     .mdrawer details summary {
       list-style: none;
@@ -665,7 +730,7 @@ if ( ! defined( 'ABSPATH' ) ) {
       gap: 28px !important;
     }
 
-    /* Consultancy Mobile Hero: Clean non-overlapping images, no awful container, hide chat */
+    /* Consultancy Mobile Hero: Clean non-overlapping images (Option 1 Mobile), hide chat */
     [data-m~=herovis] {
       height: auto !important;
       min-height: 0 !important;
@@ -678,13 +743,29 @@ if ( ! defined( 'ABSPATH' ) ) {
       overflow: visible !important;
       box-shadow: none !important;
     }
-    .consultancy-hero-visual > div:first-child {
+    .opt2-container {
+      display: none !important;
+    }
+    .mobile-hero-grid {
       display: grid !important;
       grid-template-columns: 1fr 1fr !important;
       gap: 12px !important;
       width: 100% !important;
-      height: auto !important;
+      margin-top: 10px !important;
+    }
+    .mobile-hero-grid .photo-card {
       position: static !important;
+      width: 100% !important;
+      height: auto !important;
+      margin: 0 !important;
+      box-shadow: 0 6px 16px rgba(16,20,46,0.1) !important;
+      transition: transform .2s ease;
+    }
+    .mobile-hero-grid .photo-card.before {
+      transform: rotate(-1.5deg) !important;
+    }
+    .mobile-hero-grid .photo-card.after {
+      transform: rotate(1.5deg) !important;
     }
     .sound-familiar-header {
       padding-left: 20px !important;
@@ -695,27 +776,10 @@ if ( ! defined( 'ABSPATH' ) ) {
       padding-right: 20px !important;
     }
     .consultancy-hero-main {
-      font-size: clamp(34px, 8.5vw, 52px) !important;
+      font-size: clamp(30px, 7.5vw, 42px) !important;
     }
     .consultancy-hero-sub {
-      font-size: clamp(40px, 10vw, 64px) !important;
-    }
-    .consultancy-hero-visual .tilt-straighten {
-      position: static !important;
-      width: 100% !important;
-      height: auto !important;
-      box-shadow: 0 4px 14px rgba(16,20,46,0.1) !important;
-      border-radius: 14px !important;
-    }
-    .consultancy-hero-visual .tilt-straighten:first-child {
-      transform: rotate(-2.5deg) !important;
-    }
-    .consultancy-hero-visual .tilt-straighten:last-child {
-      transform: rotate(2.5deg) !important;
-    }
-    .consultancy-hero-visual .tilt-straighten img {
-      height: 145px !important;
-      object-fit: cover !important;
+      font-size: clamp(48px, 12.5vw, 76px) !important;
     }
     .consultancy-hero-visual .float {
       display: none !important;
@@ -826,9 +890,9 @@ if ( ! defined( 'ABSPATH' ) ) {
       <a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="color:#10142E; font-size:14px; font-weight:600; letter-spacing:0.2px;">Contact</a>
     </nav>
         <div class="header-desktop-actions" style="display:flex; align-items:center; gap:16px;">
-      <div style="background:rgba(255,255,255,0.96); border:1.5px solid #E1DEF3; box-shadow:0 4px 16px rgba(16,20,46,0.06); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); display:flex; padding:4px 6px; gap:6px; border-radius:4px;">
-        <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="font-size:12px; font-weight:700; padding:8px 16px; color:#5A5F86; --sl:8px; --bc:#5A5F8655;" class="bx">Events</a>
-        <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="font-size:12px; font-weight:700; padding:8px 16px; background:#8C7AE6; color:#0A0F26; --sl:7px;" class="bx">Consultancy</a>
+      <div class="site-wing-toggle" style="display:inline-flex; align-items:center; background:#F3F0FA; border:1px solid #E1DEF3; border-radius:999px; padding:3px; gap:2px;">
+        <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="padding:6px 16px; border-radius:999px; font-size:12px; font-weight:700; text-decoration:none; transition:all .2s ease; line-height:1.2; color:#5A5F86; background:transparent;">Events</a>
+        <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="padding:6px 16px; border-radius:999px; font-size:12px; font-weight:700; text-decoration:none; transition:all .2s ease; line-height:1.2; background:#8C7AE6; color:#0A0F26;">Consultancy</a>
       </div>
       <a href="https://calendly.com/cruxnxtiongroupofcompany-info" target="_blank" rel="noopener" style="background:#8C7AE6; color:#10142E !important; font-weight:700; font-size:13px; padding:12px 22px; --sl:8px;" class="bx">Book Discovery Call</a>
     </div>
@@ -854,11 +918,6 @@ if ( ! defined( 'ABSPATH' ) ) {
     </div>
     
     <div class="mdrawer-body">
-                  <!-- Quick Wing Switcher -->
-      <div style="display:flex; gap:6px; margin:4px 0 18px;">
-        <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="font-size:12px; font-weight:700; padding:8px 18px; color:#5A5F86; --sl:6px; --bc:#5A5F8655;" class="bx">Events</a>
-        <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="font-size:12px; font-weight:700; padding:8px 18px; background:#8C7AE6; color:#0A0F26; --sl:6px;" class="bx">Consultancy</a>
-      </div>
 
       <!-- Navigation Links -->
       <div class="mdrawer-nav-links">
@@ -867,7 +926,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <!-- Accordion Services -->
         <details class="mdrawer-acc" style="border-bottom:1px solid #E1DEF3;">
           <summary style="display:flex; align-items:center; justify-content:space-between; cursor:pointer; padding:14px 0;">
-            <span class="mlink" style="color:#10142E;">Services</span>
+            <span class="mlink" style="color:#10142E !important; opacity:1 !important;">Services</span>
             <span class="acc-icon" style="color:#6C58DB; font-size:22px; font-weight:700; transition:transform .2s ease;">▾</span>
           </summary>
           <div style="padding:4px 0 16px;">
@@ -930,8 +989,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div class="reveal">
       <span class="eyebrow" style="color:#6C58DB; font-weight:700; letter-spacing:1.5px; font-size:12px;">Crux Nxtion Consultancy • Sheffield &amp; UK-Wide</span>
       <h1 class="bebas hero-title" style="margin:16px 0px 20px 0px; color:#10142E; max-width:680px;">
-        <span class="consultancy-hero-main" style="display:block; font-size:clamp(48px, 5.6vw, 68px); line-height:0.92;">YOU'VE GOT THE IDEA.</span>
-        <span class="consultancy-hero-sub" style="display:block; font-size:clamp(68px, 8.5vw, 98px); line-height:0.92; color:#6C58DB; margin-top:4px;">LET'S BUILD THE BUSINESS.</span>
+        <span class="consultancy-hero-main" style="display:block; font-size:clamp(40px, 4.6vw, 56px); line-height:0.92;">YOU'VE GOT THE IDEA.</span>
+        <span class="consultancy-hero-sub" style="display:block; font-size:clamp(70px, 9.2vw, 104px); line-height:0.92; color:#6C58DB; margin-top:4px;">LET'S BUILD THE BUSINESS.</span>
       </h1>
       <p style="font-size:17px; line-height:1.7; color:#3A3F66; max-width:580px; margin:0px 0px 32px 0px;">Whether you're starting from scratch, trying to grow, or just need a clearer direction — sit down with us. We'll talk it through, then turn it into a plan you can actually follow.</p>
       <div style="display:flex; gap:16px; flex-wrap:wrap;">
@@ -941,56 +1000,80 @@ if ( ! defined( 'ABSPATH' ) ) {
     </div>
     
     <!-- HERO RIGHT: DUAL RETAIL TRANSFORMATION SHOWCASE + FULL DISCOVERY CALL -->
-    <div style="position:relative; height:660px; display:flex; align-items:center; justify-content:center;" class="reveal consultancy-hero-visual" data-m="herovis">
+    <div style="position:relative; min-height:560px; display:flex; align-items:center; justify-content:center;" class="reveal consultancy-hero-visual" data-m="herovis">
       
-      <!-- Transformation Container featuring the 2 REAL client transformation photos -->
-      <div style="position:relative; width:100%; height:540px; display:flex; gap:20px; align-items:center; justify-content:center;">
+      <!-- Option 2 Desktop: Side-by-Side Split Showcase + Bottom Tray -->
+      <div class="opt2-container">
         
-        <!-- Photo 1: Bare Retail Unit / Office -->
-        <div class="tilt-straighten" style="--r:-3.5deg; transform:rotate(var(--r)); width:260px; height:370px; background:#FFFFFF; border-radius:18px; overflow:hidden; box-shadow:0 18px 40px rgba(16,20,46,0.18); border:2px solid #E1DEF3; position:absolute; left:15px; top:20px; z-index:1;">
-          <div style="height:270px; overflow:hidden; background:#F4F5FA;">
-            <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/consultancy-retail-unit.jpg' ); ?>" alt="Before: We find the retail shop/unit/office" style="width:100%; height:100%; object-fit:cover; display:block;">
+        <div class="opt2-cards-row">
+          <!-- Blueprint Badge -->
+          <div class="badge-blueprint opt2-badge">
+            <span class="bebas" style="font-size:17px; line-height:1.1; display:block;">FROM BLUEPRINT<br>TO FULL SETUP</span>
           </div>
-          <div style="padding:12px 14px; background:#FFFFFF;">
-            <span style="font-size:10px; font-weight:800; letter-spacing:1px; text-transform:uppercase; color:#6C58DB; display:block;">BEFORE</span>
-            <strong style="font-size:13px; font-weight:700; color:#10142E; display:block; margin-top:4px; line-height:1.35;">We find the retail shop/unit/office</strong>
+
+          <!-- Card Before (Tilted Left) -->
+          <div class="opt2-card before">
+            <div style="height:210px; overflow:hidden; background:#F4F5FA;">
+              <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/consultancy-retail-unit.jpg' ); ?>" alt="Before: We find the retail shop/unit/office" style="width:100%; height:100%; object-fit:cover; display:block;">
+            </div>
+            <div style="padding:10px 14px; background:#F8F9FE; border-top:1px solid #E1DEF3;">
+              <span style="font-size:10px; font-weight:800; letter-spacing:1px; color:#6C58DB; display:block;">BEFORE</span>
+              <p style="font-size:12px; color:#10142E; font-weight:600; margin-top:2px; line-height:1.35;">We find the retail shop/unit/office</p>
+            </div>
+          </div>
+
+          <!-- Card After (Tilted Right) -->
+          <div class="opt2-card after">
+            <div style="height:210px; overflow:hidden; background:#F4F5FA;">
+              <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/consultancy-retail-stocked.jpg' ); ?>" alt="After: We build it/stock it/set up" style="width:100%; height:100%; object-fit:cover; display:block;">
+            </div>
+            <div style="padding:10px 14px; background:#FFFFFF; border-top:1px solid #E1DEF3;">
+              <span style="font-size:10px; font-weight:800; letter-spacing:1px; color:#BA0000; display:block;">AFTER</span>
+              <p style="font-size:12px; color:#10142E; font-weight:600; margin-top:2px; line-height:1.35;">We build it/stock it/set up</p>
+            </div>
           </div>
         </div>
 
-        <!-- Photo 2: Stocked & Fitted Store -->
-        <div class="tilt-straighten" style="--r:3.5deg; transform:rotate(var(--r)); width:270px; height:390px; background:#FFFFFF; border-radius:18px; overflow:hidden; box-shadow:0 22px 50px rgba(108,88,219,0.25); border:2.5px solid #8C7AE6; position:absolute; right:10px; top:10px; z-index:2;">
-          <div style="height:280px; overflow:hidden; background:#F4F5FA;">
-            <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/consultancy-retail-stocked.jpg' ); ?>" alt="After: We build it/stock it/set up" style="width:100%; height:100%; object-fit:cover; display:block;">
-          </div>
-          <div style="padding:12px 14px; background:#FFFFFF;">
-            <span style="font-size:10px; font-weight:800; letter-spacing:1px; text-transform:uppercase; color:#BA0000; display:block;">AFTER</span>
-            <strong style="font-size:13px; font-weight:700; color:#10142E; display:block; margin-top:4px; line-height:1.35;">We build it/stock it/set up</strong>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Float Badge: From Blueprint to Launch (Top Right) -->
-      <div class="float" style="--r:5deg; position:absolute; top:20px; right:-10px; background:#8C7AE6; color:#10142E; padding:12px 18px; border-radius:10px; z-index:4; box-shadow:0 10px 24px rgba(140,122,230,0.35);">
-        <span class="bebas" style="font-size:20px; line-height:1.1; display:block;">FROM BLUEPRINT<br>TO FULL SETUP</span>
-      </div>
-
-      <!-- Scaled-Down Full Discovery Chat Box (Animated Dialogue Loop + Subtle Gentle Bounce) -->
-      <div style="position:absolute; left:-10px; bottom:10px; width:360px; z-index:5;" data-m="hv-chat full">
-        <div class="discovery-chat-bounce" style="--r:-1deg; transform:rotate(var(--r)); background:rgba(16,20,46,0.96) !important; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border:1.5px solid #3A3F72; border-radius:20px; padding:16px 18px; display:flex; flex-direction:column; gap:8px; box-shadow:0 18px 40px rgba(0,0,0,0.4);">
-          <div style="display:flex; align-items:center; gap:8px; padding-bottom:8px; border-bottom:1.5px dashed #2A2F5C;">
+        <!-- Discovery Call Tray (Animated dialogue loop + subtle gentle bounce) -->
+        <div class="discovery-chat-bounce opt2-chat" style="--r:-0.5deg; transform:rotate(var(--r)); background:rgba(16,20,46,0.96) !important; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border:1.5px solid #3A3F72; border-radius:18px; padding:14px 16px; display:flex; flex-direction:column; gap:7px; box-shadow:0 18px 40px rgba(0,0,0,0.35);" data-m="hv-chat full">
+          <div style="display:flex; align-items:center; gap:8px; padding-bottom:7px; border-bottom:1.5px dashed #2A2F5C;">
             <span class="pulse-dot" style="width:8px; height:8px; border-radius:50%; background:#3DDC84;"></span>
             <span style="font-size:12px; font-weight:700; color:#F2F1F8;">Discovery call</span>
             <span style="font-size:11px; color:#9A9AC0; margin-left:auto;">with Crux Nxtion</span>
           </div>
-          <div class="cb cb1" style="align-self:flex-end; max-width:85%; background:#2A2F5C; color:#F2F1F8; font-size:12px; line-height:1.45; padding:9px 13px; border-radius:14px 14px 2px 14px;">I've got an idea. I just don't know where to start.</div>
-          <div class="cb cb2" style="align-self:flex-start; max-width:85%; background:#8C7AE6; color:#10142E; font-size:12px; font-weight:600; line-height:1.45; padding:9px 13px; border-radius:14px 14px 14px 2px;">Good — that's the right place to start. Tell us about it.</div>
-          <div class="cb cb3" style="align-self:flex-end; max-width:85%; background:#2A2F5C; color:#F2F1F8; font-size:12px; line-height:1.45; padding:9px 13px; border-radius:14px 14px 2px 14px;">Also… we're busy, but the business isn't really growing.</div>
-          <div class="cb cb4" style="align-self:flex-start; max-width:85%; background:#8C7AE6; color:#10142E; font-size:12px; font-weight:600; line-height:1.45; padding:9px 13px; border-radius:14px 14px 14px 2px;">We'll look at both. First: what does a good year look like for you?</div>
-          <div class="cb cbt" style="align-self:flex-start; display:flex; gap:4px; padding:6px 10px; background:#2A2F5C; border-radius:8px;">
+          <div class="cb cb1" style="align-self:flex-end; max-width:85%; background:#2A2F5C; color:#F2F1F8; font-size:12px; line-height:1.45; padding:8px 12px; border-radius:14px 14px 2px 14px;">I've got an idea. I just don't know where to start.</div>
+          <div class="cb cb2" style="align-self:flex-start; max-width:85%; background:#8C7AE6; color:#10142E; font-size:12px; font-weight:600; line-height:1.45; padding:8px 12px; border-radius:14px 14px 14px 2px;">Good — that's the right place to start. Tell us about it.</div>
+          <div class="cb cb3" style="align-self:flex-end; max-width:85%; background:#2A2F5C; color:#F2F1F8; font-size:12px; line-height:1.45; padding:8px 12px; border-radius:14px 14px 2px 14px;">Also… we're busy, but the business isn't really growing.</div>
+          <div class="cb cb4" style="align-self:flex-start; max-width:85%; background:#8C7AE6; color:#10142E; font-size:12px; font-weight:600; line-height:1.45; padding:8px 12px; border-radius:14px 14px 14px 2px;">We'll look at both. First: what does a good year look like for you?</div>
+          <div class="cb cbt" style="align-self:flex-start; display:flex; gap:4px; padding:5px 9px; background:#2A2F5C; border-radius:8px;">
             <span class="cdot cdot1" style="width:5px; height:5px; border-radius:50%; background:#9A9AC0;"></span>
             <span class="cdot cdot2" style="width:5px; height:5px; border-radius:50%; background:#9A9AC0;"></span>
             <span class="cdot cdot3" style="width:5px; height:5px; border-radius:50%; background:#9A9AC0;"></span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Option 1 Mobile: Clean 50/50 Side-by-Side Grid with subtle tilt & exact owner text -->
+      <div class="mobile-hero-grid">
+        <!-- Before Card -->
+        <div class="photo-card before" style="background:#FFFFFF; border:1.5px solid #E1DEF3; border-radius:12px; overflow:hidden;">
+          <div style="height:140px; background:#F4F5FA; overflow:hidden;">
+            <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/consultancy-retail-unit.jpg' ); ?>" alt="Before: We find the retail shop/unit/office" style="width:100%; height:100%; object-fit:cover; display:block;">
+          </div>
+          <div style="padding:8px 10px;">
+            <span style="font-size:9.5px; font-weight:800; color:#6C58DB; display:block;">BEFORE</span>
+            <strong style="font-size:11.5px; color:#10142E; display:block; line-height:1.2; margin-top:2px;">We find the retail shop/unit/office</strong>
+          </div>
+        </div>
+        <!-- After Card -->
+        <div class="photo-card after" style="background:#FFFFFF; border:2px solid #8C7AE6; border-radius:12px; overflow:hidden;">
+          <div style="height:140px; background:#F4F5FA; overflow:hidden;">
+            <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/consultancy-retail-stocked.jpg' ); ?>" alt="After: We build it/stock it/set up" style="width:100%; height:100%; object-fit:cover; display:block;">
+          </div>
+          <div style="padding:8px 10px;">
+            <span style="font-size:9.5px; font-weight:800; color:#BA0000; display:block;">AFTER</span>
+            <strong style="font-size:11.5px; color:#10142E; display:block; line-height:1.2; margin-top:2px;">We build it/stock it/set up</strong>
           </div>
         </div>
       </div>
@@ -1369,9 +1452,15 @@ if ( ! defined( 'ABSPATH' ) ) {
   </div>
 
 <div class="msw">
-  <div style="background:rgba(255,255,255,0.96); border:1.5px solid #E1DEF3; box-shadow:0 12px 30px rgba(16,20,46,0.18); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); display:flex; padding:5px 6px; gap:6px;">
-    <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="padding:11px 22px; font-size:13px; font-weight:700; color:#5A5F86; --sl:7px; --bc:#5A5F8655;" class="bx">Events</a>
-    <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="padding:11px 22px; font-size:13px; font-weight:700; background:#8C7AE6; color:#0A0F26; --sl:7px;" class="bx">Consultancy</a>
+  <div style="pointer-events:auto; display:inline-flex; align-items:center; background:rgba(255,255,255,0.96); border:1.5px solid #E1DEF3; border-radius:999px; padding:4px; gap:4px; box-shadow:0 14px 36px rgba(16,20,46,0.2); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);">
+    <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:11px 22px; min-width:130px; border-radius:999px; font-size:13px; font-weight:700; text-decoration:none; transition:all .2s ease; color:#5A5F86; background:transparent;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+      <span>Events</span>
+    </a>
+    <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:11px 22px; min-width:130px; border-radius:999px; font-size:13px; font-weight:700; text-decoration:none; transition:all .2s ease; background:#8C7AE6; color:#0A0F26;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+      <span>Consultancy</span>
+    </a>
   </div>
 </div></div></div>
 
