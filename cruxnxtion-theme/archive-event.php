@@ -264,7 +264,8 @@ if ( ! defined( 'ABSPATH' ) ) {
   /* Desktop Viewport (> 900px) */
   @media (min-width: 901px) {
     header {
-      padding: 0 64px !important;
+      min-height: 80px !important;
+      padding: 14px 64px !important;
     }
     header > nav {
       display: flex !important;
@@ -660,6 +661,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
     .mega:hover .mega-menu { display: block !important; }
     .mega:hover .mega-chevron { transform: rotate(180deg); }
+  
+  /* Slanted Header Switcher Pod & Hover States */
+  .crux-sw-pod { transition: transform .2s ease, box-shadow .2s ease; }
+  .crux-sw-pod:hover { transform: translateY(-1px); }
+  .crux-sw-tab--inactive-dark:hover { color: #FFFFFF !important; background: rgba(255,255,255,0.08) !important; }
+  .crux-sw-tab--inactive-light:hover { color: #10142E !important; background: rgba(108,88,219,0.12) !important; }
+
   </style>
 
 
@@ -672,7 +680,7 @@ if ( ! defined( 'ABSPATH' ) ) {
   </div>
 
   <!-- HEADER -->
-  <header style="position:sticky; top:0; z-index:1000; display:flex; align-items:center; justify-content:space-between; padding:0 20px; border-bottom:1px solid rgba(30,43,94,0.85); background:rgba(10,15,38,0.94); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);">
+  <header style="position:sticky; top:0; z-index:1000; display:flex; align-items:center; justify-content:space-between; min-height:80px; padding:14px 20px; border-bottom:1px solid rgba(30,43,94,0.85); background:rgba(10,15,38,0.94); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);">
     <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="display:flex; align-items:center;"><img src="<?php echo crux_get_blob_url( "e4d72651b77d4c3cc1c086d9f6031149" ); ?>" alt="Crux Nxtion Events" style="height:42px; width:auto; display:block; background:#FFFFFF; padding:4px 12px 4px 12px; border-radius:8px;"></a>
     <nav style="display:flex; align-items:center; gap:28px;">
       <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="color:#F4F5FA; font-size:14px; font-weight:600; letter-spacing:0.2px;">Home</a>
@@ -765,7 +773,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             </div>
             <!-- Column 3: NOT SURE WHICH? Photo Card -->
             <div style="position:relative; border-radius:14px; overflow:hidden; min-height:240px; display:flex; flex-direction:column; justify-content:flex-end;">
-              <img src="<?php echo crux_get_blob_url( '2643e6061a232eeda4f8344fe6df6166' ); ?>" alt="Crux Nxtion Celebrations" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 20%;">
+              <img src="<?php echo crux_get_blob_url( 'f269f7683bdb441b9b45df1336cd1485' ); ?>" alt="Crux Nxtion Founder Bambad" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 20%;">
               <div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(10,15,38,0.95) 0%, rgba(10,15,38,0.3) 70%);"></div>
               <div style="position:relative; z-index:1; padding:20px;">
                 <span class="bebas" style="font-size:24px; color:#FFFFFF; display:block; margin-bottom:8px;">NOT SURE WHICH?</span>
@@ -782,9 +790,11 @@ if ( ! defined( 'ABSPATH' ) ) {
       <a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="color:#F4F5FA; font-size:14px; font-weight:600; letter-spacing:0.2px;">Contact</a>
     </nav>
         <div class="header-desktop-actions" style="display:flex; align-items:center; gap:16px;">
-      <div class="site-wing-toggle" style="display:inline-flex; align-items:center; background:rgba(10,15,38,0.92); border:1.5px solid #1E2B5E; padding:4px 6px; gap:6px; clip-path:polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); box-shadow:0 4px 16px rgba(0,0,0,0.3);">
-        <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="font-size:12px; font-weight:700; padding:8px 18px; background:#1E48B0; color:#FFFFFF; --sl:7px; line-height:1.2; text-decoration:none;" class="bx">Events</a>
-        <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="font-size:12px; font-weight:700; padding:8px 18px; color:#A3A9C8; background:transparent; --sl:7px; --bc:#A3A9C855; line-height:1.2; text-decoration:none;" class="bx">Consultancy</a>
+      <div class="site-wing-toggle crux-sw-pod crux-sw-pod--dark" style="display:inline-flex; align-items:center; padding:1.5px; background:linear-gradient(135deg, #2A3F7A 0%, #15224A 100%); clip-path:polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%); box-shadow:0 4px 16px rgba(0,0,0,0.35); filter:drop-shadow(0 2px 6px rgba(0,0,0,0.25));">
+        <div class="crux-sw-inner" style="display:inline-flex; align-items:center; background:#020512; padding:3px; gap:3px; clip-path:polygon(7px 0, 100% 0, calc(100% - 7px) 100%, 0 100%);">
+          <a href="<?php echo esc_url( home_url( "/" ) ); ?>" class="crux-sw-tab crux-sw-tab--active-events" style="display:inline-flex; align-items:center; justify-content:center; padding:7px 18px; font-size:12px; font-weight:700; letter-spacing:0.3px; text-transform:uppercase; text-decoration:none; line-height:1.2; background:#1E48B0; color:#FFFFFF; clip-path:polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%); box-shadow:0 2px 8px rgba(30,72,176,0.5);">Events</a>
+          <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" class="crux-sw-tab crux-sw-tab--inactive-dark" style="display:inline-flex; align-items:center; justify-content:center; padding:7px 18px; font-size:12px; font-weight:600; letter-spacing:0.3px; text-transform:uppercase; text-decoration:none; line-height:1.2; background:transparent; color:#8E96BB; clip-path:polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%); transition:all .2s ease;">Consultancy</a>
+        </div>
       </div>
       <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:13px; padding:12px 22px; --sl:8px;" class="bx">Plan An Event</a>
     </div>
