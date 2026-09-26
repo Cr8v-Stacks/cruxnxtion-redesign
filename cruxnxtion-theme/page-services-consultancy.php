@@ -771,7 +771,7 @@ if ( ! defined( 'ABSPATH' ) ) {
       <a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="color:#10142E; font-size:14px; font-weight:600; letter-spacing:0.2px;">Contact</a>
     </nav>
         <div class="header-desktop-actions" style="display:flex; align-items:center; gap:16px;">
-      <div style="display:flex; gap:6px;">
+      <div style="background:rgba(255,255,255,0.96); border:1.5px solid #E1DEF3; box-shadow:0 4px 16px rgba(16,20,46,0.06); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); display:flex; padding:4px 6px; gap:6px; border-radius:4px;">
         <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="font-size:12px; font-weight:700; padding:8px 16px; color:#5A5F86; --sl:8px; --bc:#5A5F8655;" class="bx">Events</a>
         <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="font-size:12px; font-weight:700; padding:8px 16px; background:#8C7AE6; color:#0A0F26; --sl:7px;" class="bx">Consultancy</a>
       </div>

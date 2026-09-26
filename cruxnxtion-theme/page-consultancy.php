@@ -95,7 +95,14 @@ if ( ! defined( 'ABSPATH' ) ) {
   .mdrawer-body .msub { display: block; padding: 6px 0; font-size: 13.5px; text-decoration: none; border-bottom: 1px solid rgba(16,20,46,0.06); }
   .mdrawer-body .msub:last-child { border-bottom: none; }
   .cb { opacity:0; animation-duration:8s; animation-iteration-count:infinite; animation-timing-function:ease; animation-fill-mode:both; }
-  .cb1 { animation-name:cb1; } .cb2 { animation-name:cb2; } .cb3 { animation-name:cb3; } .cb4 { animation-name:cb4; } .cbt { animation-name:cbt; }
+  .cb1 { animation-name:cb1 !important; } .cb2 { animation-name:cb2 !important; } .cb3 { animation-name:cb3 !important; } .cb4 { animation-name:cb4 !important; } .cbt { animation-name:cbt !important; }
+  @keyframes gentleBounce {
+    0%, 100% { transform: rotate(var(--r, -1deg)) translateY(0); }
+    50% { transform: rotate(var(--r, -1deg)) translateY(-7px); }
+  }
+  .discovery-chat-bounce {
+    animation: gentleBounce 4.2s ease-in-out infinite !important;
+  }
   @keyframes cb1 { 0%,2% { opacity:0; transform:translateY(12px); } 6%,93% { opacity:1; transform:none; } 98%,100% { opacity:0; transform:none; } }
   @keyframes cb2 { 0%,17% { opacity:0; transform:translateY(12px); } 21%,93% { opacity:1; transform:none; } 98%,100% { opacity:0; transform:none; } }
   @keyframes cb3 { 0%,34% { opacity:0; transform:translateY(12px); } 38%,93% { opacity:1; transform:none; } 98%,100% { opacity:0; transform:none; } }
@@ -327,15 +334,28 @@ if ( ! defined( 'ABSPATH' ) ) {
       padding-left: 64px !important;
       padding-right: 64px !important;
     }
+    #soundFamiliarSection, section#soundFamiliarSection {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+    #soundFamiliarScroller {
+      padding-left: 64px !important;
+      padding-right: 64px !important;
+    }
     .hero-content {
       padding: 0 64px !important;
     }
     h1.hero-title, [data-m~=root] section h1 {
-      font-size: clamp(56px, 6.8vw, 77px) !important;
+      line-height: 0.92 !important;
+    }
+    .consultancy-hero-main {
+      font-size: clamp(48px, 5.6vw, 68px) !important;
       line-height: 0.92 !important;
     }
     .consultancy-hero-sub {
-      font-size: clamp(62px, 7.8vw, 85px) !important;
+      font-size: clamp(68px, 8.5vw, 98px) !important;
       line-height: 0.92 !important;
     }
   }
@@ -666,15 +686,36 @@ if ( ! defined( 'ABSPATH' ) ) {
       height: auto !important;
       position: static !important;
     }
+    .sound-familiar-header {
+      padding-left: 20px !important;
+      padding-right: 20px !important;
+    }
+    #soundFamiliarScroller {
+      padding-left: 20px !important;
+      padding-right: 20px !important;
+    }
+    .consultancy-hero-main {
+      font-size: clamp(34px, 8.5vw, 52px) !important;
+    }
+    .consultancy-hero-sub {
+      font-size: clamp(40px, 10vw, 64px) !important;
+    }
     .consultancy-hero-visual .tilt-straighten {
       position: static !important;
-      transform: none !important;
       width: 100% !important;
       height: auto !important;
-      box-shadow: 0 4px 14px rgba(16,20,46,0.08) !important;
+      box-shadow: 0 4px 14px rgba(16,20,46,0.1) !important;
+      border-radius: 14px !important;
+    }
+    .consultancy-hero-visual .tilt-straighten:first-child {
+      transform: rotate(-2.5deg) !important;
+    }
+    .consultancy-hero-visual .tilt-straighten:last-child {
+      transform: rotate(2.5deg) !important;
     }
     .consultancy-hero-visual .tilt-straighten img {
-      height: 140px !important;
+      height: 145px !important;
+      object-fit: cover !important;
     }
     .consultancy-hero-visual .float {
       display: none !important;
@@ -785,7 +826,7 @@ if ( ! defined( 'ABSPATH' ) ) {
       <a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="color:#10142E; font-size:14px; font-weight:600; letter-spacing:0.2px;">Contact</a>
     </nav>
         <div class="header-desktop-actions" style="display:flex; align-items:center; gap:16px;">
-      <div style="display:flex; gap:6px;">
+      <div style="background:rgba(255,255,255,0.96); border:1.5px solid #E1DEF3; box-shadow:0 4px 16px rgba(16,20,46,0.06); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); display:flex; padding:4px 6px; gap:6px; border-radius:4px;">
         <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="font-size:12px; font-weight:700; padding:8px 16px; color:#5A5F86; --sl:8px; --bc:#5A5F8655;" class="bx">Events</a>
         <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="font-size:12px; font-weight:700; padding:8px 16px; background:#8C7AE6; color:#0A0F26; --sl:7px;" class="bx">Consultancy</a>
       </div>
@@ -889,8 +930,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div class="reveal">
       <span class="eyebrow" style="color:#6C58DB; font-weight:700; letter-spacing:1.5px; font-size:12px;">Crux Nxtion Consultancy • Sheffield &amp; UK-Wide</span>
       <h1 class="bebas hero-title" style="margin:16px 0px 20px 0px; color:#10142E; max-width:680px;">
-        <span class="consultancy-hero-main" style="display:block; font-size:clamp(56px, 6.8vw, 77px); line-height:0.92;">YOU'VE GOT THE IDEA.</span>
-        <span class="consultancy-hero-sub" style="display:block; font-size:clamp(62px, 7.8vw, 85px); line-height:0.92; color:#6C58DB; margin-top:4px;">LET'S BUILD THE BUSINESS.</span>
+        <span class="consultancy-hero-main" style="display:block; font-size:clamp(48px, 5.6vw, 68px); line-height:0.92;">YOU'VE GOT THE IDEA.</span>
+        <span class="consultancy-hero-sub" style="display:block; font-size:clamp(68px, 8.5vw, 98px); line-height:0.92; color:#6C58DB; margin-top:4px;">LET'S BUILD THE BUSINESS.</span>
       </h1>
       <p style="font-size:17px; line-height:1.7; color:#3A3F66; max-width:580px; margin:0px 0px 32px 0px;">Whether you're starting from scratch, trying to grow, or just need a clearer direction — sit down with us. We'll talk it through, then turn it into a plan you can actually follow.</p>
       <div style="display:flex; gap:16px; flex-wrap:wrap;">
@@ -908,24 +949,22 @@ if ( ! defined( 'ABSPATH' ) ) {
         <!-- Photo 1: Bare Retail Unit / Office -->
         <div class="tilt-straighten" style="--r:-3.5deg; transform:rotate(var(--r)); width:260px; height:370px; background:#FFFFFF; border-radius:18px; overflow:hidden; box-shadow:0 18px 40px rgba(16,20,46,0.18); border:2px solid #E1DEF3; position:absolute; left:15px; top:20px; z-index:1;">
           <div style="height:270px; overflow:hidden; background:#F4F5FA;">
-            <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/consultancy-retail-unit.jpg' ); ?>" alt="Before: Sourcing & Unit Acquisition" style="width:100%; height:100%; object-fit:cover; display:block;">
+            <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/consultancy-retail-unit.jpg' ); ?>" alt="Before: We find the retail shop/unit/office" style="width:100%; height:100%; object-fit:cover; display:block;">
           </div>
           <div style="padding:12px 14px; background:#FFFFFF;">
             <span style="font-size:10px; font-weight:800; letter-spacing:1px; text-transform:uppercase; color:#6C58DB; display:block;">BEFORE</span>
-            <strong style="font-size:13px; font-weight:700; color:#10142E; display:block; margin-top:2px;">Location &amp; Unit Acquisition</strong>
-            <span style="font-size:11.5px; color:#5A5F86; display:block; margin-top:2px;">We source the retail shop/office</span>
+            <strong style="font-size:13px; font-weight:700; color:#10142E; display:block; margin-top:4px; line-height:1.35;">We find the retail shop/unit/office</strong>
           </div>
         </div>
 
         <!-- Photo 2: Stocked & Fitted Store -->
-        <div class="tilt-straighten" style="--r:3deg; transform:rotate(var(--r)); width:270px; height:390px; background:#FFFFFF; border-radius:18px; overflow:hidden; box-shadow:0 22px 50px rgba(108,88,219,0.25); border:2.5px solid #8C7AE6; position:absolute; right:10px; top:10px; z-index:2;">
+        <div class="tilt-straighten" style="--r:3.5deg; transform:rotate(var(--r)); width:270px; height:390px; background:#FFFFFF; border-radius:18px; overflow:hidden; box-shadow:0 22px 50px rgba(108,88,219,0.25); border:2.5px solid #8C7AE6; position:absolute; right:10px; top:10px; z-index:2;">
           <div style="height:280px; overflow:hidden; background:#F4F5FA;">
-            <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/consultancy-retail-stocked.jpg' ); ?>" alt="After: Fitout, Stocking & Launch" style="width:100%; height:100%; object-fit:cover; display:block;">
+            <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/consultancy-retail-stocked.jpg' ); ?>" alt="After: We build it/stock it/set up" style="width:100%; height:100%; object-fit:cover; display:block;">
           </div>
           <div style="padding:12px 14px; background:#FFFFFF;">
             <span style="font-size:10px; font-weight:800; letter-spacing:1px; text-transform:uppercase; color:#BA0000; display:block;">AFTER</span>
-            <strong style="font-size:13px; font-weight:700; color:#10142E; display:block; margin-top:2px;">Fitout, Stocking &amp; Setup</strong>
-            <span style="font-size:11.5px; color:#5A5F86; display:block; margin-top:2px;">We build it, stock it &amp; launch</span>
+            <strong style="font-size:13px; font-weight:700; color:#10142E; display:block; margin-top:4px; line-height:1.35;">We build it/stock it/set up</strong>
           </div>
         </div>
 
@@ -936,18 +975,18 @@ if ( ! defined( 'ABSPATH' ) ) {
         <span class="bebas" style="font-size:20px; line-height:1.1; display:block;">FROM BLUEPRINT<br>TO FULL SETUP</span>
       </div>
 
-      <!-- Scaled-Down Full Discovery Chat Box (Preserving All 4 Dialogue Bubbles) -->
+      <!-- Scaled-Down Full Discovery Chat Box (Animated Dialogue Loop + Subtle Gentle Bounce) -->
       <div style="position:absolute; left:-10px; bottom:10px; width:360px; z-index:5;" data-m="hv-chat full">
-        <div class="tilt-straighten" style="--r:-1deg; transform:rotate(var(--r)); background:rgba(16,20,46,0.96) !important; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border:1.5px solid #3A3F72; border-radius:20px; padding:16px 18px; display:flex; flex-direction:column; gap:8px; box-shadow:0 18px 40px rgba(0,0,0,0.4);">
+        <div class="discovery-chat-bounce" style="--r:-1deg; transform:rotate(var(--r)); background:rgba(16,20,46,0.96) !important; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border:1.5px solid #3A3F72; border-radius:20px; padding:16px 18px; display:flex; flex-direction:column; gap:8px; box-shadow:0 18px 40px rgba(0,0,0,0.4);">
           <div style="display:flex; align-items:center; gap:8px; padding-bottom:8px; border-bottom:1.5px dashed #2A2F5C;">
             <span class="pulse-dot" style="width:8px; height:8px; border-radius:50%; background:#3DDC84;"></span>
             <span style="font-size:12px; font-weight:700; color:#F2F1F8;">Discovery call</span>
             <span style="font-size:11px; color:#9A9AC0; margin-left:auto;">with Crux Nxtion</span>
           </div>
-          <div class="bubble-in cb cb1" style="align-self:flex-end; max-width:85%; background:#2A2F5C; color:#F2F1F8; font-size:12px; line-height:1.45; padding:9px 13px; border-radius:14px 14px 2px 14px;">I've got an idea. I just don't know where to start.</div>
-          <div class="bubble-in cb cb2" style="align-self:flex-start; max-width:85%; background:#8C7AE6; color:#10142E; font-size:12px; font-weight:600; line-height:1.45; padding:9px 13px; border-radius:14px 14px 14px 2px;">Good — that's the right place to start. Tell us about it.</div>
-          <div class="bubble-in cb cb3" style="align-self:flex-end; max-width:85%; background:#2A2F5C; color:#F2F1F8; font-size:12px; line-height:1.45; padding:9px 13px; border-radius:14px 14px 2px 14px;">Also… we're busy, but the business isn't really growing.</div>
-          <div class="bubble-in cb cb4" style="align-self:flex-start; max-width:85%; background:#8C7AE6; color:#10142E; font-size:12px; font-weight:600; line-height:1.45; padding:9px 13px; border-radius:14px 14px 14px 2px;">We'll look at both. First: what does a good year look like for you?</div>
+          <div class="cb cb1" style="align-self:flex-end; max-width:85%; background:#2A2F5C; color:#F2F1F8; font-size:12px; line-height:1.45; padding:9px 13px; border-radius:14px 14px 2px 14px;">I've got an idea. I just don't know where to start.</div>
+          <div class="cb cb2" style="align-self:flex-start; max-width:85%; background:#8C7AE6; color:#10142E; font-size:12px; font-weight:600; line-height:1.45; padding:9px 13px; border-radius:14px 14px 14px 2px;">Good — that's the right place to start. Tell us about it.</div>
+          <div class="cb cb3" style="align-self:flex-end; max-width:85%; background:#2A2F5C; color:#F2F1F8; font-size:12px; line-height:1.45; padding:9px 13px; border-radius:14px 14px 2px 14px;">Also… we're busy, but the business isn't really growing.</div>
+          <div class="cb cb4" style="align-self:flex-start; max-width:85%; background:#8C7AE6; color:#10142E; font-size:12px; font-weight:600; line-height:1.45; padding:9px 13px; border-radius:14px 14px 14px 2px;">We'll look at both. First: what does a good year look like for you?</div>
           <div class="cb cbt" style="align-self:flex-start; display:flex; gap:4px; padding:6px 10px; background:#2A2F5C; border-radius:8px;">
             <span class="cdot cdot1" style="width:5px; height:5px; border-radius:50%; background:#9A9AC0;"></span>
             <span class="cdot cdot2" style="width:5px; height:5px; border-radius:50%; background:#9A9AC0;"></span>
@@ -960,12 +999,12 @@ if ( ! defined( 'ABSPATH' ) ) {
   </section>
 
   <!-- 2 SOUND FAMILIAR -->
-  <section style="min-height:671px; padding:60px 0 56px; background:#FFFFFF;" data-m="nomin">
-    <div style="padding:0 clamp(24px, 5vw, 64px); display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:40px;" class="reveal">
+  <section id="soundFamiliarSection" style="min-height:671px; padding:60px 0 56px; background:#FFFFFF; width:100%; max-width:100%;" data-m="nomin">
+    <div class="sound-familiar-header reveal" style="padding:0 64px; display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:40px;">
       <div><span class="eyebrow">Sound Familiar?</span><h2 class="bebas" style="font-size:40px; margin:12px 0px 0px 0px; color:#10142E;">THINGS FOUNDERS SAY<br>BEFORE THEY CALL US.</h2></div>
       <div style="display:flex; gap:12px;" data-m="hide"><button onclick="prevSoundFamiliar()" aria-label="Previous" style="width:44px; height:44px; background:#F3F1FC; color:#10142E; font-size:18px; display:inline-flex; align-items:center; justify-content:center; --sl:7px; cursor:pointer;" class="bx">←</button><button onclick="nextSoundFamiliar()" aria-label="Next" style="width:44px; height:44px; background:#8C7AE6; color:#10142E; font-size:18px; display:inline-flex; align-items:center; justify-content:center; --sl:7px; cursor:pointer;" class="bx">→</button></div>
     </div>
-    <div id="soundFamiliarScroller" style="overflow-x:auto; scrollbar-width:none; padding-left:64px;" class="reveal" data-m="scroller"><div style="display:flex; gap:24px; transition:transform .4s ease;" class="carousel-track" data-m="track">
+    <div id="soundFamiliarScroller" style="overflow-x:auto; scrollbar-width:none; padding-left:64px; padding-right:64px; width:100%;" class="reveal" data-m="scroller"><div style="display:flex; gap:24px; transition:transform .4s ease;" class="carousel-track" data-m="track">
         <div class="bento-tile" style="flex:0 0 400px; height:500px; position:relative; border-radius:22px; overflow:hidden; border:1.5px solid #E1DEF3;">
           <img src="<?php echo crux_get_blob_url( "19a249fe66d9d8620a7283402ecde11e" ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:top;">
           <div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(16,20,46,0.97) 0%, rgba(16,20,46,0.55) 48%, rgba(16,20,46,0.05) 100%);"></div>

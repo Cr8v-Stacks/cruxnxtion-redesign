@@ -165,7 +165,7 @@ if ( ! defined( 'ABSPATH' ) ) {
       <a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="color:#F4F5FA; font-size:14px; font-weight:600; letter-spacing:0.2px;">Contact</a>
     </nav>
         <div class="header-desktop-actions" style="display:flex; align-items:center; gap:16px;">
-      <div style="display:flex; gap:6px;">
+      <div style="background:rgba(10,15,38,0.92); border:1.5px solid #1E2B5E; box-shadow:0 4px 16px rgba(0,0,0,0.3); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); display:flex; padding:4px 6px; gap:6px; border-radius:4px;">
         <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="font-size:12px; font-weight:700; padding:8px 16px; background:#1E48B0; color:#FFFFFF; --sl:7px;" class="bx">Events</a>
         <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="font-size:12px; font-weight:700; padding:8px 16px; color:#A3A9C8; --sl:8px; --bc:#A3A9C855;" class="bx">Consultancy</a>
       </div>

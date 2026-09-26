@@ -777,7 +777,7 @@ if ( ! defined( 'ABSPATH' ) ) {
       <a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="color:#10142E; font-size:14px; font-weight:600; letter-spacing:0.2px;">Contact</a>
     </nav>
         <div class="header-desktop-actions" style="display:flex; align-items:center; gap:16px;">
-      <div style="display:flex; gap:6px;">
+      <div style="background:rgba(10,15,38,0.92); border:1.5px solid #1E2B5E; box-shadow:0 4px 16px rgba(0,0,0,0.3); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); display:flex; padding:4px 6px; gap:6px; border-radius:4px;">
         <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="font-size:12px; font-weight:700; padding:8px 16px; background:#1E48B0; color:#FFFFFF; --sl:7px;" class="bx">Events</a>
         <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="font-size:12px; font-weight:700; padding:8px 16px; color:#A3A9C8; --sl:8px; --bc:#A3A9C855;" class="bx">Consultancy</a>
       </div>
@@ -1009,33 +1009,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;" data-m="g1">
           <div style="background:#0D1330; border-radius:14px; overflow:hidden; border:1px solid #1E2B5E;">
-            <div style="height:240px; overflow:hidden;"><img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/consultancy-retail-unit.jpg' ); ?>" alt="We find the retail shop/unit/office" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
+            <div style="height:320px; overflow:hidden;"><img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/consultancy-retail-unit.jpg' ); ?>" alt="Before: We find the retail shop/unit/office" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></div>
             <div style="padding:14px 18px; display:flex; justify-content:space-between; align-items:center;">
-              <span style="font-size:12px; font-weight:800; color:#8C7AE6; letter-spacing:0.8px; text-transform:uppercase;">Step 01: Siting &amp; Acquisition</span>
-              <span style="font-size:12.5px; color:#FFFFFF; font-weight:700;">We find the retail shop/unit/office</span>
+              <span style="font-size:11px; font-weight:800; color:#8C7AE6; letter-spacing:1px; text-transform:uppercase; background:rgba(140,122,230,0.15); padding:4px 10px; border-radius:4px;">BEFORE</span>
+              <span style="font-size:13.5px; color:#FFFFFF; font-weight:700;">We find the retail shop/unit/office</span>
             </div>
           </div>
 
           <div style="background:#0D1330; border-radius:14px; overflow:hidden; border:1px solid #1E2B5E;">
-            <div style="height:240px; overflow:hidden;"><img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/consultancy-retail-stocked.jpg' ); ?>" alt="We build it/stock it/set up" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
+            <div style="height:320px; overflow:hidden;"><img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/consultancy-retail-stocked.jpg' ); ?>" alt="After: We build it/stock it/set up" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></div>
             <div style="padding:14px 18px; display:flex; justify-content:space-between; align-items:center;">
-              <span style="font-size:12px; font-weight:800; color:#BA0000; letter-spacing:0.8px; text-transform:uppercase;">Step 02: Full Fitout &amp; Launch</span>
-              <span style="font-size:12.5px; color:#FFFFFF; font-weight:700;">We build it/stock it/set up</span>
+              <span style="font-size:11px; font-weight:800; color:#BA0000; letter-spacing:1px; text-transform:uppercase; background:rgba(186,0,0,0.15); padding:4px 10px; border-radius:4px;">AFTER</span>
+              <span style="font-size:13.5px; color:#FFFFFF; font-weight:700;">We build it/stock it/set up</span>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CLOSING MANIFESTO -->
-  <section style="padding:70px 20px; background:#10142E; text-align:center;">
-    <div style="max-width:820px; margin:0 auto;" class="reveal">
-      <span class="eyebrow" style="color:#A9C0F5 !important;">You Are In The Right Place</span>
-      <h2 class="bebas" style="font-size: clamp(34px, 4.5vw, 54px); color:#FFFFFF; margin:16px 0 20px; line-height:1.05;">WHETHER LAUNCHING A BRAND-NEW FIRM, SCALING AN ESTABLISHED OPERATION, OR PLANNING A LANDMARK EVENT — CRUX NXTION IS BUILT TO MAKE IT HAPPEN.</h2>
-      <div style="display:flex; justify-content:center; gap:16px; margin-top:28px; flex-wrap:wrap;">
-        <a href="<?php echo esc_url( home_url( '/contact/?type=events' ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:15px; padding:16px 32px; --sl:10px;" class="bx">Plan An Event →</a>
-        <a href="https://calendly.com/cruxnxtiongroupofcompany-info" target="_blank" rel="noopener" style="background:#8C7AE6; color:#10142E; font-weight:700; font-size:15px; padding:16px 32px; --sl:10px;" class="bx">Book A Discovery Call →</a>
       </div>
     </div>
   </section>
