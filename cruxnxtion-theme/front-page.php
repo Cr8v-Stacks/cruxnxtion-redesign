@@ -314,6 +314,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
   /* Mobile Viewport / Minimized Browser (<= 900px) */
   @media (max-width: 900px) {
+    .also-from-crux-content { padding: 36px 20px !important; }
+
     [data-m~=root] {
       width: 100% !important;
       max-width: 100% !important;
@@ -1035,7 +1037,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <!-- ALSO FROM CRUX — consultancy fork -->
   <section style="min-height:560px; display:flex; flex-direction:column; justify-content:center; padding:40px 20px 44px 20px;" data-m="nomin">
     <div style="display:grid; grid-template-columns:1fr 1fr; min-height:660px; border-radius:26px; overflow:hidden; border:1.5px solid #1E2B5E; background:#111838;" class="reveal" data-m="g1">
-      <div style=" padding:44px 20px 44px 20px; display:flex; flex-direction:column; justify-content:center;" class="reveal">
+      <div style=" padding:44px 50px 44px 60px; display:flex; flex-direction:column; justify-content:center;" class="reveal also-from-crux-content">
         <span class="eyebrow" style="color:#B7A6FF !important;">Also From Crux Nxtion</span>
         <h2 class="bebas" style="font-size:40px; margin:14px 0px 18px 0px; color:#F4F5FA;">GOT A BUSINESS BEHIND THE EVENT?</h2>
         <p style="font-size:16px; line-height:1.75; color:#C5CADF; max-width:480px; margin:0px 0px 26px 0px;">Crux Nxtion Consultancy turns business ideas into businesses that work. Whether you are starting from scratch, trying to grow, or need a clearer direction, we help you make smarter business moves.</p>
@@ -1051,17 +1053,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <img src="<?php echo crux_get_blob_url( "5b1a6ab37f0230a96cac807ce57c7983" ); ?>" alt="A Crux Nxtion Consultancy session" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
         <div style="position:absolute; inset:0; background:linear-gradient(90deg, rgba(27,32,72,0.85) 0%, rgba(91,141,239,0.12) 60%);"></div>
 
-        <!-- Real Transformation Cards overlay -->
-        <div style="position:absolute; right:20px; top:24px; display:flex; gap:12px; z-index:2;" data-m="hide">
-          <div class="tilt-straighten" style="--r:-3deg; transform:rotate(var(--r)); width:135px; background:#FFFFFF; border-radius:12px; overflow:hidden; box-shadow:0 12px 28px rgba(0,0,0,0.3); border:1.5px solid #E1DEF3;">
-            <div style="height:120px; overflow:hidden;"><img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/consultancy-retail-unit.jpg' ); ?>" alt="We find the retail shop/unit/office" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
-            <div style="padding:6px 8px; background:#FFFFFF; text-align:center;"><p style="font-size:9.5px; font-weight:700; color:#10142E; margin:0; line-height:1.25;">We find the retail shop/unit/office</p></div>
-          </div>
-          <div class="tilt-straighten" style="--r:3deg; transform:rotate(var(--r)); width:135px; background:#FFFFFF; border-radius:12px; overflow:hidden; box-shadow:0 12px 28px rgba(0,0,0,0.3); border:1.5px solid #8C7AE6;">
-            <div style="height:120px; overflow:hidden;"><img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/consultancy-retail-stocked.jpg' ); ?>" alt="We build it/stock it/set up" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
-            <div style="padding:6px 8px; background:#FFFFFF; text-align:center;"><p style="font-size:9.5px; font-weight:700; color:#10142E; margin:0; line-height:1.25;">We build it/stock it/set up</p></div>
-          </div>
-        </div>
+
 
         <div style="position:absolute; left:30px; bottom:30px; right:30px; display:flex; flex-direction:column; gap:10px; z-index:2;">
           <div class="float" style="--r:0deg; align-self:flex-end; max-width:85%; background:#1E2B5E; color:#F4F5FA; font-size:13px; line-height:1.5; padding:11px 15px; border-radius:16px 16px 4px 16px;">I've got an idea. I just don't know where to start.</div>
@@ -1289,15 +1281,15 @@ if ( ! defined( 'ABSPATH' ) ) {
   </footer>
 
 <div class="msw">
-  <div style="pointer-events:auto; display:inline-flex; align-items:center; background:rgba(10,15,38,0.95); border:1.5px solid #1E2B5E; padding:5px 6px; gap:6px; clip-path:polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%); box-shadow:0 14px 36px rgba(0,0,0,0.6); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);">
-    <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:11px 22px; min-width:130px; font-size:13px; font-weight:700; background:#1E48B0; color:#FFFFFF; --sl:7px; text-decoration:none;" class="bx">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-      <span>Events</span>
-    </a>
-    <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:11px 22px; min-width:130px; font-size:13px; font-weight:700; color:#A3A9C8; background:transparent; --sl:7px; --bc:#A3A9C855; text-decoration:none;" class="bx">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-      <span>Consultancy</span>
-    </a>
+  <div class="crux-sw-pod crux-sw-pod--dark" style="pointer-events:auto; display:inline-flex; align-items:center; padding:1.5px; background:linear-gradient(135deg, #2A3F7A 0%, #15224A 100%); clip-path:polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%); box-shadow:0 14px 36px rgba(0,0,0,0.65); filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4));">
+    <div class="crux-sw-inner" style="display:inline-flex; align-items:center; background:#020512; padding:4px; gap:4px; clip-path:polygon(7px 0, 100% 0, calc(100% - 7px) 100%, 0 100%);">
+      <a href="<?php echo esc_url( home_url( "/" ) ); ?>" class="crux-sw-tab crux-sw-tab--active-events" style="display:inline-flex; align-items:center; justify-content:center; padding:11px 22px; min-width:140px; font-size:13px; font-weight:700; letter-spacing:0.3px; text-transform:uppercase; text-decoration:none; line-height:1.2; background:#1E48B0; color:#FFFFFF; clip-path:polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%); box-shadow:0 2px 8px rgba(30,72,176,0.5);">
+        <span>Events</span>
+      </a>
+      <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" class="crux-sw-tab crux-sw-tab--inactive-dark" style="display:inline-flex; align-items:center; justify-content:center; padding:11px 22px; min-width:140px; font-size:13px; font-weight:600; letter-spacing:0.3px; text-transform:uppercase; text-decoration:none; line-height:1.2; background:transparent; color:#8E96BB; clip-path:polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%); transition:all .2s ease;">
+        <span>Consultancy</span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:6px; display:inline-block; vertical-align:middle;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </a>
+    </div>
   </div>
 </div></div></div>
 
