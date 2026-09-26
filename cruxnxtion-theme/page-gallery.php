@@ -606,8 +606,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     [data-m~=root] > section:first-of-type,
     section[data-m~=g1]:first-of-type,
     [data-m~=hero] {
-      padding-top: 24px !important;
-      padding-bottom: 36px !important;
+      padding-top: 74px !important;
+    padding-bottom: 56px !important;
       padding-left: 20px !important;
       padding-right: 20px !important;
       min-height: 0 !important;
@@ -658,7 +658,9 @@ if ( ! defined( 'ABSPATH' ) ) {
     }
   }
 
-</style>
+    .mega:hover .mega-menu { display: block !important; }
+    .mega:hover .mega-chevron { transform: rotate(180deg); }
+  </style>
 
 
 <div style="width:100%; max-width:100%; margin:0; background:#0A0F26; overflow-x:clip;" data-m="root">
@@ -674,83 +676,101 @@ if ( ! defined( 'ABSPATH' ) ) {
     <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="display:flex; align-items:center;"><img src="<?php echo crux_get_blob_url( "e4d72651b77d4c3cc1c086d9f6031149" ); ?>" alt="Crux Nxtion Events" style="height:42px; width:auto; display:block; background:#FFFFFF; padding:4px 12px 4px 12px; border-radius:8px;"></a>
     <nav style="display:flex; align-items:center; gap:28px;">
       <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="color:#F4F5FA; font-size:14px; font-weight:600; letter-spacing:0.2px;">Home</a>
-      <div class="crux-nav-dropdown">
-        <a href="<?php echo esc_url( home_url( "/services/" ) ); ?>" class="crux-nav-trigger" style="color:#F4F5FA;">
+      <div class="mega" style="position:relative;">
+        <a href="<?php echo esc_url( home_url( "/services/" ) ); ?>" style="color:#F4F5FA; font-size:14px; font-weight:600; letter-spacing:0.2px; display:inline-flex; align-items:center; gap:6px;">
           <span>Services</span>
-          <svg class="crux-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg class="mega-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg" style="transition:transform 0.2s ease;">
             <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </a>
-        <div class="crux-services-card" style="background:#0B112C; border:1px solid #1E2B5E; box-shadow:0 24px 50px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.06);">
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; padding:20px 18px 16px;">
-            <!-- COLUMN 1: EVENTS WING -->
-            <div style="background:rgba(255,255,255,0.02); border:1px solid #1E2B5E; border-top:3px solid #002671; border-radius:10px; padding:14px; display:flex; flex-direction:column; justify-content:space-between;">
-              <div>
-                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
-                  <span style="background:#002671; color:#FFFFFF; font-size:9.5px; font-weight:800; letter-spacing:1px; padding:3px 8px; clip-path:polygon(3px 0,100% 0,calc(100% - 3px) 100%,0 100%);">EVENTS WING</span>
-                  <span style="font-size:10px; font-weight:700; color:#5B8DEF; text-transform:uppercase;">Live Production</span>
-                </div>
-                <div style="display:flex; flex-direction:column; gap:4px;">
-                  <a class="c-dlink" href="<?php echo esc_url( home_url( "/services/" ) ); ?>" style="color:#F4F5FA;">
-                    <span style="width:6px; height:6px; border-radius:50%; background:#5B8DEF; flex:0 0 6px;"></span>
-                    <span style="flex:1;"><strong style="display:block; font-size:12.5px; color:#F4F5FA; font-weight:700;">Event Planning &amp; Management</strong><span style="display:block; font-size:11px; color:#A3A9C8;">Weddings, Galas &amp; Festivals</span></span>
-                  </a>
-                  <a class="c-dlink" href="<?php echo esc_url( home_url( "/services/" ) ); ?>" style="color:#F4F5FA;">
-                    <span style="width:6px; height:6px; border-radius:50%; background:#5B8DEF; flex:0 0 6px;"></span>
-                    <span style="flex:1;"><strong style="display:block; font-size:12.5px; color:#F4F5FA; font-weight:700;">Entertainment &amp; Talent</strong><span style="display:block; font-size:11px; color:#A3A9C8;">Artists, DJs &amp; Cultural Acts</span></span>
-                  </a>
-                  <a class="c-dlink" href="<?php echo esc_url( home_url( "/services/" ) ); ?>" style="color:#F4F5FA;">
-                    <span style="width:6px; height:6px; border-radius:50%; background:#5B8DEF; flex:0 0 6px;"></span>
-                    <span style="flex:1;"><strong style="display:block; font-size:12.5px; color:#F4F5FA; font-weight:700;">Audio-Visual &amp; Staging</strong><span style="display:block; font-size:11px; color:#A3A9C8;">Lighting, Sound &amp; LED Setup</span></span>
-                  </a>
-                  <a class="c-dlink" href="<?php echo esc_url( home_url( "/services/" ) ); ?>" style="color:#F4F5FA;">
-                    <span style="width:6px; height:6px; border-radius:50%; background:#5B8DEF; flex:0 0 6px;"></span>
-                    <span style="flex:1;"><strong style="display:block; font-size:12.5px; color:#F4F5FA; font-weight:700;">On-Site Coordination</strong><span style="display:block; font-size:11px; color:#A3A9C8;">Floor &amp; Vendor Management</span></span>
-                  </a>
-                </div>
-              </div>
-              <div style="margin-top:12px; padding-top:10px; border-top:1px solid #1E2B5E;">
-                <a href="<?php echo esc_url( home_url( "/services/" ) ); ?>" style="color:#5B8DEF; font-size:11.5px; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:4px;">All Event Services &rarr;</a>
-              </div>
+        <div class="mega-menu" style="display:none; position:absolute; left:-180px; top:100%; width:840px; background:#0B112C; border:1px solid #1E2B5E; padding:32px; box-shadow:0 30px 60px rgba(0,0,0,0.5); border-radius:14px; z-index:9999;">
+          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:28px;">
+            <!-- Column 1: EVENTS -->
+            <div>
+              <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;"><span class="bebas" style="font-size:24px; color:#F4F5FA;">EVENTS</span><span style="font-size:10px; letter-spacing:1.5px; font-weight:700; color:#5B8DEF;">FOR YOUR NIGHT</span></div>
+              <a class="mrow" href="<?php echo esc_url( home_url( "/services/" ) ); ?>" style="display:flex; gap:12px; align-items:flex-start; padding:8px 0; color:#F4F5FA; text-decoration:none;">
+                <span style="width:7px; height:7px; border-radius:50%; background:#5B8DEF; margin-top:5px; flex:0 0 7px;"></span>
+                <span>
+                  <span style="display:block; font-size:13px; font-weight:700; color:#F4F5FA;">Event Planning &amp; Management</span>
+                  <span style="display:block; font-size:11px; color:#A3A9C8; margin-top:2px;">End-to-end execution</span>
+                </span>
+              </a>
+              <a class="mrow" href="<?php echo esc_url( home_url( "/services/" ) ); ?>" style="display:flex; gap:12px; align-items:flex-start; padding:8px 0; color:#F4F5FA; text-decoration:none;">
+                <span style="width:7px; height:7px; border-radius:50%; background:#5B8DEF; margin-top:5px; flex:0 0 7px;"></span>
+                <span>
+                  <span style="display:block; font-size:13px; font-weight:700; color:#F4F5FA;">Entertainment &amp; Talent</span>
+                  <span style="display:block; font-size:11px; color:#A3A9C8; margin-top:2px;">DJs, hosts, live performers</span>
+                </span>
+              </a>
+              <a class="mrow" href="<?php echo esc_url( home_url( "/services/" ) ); ?>" style="display:flex; gap:12px; align-items:flex-start; padding:8px 0; color:#F4F5FA; text-decoration:none;">
+                <span style="width:7px; height:7px; border-radius:50%; background:#5B8DEF; margin-top:5px; flex:0 0 7px;"></span>
+                <span>
+                  <span style="display:block; font-size:13px; font-weight:700; color:#F4F5FA;">Event Designs &amp; Production</span>
+                  <span style="display:block; font-size:11px; color:#A3A9C8; margin-top:2px;">Weddings, birthdays, launches</span>
+                </span>
+              </a>
+              <a class="mrow" href="<?php echo esc_url( home_url( "/services/" ) ); ?>" style="display:flex; gap:12px; align-items:flex-start; padding:8px 0; color:#F4F5FA; text-decoration:none;">
+                <span style="width:7px; height:7px; border-radius:50%; background:#5B8DEF; margin-top:5px; flex:0 0 7px;"></span>
+                <span>
+                  <span style="display:block; font-size:13px; font-weight:700; color:#F4F5FA;">Event Marketing &amp; Promotion</span>
+                  <span style="display:block; font-size:11px; color:#A3A9C8; margin-top:2px;">Buzz that fills the room</span>
+                </span>
+              </a>
+              <a class="mrow" href="<?php echo esc_url( home_url( "/services/" ) ); ?>" style="display:flex; gap:12px; align-items:flex-start; padding:8px 0; color:#F4F5FA; text-decoration:none;">
+                <span style="width:7px; height:7px; border-radius:50%; background:#5B8DEF; margin-top:5px; flex:0 0 7px;"></span>
+                <span>
+                  <span style="display:block; font-size:13px; font-weight:700; color:#F4F5FA;">On-Site Coordination</span>
+                  <span style="display:block; font-size:11px; color:#A3A9C8; margin-top:2px;">Day-of logistics &amp; support</span>
+                </span>
+              </a>
             </div>
-
-            <!-- COLUMN 2: CONSULTANCY WING -->
-            <div style="background:rgba(255,255,255,0.02); border:1px solid #1E2B5E; border-top:3px solid #8C7AE6; border-radius:10px; padding:14px; display:flex; flex-direction:column; justify-content:space-between;">
-              <div>
-                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
-                  <span style="background:#8C7AE6; color:#10142E; font-size:9.5px; font-weight:800; letter-spacing:1px; padding:3px 8px; clip-path:polygon(3px 0,100% 0,calc(100% - 3px) 100%,0 100%);">CONSULTANCY WING</span>
-                  <span style="font-size:10px; font-weight:700; color:#8C7AE6; text-transform:uppercase;">Strategy &amp; Scale</span>
-                </div>
-                <div style="display:flex; flex-direction:column; gap:4px;">
-                  <a class="c-dlink" href="<?php echo esc_url( home_url( "/services-consultancy/" ) ); ?>" style="color:#F4F5FA;">
-                    <span style="width:6px; height:6px; border-radius:50%; background:#8C7AE6; flex:0 0 6px;"></span>
-                    <span style="flex:1;"><strong style="display:block; font-size:12.5px; color:#F4F5FA; font-weight:700;">Business Setup &amp; UK Reg</strong><span style="display:block; font-size:11px; color:#A3A9C8;">Structure, HMRC &amp; Roadmap</span></span>
-                  </a>
-                  <a class="c-dlink" href="<?php echo esc_url( home_url( "/services-consultancy/" ) ); ?>" style="color:#F4F5FA;">
-                    <span style="width:6px; height:6px; border-radius:50%; background:#8C7AE6; flex:0 0 6px;"></span>
-                    <span style="flex:1;"><strong style="display:block; font-size:12.5px; color:#F4F5FA; font-weight:700;">Commercial Fitout &amp; Setup</strong><span style="display:block; font-size:11px; color:#A3A9C8;">Unit Sourcing &amp; Shopfitting</span></span>
-                  </a>
-                  <a class="c-dlink" href="<?php echo esc_url( home_url( "/services-consultancy/" ) ); ?>" style="color:#F4F5FA;">
-                    <span style="width:6px; height:6px; border-radius:50%; background:#8C7AE6; flex:0 0 6px;"></span>
-                    <span style="flex:1;"><strong style="display:block; font-size:12.5px; color:#F4F5FA; font-weight:700;">Brand Growth &amp; Scaling</strong><span style="display:block; font-size:11px; color:#A3A9C8;">Marketing &amp; Revenue Engines</span></span>
-                  </a>
-                  <a class="c-dlink" href="<?php echo esc_url( home_url( "/services-consultancy/" ) ); ?>" style="color:#F4F5FA;">
-                    <span style="width:6px; height:6px; border-radius:50%; background:#8C7AE6; flex:0 0 6px;"></span>
-                    <span style="flex:1;"><strong style="display:block; font-size:12.5px; color:#F4F5FA; font-weight:700;">Specialized Visas &amp; Advisory</strong><span style="display:block; font-size:11px; color:#A3A9C8;">Global Talent &amp; Founder Visas</span></span>
-                  </a>
-                </div>
-              </div>
-              <div style="margin-top:12px; padding-top:10px; border-top:1px solid #1E2B5E;">
-                <a href="<?php echo esc_url( home_url( "/services-consultancy/" ) ); ?>" style="color:#8C7AE6; font-size:11.5px; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:4px;">All Strategy Services &rarr;</a>
-              </div>
+            <!-- Column 2: CONSULTANCY -->
+            <div>
+              <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;"><span class="bebas" style="font-size:24px; color:#F4F5FA;">CONSULTANCY</span><span style="font-size:10px; letter-spacing:1.5px; font-weight:700; color:#B7A6FF;">FOR YOUR BUSINESS</span></div>
+              <a class="mrow" href="<?php echo esc_url( home_url( "/services-consultancy/" ) ); ?>" style="display:flex; gap:12px; align-items:flex-start; padding:8px 0; color:#F4F5FA; text-decoration:none;">
+                <span style="width:7px; height:7px; border-radius:50%; background:#8C7AE6; margin-top:5px; flex:0 0 7px;"></span>
+                <span>
+                  <span style="display:block; font-size:13px; font-weight:700; color:#F4F5FA;">Business Setup &amp; Strategy</span>
+                  <span style="display:block; font-size:11px; color:#A3A9C8; margin-top:2px;">From idea to a plan</span>
+                </span>
+              </a>
+              <a class="mrow" href="<?php echo esc_url( home_url( "/services-consultancy/" ) ); ?>" style="display:flex; gap:12px; align-items:flex-start; padding:8px 0; color:#F4F5FA; text-decoration:none;">
+                <span style="width:7px; height:7px; border-radius:50%; background:#8C7AE6; margin-top:5px; flex:0 0 7px;"></span>
+                <span>
+                  <span style="display:block; font-size:13px; font-weight:700; color:#F4F5FA;">Branding &amp; Marketing</span>
+                  <span style="display:block; font-size:11px; color:#A3A9C8; margin-top:2px;">Say what you do</span>
+                </span>
+              </a>
+              <a class="mrow" href="<?php echo esc_url( home_url( "/services-consultancy/" ) ); ?>" style="display:flex; gap:12px; align-items:flex-start; padding:8px 0; color:#F4F5FA; text-decoration:none;">
+                <span style="width:7px; height:7px; border-radius:50%; background:#8C7AE6; margin-top:5px; flex:0 0 7px;"></span>
+                <span>
+                  <span style="display:block; font-size:13px; font-weight:700; color:#F4F5FA;">Business Growth</span>
+                  <span style="display:block; font-size:11px; color:#A3A9C8; margin-top:2px;">More customers &amp; revenue</span>
+                </span>
+              </a>
+              <a class="mrow" href="<?php echo esc_url( home_url( "/services-consultancy/" ) ); ?>" style="display:flex; gap:12px; align-items:flex-start; padding:8px 0; color:#F4F5FA; text-decoration:none;">
+                <span style="width:7px; height:7px; border-radius:50%; background:#8C7AE6; margin-top:5px; flex:0 0 7px;"></span>
+                <span>
+                  <span style="display:block; font-size:13px; font-weight:700; color:#F4F5FA;">Commercial Fitout &amp; Setup</span>
+                  <span style="display:block; font-size:11px; color:#A3A9C8; margin-top:2px;">Unit sourcing &amp; shopfitting</span>
+                </span>
+              </a>
+              <a class="mrow" href="<?php echo esc_url( home_url( "/services-consultancy/" ) ); ?>" style="display:flex; gap:12px; align-items:flex-start; padding:8px 0; color:#F4F5FA; text-decoration:none;">
+                <span style="width:7px; height:7px; border-radius:50%; background:#8C7AE6; margin-top:5px; flex:0 0 7px;"></span>
+                <span>
+                  <span style="display:block; font-size:13px; font-weight:700; color:#F4F5FA;">Specialized Visas &amp; Advisory</span>
+                  <span style="display:block; font-size:11px; color:#A3A9C8; margin-top:2px;">Global talent &amp; founder visas</span>
+                </span>
+              </a>
             </div>
-          </div>
-          <!-- DROPDOWN QUICK ACTION STRIP -->
-          <div style="background:rgba(10,15,38,0.9); border-top:1px solid #1E2B5E; padding:12px 20px; display:flex; align-items:center; justify-content:space-between; border-radius:0 0 12px 12px;">
-            <span style="font-size:11px; color:#A3A9C8; font-weight:600; letter-spacing:0.3px;">Crux Nxtion Dual-Wing Collective</span>
-            <div style="display:flex; gap:8px;">
-              <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="font-size:11px; font-weight:700; padding:6px 14px; background:#BA0000; color:#FFFFFF; text-decoration:none; --sl:4px;" class="bx">Plan Event</a>
-              <a href="https://calendly.com/cruxnxtiongroupofcompany-info" target="_blank" rel="noopener" style="font-size:11px; font-weight:700; padding:6px 14px; background:#8C7AE6; color:#10142E; text-decoration:none; --sl:4px;" class="bx">Discovery Call</a>
+            <!-- Column 3: NOT SURE WHICH? Photo Card -->
+            <div style="position:relative; border-radius:14px; overflow:hidden; min-height:240px; display:flex; flex-direction:column; justify-content:flex-end;">
+              <img src="<?php echo crux_get_blob_url( 'f269f7683bdb441b9b45df1336cd1485' ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+              <div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(10,15,38,0.95) 0%, rgba(10,15,38,0.3) 70%);"></div>
+              <div style="position:relative; z-index:1; padding:20px;">
+                <span class="bebas" style="font-size:24px; color:#FFFFFF; display:block; margin-bottom:8px;">NOT SURE WHICH?</span>
+                <a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="display:inline-block; background:#BA0000; color:#FFFFFF; font-weight:700; font-size:13px; padding:10px 18px; --sl:8px; text-decoration:none;" class="bx">Book A Call &rarr;</a>
+              </div>
             </div>
           </div>
         </div>
@@ -762,9 +782,9 @@ if ( ! defined( 'ABSPATH' ) ) {
       <a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="color:#F4F5FA; font-size:14px; font-weight:600; letter-spacing:0.2px;">Contact</a>
     </nav>
         <div class="header-desktop-actions" style="display:flex; align-items:center; gap:16px;">
-      <div class="site-wing-toggle" style="display:inline-flex; align-items:center; background:rgba(10,15,38,0.7); border:1px solid #1E2B5E; border-radius:999px; padding:3px; gap:2px;">
-        <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="padding:6px 16px; border-radius:999px; font-size:12px; font-weight:700; text-decoration:none; transition:all .2s ease; line-height:1.2; background:#1E48B0; color:#FFFFFF;">Events</a>
-        <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="padding:6px 16px; border-radius:999px; font-size:12px; font-weight:700; text-decoration:none; transition:all .2s ease; line-height:1.2; color:#A3A9C8; background:transparent;">Consultancy</a>
+      <div class="site-wing-toggle" style="display:inline-flex; align-items:center; background:rgba(10,15,38,0.92); border:1.5px solid #1E2B5E; padding:4px 6px; gap:6px; clip-path:polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); box-shadow:0 4px 16px rgba(0,0,0,0.3);">
+        <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="font-size:12px; font-weight:700; padding:8px 18px; background:#1E48B0; color:#FFFFFF; --sl:7px; line-height:1.2; text-decoration:none;" class="bx">Events</a>
+        <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="font-size:12px; font-weight:700; padding:8px 18px; color:#A3A9C8; background:transparent; --sl:7px; --bc:#A3A9C855; line-height:1.2; text-decoration:none;" class="bx">Consultancy</a>
       </div>
       <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:13px; padding:12px 22px; --sl:8px;" class="bx">Plan An Event</a>
     </div>
@@ -984,12 +1004,12 @@ if ( ! defined( 'ABSPATH' ) ) {
   </footer>
 
 <div class="msw">
-  <div style="pointer-events:auto; display:inline-flex; align-items:center; background:rgba(10,15,38,0.94); border:1.5px solid #1E2B5E; border-radius:999px; padding:4px; gap:4px; box-shadow:0 14px 36px rgba(0,0,0,0.6); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);">
-    <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:11px 22px; min-width:130px; border-radius:999px; font-size:13px; font-weight:700; text-decoration:none; transition:all .2s ease; background:#1E48B0; color:#FFFFFF;">
+  <div style="pointer-events:auto; display:inline-flex; align-items:center; background:rgba(10,15,38,0.95); border:1.5px solid #1E2B5E; padding:5px 6px; gap:6px; clip-path:polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%); box-shadow:0 14px 36px rgba(0,0,0,0.6); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);">
+    <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:11px 22px; min-width:130px; font-size:13px; font-weight:700; background:#1E48B0; color:#FFFFFF; --sl:7px; text-decoration:none;" class="bx">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
       <span>Events</span>
     </a>
-    <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:11px 22px; min-width:130px; border-radius:999px; font-size:13px; font-weight:700; text-decoration:none; transition:all .2s ease; color:#A3A9C8; background:transparent;">
+    <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:11px 22px; min-width:130px; font-size:13px; font-weight:700; color:#A3A9C8; background:transparent; --sl:7px; --bc:#A3A9C855; text-decoration:none;" class="bx">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
       <span>Consultancy</span>
     </a>
