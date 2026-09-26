@@ -777,7 +777,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             </div>
             <!-- Column 3: NOT SURE WHICH? Photo Card -->
             <div style="position:relative; border-radius:14px; overflow:hidden; min-height:240px; display:flex; flex-direction:column; justify-content:flex-end;">
-              <img src="<?php echo crux_get_blob_url( 'f269f7683bdb441b9b45df1336cd1485' ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+              <img src="<?php echo crux_get_blob_url( '2643e6061a232eeda4f8344fe6df6166' ); ?>" alt="Crux Nxtion Celebrations" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 20%;">
               <div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(16,20,46,0.95) 0%, rgba(16,20,46,0.3) 70%);"></div>
               <div style="position:relative; z-index:1; padding:20px;">
                 <span class="bebas" style="font-size:24px; color:#FFFFFF; display:block; margin-bottom:8px;">NOT SURE WHICH?</span>
