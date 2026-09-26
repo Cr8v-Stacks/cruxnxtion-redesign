@@ -102,6 +102,180 @@
   .bx:hover { filter:brightness(1.1); transform:translateY(-2px); }
   .bx:active { transform:none; filter:brightness(.95); }
   .bx { transition:transform .2s ease, filter .2s ease; }
+
+  /* Slanted Form Switcher Tabs (Canonical Crux Nxtion .bx System) */
+  .contact-mode-tabs {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .contact-tab-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 22px;
+    font-size: 13.5px;
+    font-weight: 700;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    --sl: 8px;
+    --bc: #D2CEEA;
+    --bw: 1.5px;
+    background: #F7F5FE;
+    color: #5A5F86;
+    cursor: pointer;
+    transition: transform .2s ease, filter .2s ease, background .2s ease, color .2s ease;
+    outline: none;
+    user-select: none;
+    text-decoration: none;
+  }
+  .contact-tab-btn:hover {
+    --bc: #8C7AE6;
+    background: #EDE9FE;
+    color: #10142E;
+    transform: translateY(-2px);
+  }
+  .contact-tab-btn:active {
+    transform: none;
+  }
+  .contact-tab-btn.active[data-tab="events"] {
+    background: #002671 !important;
+    color: #FFFFFF !important;
+    --bc: transparent !important;
+    box-shadow: 0 4px 14px rgba(0, 38, 113, 0.28);
+  }
+  .contact-tab-btn.active[data-tab="consultancy"] {
+    background: #8C7AE6 !important;
+    color: #10142E !important;
+    --bc: transparent !important;
+    box-shadow: 0 4px 14px rgba(140, 122, 230, 0.35);
+  }
+  .contact-tab-btn.active[data-tab="partner"] {
+    background: #BA0000 !important;
+    color: #FFFFFF !important;
+    --bc: transparent !important;
+    box-shadow: 0 4px 14px rgba(186, 0, 0, 0.28);
+  }
+
+  /* Slanted Multi-Select Service Chips (Canonical Crux Nxtion .bx System) */
+  .chip-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    --sl: 6px;
+    --bc: #D2CEEA;
+    --bw: 1.5px;
+    padding: 9px 16px;
+    font-size: 12.5px;
+    font-weight: 600;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    cursor: pointer;
+    background: #FFFFFF;
+    color: #3A3F66;
+    transition: transform .2s ease, filter .2s ease, background .2s ease, color .2s ease;
+    user-select: none;
+    text-decoration: none;
+    line-height: 1.2;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .chip-btn:hover {
+    --bc: #8C7AE6;
+    background: #FAF9FE;
+    transform: translateY(-2px);
+  }
+  .chip-btn:active {
+    transform: none;
+  }
+  .chip-btn .chip-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 15px;
+    height: 15px;
+    clip-path: polygon(3px 0, 100% 0, calc(100% - 3px) 100%, 0 100%);
+    border-radius: 0 !important;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.04);
+    font-size: 10px;
+    font-weight: 800;
+    color: transparent;
+    transition: all .2s ease;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  /* Active states for multi-selection slanted chips */
+  .chip-btn.selected[data-cat="e"] {
+    background: #002671 !important;
+    border-color: transparent !important;
+    color: #FFFFFF !important;
+    --bc: transparent !important;
+    box-shadow: 0 4px 12px rgba(0, 38, 113, 0.25);
+  }
+  .chip-btn.selected[data-cat="e"] .chip-icon {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: transparent;
+    color: #FFFFFF;
+  }
+  .chip-btn.selected[data-cat="c"] {
+    background: #8C7AE6 !important;
+    border-color: transparent !important;
+    color: #10142E !important;
+    --bc: transparent !important;
+    box-shadow: 0 4px 12px rgba(140, 122, 230, 0.32);
+  }
+  .chip-btn.selected[data-cat="c"] .chip-icon {
+    background: rgba(16, 20, 46, 0.18);
+    border-color: transparent;
+    color: #10142E;
+  }
+  .chip-btn.selected[data-cat="p"] {
+    background: #BA0000 !important;
+    border-color: transparent !important;
+    color: #FFFFFF !important;
+    --bc: transparent !important;
+    box-shadow: 0 4px 12px rgba(186, 0, 0, 0.25);
+  }
+  .chip-btn.selected[data-cat="p"] .chip-icon {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: transparent;
+    color: #FFFFFF;
+  }
+
+  /* Submission Spinner Animation */
+  @keyframes cruxSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  .crux-spinner {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-radius: 50%;
+    border-top-color: #FFFFFF;
+    animation: cruxSpin 0.75s linear infinite;
+    vertical-align: middle;
+    margin-right: 8px;
+    flex-shrink: 0;
+  }
+  .crux-spinner--dark {
+    border: 2px solid rgba(16, 20, 46, 0.25);
+    border-top-color: #10142E;
+  }
+
+  /* Shaking validation animation */
+  @keyframes cruxShake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-6px); }
+    40%, 80% { transform: translateX(6px); }
+  }
+  .input-error-shake {
+    border-color: #E5383B !important;
+    background: #FFF7F7 !important;
+    animation: cruxShake 0.4s ease;
+  }
+
 </style>
 </helmet>
 
@@ -141,31 +315,121 @@
     <div style="padding:80px 64px;" class="reveal">
       <span class="eyebrow">Get In Touch</span>
       <h1 class="bebas" style="font-size:72px; margin:14px 0 26px; color:#10142E;">LET'S TALK.</h1>
-      <form style="display:flex; flex-direction:column; gap:14px; max-width:540px;">
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;"><input type="text" placeholder="Your name" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E;" class="reveal"><input type="email" placeholder="you@email.com" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E;" class="reveal"></div>
-        <input type="text" placeholder="Phone (optional)" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E;">
-        <div><div style="font-size:12px; font-weight:700; letter-spacing:1.6px; text-transform:uppercase; color:#5A5F86; margin-bottom:10px;">What do you need help with? <span style="text-transform:none; letter-spacing:0; font-weight:500;">Tick anything that fits.</span></div>
-          <div style="display:flex; gap:8px; flex-wrap:wrap;"><sc-for list="{{opts}}" as="o" hint-placeholder-count="10"><button type="button" onclick="{{o.pick}}" style="{{o.style}}" class="bx">{{o.label}}</button></sc-for></div></div>
-        <sc-if value="{{noneSel}}" hint-placeholder-val="{{false}}"><p style="font-size:13.5px; color:#5A5F86; margin:0; padding:14px 16px; background:#F3F1FC; border-radius:12px;">Not sure yet? No problem. Just tell us what you have in mind below.</p></sc-if>
-        <sc-if value="{{ev}}" hint-placeholder-val="{{true}}"><div style="display:flex; flex-direction:column; gap:12px; padding:18px; border:1.5px solid #D6DDF3; border-radius:16px; background:#F6F8FE;">
+            <!-- INTAKE TABS -->
+      <div class="contact-mode-tabs" id="contact-mode-tabs">
+        <button type="button" class="contact-tab-btn bx active" data-tab="events">Plan An Event</button>
+        <button type="button" class="contact-tab-btn bx" data-tab="consultancy">Business Strategy</button>
+        <button type="button" class="contact-tab-btn bx" data-tab="partner">Sponsorship &amp; Partnership</button>
+      </div>
+
+      <form id="crux-intake-form" onsubmit="event.preventDefault(); return false;" style="display:flex; flex-direction:column; gap:16px; max-width:560px;">
+        <input type="hidden" name="inquiry_type" id="inquiry_type" value="events">
+        <div id="hidden-services-inputs"></div>
+        <div style="display:none;"><input type="text" name="crux_hp" value=""></div>
+
+        <!-- Alert messages box -->
+        <div id="contact-alert-box" style="display:none; padding:14px 18px; border-radius:12px; font-size:14px; font-weight:600; line-height:1.5;"></div>
+        
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;" data-m="g1">
+          <div>
+            <input type="text" name="name" id="inp-name" required placeholder="Your full name *" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E; box-sizing:border-box;">
+          </div>
+          <div>
+            <input type="email" name="email" id="inp-email" required placeholder="Email address *" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E; box-sizing:border-box;">
+          </div>
+        </div>
+
+        <input type="tel" name="phone" id="inp-phone" placeholder="Phone number (optional)" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E; box-sizing:border-box;">
+
+        <!-- Dynamic Service Chips Section -->
+        <div>
+          <div id="chips-section-title" style="font-size:12px; font-weight:700; letter-spacing:1.6px; text-transform:uppercase; color:#5A5F86; margin-bottom:12px;">
+            What do you need help with? <span style="text-transform:none; letter-spacing:0; font-weight:500;">Select any that fit:</span>
+          </div>
+
+          <!-- Group 1: Events Chips -->
+          <div id="chips-group-events" class="chips-group" style="display:flex; gap:9px; flex-wrap:wrap;">
+            <button type="button" class="chip-btn bx selected" data-cat="e" data-name="Event planning" aria-pressed="true"><span class="chip-icon">✓</span><span>Event planning</span></button>
+            <button type="button" class="chip-btn bx" data-cat="e" data-name="Entertainment & talent" aria-pressed="false"><span class="chip-icon">✓</span><span>Entertainment &amp; talent</span></button>
+            <button type="button" class="chip-btn bx" data-cat="e" data-name="Design & production" aria-pressed="false"><span class="chip-icon">✓</span><span>Design &amp; production</span></button>
+            <button type="button" class="chip-btn bx" data-cat="e" data-name="Marketing & promotion" aria-pressed="false"><span class="chip-icon">✓</span><span>Marketing &amp; promotion</span></button>
+            <button type="button" class="chip-btn bx" data-cat="e" data-name="On-site coordination" aria-pressed="false"><span class="chip-icon">✓</span><span>On-site coordination</span></button>
+          </div>
+
+          <!-- Group 2: Consultancy Chips -->
+          <div id="chips-group-consultancy" class="chips-group" style="display:none; gap:9px; flex-wrap:wrap;">
+            <button type="button" class="chip-btn bx" data-cat="c" data-name="Business setup & strategy" aria-pressed="false"><span class="chip-icon">✓</span><span>Business setup &amp; strategy</span></button>
+            <button type="button" class="chip-btn bx" data-cat="c" data-name="Branding & marketing" aria-pressed="false"><span class="chip-icon">✓</span><span>Branding &amp; marketing</span></button>
+            <button type="button" class="chip-btn bx" data-cat="c" data-name="Business growth" aria-pressed="false"><span class="chip-icon">✓</span><span>Business growth</span></button>
+            <button type="button" class="chip-btn bx" data-cat="c" data-name="Activation growth" aria-pressed="false"><span class="chip-icon">✓</span><span>Activation growth</span></button>
+            <button type="button" class="chip-btn bx" data-cat="c" data-name="Audit & advisory" aria-pressed="false"><span class="chip-icon">✓</span><span>Audit &amp; advisory</span></button>
+          </div>
+
+          <!-- Group 3: Partner Chips -->
+          <div id="chips-group-partner" class="chips-group" style="display:none; gap:9px; flex-wrap:wrap;">
+            <button type="button" class="chip-btn bx" data-cat="p" data-name="Event sponsorship" aria-pressed="false"><span class="chip-icon">✓</span><span>Event sponsorship</span></button>
+            <button type="button" class="chip-btn bx" data-cat="p" data-name="Brand activation partner" aria-pressed="false"><span class="chip-icon">✓</span><span>Brand activation partner</span></button>
+            <button type="button" class="chip-btn bx" data-cat="p" data-name="Vendor & catering partner" aria-pressed="false"><span class="chip-icon">✓</span><span>Vendor &amp; catering partner</span></button>
+            <button type="button" class="chip-btn bx" data-cat="p" data-name="Media & talent collaboration" aria-pressed="false"><span class="chip-icon">✓</span><span>Media &amp; talent collaboration</span></button>
+          </div>
+        </div>
+
+        <!-- Panel 1: Event Details -->
+        <div id="panel-event-details" class="intake-panel" style="display:flex; flex-direction:column; gap:12px; padding:18px; border:1.5px solid #D6DDF3; border-radius:16px; background:#F6F8FE;">
           <span style="font-size:12px; font-weight:700; letter-spacing:1.6px; text-transform:uppercase; color:#002671;">About your event</span>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;"><input type="text" placeholder="Event type (wedding, gala, party...)" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E;"><input type="text" placeholder="Preferred date" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E;"></div>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;"><input type="text" placeholder="Approx. number of guests" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E;"><input type="text" placeholder="City or venue" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E;"></div>
-        </div></sc-if>
-        <sc-if value="{{co}}" hint-placeholder-val="{{false}}"><div style="display:flex; flex-direction:column; gap:12px; padding:18px; border:1.5px solid #E1DEF3; border-radius:16px; background:#F7F5FE;">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;" data-m="g1">
+            <input type="text" name="ev_type" placeholder="Event type (wedding, gala, party...)" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E; box-sizing:border-box;">
+            <input type="text" name="ev_date" placeholder="Preferred date / month" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E; box-sizing:border-box;">
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;" data-m="g1">
+            <input type="text" name="ev_guests" placeholder="Approx. number of guests" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E; box-sizing:border-box;">
+            <input type="text" name="ev_venue" placeholder="City or prospective venue" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E; box-sizing:border-box;">
+          </div>
+        </div>
+
+        <!-- Panel 2: Business Details -->
+        <div id="panel-business-details" class="intake-panel" style="display:none; flex-direction:column; gap:12px; padding:18px; border:1.5px solid #E1DEF3; border-radius:16px; background:#F7F5FE;">
           <span style="font-size:12px; font-weight:700; letter-spacing:1.6px; text-transform:uppercase; color:#6C58DB;">About your business</span>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;"><input type="text" placeholder="Business name (if you have one)" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E;"><input type="text" placeholder="Stage: idea / running / scaling" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E;"></div>
-        </div></sc-if>
-        <textarea rows="4" placeholder="Tell us what you have in mind, and where you are stuck." style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E;"></textarea>
-        <p class="routeNote" style="font-size:12.5px; color:#5A5F86; margin:0;">{{routeNote}}</p>
-        <a href="ContactS.dc.html" style="display:block; text-align:center; background:#8C7AE6; color:#10142E; font-weight:700; font-size:15px; padding:17px; margin-top:6px; --sl:10px;" class="bx">Send Your Brief</a>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;" data-m="g1">
+            <input type="text" name="biz_name" placeholder="Business name (if trading)" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E; box-sizing:border-box;">
+            <input type="text" name="biz_stage" placeholder="Stage: idea / trading / scaling" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E; box-sizing:border-box;">
+          </div>
+        </div>
+
+        <!-- Panel 3: Partnership Details -->
+        <div id="panel-partner-details" class="intake-panel" style="display:none; flex-direction:column; gap:12px; padding:18px; border:1.5px solid #F5C6C6; border-radius:16px; background:#FFF7F7;">
+          <span style="font-size:12px; font-weight:700; letter-spacing:1.6px; text-transform:uppercase; color:#BA0000;">Sponsorship &amp; Collaboration</span>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;" data-m="g1">
+            <input type="text" name="partner_company" placeholder="Brand / Organization name" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E; box-sizing:border-box;">
+            <input type="text" name="partner_interest" placeholder="Interest: Sponsor / Vendor / Co-Host" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E; box-sizing:border-box;">
+          </div>
+        </div>
+
+        <textarea name="message" id="inp-message" rows="4" placeholder="Tell us what you have in mind, where you are stuck, or what you would like to achieve." style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E; box-sizing:border-box;"></textarea>
+        
+        <p id="route-note-label" class="routeNote" style="font-size:12.5px; color:#5A5F86; margin:0; line-height:1.5;">
+          Direct connection: This goes straight to our events crew. We respond within 24 business hours.
+        </p>
+
+        <button type="button" id="btn-submit-brief" class="bx" style="display:flex; align-items:center; justify-content:center; text-align:center; background:#002671; color:#FFFFFF; font-weight:700; font-size:15px; padding:17px; margin-top:6px; --sl:10px; cursor:pointer; width:100%; transition:all .2s ease;">Submit</button>
       </form>
+
+      <!-- Confirmation Card -->
+      <div id="contact-confirmation-card" class="crux-confirm-card" style="display:none; background:#F8FAFE; border:2px solid #002671; border-radius:0 !important; clip-path:polygon(14px 0, 100% 0, calc(100% - 14px) 100%, 0 100%); padding:44px 36px; max-width:560px; text-align:center; box-sizing:border-box;">
+        <div style="width:68px; height:68px; border-radius:50%; background:#27AE60; color:#FFFFFF; font-size:32px; font-weight:800; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; box-shadow:0 8px 24px rgba(39, 174, 96, 0.35);">✓</div>
+        <h2 class="bebas" style="font-size:38px; color:#10142E; margin:0 0 12px; letter-spacing:0.5px;">MESSAGE RECEIVED!</h2>
+        <p id="confirm-msg-body" style="font-size:15.5px; line-height:1.65; color:#3A3F66; margin:0 0 24px;">Thank you! Your brief has been transmitted directly to our team. A real person will review your requirements and reply within 24 business hours.</p>
+        <div id="confirm-summary-badge" style="display:inline-block; background:#E8EFFD; border:1px solid #C4D3F8; border-radius:0 !important; --sl:6px; padding:8px 20px; font-size:13px; font-weight:700; color:#002671; margin-bottom:28px;">Events Inquiry</div>
+        <div>
+          <button type="button" id="btn-reset-form" style="display:inline-block; background:#8C7AE6; color:#10142E; font-weight:700; font-size:14px; padding:13px 26px; --sl:8px; border:none; cursor:pointer;" class="bx">Send Another Message</button>
+        </div>
+      </div>
     </div>
     <div style="position:relative; overflow:hidden;" class="reveal">
-      <img src="/_blob/5d2ff88df9e44a1a073b23c7eb8ac29d" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;" class="drift">
+      <img src="/_blob/4170d6b6009c07e37d83bae48a68917b" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;" class="drift">
       <div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(16,20,46,0.92) 0%, rgba(16,20,46,0.25) 70%);"></div>
       <div style="position:relative; height:100%; display:flex; flex-direction:column; justify-content:flex-end; padding:56px; gap:12px;">
-        <div style="display:flex; align-items:center; gap:12px; background:rgba(16,20,46,0.86); padding:11px 22px 11px 12px; width:fit-content; --sl:6px; --bc:#3A3F72;" class="bx"><span style="width:32px; height:32px; border-radius:50%; background:#8C7AE6; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:#10142E;">✆</span><span style="font-size:13px; font-weight:600; color:#F2F1F8;">+44 7762 278076</span></div><div style="display:flex; align-items:center; gap:12px; background:rgba(16,20,46,0.86); padding:11px 22px 11px 12px; width:fit-content; --sl:6px; --bc:#3A3F72;" class="bx"><span style="width:32px; height:32px; border-radius:50%; background:#8C7AE6; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:#10142E;">✆</span><span style="font-size:13px; font-weight:600; color:#F2F1F8;">+44 7341 366400</span></div><div style="display:flex; align-items:center; gap:12px; background:rgba(16,20,46,0.86); padding:11px 22px 11px 12px; width:fit-content; --sl:6px; --bc:#3A3F72;" class="bx"><span style="width:32px; height:32px; border-radius:50%; background:#8C7AE6; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:#10142E;">@</span><span style="font-size:13px; font-weight:600; color:#F2F1F8;">infoandsales@cruxnxtionevents.net</span></div><div style="display:flex; align-items:center; gap:12px; background:rgba(16,20,46,0.86); padding:11px 22px 11px 12px; width:fit-content; --sl:6px; --bc:#3A3F72;" class="bx"><span style="width:32px; height:32px; border-radius:50%; background:#8C7AE6; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:#10142E;">●</span><span style="font-size:13px; font-weight:600; color:#F2F1F8;">29 Dun Work, Sheffield S3 8FB</span></div>
+        <div style="display:flex; align-items:center; gap:12px; background:rgba(16,20,46,0.86); padding:11px 22px 11px 12px; width:fit-content; --sl:6px; --bc:#3A3F72;" class="bx"><span style="width:32px; height:32px; border-radius:50%; background:#8C7AE6; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:#10142E;">✆</span><span style="font-size:13px; font-weight:600; color:#F2F1F8;">+44 7762 278076</span></div><div style="display:flex; align-items:center; gap:12px; background:rgba(16,20,46,0.86); padding:11px 22px 11px 12px; width:fit-content; --sl:6px; --bc:#3A3F72;" class="bx"><span style="width:32px; height:32px; border-radius:50%; background:#8C7AE6; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:#10142E;">✆</span><span style="font-size:13px; font-weight:600; color:#F2F1F8;">+44 7341 366400</span></div><div style="display:flex; align-items:center; gap:12px; background:rgba(16,20,46,0.86); padding:11px 22px 11px 12px; width:fit-content; --sl:6px; --bc:#3A3F72;" class="bx"><span style="width:32px; height:32px; border-radius:50%; background:#8C7AE6; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:#10142E;">@</span><span style="font-size:13px; font-weight:600; color:#F2F1F8;">infoandsales@cruxnxtion.co.uk</span></div><div style="display:flex; align-items:center; gap:12px; background:rgba(16,20,46,0.86); padding:11px 22px 11px 12px; width:fit-content; --sl:6px; --bc:#3A3F72;" class="bx"><span style="width:32px; height:32px; border-radius:50%; background:#8C7AE6; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:#10142E;">●</span><span style="font-size:13px; font-weight:600; color:#F2F1F8;">29 Dun Work, Sheffield S3 8FB</span></div>
         <a href="#" style="color:#F2F1F8; font-weight:700; font-size:13px; border-bottom:1.5px solid #8C7AE6; padding-bottom:2px; width:fit-content; margin-top:6px;">Get directions →</a>
       </div>
     </div>
@@ -224,9 +488,280 @@
     <div style="width:100%; max-width:900px; height:1px; background:#2A2F5C; margin:0 auto 24px;"></div>
     <p style="font-size:13px; color:#6E6E9A; margin:0;">© 2026 Crux Nxtion Events • Sheffield, United Kingdom • All Rights Reserved</p>
   </footer>
-  </div>
+<script>
+(function() {
+  function initCruxContactEngine() {
+    var tabsContainer = document.getElementById('contact-mode-tabs');
+    var contactForm = document.getElementById('crux-intake-form');
+    if (!tabsContainer || !contactForm) return;
+    if (contactForm.getAttribute('data-engine-ready') === 'true') return;
+    contactForm.setAttribute('data-engine-ready', 'true');
 
-</div>
+    var tabButtons = tabsContainer.querySelectorAll('.contact-tab-btn');
+    var groupEvents = document.getElementById('chips-group-events');
+    var groupConsultancy = document.getElementById('chips-group-consultancy');
+    var groupPartner = document.getElementById('chips-group-partner');
+
+    var panelEvents = document.getElementById('panel-event-details');
+    var panelConsultancy = document.getElementById('panel-business-details');
+    var panelPartner = document.getElementById('panel-partner-details');
+
+    var typeInput = document.getElementById('inquiry_type');
+    var hiddenServices = document.getElementById('hidden-services-inputs');
+    var routeNote = document.getElementById('route-note-label');
+    var submitBtn = document.getElementById('btn-submit-brief');
+    var alertBox = document.getElementById('contact-alert-box');
+    var confirmCard = document.getElementById('contact-confirmation-card');
+    var confirmBadge = document.getElementById('confirm-summary-badge');
+    var confirmBody = document.getElementById('confirm-msg-body');
+    var resetBtn = document.getElementById('btn-reset-form');
+
+    var nameInput = document.getElementById('inp-name');
+    var emailInput = document.getElementById('inp-email');
+
+    var currentTab = 'events';
+
+    function setTab(tabName) {
+      currentTab = tabName;
+      if (typeInput) typeInput.value = tabName;
+
+      tabButtons.forEach(function(btn) {
+        if (btn.getAttribute('data-tab') === tabName) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      if (groupEvents) groupEvents.style.display = (tabName === 'events') ? 'flex' : 'none';
+      if (groupConsultancy) groupConsultancy.style.display = (tabName === 'consultancy') ? 'flex' : 'none';
+      if (groupPartner) groupPartner.style.display = (tabName === 'partner') ? 'flex' : 'none';
+
+      if (panelEvents) panelEvents.style.display = (tabName === 'events') ? 'flex' : 'none';
+      if (panelConsultancy) panelConsultancy.style.display = (tabName === 'consultancy') ? 'flex' : 'none';
+      if (panelPartner) panelPartner.style.display = (tabName === 'partner') ? 'flex' : 'none';
+
+      if (tabName === 'events') {
+        if (routeNote) routeNote.textContent = 'Direct connection: This goes straight to our events crew. We respond within 24 business hours.';
+        if (submitBtn) {
+          submitBtn.style.background = '#002671';
+          submitBtn.style.color = '#FFFFFF';
+        }
+      } else if (tabName === 'consultancy') {
+        if (routeNote) routeNote.textContent = 'Direct connection: This goes straight to our consultancy & business advisory team. We respond within 24 business hours.';
+        if (submitBtn) {
+          submitBtn.style.background = '#8C7AE6';
+          submitBtn.style.color = '#10142E';
+        }
+      } else if (tabName === 'partner') {
+        if (routeNote) routeNote.textContent = 'Direct connection: This goes straight to our executive partnerships & sponsorship team. We respond within 24 business hours.';
+        if (submitBtn) {
+          submitBtn.style.background = '#BA0000';
+          submitBtn.style.color = '#FFFFFF';
+        }
+      }
+
+      if (submitBtn && submitBtn.textContent !== 'Submitting...') {
+        submitBtn.textContent = 'Submit';
+      }
+
+      syncServicesInputs();
+    }
+
+    function syncServicesInputs() {
+      if (!hiddenServices) return;
+      hiddenServices.innerHTML = '';
+
+      var activeGroup = (currentTab === 'events') ? groupEvents : (currentTab === 'consultancy') ? groupConsultancy : groupPartner;
+      if (!activeGroup) return;
+
+      var selected = activeGroup.querySelectorAll('.chip-btn.selected');
+      selected.forEach(function(chip) {
+        var name = chip.getAttribute('data-name');
+        if (name) {
+          var input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = 'services[]';
+          input.value = name;
+          hiddenServices.appendChild(input);
+        }
+      });
+    }
+
+    tabButtons.forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        var tab = this.getAttribute('data-tab');
+        if (tab) setTab(tab);
+      });
+    });
+
+    var allChips = document.querySelectorAll('.chip-btn');
+    allChips.forEach(function(chip) {
+      chip.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.classList.toggle('selected');
+        this.setAttribute('aria-pressed', this.classList.contains('selected') ? 'true' : 'false');
+        syncServicesInputs();
+      });
+    });
+
+    var searchParams = new URLSearchParams(window.location.search);
+    var qType = (searchParams.get('type') || '').toLowerCase();
+    var hash = (window.location.hash || '').toLowerCase();
+
+    if (qType === 'consultancy' || qType === 'business' || hash.indexOf('consultancy') !== -1 || hash.indexOf('business') !== -1) {
+      setTab('consultancy');
+    } else if (qType === 'partner' || qType === 'sponsorship' || qType === 'sponsor' || hash.indexOf('partner') !== -1 || hash.indexOf('sponsor') !== -1) {
+      setTab('partner');
+    } else {
+      setTab('events');
+    }
+
+    function showAlert(msg, isError) {
+      if (!alertBox) return;
+      alertBox.textContent = msg;
+      alertBox.style.display = 'block';
+      if (isError) {
+        alertBox.style.background = '#FFF0F0';
+        alertBox.style.border = '1.5px solid #E5383B';
+        alertBox.style.color = '#BA0000';
+      } else {
+        alertBox.style.background = '#E8F8F0';
+        alertBox.style.border = '1.5px solid #27AE60';
+        alertBox.style.color = '#10142E';
+      }
+      alertBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function hideAlert() {
+      if (alertBox) alertBox.style.display = 'none';
+    }
+
+    function triggerShake(el) {
+      if (!el) return;
+      el.classList.add('input-error-shake');
+      setTimeout(function() {
+        el.classList.remove('input-error-shake');
+      }, 500);
+      el.focus();
+    }
+
+    function doSubmit() {
+      hideAlert();
+
+      if (!nameInput || !nameInput.value.trim()) {
+        showAlert('Please provide your name so we know who to address.', true);
+        triggerShake(nameInput);
+        return;
+      }
+
+      if (!emailInput || !emailInput.value.trim() || !emailInput.value.includes('@')) {
+        showAlert('Please provide a valid email address so we can reply to you.', true);
+        triggerShake(emailInput);
+        return;
+      }
+
+      var hp = contactForm.querySelector('input[name="crux_hp"]');
+      if (hp && hp.value.trim()) {
+        return;
+      }
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.style.pointerEvents = 'none';
+        submitBtn.style.opacity = '0.75';
+        var isDarkText = (currentTab === 'consultancy');
+        var spinnerClass = isDarkText ? 'crux-spinner crux-spinner--dark' : 'crux-spinner';
+        submitBtn.innerHTML = '<span class="' + spinnerClass + '"></span> Submitting...';
+      }
+
+      syncServicesInputs();
+
+      // In prototype preview or standalone HTML, simulate transmission
+      setTimeout(function() {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.style.pointerEvents = 'auto';
+          submitBtn.style.opacity = '1';
+          submitBtn.innerHTML = 'Submit';
+        }
+
+        contactForm.style.display = 'none';
+
+        if (confirmBadge) {
+          if (currentTab === 'consultancy') {
+            confirmBadge.textContent = 'Business Strategy Inquiry';
+            confirmBadge.style.color = '#6C58DB';
+            confirmBadge.style.background = '#EDE9FE';
+            confirmBadge.style.borderColor = '#D5CEFA';
+          } else if (currentTab === 'partner') {
+            confirmBadge.textContent = 'Sponsorship & Partnership Inquiry';
+            confirmBadge.style.color = '#BA0000';
+            confirmBadge.style.background = '#FFEAEA';
+            confirmBadge.style.borderColor = '#F5C6C6';
+          } else {
+            confirmBadge.textContent = 'Event Planning Inquiry';
+            confirmBadge.style.color = '#002671';
+            confirmBadge.style.background = '#E8EFFD';
+            confirmBadge.style.borderColor = '#C4D3F8';
+          }
+        }
+
+        if (confirmCard) {
+          confirmCard.style.display = 'block';
+          confirmCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 700);
+    }
+
+    if (submitBtn) {
+      submitBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        doSubmit();
+      });
+    }
+
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      doSubmit();
+    });
+
+    if (resetBtn) {
+      resetBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        contactForm.reset();
+        allChips.forEach(function(c) {
+          c.classList.remove('selected');
+          c.setAttribute('aria-pressed', 'false');
+        });
+        var activeGroup = (currentTab === 'events') ? groupEvents : (currentTab === 'consultancy') ? groupConsultancy : groupPartner;
+        if (activeGroup) {
+          var firstChip = activeGroup.querySelector('.chip-btn');
+          if (firstChip) {
+            firstChip.classList.add('selected');
+            firstChip.setAttribute('aria-pressed', 'true');
+          }
+        }
+        syncServicesInputs();
+
+        if (confirmCard) confirmCard.style.display = 'none';
+        contactForm.style.display = 'flex';
+        tabsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCruxContactEngine);
+  } else {
+    initCruxContactEngine();
+  }
+})();
+</script>
 </x-dc>
 <script type="text/x-dc" data-dc-script="" data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:2800}}">
 class Component extends DCLogic {

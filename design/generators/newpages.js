@@ -93,7 +93,7 @@ ${perks.map((p,i)=>`      <div style="border-top:3px solid ${['#5B8DEF',RED,PU,'
   <!-- ENQUIRY -->
   <section style="padding:30px 64px 100px;">
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:0; background:#111838; border:1.5px solid #1E2B5E; border-radius:16px; overflow:hidden;">
-      <div style="padding:46px 44px;"><span class="eyebrow">Start The Conversation</span><h2 class="bebas" style="font-size:52px; margin:12px 0 14px; color:#F4F5FA;">TELL US ABOUT YOUR BRAND.</h2><p style="font-size:15px; line-height:1.65; color:#A3A9C8; margin:0 0 20px;">Share who you want to reach and we will suggest the events and package that fit. You will hear back within two working days.</p><p style="font-size:14px; color:#D5D9EA; margin:0; line-height:1.9;">infoandsales@cruxnxtionevents.net<br>+44 7341 366400</p></div>
+      <div style="padding:46px 44px;"><span class="eyebrow">Start The Conversation</span><h2 class="bebas" style="font-size:52px; margin:12px 0 14px; color:#F4F5FA;">TELL US ABOUT YOUR BRAND.</h2><p style="font-size:15px; line-height:1.65; color:#A3A9C8; margin:0 0 20px;">Share who you want to reach and we will suggest the events and package that fit. You will hear back within two working days.</p><p style="font-size:14px; color:#D5D9EA; margin:0; line-height:1.9;">infoandsales@cruxnxtion.co.uk<br>+44 7341 366400</p></div>
       <form style="padding:40px 44px; background:#0D1330; display:flex; flex-direction:column; gap:14px;">
         <input type="text" placeholder="Your name" style="font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #1E2B5E; border-radius:10px; background:#111838; color:#F4F5FA;">
         <input type="text" placeholder="Company or brand" style="font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #1E2B5E; border-radius:10px; background:#111838; color:#F4F5FA;">
@@ -136,7 +136,7 @@ ${ev.map((e,i)=>`      <a href="SingleEventA.dc.html" style="display:flex; flex-
 }
 
 // ---------------- Legal pages (light) ----------------
-const CO='Crux Nxtion Events', ADDR='29 Dun Work, Sheffield S3 8FB, United Kingdom', MAIL='infoandsales@cruxnxtionevents.net';
+const CO='Crux Nxtion Events', ADDR='29 Dun Work, Sheffield S3 8FB, United Kingdom', MAIL='infoandsales@cruxnxtion.co.uk';
 function legal(file,title,eyebrow,intro,sections){
   const [pre,post]=frame(light,'  <!-- 1 CONTACT -->',title+' — Crux Nxtion Events',2200);
   const toc=sections.map((s,i)=>`<a href="#s${i+1}" style="display:block; font-size:14px; color:#5A5F86; padding:9px 0 9px 14px; border-left:2px solid #E1DEF3;">${i+1}. ${s[0]}</a>`).join('');

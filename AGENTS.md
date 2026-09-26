@@ -1,6 +1,7 @@
 # Instructions for AI coding agents
 
-Start with `HANDOFF.md`. It is the full brief: goal, page inventory, design system, behaviours, confirmed vs unconfirmed content, client preferences, known gaps, build plan and open questions.
+Start with `CRUXNXTION_MASTER_REFERENCE.md` and `HANDOFF.md`.
+`CRUXNXTION_MASTER_REFERENCE.md` is the complete engineering reference containing the full dual-brand architecture, design system rules, surgical fixes, responsive rules, 404/403 safety systems, and build commands.
 
 Ground rules
 - The files in `design/pages/` are the approved visual spec. Do not redesign; reproduce them faithfully and ask the owner about anything genuinely undecided.

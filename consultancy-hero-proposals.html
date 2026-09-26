@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crux Nxtion Consultancy Hero — 3 Design Proposals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    background: #0B0F1F;
+    color: #F4F5FA;
+    padding: 24px 20px 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .bebas { font-family: 'Bebas Neue', 'Arial Narrow', sans-serif; letter-spacing: 0.5px; line-height: 0.92; text-transform: uppercase; }
+  .eyebrow { font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-size: 11px; }
+
+  /* Control Panel */
+  .control-panel {
+    background: #151A38;
+    border: 1px solid #2B3468;
+    border-radius: 16px;
+    padding: 16px 24px;
+    max-width: 1200px;
+    width: 100%;
+    margin-bottom: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  }
+  .panel-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .panel-title span {
+    background: #8C7AE6;
+    color: #10142E;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 6px;
+  }
+  .btn-group {
+    display: flex;
+    gap: 8px;
+    background: #0B0F1F;
+    padding: 4px;
+    border-radius: 10px;
+    border: 1px solid #232B56;
+  }
+  .tab-btn {
+    background: transparent;
+    border: none;
+    color: #A3A9C8;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 8px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all .2s ease;
+  }
+  .tab-btn:hover { color: #FFFFFF; }
+  .tab-btn.active {
+    background: #8C7AE6;
+    color: #10142E;
+    box-shadow: 0 2px 8px rgba(140,122,230,0.3);
+  }
+  .view-toggle {
+    display: flex;
+    gap: 6px;
+    background: #0B0F1F;
+    padding: 4px;
+    border-radius: 10px;
+    border: 1px solid #232B56;
+  }
+  .view-btn {
+    background: transparent;
+    border: none;
+    color: #A3A9C8;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all .2s ease;
+  }
+  .view-btn.active {
+    background: #3A4785;
+    color: #FFFFFF;
+  }
+
+  /* Slanted button */
+  .bx {
+    position: relative;
+    clip-path: polygon(var(--sl,8px) 0, 100% 0, calc(100% - var(--sl,8px)) 100%, 0 100%);
+    border: 0 !important;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    transition: transform .2s ease, filter .2s ease;
+  }
+  .bx::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--bc, transparent);
+    pointer-events: none;
+    clip-path: polygon(evenodd, var(--sl,8px) 0, 100% 0, calc(100% - var(--sl,8px)) 100%, 0 100%, var(--sl,8px) 0, calc(var(--sl,8px) + 1.5px) 1.5px, calc(100% - 1.5px) 1.5px, calc(100% - var(--sl,8px) - 1.5px) calc(100% - 1.5px), 1.5px calc(100% - 1.5px), calc(var(--sl,8px) + 1.5px) 1.5px, var(--sl,8px) 0);
+  }
+  .bx:hover { filter: brightness(1.1); transform: translateY(-2px); }
+
+  /* Stage viewport frame */
+  .stage-frame {
+    width: 100%;
+    max-width: 1400px;
+    background: #FFFFFF;
+    color: #10142E;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    transition: max-width .35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .stage-frame.mobile-mode {
+    max-width: 420px;
+    border-radius: 36px;
+    border: 10px solid #232B56;
+    box-shadow: 0 24px 70px rgba(0,0,0,0.8);
+  }
+
+  /* Header Simulation */
+  .sim-header {
+    background: #FFFFFF;
+    border-bottom: 1px solid #E1DEF3;
+    padding: 14px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .stage-frame.mobile-mode .sim-header {
+    padding: 12px 20px;
+  }
+  .sim-logo {
+    font-weight: 800;
+    font-size: 16px;
+    color: #10142E;
+    letter-spacing: -0.5px;
+  }
+  .sim-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .stage-frame.mobile-mode .sim-header-actions {
+    display: none;
+  }
+  .sim-hamburger {
+    display: none;
+    width: 24px;
+    height: 18px;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .sim-hamburger span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: #10142E;
+  }
+  .stage-frame.mobile-mode .sim-hamburger {
+    display: flex;
+  }
+
+  /* Hero Base Layout */
+  .hero-section {
+    padding: 60px 48px;
+    background: #FFFFFF;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 48px;
+    align-items: center;
+    min-height: 640px;
+  }
+  .stage-frame.mobile-mode .hero-section {
+    grid-template-columns: 1fr;
+    padding: 30px 20px 40px;
+    gap: 32px;
+    min-height: auto;
+  }
+
+  /* Left Column */
+  .hero-left {
+    max-width: 660px;
+  }
+  .stage-frame.mobile-mode .hero-left {
+    max-width: 100%;
+  }
+
+  .hero-h1 {
+    margin: 16px 0 20px 0;
+    color: #10142E;
+  }
+  .h1-line-1 {
+    display: block;
+    font-size: clamp(56px, 6.8vw, 77px);
+    line-height: 0.92;
+  }
+  .h1-line-2 {
+    display: block;
+    font-size: clamp(62px, 7.8vw, 85px);
+    line-height: 0.92;
+    color: #6C58DB;
+    margin-top: 4px;
+  }
+  .stage-frame.mobile-mode .h1-line-1 {
+    font-size: 44px;
+    line-height: 0.94;
+  }
+  .stage-frame.mobile-mode .h1-line-2 {
+    font-size: 48px;
+    line-height: 0.94;
+  }
+
+  .hero-desc {
+    font-size: 17px;
+    line-height: 1.7;
+    color: #3A3F66;
+    max-width: 580px;
+    margin: 0 0 32px;
+  }
+  .stage-frame.mobile-mode .hero-desc {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  .hero-ctas {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .stage-frame.mobile-mode .hero-ctas {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .stage-frame.mobile-mode .hero-ctas .bx {
+    padding: 14px 20px !important;
+  }
+
+  /* Right Column (Visual) */
+  .hero-visual {
+    position: relative;
+    height: 600px;
+    width: 100%;
+  }
+  .stage-frame.mobile-mode .hero-visual {
+    height: auto;
+    position: static;
+  }
+
+  /* Chat Box Components */
+  .discovery-box {
+    background: rgba(16, 20, 46, 0.96);
+    border: 1.5px solid #3A3F72;
+    border-radius: 18px;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: 0 16px 36px rgba(0,0,0,0.35);
+  }
+  .chat-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1.5px dashed #2A2F5C;
+  }
+  .pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #3DDC84;
+    box-shadow: 0 0 0 0 rgba(61,220,132,0.6);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(61,220,132,0.6); }
+    70% { box-shadow: 0 0 0 6px rgba(61,220,132,0); }
+    100% { box-shadow: 0 0 0 0 rgba(61,220,132,0); }
+  }
+  .bubble {
+    max-width: 86%;
+    font-size: 12px;
+    line-height: 1.45;
+    padding: 8px 12px;
+  }
+  .b-client {
+    align-self: flex-end;
+    background: #2A2F5C;
+    color: #F2F1F8;
+    border-radius: 12px 12px 2px 12px;
+  }
+  .b-crux {
+    align-self: flex-start;
+    background: #8C7AE6;
+    color: #10142E;
+    font-weight: 600;
+    border-radius: 12px 12px 12px 2px;
+  }
+  .typing-dots {
+    display: flex;
+    gap: 4px;
+    padding: 6px 10px;
+    background: #2A2F5C;
+    border-radius: 8px;
+    align-self: flex-start;
+  }
+  .typing-dots span {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #9A9AC0;
+  }
+
+  /* Blueprint Badge */
+  .badge-blueprint {
+    background: #8C7AE6;
+    color: #10142E;
+    padding: 10px 16px;
+    border-radius: 10px;
+    box-shadow: 0 10px 24px rgba(140,122,230,0.35);
+  }
+
+  /* Hide chat and blueprint badge on mobile completely */
+  .stage-frame.mobile-mode .discovery-box,
+  .stage-frame.mobile-mode .badge-blueprint {
+    display: none !important;
+  }
+
+  /* Mobile Non-Overlapping Grid for Images */
+  .stage-frame.mobile-mode .mobile-non-overlap-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+    width: 100% !important;
+    margin-top: 10px !important;
+  }
+  .stage-frame.mobile-mode .mobile-non-overlap-grid.stacked {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+  .stage-frame.mobile-mode .mobile-non-overlap-grid .photo-card {
+    position: static !important;
+    transform: none !important;
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    box-shadow: 0 6px 16px rgba(16,20,46,0.1) !important;
+  }
+  .stage-frame.mobile-mode .mobile-non-overlap-grid .photo-img-wrap {
+    height: 140px !important;
+  }
+  .stage-frame.mobile-mode .mobile-non-overlap-grid.stacked .photo-img-wrap {
+    height: 180px !important;
+  }
+
+  /* Proposal-specific styles */
+  .proposal-view { display: none; }
+  .proposal-view.active { display: block; }
+
+  /* Option 1 Styles */
+  .opt1-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  .opt1-card-before {
+    position: absolute;
+    left: 20px;
+    top: 40px;
+    width: 250px;
+    transform: rotate(-3.5deg);
+    z-index: 1;
+    background: #FFFFFF;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 2px solid #E1DEF3;
+    box-shadow: 0 16px 36px rgba(16,20,46,0.16);
+    transition: transform .3s ease;
+  }
+  .opt1-card-before:hover { transform: rotate(0deg) scale(1.03); }
+  .opt1-card-after {
+    position: absolute;
+    right: 20px;
+    top: 25px;
+    width: 265px;
+    transform: rotate(3deg);
+    z-index: 2;
+    background: #FFFFFF;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 2.5px solid #8C7AE6;
+    box-shadow: 0 20px 46px rgba(108,88,219,0.22);
+    transition: transform .3s ease;
+  }
+  .opt1-card-after:hover { transform: rotate(0deg) scale(1.03); }
+  .opt1-chat {
+    position: absolute;
+    left: 0px;
+    bottom: 20px;
+    width: 350px;
+    transform: rotate(-1deg);
+    z-index: 4;
+  }
+  .opt1-badge {
+    position: absolute;
+    right: -10px;
+    top: 15px;
+    transform: rotate(5deg);
+    z-index: 5;
+  }
+
+  /* Option 2 Styles: Side-by-Side Split Showcase + Bottom Tray */
+  .opt2-container {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+  }
+  .opt2-cards-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    position: relative;
+  }
+  .opt2-card {
+    background: #FFFFFF;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(16,20,46,0.12);
+  }
+  .opt2-card.before { border: 2px solid #E1DEF3; }
+  .opt2-card.after { border: 2.5px solid #8C7AE6; box-shadow: 0 14px 34px rgba(140,122,230,0.22); }
+  .opt2-chat {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .opt2-badge {
+    position: absolute;
+    top: -24px;
+    right: -10px;
+    transform: rotate(4deg);
+    z-index: 6;
+  }
+
+  /* Option 3 Styles: Ascending Step Progression */
+  .opt3-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  .opt3-card-before {
+    position: absolute;
+    left: 10px;
+    top: 30px;
+    width: 240px;
+    background: #FFFFFF;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 2px solid #E1DEF3;
+    box-shadow: 0 14px 30px rgba(16,20,46,0.14);
+    z-index: 1;
+  }
+  .opt3-card-after {
+    position: absolute;
+    right: 15px;
+    top: 0px;
+    width: 260px;
+    background: #FFFFFF;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 2.5px solid #6C58DB;
+    box-shadow: 0 20px 44px rgba(108,88,219,0.28);
+    z-index: 2;
+  }
+  .opt3-arrow-bridge {
+    position: absolute;
+    left: 235px;
+    top: 110px;
+    z-index: 3;
+    background: #8C7AE6;
+    color: #10142E;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+  }
+  .opt3-chat {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    width: 350px;
+    z-index: 4;
+  }
+  .opt3-badge {
+    position: absolute;
+    right: 5px;
+    top: -15px;
+    transform: rotate(6deg);
+    z-index: 5;
+  }
+</style>
+</head>
+<body>
+
+  <!-- Controls -->
+  <div class="control-panel">
+    <div class="panel-title">
+      <span>INTERACTIVE PROPOSAL</span>
+      <strong>Consultancy Hero: 3 Positioning Options</strong>
+    </div>
+
+    <div style="display:flex; gap:16px; flex-wrap:wrap; align-items:center;">
+      <!-- Tab Buttons -->
+      <div class="btn-group">
+        <button class="tab-btn active" onclick="switchProposal(1)">Option 1: Editorial Stagger</button>
+        <button class="tab-btn" onclick="switchProposal(2)">Option 2: Split Showcase & Tray</button>
+        <button class="tab-btn" onclick="switchProposal(3)">Option 3: Ascending Elevation</button>
+      </div>
+
+      <!-- Viewport Toggle -->
+      <div class="view-toggle">
+        <button class="view-btn active" id="btn-desktop" onclick="setViewMode('desktop')">🖥️ Desktop</button>
+        <button class="view-btn" id="btn-mobile" onclick="setViewMode('mobile')">📱 Mobile</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage Frame -->
+  <div class="stage-frame" id="stageFrame">
+    
+    <!-- Sim Header -->
+    <header class="sim-header">
+      <div class="sim-logo">CRUX NXTION</div>
+      <div class="sim-header-actions">
+        <!-- Reverted 2-button slanted header switcher -->
+        <div style="display:flex; gap:6px;">
+          <a href="#" style="font-size:12px; font-weight:700; padding:8px 16px; color:#5A5F86; --sl:8px; --bc:#5A5F8655;" class="bx">Events</a>
+          <a href="#" style="font-size:12px; font-weight:700; padding:8px 16px; background:#8C7AE6; color:#0A0F26; --sl:7px;" class="bx">Consultancy</a>
+        </div>
+        <a href="#" style="background:#8C7AE6; color:#10142E; font-weight:700; font-size:13px; padding:12px 22px; --sl:8px;" class="bx">Book Discovery Call</a>
+      </div>
+      <div class="sim-hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </header>
+
+    <!-- ================= PROPOSAL 1: EDITORIAL STAGGER ================= -->
+    <div class="proposal-view active" id="proposal-1">
+      <section class="hero-section">
+        <!-- Left Content -->
+        <div class="hero-left">
+          <span class="eyebrow" style="color:#6C58DB;">Crux Nxtion Consultancy • Sheffield &amp; UK-Wide</span>
+          <h1 class="bebas hero-h1">
+            <span class="h1-line-1">YOU'VE GOT THE IDEA.</span>
+            <span class="h1-line-2">LET'S BUILD THE BUSINESS.</span>
+          </h1>
+          <p class="hero-desc">Whether you're starting from scratch, trying to grow, or just need a clearer direction — sit down with us. We'll talk it through, then turn it into a plan you can actually follow.</p>
+          <div class="hero-ctas">
+            <a href="#" style="background:#8C7AE6; color:#10142E; font-weight:700; font-size:15px; padding:16px 30px; --sl:10px;" class="bx">Book A Discovery Call</a>
+            <a href="#" style="color:#10142E; font-weight:700; font-size:15px; padding:14.5px 28px; --sl:10px; --bc:#10142E;" class="bx">See How We Work</a>
+          </div>
+        </div>
+
+        <!-- Right Visual (Desktop & Mobile Adaptive) -->
+        <div class="hero-visual">
+          
+          <!-- Desktop Version -->
+          <div class="opt1-container desktop-only">
+            
+            <!-- Before Card -->
+            <div class="opt1-card-before photo-card">
+              <div class="photo-img-wrap" style="height:250px; background:#EAE7F5; overflow:hidden;">
+                <img src="/assets/consultancy-retail-unit.jpg" alt="Before: Retail Unit Acquisition" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.src='https://images.unsplash.com/photo-1513694203232-719a280e022f?w=600&auto=format&fit=crop&q=80'">
+              </div>
+              <div style="padding:12px 14px; background:#FFFFFF;">
+                <span style="font-size:10px; font-weight:800; letter-spacing:1px; text-transform:uppercase; color:#6C58DB; display:block;">BEFORE</span>
+                <strong style="font-size:13px; font-weight:700; color:#10142E; display:block; margin-top:2px;">Location &amp; Unit Acquisition</strong>
+                <span style="font-size:11.5px; color:#5A5F86; display:block; margin-top:2px;">We source the retail shop/office</span>
+              </div>
+            </div>
+
+            <!-- After Card -->
+            <div class="opt1-card-after photo-card">
+              <div class="photo-img-wrap" style="height:265px; background:#EAE7F5; overflow:hidden;">
+                <img src="/assets/consultancy-retail-stocked.jpg" alt="After: Fitout, Stocking & Launch" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.src='https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=600&auto=format&fit=crop&q=80'">
+              </div>
+              <div style="padding:12px 14px; background:#FFFFFF;">
+                <span style="font-size:10px; font-weight:800; letter-spacing:1px; text-transform:uppercase; color:#BA0000; display:block;">AFTER</span>
+                <strong style="font-size:13px; font-weight:700; color:#10142E; display:block; margin-top:2px;">Fitout, Stocking &amp; Setup</strong>
+                <span style="font-size:11.5px; color:#5A5F86; display:block; margin-top:2px;">We build it, stock it &amp; launch</span>
+              </div>
+            </div>
+
+            <!-- Blueprint Badge (Top Right) -->
+            <div class="badge-blueprint opt1-badge">
+              <span class="bebas" style="font-size:18px; line-height:1.1; display:block;">FROM BLUEPRINT<br>TO FULL SETUP</span>
+            </div>
+
+            <!-- Discovery Call Chat Box (Bottom Left) -->
+            <div class="discovery-box opt1-chat">
+              <div class="chat-header">
+                <span class="pulse-dot"></span>
+                <span style="font-size:12px; font-weight:700; color:#F2F1F8;">Discovery call</span>
+                <span style="font-size:11px; color:#9A9AC0; margin-left:auto;">with Crux Nxtion</span>
+              </div>
+              <div class="bubble b-client">I've got an idea. I just don't know where to start.</div>
+              <div class="bubble b-crux">Good — that's the right place to start. Tell us about it.</div>
+              <div class="bubble b-client">Also… we're busy, but the business isn't really growing.</div>
+              <div class="bubble b-crux">We'll look at both. First: what does a good year look like for you?</div>
+              <div class="typing-dots"><span></span><span></span><span></span></div>
+            </div>
+
+          </div>
+
+          <!-- Mobile Version (Zero overlap, clean 50/50 side-by-side, no awful container, no chat) -->
+          <div class="mobile-non-overlap-grid mobile-only" style="display:none;">
+            <!-- Before Card -->
+            <div class="photo-card" style="background:#FFFFFF; border:1.5px solid #E1DEF3; border-radius:12px; overflow:hidden;">
+              <div class="photo-img-wrap" style="height:140px; background:#EAE7F5;">
+                <img src="/assets/consultancy-retail-unit.jpg" alt="Before" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.src='https://images.unsplash.com/photo-1513694203232-719a280e022f?w=600&auto=format&fit=crop&q=80'">
+              </div>
+              <div style="padding:8px 10px;">
+                <span style="font-size:9.5px; font-weight:800; color:#6C58DB; display:block;">BEFORE</span>
+                <strong style="font-size:11.5px; color:#10142E; display:block; line-height:1.2; margin-top:2px;">Unit Sourcing</strong>
+              </div>
+            </div>
+            <!-- After Card -->
+            <div class="photo-card" style="background:#FFFFFF; border:2px solid #8C7AE6; border-radius:12px; overflow:hidden;">
+              <div class="photo-img-wrap" style="height:140px; background:#EAE7F5;">
+                <img src="/assets/consultancy-retail-stocked.jpg" alt="After" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.src='https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=600&auto=format&fit=crop&q=80'">
+              </div>
+              <div style="padding:8px 10px;">
+                <span style="font-size:9.5px; font-weight:800; color:#BA0000; display:block;">AFTER</span>
+                <strong style="font-size:11.5px; color:#10142E; display:block; line-height:1.2; margin-top:2px;">Fitted &amp; Stocked</strong>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+
+    <!-- ================= PROPOSAL 2: SPLIT SHOWCASE & TRAY ================= -->
+    <div class="proposal-view" id="proposal-2">
+      <section class="hero-section">
+        <!-- Left Content -->
+        <div class="hero-left">
+          <span class="eyebrow" style="color:#6C58DB;">Crux Nxtion Consultancy • Sheffield &amp; UK-Wide</span>
+          <h1 class="bebas hero-h1">
+            <span class="h1-line-1">YOU'VE GOT THE IDEA.</span>
+            <span class="h1-line-2">LET'S BUILD THE BUSINESS.</span>
+          </h1>
+          <p class="hero-desc">Whether you're starting from scratch, trying to grow, or just need a clearer direction — sit down with us. We'll talk it through, then turn it into a plan you can actually follow.</p>
+          <div class="hero-ctas">
+            <a href="#" style="background:#8C7AE6; color:#10142E; font-weight:700; font-size:15px; padding:16px 30px; --sl:10px;" class="bx">Book A Discovery Call</a>
+            <a href="#" style="color:#10142E; font-weight:700; font-size:15px; padding:14.5px 28px; --sl:10px; --bc:#10142E;" class="bx">See How We Work</a>
+          </div>
+        </div>
+
+        <!-- Right Visual -->
+        <div class="hero-visual">
+          <div class="opt2-container desktop-only">
+            
+            <div class="opt2-cards-row">
+              <!-- Blueprint Badge -->
+              <div class="badge-blueprint opt2-badge">
+                <span class="bebas" style="font-size:17px; line-height:1.1; display:block;">FROM BLUEPRINT<br>TO FULL SETUP</span>
+              </div>
+
+              <!-- Card Before -->
+              <div class="opt2-card before">
+                <div style="height:210px; overflow:hidden;">
+                  <img src="/assets/consultancy-retail-unit.jpg" alt="Before" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='https://images.unsplash.com/photo-1513694203232-719a280e022f?w=600&auto=format&fit=crop&q=80'">
+                </div>
+                <div style="padding:10px 14px; background:#F8F9FE; border-top:1px solid #E1DEF3;">
+                  <span style="font-size:10px; font-weight:800; letter-spacing:1px; color:#6C58DB;">BEFORE: SOURCING</span>
+                  <p style="font-size:12px; color:#10142E; font-weight:600; margin-top:2px;">Empty Commercial Shell</p>
+                </div>
+              </div>
+
+              <!-- Card After -->
+              <div class="opt2-card after">
+                <div style="height:210px; overflow:hidden;">
+                  <img src="/assets/consultancy-retail-stocked.jpg" alt="After" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=600&auto=format&fit=crop&q=80'">
+                </div>
+                <div style="padding:10px 14px; background:#FFFFFF; border-top:1px solid #E1DEF3;">
+                  <span style="font-size:10px; font-weight:800; letter-spacing:1px; color:#BA0000;">AFTER: OPERATIONAL</span>
+                  <p style="font-size:12px; color:#10142E; font-weight:600; margin-top:2px;">Stocked &amp; Fully Fitted Store</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Discovery Call Tray -->
+            <div class="discovery-box opt2-chat">
+              <div class="chat-header">
+                <span class="pulse-dot"></span>
+                <span style="font-size:12px; font-weight:700; color:#F2F1F8;">Discovery call</span>
+                <span style="font-size:11px; color:#9A9AC0; margin-left:auto;">with Crux Nxtion</span>
+              </div>
+              <div class="bubble b-client">I've got an idea. I just don't know where to start.</div>
+              <div class="bubble b-crux">Good — that's the right place to start. Tell us about it.</div>
+              <div class="bubble b-client">Also… we're busy, but the business isn't really growing.</div>
+              <div class="bubble b-crux">We'll look at both. First: what does a good year look like for you?</div>
+            </div>
+
+          </div>
+
+          <!-- Mobile Version (Clean Stacked, No Overlap, No Chat) -->
+          <div class="mobile-non-overlap-grid stacked mobile-only" style="display:none;">
+            <div class="photo-card" style="background:#FFFFFF; border:1.5px solid #E1DEF3; border-radius:12px; overflow:hidden;">
+              <div class="photo-img-wrap" style="height:160px;">
+                <img src="/assets/consultancy-retail-unit.jpg" alt="Before" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.src='https://images.unsplash.com/photo-1513694203232-719a280e022f?w=600&auto=format&fit=crop&q=80'">
+              </div>
+              <div style="padding:10px 12px;">
+                <span style="font-size:10px; font-weight:800; color:#6C58DB; display:block;">BEFORE</span>
+                <strong style="font-size:13px; color:#10142E;">Location &amp; Unit Sourced</strong>
+              </div>
+            </div>
+            <div class="photo-card" style="background:#FFFFFF; border:2px solid #8C7AE6; border-radius:12px; overflow:hidden;">
+              <div class="photo-img-wrap" style="height:160px;">
+                <img src="/assets/consultancy-retail-stocked.jpg" alt="After" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.src='https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=600&auto=format&fit=crop&q=80'">
+              </div>
+              <div style="padding:10px 12px;">
+                <span style="font-size:10px; font-weight:800; color:#BA0000; display:block;">AFTER</span>
+                <strong style="font-size:13px; color:#10142E;">Fully Built, Stocked &amp; Trading</strong>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+
+    <!-- ================= PROPOSAL 3: ASCENDING ELEVATION ================= -->
+    <div class="proposal-view" id="proposal-3">
+      <section class="hero-section">
+        <!-- Left Content -->
+        <div class="hero-left">
+          <span class="eyebrow" style="color:#6C58DB;">Crux Nxtion Consultancy • Sheffield &amp; UK-Wide</span>
+          <h1 class="bebas hero-h1">
+            <span class="h1-line-1">YOU'VE GOT THE IDEA.</span>
+            <span class="h1-line-2">LET'S BUILD THE BUSINESS.</span>
+          </h1>
+          <p class="hero-desc">Whether you're starting from scratch, trying to grow, or just need a clearer direction — sit down with us. We'll talk it through, then turn it into a plan you can actually follow.</p>
+          <div class="hero-ctas">
+            <a href="#" style="background:#8C7AE6; color:#10142E; font-weight:700; font-size:15px; padding:16px 30px; --sl:10px;" class="bx">Book A Discovery Call</a>
+            <a href="#" style="color:#10142E; font-weight:700; font-size:15px; padding:14.5px 28px; --sl:10px; --bc:#10142E;" class="bx">See How We Work</a>
+          </div>
+        </div>
+
+        <!-- Right Visual -->
+        <div class="hero-visual">
+          <div class="opt3-container desktop-only">
+            
+            <!-- Before Card -->
+            <div class="opt3-card-before">
+              <div style="height:230px; overflow:hidden;">
+                <img src="/assets/consultancy-retail-unit.jpg" alt="Before" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='https://images.unsplash.com/photo-1513694203232-719a280e022f?w=600&auto=format&fit=crop&q=80'">
+              </div>
+              <div style="padding:10px 12px; background:#FFFFFF;">
+                <span style="font-size:9.5px; font-weight:800; color:#6C58DB;">BEFORE</span>
+                <strong style="font-size:12.5px; color:#10142E; display:block;">Unit Acquisition</strong>
+              </div>
+            </div>
+
+            <!-- Transition Arrow Bridge -->
+            <div class="opt3-arrow-bridge">→</div>
+
+            <!-- After Card -->
+            <div class="opt3-card-after">
+              <div style="height:250px; overflow:hidden;">
+                <img src="/assets/consultancy-retail-stocked.jpg" alt="After" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=600&auto=format&fit=crop&q=80'">
+              </div>
+              <div style="padding:12px 14px; background:#FFFFFF;">
+                <span style="font-size:9.5px; font-weight:800; color:#BA0000;">AFTER</span>
+                <strong style="font-size:13px; color:#10142E; display:block;">Full Fitout &amp; Stocking</strong>
+              </div>
+            </div>
+
+            <!-- Blueprint Badge -->
+            <div class="badge-blueprint opt3-badge">
+              <span class="bebas" style="font-size:18px; line-height:1.1; display:block;">FROM BLUEPRINT<br>TO FULL SETUP</span>
+            </div>
+
+            <!-- Discovery Call Chat -->
+            <div class="discovery-box opt3-chat">
+              <div class="chat-header">
+                <span class="pulse-dot"></span>
+                <span style="font-size:12px; font-weight:700; color:#F2F1F8;">Discovery call</span>
+                <span style="font-size:11px; color:#9A9AC0; margin-left:auto;">with Crux Nxtion</span>
+              </div>
+              <div class="bubble b-client">I've got an idea. I just don't know where to start.</div>
+              <div class="bubble b-crux">Good — that's the right place to start. Tell us about it.</div>
+              <div class="bubble b-client">Also… we're busy, but the business isn't really growing.</div>
+              <div class="bubble b-crux">We'll look at both. First: what does a good year look like for you?</div>
+            </div>
+
+          </div>
+
+          <!-- Mobile Version (Side by Side 50/50, No overlap, No chat) -->
+          <div class="mobile-non-overlap-grid mobile-only" style="display:none;">
+            <div class="photo-card" style="background:#FFFFFF; border:1.5px solid #E1DEF3; border-radius:12px; overflow:hidden;">
+              <div class="photo-img-wrap" style="height:140px;">
+                <img src="/assets/consultancy-retail-unit.jpg" alt="Before" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.src='https://images.unsplash.com/photo-1513694203232-719a280e022f?w=600&auto=format&fit=crop&q=80'">
+              </div>
+              <div style="padding:8px 10px;">
+                <span style="font-size:9.5px; font-weight:800; color:#6C58DB; display:block;">BEFORE</span>
+                <strong style="font-size:11.5px; color:#10142E; display:block; line-height:1.2; margin-top:2px;">Unit Sourcing</strong>
+              </div>
+            </div>
+            <div class="photo-card" style="background:#FFFFFF; border:2px solid #8C7AE6; border-radius:12px; overflow:hidden;">
+              <div class="photo-img-wrap" style="height:140px;">
+                <img src="/assets/consultancy-retail-stocked.jpg" alt="After" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.src='https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=600&auto=format&fit=crop&q=80'">
+              </div>
+              <div style="padding:8px 10px;">
+                <span style="font-size:9.5px; font-weight:800; color:#BA0000; display:block;">AFTER</span>
+                <strong style="font-size:11.5px; color:#10142E; display:block; line-height:1.2; margin-top:2px;">Fitted &amp; Stocked</strong>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+
+  </div>
+
+  <script>
+    function switchProposal(num) {
+      document.querySelectorAll('.proposal-view').forEach(function(el) {
+        el.classList.remove('active');
+      });
+      document.querySelectorAll('.tab-btn').forEach(function(btn, idx) {
+        btn.classList.toggle('active', idx + 1 === num);
+      });
+      document.getElementById('proposal-' + num).classList.add('active');
+    }
+
+    function setViewMode(mode) {
+      var frame = document.getElementById('stageFrame');
+      var btnDesk = document.getElementById('btn-desktop');
+      var btnMob = document.getElementById('btn-mobile');
+
+      if (mode === 'mobile') {
+        frame.classList.add('mobile-mode');
+        btnMob.classList.add('active');
+        btnDesk.classList.remove('active');
+        document.querySelectorAll('.desktop-only').forEach(function(el) { el.style.display = 'none'; });
+        document.querySelectorAll('.mobile-only').forEach(function(el) { el.style.display = 'grid'; });
+      } else {
+        frame.classList.remove('mobile-mode');
+        btnDesk.classList.add('active');
+        btnMob.classList.remove('active');
+        document.querySelectorAll('.desktop-only').forEach(function(el) { el.style.display = ''; });
+        document.querySelectorAll('.mobile-only').forEach(function(el) { el.style.display = 'none'; });
+      }
+    }
+  </script>
+</body>
+</html>

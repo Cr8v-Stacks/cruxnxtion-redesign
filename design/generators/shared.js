@@ -138,7 +138,7 @@ const contactBody=`  <!-- 1 CONTACT -->
       <img src="${IM.e2}" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
       <div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(16,20,46,0.92) 0%, rgba(16,20,46,0.25) 70%);"></div>
       <div style="position:relative; height:100%; display:flex; flex-direction:column; justify-content:flex-end; padding:56px; gap:12px;">
-        ${chip('&#9990;','+44 7762 278076')}${chip('&#9990;','+44 7341 366400')}${chip('@','infoandsales@cruxnxtionevents.net')}${chip('&#9679;','29 Dun Work, Sheffield S3 8FB')}
+        ${chip('&#9990;','+44 7762 278076')}${chip('&#9990;','+44 7341 366400')}${chip('@','infoandsales@cruxnxtion.co.uk')}${chip('&#9679;','29 Dun Work, Sheffield S3 8FB')}
         <a href="#" style="color:${LT}; font-weight:700; font-size:13px; border-bottom:1.5px solid ${PU}; padding-bottom:2px; width:fit-content; margin-top:6px;">Get directions &rarr;</a>
       </div>
     </div>
