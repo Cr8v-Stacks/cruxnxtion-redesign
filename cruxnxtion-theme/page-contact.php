@@ -67,14 +67,286 @@ if ( ! defined( 'ABSPATH' ) ) {
   section h2 { animation: rise .7s ease both; }
   .bento-tile img { transition: transform .6s ease; }
   .bento-tile:hover img { transform: scale(1.06); }
-  button { transition: transform .2s ease, background .2s ease, opacity .2s ease; }
-  button:hover { transform: scale(1.08); }
+  button {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    -webkit-appearance: none;
+    appearance: none;
+  }
   .float { animation: floaty 5s ease-in-out infinite; }
   .pulse-dot { animation: pulse 2s infinite; }
   a[style*="clip-path"]:active { transform: translateY(0) scale(.98); }
   body { background:#FFFFFF; color:#10142E; }
   .eyebrow { color:#6C58DB !important; }
   .ticket-stub::before, .ticket-stub::after { background:#FFFFFF !important; }
+
+  /* Slanted Architecture (.bx) */
+  .bx {
+    position: relative;
+    clip-path: polygon(var(--sl, 10px) 0, 100% 0, calc(100% - var(--sl, 10px)) 100%, 0 100%);
+    border: 0 !important;
+    border-radius: 0 !important;
+    --bw: 1.5px;
+    text-align: center;
+    transition: transform .2s ease, filter .2s ease, background .2s ease, color .2s ease, box-shadow .2s ease;
+  }
+  .bx::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--bc, transparent);
+    pointer-events: none;
+    clip-path: polygon(evenodd,
+      var(--sl, 10px) 0, 100% 0, calc(100% - var(--sl, 10px)) 100%, 0 100%,
+      var(--sl, 10px) 0,
+      calc(var(--sl, 10px) + var(--bw)) var(--bw),
+      calc(100% - var(--bw)) var(--bw),
+      calc(100% - var(--sl, 10px) - var(--bw)) calc(100% - var(--bw)),
+      var(--bw) calc(100% - var(--bw)),
+      calc(var(--sl, 10px) + var(--bw)) var(--bw),
+      var(--sl, 10px) 0
+    );
+  }
+  .bx:hover {
+    filter: brightness(1.08);
+    transform: translateY(-2px);
+  }
+  .bx:active {
+    transform: translateY(0);
+    filter: brightness(0.95);
+  }
+
+  /* Contact Mode Tabs */
+  .contact-mode-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .contact-tab-btn {
+    font-family: 'Space Grotesk', system-ui, sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 13.5px !important;
+    letter-spacing: 0.2px !important;
+    padding: 12px 22px !important;
+    --sl: 8px !important;
+    cursor: pointer !important;
+    background: #F3F1FC !important;
+    color: #4A5073 !important;
+    --bc: #DCD7F5 !important;
+    --bw: 1.5px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    user-select: none;
+    border: none !important;
+    outline: none !important;
+  }
+  .contact-tab-btn:hover {
+    background: #E8E4F8 !important;
+    color: #10142E !important;
+    --bc: #C8BFF0 !important;
+    transform: translateY(-2px) !important;
+  }
+  .contact-tab-btn[data-tab="events"].active {
+    background: #002671 !important;
+    color: #FFFFFF !important;
+    --bc: #002671 !important;
+    box-shadow: 0 4px 14px rgba(0, 38, 113, 0.28) !important;
+  }
+  .contact-tab-btn[data-tab="consultancy"].active {
+    background: #8C7AE6 !important;
+    color: #10142E !important;
+    --bc: #8C7AE6 !important;
+    box-shadow: 0 4px 14px rgba(140, 122, 230, 0.35) !important;
+  }
+  .contact-tab-btn[data-tab="partner"].active {
+    background: #BA0000 !important;
+    color: #FFFFFF !important;
+    --bc: #BA0000 !important;
+    box-shadow: 0 4px 14px rgba(186, 0, 0, 0.28) !important;
+  }
+
+  /* Dynamic Service Chips */
+  .chips-group {
+    display: flex;
+    gap: 9px;
+    flex-wrap: wrap;
+  }
+  .chip-btn {
+    font-family: 'Space Grotesk', system-ui, sans-serif !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 7px !important;
+    padding: 9px 16px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    --sl: 6px !important;
+    --bw: 1px !important;
+    background: #F4F3FA !important;
+    color: #4A5073 !important;
+    --bc: #E1DEF3 !important;
+    user-select: none;
+    border: none !important;
+    outline: none !important;
+  }
+  .chip-btn:hover {
+    background: #ECE9F7 !important;
+    color: #10142E !important;
+    --bc: #D2CBF2 !important;
+    transform: translateY(-1.5px) !important;
+  }
+  .chip-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1;
+    width: 14px;
+    height: 14px;
+    opacity: 0.35;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  .chip-btn.selected {
+    transform: translateY(-1px) !important;
+  }
+  .chip-btn.selected .chip-icon {
+    opacity: 1 !important;
+    transform: scale(1.15) !important;
+  }
+  .chip-btn[data-cat="e"].selected {
+    background: #002671 !important;
+    color: #FFFFFF !important;
+    --bc: #002671 !important;
+    box-shadow: 0 3px 10px rgba(0, 38, 113, 0.25) !important;
+  }
+  .chip-btn[data-cat="c"].selected {
+    background: #8C7AE6 !important;
+    color: #10142E !important;
+    --bc: #8C7AE6 !important;
+    box-shadow: 0 3px 10px rgba(140, 122, 230, 0.3) !important;
+  }
+  .chip-btn[data-cat="p"].selected {
+    background: #BA0000 !important;
+    color: #FFFFFF !important;
+    --bc: #BA0000 !important;
+    box-shadow: 0 3px 10px rgba(186, 0, 0, 0.25) !important;
+  }
+
+  /* Submit Brief Button */
+  #btn-submit-brief {
+    font-family: 'Space Grotesk', system-ui, sans-serif !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.4px !important;
+    text-transform: uppercase !important;
+    font-size: 14px !important;
+    outline: none !important;
+    box-shadow: 0 4px 16px rgba(0, 38, 113, 0.2);
+    transition: transform .2s ease, filter .2s ease, background .25s ease, box-shadow .2s ease !important;
+  }
+  #btn-submit-brief:hover {
+    filter: brightness(1.1) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 24px rgba(0, 38, 113, 0.3) !important;
+  }
+  #btn-submit-brief:active {
+    transform: translateY(0) !important;
+    filter: brightness(0.95) !important;
+  }
+
+  /* Form Inputs Focus & Error Shake */
+  #crux-intake-form input:focus,
+  #crux-intake-form textarea:focus {
+    border-color: #6C58DB !important;
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(108, 88, 219, 0.15) !important;
+  }
+  @keyframes inputShake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-6px); }
+    40%, 80% { transform: translateX(6px); }
+  }
+  .input-error-shake {
+    animation: inputShake 0.4s ease !important;
+    border-color: #E5383B !important;
+    box-shadow: 0 0 0 3px rgba(229, 56, 59, 0.15) !important;
+  }
+
+  /* Loading Spinner */
+  .crux-spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #FFFFFF;
+    animation: rc-spin 0.6s linear infinite;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  .crux-spinner--dark {
+    border-color: rgba(16, 20, 46, 0.25);
+    border-top-color: #10142E;
+  }
+
+  /* Modal Buttons */
+  #btn-modal-close:hover {
+    background: #E4E0F7 !important;
+    transform: scale(1.08);
+  }
+  #btn-modal-done:hover,
+  #btn-modal-reset:hover,
+  #btn-modal-calendly:hover {
+    filter: brightness(1.1) !important;
+    transform: translateY(-2px) !important;
+  }
+
+  /* Bottom Sticky Consultancy Booking Button */
+  .contact-sticky-booking {
+    position: fixed !important;
+    bottom: 28px !important;
+    right: 28px !important;
+    z-index: 990 !important;
+    display: flex !important;
+    pointer-events: none !important;
+    transition: transform .25s ease, opacity .25s ease;
+  }
+  .contact-sticky-booking .crux-sw-pod {
+    transition: transform .2s ease, filter .2s ease;
+  }
+  .contact-sticky-booking .crux-sw-pod:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+  }
+  .contact-sticky-booking-btn:hover {
+    background: #9D8DF0 !important;
+  }
+  .contact-sticky-booking-btn:active {
+    transform: translateY(0);
+    filter: brightness(0.95);
+  }
+
+  /* Small Mobile Tabs Stack */
+  @media (max-width: 600px) {
+    .contact-mode-tabs {
+      flex-direction: column !important;
+      gap: 8px !important;
+    }
+    .contact-tab-btn {
+      width: 100% !important;
+      box-sizing: border-box !important;
+      justify-content: center !important;
+    }
+  }
 
     /* Services Dropdown (Focused Floating Card - Light Theme) */
   .crux-nav-dropdown { position: relative !important; display: inline-flex !important; align-items: center !important; height: 100% !important; padding: 18px 0 !important; }
@@ -109,12 +381,60 @@ if ( ! defined( 'ABSPATH' ) ) {
   /* Mobile Viewport (<= 900px) */
   @media (max-width: 900px) {
     [data-m~="root"] > section:first-of-type, section[data-m~="g1"]:first-of-type, [data-m~="hero"] {
+      grid-template-columns: 1fr !important;
       padding-top: 74px !important;
       padding-bottom: 56px !important;
       padding-left: 20px !important;
       padding-right: 20px !important;
       min-height: 0 !important;
-      gap: 28px !important;
+      gap: 36px !important;
+    }
+    [data-m~="root"] > section:first-of-type > div:first-child {
+      padding: 0 !important;
+    }
+    [data-m~="root"] > section:first-of-type > div:nth-child(2) {
+      min-height: 420px !important;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    [data-m~="root"] > section:first-of-type > div:nth-child(2) > div:last-child {
+      padding: 32px 20px !important;
+    }
+    [data-m~="g1"] {
+      grid-template-columns: 1fr !important;
+      gap: 12px !important;
+    }
+    [data-m~="root"] > section:nth-of-type(2) {
+      padding: 60px 20px !important;
+      min-height: 0 !important;
+    }
+    [data-m~="root"] > section:nth-of-type(2) > div:nth-of-type(2) {
+      grid-template-columns: 1fr !important;
+    }
+    [data-m~="prefooter-inner"] {
+      padding: 40px 20px !important;
+      flex-direction: column !important;
+      align-items: flex-start !important;
+    }
+    [data-m~="ctas"] {
+      flex-direction: column !important;
+      width: 100% !important;
+    }
+    [data-m~="ctas"] a {
+      width: 100% !important;
+      box-sizing: border-box !important;
+    }
+    .contact-sticky-booking {
+      bottom: 20px !important;
+      left: 0 !important;
+      right: 0 !important;
+      justify-content: center !important;
+      align-items: center !important;
+      padding: 0 16px !important;
+    }
+    .contact-sticky-booking-btn {
+      padding: 10px 18px !important;
+      font-size: 12px !important;
     }
     header { padding: 10px 20px !important; }
     header > nav { display: none !important; }
@@ -580,11 +900,6 @@ if ( ! defined( 'ABSPATH' ) ) {
       <img src="<?php echo crux_get_blob_url( "4170d6b6009c07e37d83bae48a68917b" ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;" class="drift">
       <div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(16,20,46,0.92) 0%, rgba(16,20,46,0.25) 70%);"></div>
       <div style="position:relative; height:100%; display:flex; flex-direction:column; justify-content:flex-end; padding:56px; gap:12px;">
-        <div style="background:rgba(16,20,46,0.96) !important; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); padding:16px 20px; width:fit-content; max-width:100%; --sl:6px; --bc:#8C7AE6; margin-bottom:4px;" class="bx">
-          <div style="font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:#8C7AE6; margin-bottom:4px;">Direct Consultancy Booking</div>
-          <div style="font-size:13px; font-weight:600; color:#F2F1F8; margin-bottom:12px;">Prefer to book directly with our business advisory team?</div>
-          <a href="https://calendly.com/cruxnxtiongroupofcompany-info" target="_blank" rel="noopener" style="background:#8C7AE6; color:#10142E !important; font-weight:700; font-size:12.5px; padding:8px 18px; --sl:5px; display:inline-block; text-decoration:none;" class="bx">Book On Calendly &rarr;</a>
-        </div>
         <div style="display:flex; align-items:center; gap:12px; background:rgba(16,20,46,0.96) !important; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); padding:11px 22px 11px 12px; width:fit-content; --sl:6px; --bc:#3A3F72;" class="bx"><span style="width:32px; height:32px; border-radius:50%; background:#8C7AE6; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:#10142E;">✆</span><span style="font-size:13px; font-weight:600; color:#F2F1F8;">+44 7762 278076</span></div><div style="display:flex; align-items:center; gap:12px; background:rgba(16,20,46,0.96) !important; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); padding:11px 22px 11px 12px; width:fit-content; --sl:6px; --bc:#3A3F72;" class="bx"><span style="width:32px; height:32px; border-radius:50%; background:#8C7AE6; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:#10142E;">✆</span><span style="font-size:13px; font-weight:600; color:#F2F1F8;">+44 7341 366400</span></div><div style="display:flex; align-items:center; gap:12px; background:rgba(16,20,46,0.96) !important; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); padding:11px 22px 11px 12px; width:fit-content; --sl:6px; --bc:#3A3F72;" class="bx"><span style="width:32px; height:32px; border-radius:50%; background:#8C7AE6; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:#10142E;">@</span><?php $c_mail = 'infoandsales@cruxnxtion.co.uk'; ?><a href="<?php echo esc_url( 'mailto:' . antispambot( $c_mail ) ); ?>" style="font-size:13px; font-weight:600; color:#F2F1F8; text-decoration:none;"><?php echo esc_html( antispambot( $c_mail ) ); ?></a></div><div style="display:flex; align-items:center; gap:12px; background:rgba(16,20,46,0.96) !important; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); padding:11px 22px 11px 12px; width:fit-content; --sl:6px; --bc:#3A3F72;" class="bx"><span style="width:32px; height:32px; border-radius:50%; background:#8C7AE6; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:#10142E;">●</span><span style="font-size:13px; font-weight:600; color:#F2F1F8;">29 Dun Work, Sheffield S3 8FB</span></div>
         <a href="#" style="color:#F2F1F8; font-weight:700; font-size:13px; border-bottom:1.5px solid #8C7AE6; padding-bottom:2px; width:fit-content; margin-top:6px;">Get directions →</a>
       </div>
@@ -691,8 +1006,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
     var nameInput = document.getElementById('inp-name');
     var emailInput = document.getElementById('inp-email');
+    var alertBox = document.getElementById('contact-alert-box');
 
-    // Multi-tab brief state: array of selected wings (allows 1, 2, or all 3 simultaneous tabs)
+    // Tab brief state: array of selected wings (allows clean switching and multi-service selection)
     var activeTabs = ['events'];
 
     function updateTabsUI() {
@@ -775,17 +1091,8 @@ if ( ! defined( 'ABSPATH' ) ) {
       syncServicesAndTabsInputs();
     }
 
-    function toggleTab(tabName) {
-      var idx = activeTabs.indexOf(tabName);
-      if (idx !== -1) {
-        // Toggle off if multiple tabs are active (keep at least 1)
-        if (activeTabs.length > 1) {
-          activeTabs.splice(idx, 1);
-        }
-      } else {
-        // Toggle on
-        activeTabs.push(tabName);
-      }
+    function selectTab(tabName) {
+      activeTabs = [tabName];
       updateTabsUI();
     }
 
@@ -841,12 +1148,12 @@ if ( ! defined( 'ABSPATH' ) ) {
       });
     }
 
-    // Tab buttons click handler (multi-tab toggle)
+    // Tab buttons click handler (switch active wing)
     tabButtons.forEach(function(btn) {
       btn.addEventListener('click', function(e) {
         e.preventDefault();
         var tab = this.getAttribute('data-tab');
-        if (tab) toggleTab(tab);
+        if (tab) selectTab(tab);
       });
     });
 
@@ -1107,14 +1414,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 })();
 </script>
 
-<div class="msw">
-  <div class="crux-sw-pod crux-sw-pod--light" style="pointer-events:auto; display:inline-flex; align-items:center; padding:1.5px; background:linear-gradient(135deg, #C4BAEE 0%, #A99CE0 100%); clip-path:polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%); box-shadow:0 14px 36px rgba(16,20,46,0.22); filter:drop-shadow(0 4px 12px rgba(16,20,46,0.12));">
-    <div class="crux-sw-inner" style="display:inline-flex; align-items:center; background:#EBE7F7; padding:4px; gap:4px; clip-path:polygon(7px 0, 100% 0, calc(100% - 7px) 100%, 0 100%);">
-      <a href="<?php echo esc_url( home_url( "/" ) ); ?>" class="crux-sw-tab crux-sw-tab--active-events" style="display:inline-flex; align-items:center; justify-content:center; padding:11px 22px; min-width:140px; font-size:13px; font-weight:700; letter-spacing:0.3px; text-transform:uppercase; text-decoration:none; line-height:1.2; background:#1E48B0; color:#FFFFFF; clip-path:polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%); box-shadow:0 2px 8px rgba(30,72,176,0.4);">
-        <span>Events</span>
-      </a>
-      <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" class="crux-sw-tab crux-sw-tab--inactive-light" style="display:inline-flex; align-items:center; justify-content:center; padding:11px 22px; min-width:140px; font-size:13px; font-weight:600; letter-spacing:0.3px; text-transform:uppercase; text-decoration:none; line-height:1.2; background:transparent; color:#4A5073; clip-path:polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%); transition:all .2s ease;">
-        <span>Consultancy</span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:6px; display:inline-block; vertical-align:middle;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+<!-- BOTTOM STICKY CONSULTANCY BOOKING BUTTON -->
+<div class="contact-sticky-booking" id="contact-sticky-booking">
+  <div class="crux-sw-pod crux-sw-pod--light" style="pointer-events:auto; display:inline-flex; align-items:center; padding:1.5px; background:linear-gradient(135deg, #C4BAEE 0%, #8C7AE6 100%); clip-path:polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%); box-shadow:0 14px 36px rgba(16,20,46,0.28); filter:drop-shadow(0 6px 16px rgba(16,20,46,0.18));">
+    <div class="crux-sw-inner" style="display:inline-flex; align-items:center; background:#10142E; padding:4px; clip-path:polygon(7px 0, 100% 0, calc(100% - 7px) 100%, 0 100%);">
+      <a href="https://calendly.com/cruxnxtiongroupofcompany-info" target="_blank" rel="noopener" class="contact-sticky-booking-btn" style="display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:11px 22px; font-family:'Space Grotesk',system-ui,sans-serif; font-size:13px; font-weight:700; letter-spacing:0.3px; text-transform:uppercase; text-decoration:none; line-height:1.2; background:#8C7AE6; color:#10142E; clip-path:polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%); box-shadow:0 2px 10px rgba(140,122,230,0.45); transition:all .2s ease;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10142E" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle; flex-shrink:0;">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        <span style="font-weight:800; letter-spacing:0.4px;">Direct Consultancy Booking</span>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10142E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle; flex-shrink:0;">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
       </a>
     </div>
   </div>
