@@ -205,23 +205,21 @@ if ( ! defined( 'ABSPATH' ) ) {
     transform: translateY(-1.5px) !important;
   }
   .chip-icon {
-    display: inline-flex;
+    display: none;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 800;
     line-height: 1;
-    width: 14px;
-    height: 14px;
-    opacity: 0.35;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    width: 13px;
+    height: 13px;
+    margin-right: 2px;
   }
   .chip-btn.selected {
     transform: translateY(-1px) !important;
   }
   .chip-btn.selected .chip-icon {
-    opacity: 1 !important;
-    transform: scale(1.15) !important;
+    display: inline-flex !important;
   }
   .chip-btn[data-cat="e"].selected {
     background: #002671 !important;
@@ -310,17 +308,23 @@ if ( ! defined( 'ABSPATH' ) ) {
     transform: translateY(-2px) !important;
   }
 
-  /* Bottom Sticky Consultancy Booking Button */
+  /* Bottom Sticky Consultancy Booking Button - Perfectly Centered Sitewide */
   .contact-sticky-booking {
     position: fixed !important;
-    bottom: 28px !important;
-    right: 28px !important;
-    z-index: 990 !important;
+    bottom: 24px !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
     display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    z-index: 990 !important;
     pointer-events: none !important;
     transition: transform .25s ease, opacity .25s ease;
   }
   .contact-sticky-booking .crux-sw-pod {
+    margin: 0 auto !important;
+    pointer-events: auto !important;
     transition: transform .2s ease, filter .2s ease;
   }
   .contact-sticky-booking .crux-sw-pod:hover {
@@ -428,9 +432,11 @@ if ( ! defined( 'ABSPATH' ) ) {
       bottom: 20px !important;
       left: 0 !important;
       right: 0 !important;
+      width: 100% !important;
       justify-content: center !important;
       align-items: center !important;
       padding: 0 16px !important;
+      box-sizing: border-box !important;
     }
     .contact-sticky-booking-btn {
       padding: 10px 18px !important;
@@ -801,7 +807,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
           <!-- Group 1: Events Chips -->
           <div id="chips-group-events" class="chips-group" style="display:flex; gap:9px; flex-wrap:wrap;">
-            <button type="button" class="chip-btn bx selected" data-cat="e" data-name="Event planning" aria-pressed="true"><span class="chip-icon">✓</span><span>Event planning</span></button>
+            <button type="button" class="chip-btn bx" data-cat="e" data-name="Event planning" aria-pressed="false"><span class="chip-icon">✓</span><span>Event planning</span></button>
             <button type="button" class="chip-btn bx" data-cat="e" data-name="Entertainment & talent" aria-pressed="false"><span class="chip-icon">✓</span><span>Entertainment &amp; talent</span></button>
             <button type="button" class="chip-btn bx" data-cat="e" data-name="Design & production" aria-pressed="false"><span class="chip-icon">✓</span><span>Design &amp; production</span></button>
             <button type="button" class="chip-btn bx" data-cat="e" data-name="Marketing & promotion" aria-pressed="false"><span class="chip-icon">✓</span><span>Marketing &amp; promotion</span></button>
@@ -1364,13 +1370,6 @@ if ( ! defined( 'ABSPATH' ) ) {
       });
       activeTabs = ['events'];
       updateTabsUI();
-      if (groupEvents) {
-        var firstChip = groupEvents.querySelector('.chip-btn');
-        if (firstChip) {
-          firstChip.classList.add('selected');
-          firstChip.setAttribute('aria-pressed', 'true');
-        }
-      }
       syncServicesAndTabsInputs();
       closeModal();
       tabsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1416,7 +1415,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <!-- BOTTOM STICKY CONSULTANCY BOOKING BUTTON -->
 <div class="contact-sticky-booking" id="contact-sticky-booking">
-  <div class="crux-sw-pod crux-sw-pod--light" style="pointer-events:auto; display:inline-flex; align-items:center; padding:1.5px; background:linear-gradient(135deg, #C4BAEE 0%, #8C7AE6 100%); clip-path:polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%); box-shadow:0 14px 36px rgba(16,20,46,0.28); filter:drop-shadow(0 6px 16px rgba(16,20,46,0.18));">
+  <div class="crux-sw-pod crux-sw-pod--light" style="pointer-events:auto; margin:0 auto; display:inline-flex; align-items:center; padding:1.5px; background:linear-gradient(135deg, #C4BAEE 0%, #8C7AE6 100%); clip-path:polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%); box-shadow:0 14px 36px rgba(16,20,46,0.28); filter:drop-shadow(0 6px 16px rgba(16,20,46,0.18));">
     <div class="crux-sw-inner" style="display:inline-flex; align-items:center; background:#10142E; padding:4px; clip-path:polygon(7px 0, 100% 0, calc(100% - 7px) 100%, 0 100%);">
       <a href="https://calendly.com/cruxnxtiongroupofcompany-info" target="_blank" rel="noopener" class="contact-sticky-booking-btn" style="display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:11px 22px; font-family:'Space Grotesk',system-ui,sans-serif; font-size:13px; font-weight:700; letter-spacing:0.3px; text-transform:uppercase; text-decoration:none; line-height:1.2; background:#8C7AE6; color:#10142E; clip-path:polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%); box-shadow:0 2px 10px rgba(140,122,230,0.45); transition:all .2s ease;">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10142E" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle; flex-shrink:0;">
