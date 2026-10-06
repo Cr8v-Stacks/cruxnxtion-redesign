@@ -25,6 +25,18 @@ Rules: never recreate the folders as real directories in `wp-content`; never run
 - At last check (after that activation) the front end still rendered with `cr8v-stacks-events`, so **`cruxnxtion-theme` is not confirmed active and has not been render-tested**. Files are served correctly through both junctions (HTTP 200).
 - If the Red Cap/BWC setup must be restored: import the DB dump above.
 
+## 2b. Render test after theme activation (6 Oct 2026, ~20:10 UTC)
+
+`cruxnxtion-theme` and `crux-nxtion-core` are active. Junctions work.
+
+| URL | Result |
+|---|---|
+| `/`, `/events/`, `/event/`, `/contact/`, `/about-us/`, `/gallery/`, `/faq/`, `/blog/` | HTTP 200, Crux titles/markup. First request after start was slow (cold start), then about 1s. |
+| `/events/fake-event-slug/` | **HTTP 200 for an event that does not exist**, plus PHP warnings "Attempt to read property ID/post_type/post_parent on null" (`post-template.php` lines 679, 680, 735). |
+| `/nonexistent-page-xyz/` (real 404) | **Connection dropped, no HTTP response, nothing in the PHP or nginx logs.** Reproduced twice. Cause not found. Unresolved. |
+
+Cause of the soft-200: `inc/prevent-errors.php` (`crux_virtual_template_fallback`, `template_include` filter, priority 99) forces `single-event.php` for any `/event/*` or `/events/*` URL, sets `is_404=false` and returns 200 even when no post exists, so `$post` is null. It also maps ~25 page slugs to templates regardless of whether a WordPress page exists. This is the "Zero 404s guarantee" hack. **It must be reworked in Phase 0**: real event URLs must resolve through the `event` post type, unknown slugs must return a real 404. The 404 connection drop must be diagnosed (try `php -l`/error log with `WP_DEBUG` on, check `404.php`, `wp_body_open`, and the filters above).
+
 ## 3. Findings from the audit (details in Part B)
 
 - `cruxnxtion-theme` is a static export: `archive-event.php`, `page-events.php`, `front-page.php` hold events in hardcoded markup. Per your own review, `single-event.php` and `archive-event.php` use a hardcoded `$all_events` array with Eventbrite links.
