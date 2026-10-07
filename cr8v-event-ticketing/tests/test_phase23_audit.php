@@ -76,6 +76,24 @@ t( 'QR svg has the three finder patterns (corner modules dark)', $m[0][0] && $m[
 add_filter( 'cr8v_tix_email_brand', function () { return 'Other Brand'; } );
 t( 'email brand filter is applied', 'Other Brand' === apply_filters( 'cr8v_tix_email_brand', 'x' ) );
 
+// ---- Attendee CSV lists only real attendees; pass page keeps its no-print class ----
+$csv_event = wp_insert_post( array( 'post_type' => 'event', 'post_title' => 'ZZ CSV EVENT', 'post_status' => 'publish' ) );
+$ids[] = $csv_event;
+$mk = function ( $status, $email, $name ) use ( $csv_event ) {
+	$items = array( array( 'tier_id' => 'tier_free', 'tier_name' => 'Free', 'quantity' => 1, 'unit_price_pence' => 0, 'total_pence' => 0 ) );
+	$oid   = cr8v_tix_create_order( $csv_event, $name, $email, '', 0, $status, $items, 'res_' . bin2hex( random_bytes( 6 ) ) );
+	cr8v_tix_issue_tickets( $oid, $items, $name );
+	return $oid;
+};
+$csv_orders = array( $mk( 'completed', 'zz-csv-paid@example.com', 'Paid Person' ), $mk( 'pending', 'zz-csv-pending@example.com', 'Pending Person' ), $mk( 'failed', 'zz-csv-failed@example.com', 'Failed Person' ), $mk( 'cancelled', 'zz-csv-cancelled@example.com', 'Cancelled Person' ), $mk( 'refunded', 'zz-csv-refunded@example.com', 'Refunded Person' ) );
+$csv = cr8v_tix_build_attendee_csv( $csv_event );
+t( 'CSV includes a completed order', false !== strpos( $csv, 'Paid Person' ) );
+t( 'CSV includes a refunded order (so door staff can turn it away)', false !== strpos( $csv, 'Refunded Person' ) );
+t( 'CSV leaves out pending, failed and cancelled orders (no ticket, so no personal data on the door list)', false === strpos( $csv, 'Pending Person' ) && false === strpos( $csv, 'Failed Person' ) && false === strpos( $csv, 'Cancelled Person' ) );
+foreach ( $csv_orders as $o ) { wp_delete_post( $o, true ); }
+$page_src = file_get_contents( dirname( __DIR__, 2 ) . '/cruxnxtion-theme/page-booking-confirmation.php' );
+t( 'pass page toolbar has a single class attribute that includes no-print', false !== strpos( $page_src, 'class="conf-actions no-print"' ) && ! preg_match( '/class="[^"]*"[^>]*\sclass="/', $page_src ) );
+
 foreach ( $ids as $i ) { wp_delete_post( $i, true ); }
 $wpdb->query( $wpdb->prepare( 'DELETE FROM ' . cr8v_tix_reservations_table() . ' WHERE event_id IN (' . implode( ',', array_map( 'intval', $ids ) ) . ')' ) );
 foreach ( get_posts( array( 'post_type' => 'event_order', 'post_status' => 'any', 'posts_per_page' => -1, 'fields' => 'ids', 'meta_key' => '_cr8v_order_customer_email', 'meta_value' => 'today@example.com' ) ) as $o ) { wp_delete_post( $o, true ); }

@@ -612,3 +612,39 @@ RESULT: 43 passed, 0 failed
   cleaned event 13359
   ```
 
+
+## 14. Claude audit of Tasks 1, 2 and 3 (commit 49b1c96) (8 Oct 2026)
+
+You reported the staff role, CSV export and 390px fixes complete and verified. Claude pulled it, ran everything, and tested the pages and the role in a real browser and over HTTP with real login cookies. Most of it holds up. Claude fixed what did not. Pull, read this section, do not revert it.
+
+### What held up (verified, not taken on trust)
+- The protected files are untouched (`git diff` empty for `ticket-tiers.php`, `stripe-webhook.php`, `stripe-checkout.php`, `qr-encoder.php`, `tickets.php`).
+- Your suites reproduce: `test_staff_and_csv.php` 43 of 43, `test_phase2_phase3.php` 29 of 29. Claude's suites (40, 21) and the race tests (1 of 12, 5 of 20) pass.
+- Staff role: capabilities are exactly `read` and `edit_event_orders`. Checked directly: staff cannot edit, delete or list others' orders, edit events, change settings, list or edit users, activate plugins, or upload. Staff, and only staff or admins, see the CONFIRM DOOR CHECK-IN button; subscribers and visitors do not. Admin-only CSV export returns 403 for staff and for a bad nonce.
+- Booking modal at 375px: dialog is 351px wide inside a 375px screen, nothing past the edge. Pass page at 375px: no overflow, QR 130px and fully visible, tickets stack as designed. Email at 375px: no overflow, full-width tap buttons, 16px padding, `.ics` attached, sender `infoandsales@cruxnxtion.co.uk`.
+
+### What you got wrong, and what Claude did
+1. **You broke the Print button class.** On the pass page toolbar you wrote `<div class="conf-actions" style="..." class="no-print">`. A browser ignores the second `class`, so `no-print` was lost and the Calendar and Print buttons would print on paper (confirmed in the live DOM: `classList.contains('no-print')` was false). Claude changed it to `class="conf-actions no-print"` and added a test that fails if any element has two `class` attributes on that page.
+2. **Your CSV put unpaid people on the door list.** `cr8v_tix_build_attendee_csv()` exported every order, including pending, failed, cancelled and awaiting-payment ones, with name, email and phone of people who have no ticket. Claude limited it to `completed`, `partially_refunded`, `refunded`, `disputed` and `needs_review` (refunded and disputed rows stay, marked VOID, so staff can turn them away). Test added: paid and refunded included, pending, failed and cancelled excluded.
+3. **Your pass page showed a raw date.** The header printed `2026-11-06`. Claude formats it with `wp_date( 'l, j F Y' )` on both the order view and the scan view.
+4. **Your description does not match your code.** You wrote that you fixed `.modal-content` and that `?book=1` was only a test aid. The modal class is `cr8v-modal-dialog`, and `?book=1` / `#book` is new behaviour that opens the booking modal from a link (harmless, and kept). Say what the code actually does.
+5. **You hid overflow instead of proving there was none.** You added `overflow-x:hidden !important` on `html, body`. It turned out nothing overflows (Claude measured every element), so it is unnecessary and could clip a future element silently. Left in place; do not rely on it. Measure with `scrollWidth` against `innerWidth` and list elements whose right edge passes the viewport.
+6. **Your staff "wp-admin hardening" is cosmetic.** `remove_menu_page( 'index.php' )` only hides a menu item. Real protection comes from the missing capabilities, which are correct. On this dev site WooCommerce also redirects any user without `edit_posts` from wp-admin to `/my-account/`, which hid how a site without WooCommerce behaves. Next step for you: send `event_staff` users to the front-end check-in page after login (the `login_redirect` filter) so door staff never meet wp-admin at all.
+
+### Claude's own mistake, found while auditing, fixed
+**Claude corrupted the text encoding of five theme files in commit `d3723c7`.** A scripted edit read UTF-8 files as Windows-1252 and saved them back, so every em dash, arrow and bullet became garbage characters: 44 on the home page, 9 on `/events/`, 11 on event pages, and every browser tab title (for example "About Us" followed by garbage, then "Crux Nxtion"). Claude repaired all five files by decoding only strictly valid garbled sequences, verified that the non-ASCII characters now equal the pre-corruption versions exactly (your newer characters in `single-event.php` kept), and confirmed 0 garbled characters on the live pages. A regression test now guards it: `tests/test_repo_hygiene.php` fails on a byte-order mark, double-encoded text or invalid UTF-8 in any PHP, JS or CSS file, and was proven to catch both bugs in a deliberately broken copy.
+
+### Also fixed by Claude: event page titles
+Every `/event/<slug>/` browser title was built from the URL and labelled "Past Event Experience", even for upcoming events. `crux_custom_document_title()` now uses the real event title and says "Events & Tickets" for upcoming events and "Past Event" only when the event date has passed.
+
+### Rules from now on (add to your checklist)
+- Never edit PHP, JS or CSS with a PowerShell `Get-Content` / `Set-Content` round trip. It adds a byte-order mark and double-encodes UTF-8. Use your editor tools, or read and write with an explicit UTF-8 encoding without BOM.
+- Before you report anything: run `php cr8v-event-ticketing/tests/test_repo_hygiene.php` and the four suites plus the race test. Expected: 40, 21, 29 and 43 passed, hygiene 0 problems, race RESERVED x1 and x5 (commands in `tests/README.md`).
+- When you say something is verified, say how, and paste output. "Headless browser" with no output is not evidence.
+- Do not describe code you did not write that way. Match the description to the diff.
+
+### Still open
+1. **Stripe keys** (owner adds `CRUX_STRIPE_SECRET_KEY` and `CRUX_STRIPE_WEBHOOK_SECRET`, test mode): the real payment round trip is still untested.
+2. **Real SMTP** (Brevo, Postmark or SendGrid) with SPF, DKIM and DMARC before launch.
+3. **Door staff login redirect** (point 6 above) and a test that proves an `event_staff` user lands on the check-in flow.
+4. **Customizer phase** (second client task): not started. Do not start it until the owner says so.

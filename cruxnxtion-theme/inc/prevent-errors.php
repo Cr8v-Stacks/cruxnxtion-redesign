@@ -206,25 +206,25 @@ function crux_custom_document_title( $title_parts ) {
 	$slug = trim( parse_url( $request_uri, PHP_URL_PATH ), '/' );
 
 	$title_map = array(
-		'founder'              => 'Founder Story â€” Crux Nxtion',
-		'about'                => 'About Us â€” Crux Nxtion',
-		'about-us'             => 'About Us â€” Crux Nxtion',
-		'contact'              => 'Contact Us â€” Crux Nxtion',
-		'contact-us'           => 'Contact Us â€” Crux Nxtion',
-		'gallery'              => 'Ticket Wall & Event Gallery â€” Crux Nxtion',
-		'events'               => 'Events & Tickets â€” Crux Nxtion',
-		'past-events'          => 'Past Events Archive â€” Crux Nxtion',
-		'events-archive'       => 'Past Events Archive â€” Crux Nxtion',
-		'services'             => 'Event Services & Production â€” Crux Nxtion',
-		'services-consultancy' => 'Business Consultancy Services â€” Crux Nxtion',
-		'consultancy'          => 'Business Consultancy â€” Crux Nxtion',
-		'faq'                  => 'FAQ & Inquiries â€” Crux Nxtion',
-		'faqs'                 => 'FAQ & Inquiries â€” Crux Nxtion',
-		'sponsors'             => 'Sponsors & Brand Partners â€” Crux Nxtion',
-		'blog'                 => 'Journal & Event Recaps â€” Crux Nxtion',
-		'privacy-policy'       => 'Privacy Policy â€” Crux Nxtion',
-		'cookie-policy'        => 'Cookie Policy â€” Crux Nxtion',
-		'terms-conditions'     => 'Terms & Conditions â€” Crux Nxtion',
+		'founder'              => 'Founder Story — Crux Nxtion',
+		'about'                => 'About Us — Crux Nxtion',
+		'about-us'             => 'About Us — Crux Nxtion',
+		'contact'              => 'Contact Us — Crux Nxtion',
+		'contact-us'           => 'Contact Us — Crux Nxtion',
+		'gallery'              => 'Ticket Wall & Event Gallery — Crux Nxtion',
+		'events'               => 'Events & Tickets — Crux Nxtion',
+		'past-events'          => 'Past Events Archive — Crux Nxtion',
+		'events-archive'       => 'Past Events Archive — Crux Nxtion',
+		'services'             => 'Event Services & Production — Crux Nxtion',
+		'services-consultancy' => 'Business Consultancy Services — Crux Nxtion',
+		'consultancy'          => 'Business Consultancy — Crux Nxtion',
+		'faq'                  => 'FAQ & Inquiries — Crux Nxtion',
+		'faqs'                 => 'FAQ & Inquiries — Crux Nxtion',
+		'sponsors'             => 'Sponsors & Brand Partners — Crux Nxtion',
+		'blog'                 => 'Journal & Event Recaps — Crux Nxtion',
+		'privacy-policy'       => 'Privacy Policy — Crux Nxtion',
+		'cookie-policy'        => 'Cookie Policy — Crux Nxtion',
+		'terms-conditions'     => 'Terms & Conditions — Crux Nxtion',
 	);
 
 	if ( isset( $title_map[ $slug ] ) ) {
@@ -236,8 +236,15 @@ function crux_custom_document_title( $title_parts ) {
 	}
 
 	if ( preg_match( '#^event(?:s)?/(.+)$#i', $slug, $em ) ) {
-		$raw_name = ucwords( str_replace( array( '-', '_' ), ' ', $em[1] ) );
-		$t = $raw_name . ' â€” Past Event Experience â€” Crux Nxtion';
+		// Use the real event: its own title, and "Past Event" only when the event date has passed.
+		$ev_for_title = function_exists( 'crux_get_event_data' ) ? crux_get_event_data( $em[1] ) : null;
+		if ( $ev_for_title ) {
+			$ev_name  = wp_specialchars_decode( get_the_title( $ev_for_title['id'] ), ENT_QUOTES );
+			$ev_label = ! empty( $ev_for_title['is_past'] ) ? 'Past Event' : 'Events & Tickets';
+			$t        = $ev_name . ' — ' . $ev_label . ' — Crux Nxtion';
+		} else {
+			$t = ucwords( str_replace( array( '-', '_' ), ' ', $em[1] ) ) . ' — Crux Nxtion';
+		}
 		if ( is_array( $title_parts ) ) {
 			$title_parts['title'] = $t;
 			return $title_parts;
@@ -247,7 +254,7 @@ function crux_custom_document_title( $title_parts ) {
 
 	if ( preg_match( '#^blog/(.+)$#i', $slug, $bm ) ) {
 		$raw_title = ucwords( str_replace( array( '-', '_' ), ' ', $bm[1] ) );
-		$t = $raw_title . ' â€” Journal â€” Crux Nxtion';
+		$t = $raw_title . ' — Journal — Crux Nxtion';
 		if ( is_array( $title_parts ) ) {
 			$title_parts['title'] = $t;
 			return $title_parts;

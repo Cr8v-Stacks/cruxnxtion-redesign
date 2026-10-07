@@ -375,7 +375,15 @@ function cr8v_tix_build_attendee_csv( $event_id = 0 ) {
 
 	$orders = get_posts( $args );
 
+	// An attendee list is for the door: only orders that were actually paid or confirmed. Pending,
+	// failed, cancelled and awaiting-payment orders belong to people who have no ticket, so their personal
+	// data is left out. Refunded and disputed orders stay in, flagged VOID, so staff can turn them away.
+	$listable = array( 'completed', 'partially_refunded', 'refunded', 'disputed', 'needs_review' );
+
 	foreach ( $orders as $order ) {
+		if ( ! in_array( (string) get_post_meta( $order->ID, '_cr8v_order_status', true ), $listable, true ) ) {
+			continue;
+		}
 		$oid         = $order->ID;
 		$ev_id       = (int) get_post_meta( $oid, '_cr8v_order_event_id', true );
 		$ev_title    = $ev_id ? get_the_title( $ev_id ) : '';

@@ -332,6 +332,10 @@ if ( 'verify_ticket' === $view_mode ) :
 	$v_event_title = $v_event ? sanitize_text_field( $v_event->post_title ) : __( 'Crux Nxtion Event', 'cruxnxtion' );
 	$v_venue       = (string) get_post_meta( $v_event_id, '_cr8v_event_venue', true );
 	$v_date_raw    = (string) get_post_meta( $v_event_id, '_cr8v_event_date', true );
+	// Show a readable date (the stored value is Y-m-d).
+	if ( preg_match( '/^\d{4}-\d{2}-\d{2}$/', $v_date_raw ) ) {
+		$v_date_raw = wp_date( 'l, j F Y', strtotime( $v_date_raw . ' 12:00:00' ) );
+	}
 	$v_time        = (string) get_post_meta( $v_event_id, '_cr8v_event_time', true );
 ?>
 
@@ -494,6 +498,10 @@ elseif ( 'order_confirmed' === $view_mode && $order_post ) :
 
 	$ev_title   = $o_event ? sanitize_text_field( $o_event->post_title ) : __( 'Crux Nxtion Event', 'cruxnxtion' );
 	$ev_date    = (string) get_post_meta( $o_ev_id, '_cr8v_event_date', true );
+	// Show a readable date (the stored value is Y-m-d).
+	if ( preg_match( '/^\d{4}-\d{2}-\d{2}$/', $ev_date ) ) {
+		$ev_date = wp_date( 'l, j F Y', strtotime( $ev_date . ' 12:00:00' ) );
+	}
 	$ev_time    = (string) get_post_meta( $o_ev_id, '_cr8v_event_time', true );
 	$ev_venue   = (string) get_post_meta( $o_ev_id, '_cr8v_event_venue', true );
 	$ev_loc     = (string) get_post_meta( $o_ev_id, '_cr8v_event_location', true );
@@ -542,7 +550,7 @@ elseif ( 'order_confirmed' === $view_mode && $order_post ) :
 			</div>
 
 			<!-- Action Toolbar -->
-			<div class="conf-actions" style="display:flex; gap:12px; margin-top:24px; flex-wrap:wrap;" class="no-print">
+			<div class="conf-actions no-print" style="display:flex; gap:12px; margin-top:24px; flex-wrap:wrap;">
 				<?php if ( $o_ev_id ) : ?>
 					<a href="<?php echo esc_url( add_query_arg( array( 'cr8v_tix_download_ics' => '1', 'event_id' => $o_ev_id ), home_url( '/' ) ) ); ?>" class="bx" style="background:#002671; border:1px solid #5B8DEF; color:#FFFFFF; font-weight:700; font-size:13.5px; padding:12px 20px; --sl:8px;">
 						📅 <?php esc_html_e( 'Add to Calendar (.ics)', 'cruxnxtion' ); ?>

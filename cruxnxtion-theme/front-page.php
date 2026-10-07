@@ -133,7 +133,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     height: auto;
   }
 
-  /* Full-bleed 100% root container â€” edge-to-edge layout, never pillarboxed */
+  /* Full-bleed 100% root container — edge-to-edge layout, never pillarboxed */
   [data-m~=root] {
     width: 100% !important;
     max-width: 100% !important;
@@ -676,7 +676,7 @@ if ( ! defined( 'ABSPATH' ) ) {
   <!-- SHOUT-OUT BAR -->
   <div class="top-shoutout-bar" style="background:#002671; padding:10px 20px 10px 20px; display:flex; align-items:center; justify-content:center; gap:10px;">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3 11l18-7-7 18-2-8-9-3z" stroke="#FFFFFF" stroke-width="1.8" stroke-linejoin="round"></path></svg>
-    <span style="font-size:12.5px; font-weight:700; color:#FFFFFF; letter-spacing:0.3px;">Now booking <?php echo date( "Y" ); ?>/<?php echo (int) date( "Y" ) + 1; ?> across the UK â€” <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="color:#FFFFFF; font-weight:800; border-bottom:1px solid #FFFFFF;">get in touch â†’</a></span>
+    <span style="font-size:12.5px; font-weight:700; color:#FFFFFF; letter-spacing:0.3px;">Now booking <?php echo date( "Y" ); ?>/<?php echo (int) date( "Y" ) + 1; ?> across the UK — <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="color:#FFFFFF; font-weight:800; border-bottom:1px solid #FFFFFF;">get in touch →</a></span>
   </div>
 
   <!-- HEADER -->
@@ -829,7 +829,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <details class="mdrawer-acc" style="border-bottom:1px solid #1E2B5E;">
           <summary style="display:flex; align-items:center; justify-content:space-between; cursor:pointer; padding:14px 0;">
             <span class="mlink" style="color:#F4F5FA !important; opacity:1 !important;">Services</span>
-            <span class="acc-icon" style="color:#FF2E3D; font-size:22px; font-weight:700; transition:transform .2s ease;">â–¾</span>
+            <span class="acc-icon" style="color:#FF2E3D; font-size:22px; font-weight:700; transition:transform .2s ease;">▾</span>
           </summary>
           <div style="padding:4px 0 16px;">
             <!-- Events sub-box -->
@@ -895,31 +895,31 @@ if ( ! defined( 'ABSPATH' ) ) {
       <span class="eyebrow" style="font-size:11.5px !important; letter-spacing:0.8px !important; text-transform:none !important; font-weight:700 !important; color:#5B8DEF; margin-bottom:14px; display:inline-block;">Cultural Live Event Production &amp; Business Consultancy</span>
 
       <h1 class="bebas" style="font-size:52px; margin:0px 0px 18px 0px; color:#F4F5FA; line-height:0.95;">WE PLAN IT.<br>WE BOOK IT.<br><span style="color:#E5383B;">WE RUN IT.</span></h1>
-      <p class="hero-desc" style="font-size:16px !important; line-height:1.65; color:#C5CADF; max-width:580px; margin:0px 0px 28px 0px;">Crux Nxtion Events &amp; Consultancy plans, books, and executes the live gatherings people talk about for weeks, while delivering the strategic business solutions that scale the enterprises behind them â€” your singular crew from the first brief to the final execution.</p>
+      <p class="hero-desc" style="font-size:16px !important; line-height:1.65; color:#C5CADF; max-width:580px; margin:0px 0px 28px 0px;">Crux Nxtion Events &amp; Consultancy plans, books, and executes the live gatherings people talk about for weeks, while delivering the strategic business solutions that scale the enterprises behind them — your singular crew from the first brief to the final execution.</p>
       <div style="display:flex; gap:16px; flex-wrap:wrap;">
-        <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:15px; padding:16px 30px; --sl:10px;" class="bx">Plan An Event â†’</a>
-        <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="background:#8C7AE6; color:#10142E; font-weight:700; font-size:15px; padding:16px 28px; --sl:10px;" class="bx">Explore Consultancy â†’</a>
+        <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:15px; padding:16px 30px; --sl:10px;" class="bx">Plan An Event →</a>
+        <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="background:#8C7AE6; color:#10142E; font-weight:700; font-size:15px; padding:16px 28px; --sl:10px;" class="bx">Explore Consultancy →</a>
       </div>
     </div>
   </section>
 
-    <!-- MARQUEE â€” SLANTED TO MATCH HERO CUT -->
+    <!-- MARQUEE — SLANTED TO MATCH HERO CUT -->
   <div class="hero-slanted-marquee" style="background:#002671; padding:18px 0; overflow:hidden; white-space:nowrap; margin-top:-53px; transform:skewY(-2.1deg); transform-origin:left top; z-index:2; position:relative; box-shadow:0 12px 30px rgba(0,0,0,0.4); border-top:1.5px solid rgba(91,141,239,0.4); border-bottom:1.5px solid rgba(91,141,239,0.2);">
     <div style="display:inline-flex; transform:skewY(2.1deg); animation:rc-marquee 22s linear infinite;">
-      <span class="bebas" style="font-size:26px; color:#FFFFFF; letter-spacing:1.2px; padding-right:1ch;">EVENT MANAGEMENT &nbsp;â€¢&nbsp; ENTERTAINMENT BOOKING &nbsp;â€¢&nbsp; EVENT DESIGN &nbsp;â€¢&nbsp; ON-SITE COORDINATION &nbsp;â€¢&nbsp; WEDDINGS &nbsp;â€¢&nbsp; CULTURAL NIGHTS &nbsp;â€¢&nbsp; FESTIVALS &nbsp;â€¢&nbsp; CORPORATE GALAS &nbsp;â€¢&nbsp;</span>
-      <span class="bebas" style="font-size:26px; color:#FFFFFF; letter-spacing:1.2px; padding-right:1ch;" aria-hidden="true">EVENT MANAGEMENT &nbsp;â€¢&nbsp; ENTERTAINMENT BOOKING &nbsp;â€¢&nbsp; EVENT DESIGN &nbsp;â€¢&nbsp; ON-SITE COORDINATION &nbsp;â€¢&nbsp; WEDDINGS &nbsp;â€¢&nbsp; CULTURAL NIGHTS &nbsp;â€¢&nbsp; FESTIVALS &nbsp;â€¢&nbsp; CORPORATE GALAS &nbsp;â€¢&nbsp;</span>
+      <span class="bebas" style="font-size:26px; color:#FFFFFF; letter-spacing:1.2px; padding-right:1ch;">EVENT MANAGEMENT &nbsp;•&nbsp; ENTERTAINMENT BOOKING &nbsp;•&nbsp; EVENT DESIGN &nbsp;•&nbsp; ON-SITE COORDINATION &nbsp;•&nbsp; WEDDINGS &nbsp;•&nbsp; CULTURAL NIGHTS &nbsp;•&nbsp; FESTIVALS &nbsp;•&nbsp; CORPORATE GALAS &nbsp;•&nbsp;</span>
+      <span class="bebas" style="font-size:26px; color:#FFFFFF; letter-spacing:1.2px; padding-right:1ch;" aria-hidden="true">EVENT MANAGEMENT &nbsp;•&nbsp; ENTERTAINMENT BOOKING &nbsp;•&nbsp; EVENT DESIGN &nbsp;•&nbsp; ON-SITE COORDINATION &nbsp;•&nbsp; WEDDINGS &nbsp;•&nbsp; CULTURAL NIGHTS &nbsp;•&nbsp; FESTIVALS &nbsp;•&nbsp; CORPORATE GALAS &nbsp;•&nbsp;</span>
     </div>
   </div>
 
-  <!-- SERVICES â€” rider / setlist rows -->
+  <!-- SERVICES — rider / setlist rows -->
   <section id="services" style="min-height:560px; display:flex; flex-direction:column; justify-content:center; padding:44px 20px 44px 20px;" data-m="nomin">
     <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:8px;" class="reveal" data-m="stack">
       <h2 class="bebas" style="font-size:34px; margin:0px 0px 0px 0px; color:#F4F5FA;">WHAT WE DO</h2>
       <span style="font-size:12px; color:#7A82A8; letter-spacing:2px; text-transform:uppercase;">Event Services</span>
     </div>
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;" class="reveal" data-m="stack">
-      <p style="max-width:500px; font-size:13px; color:#8E96BB; margin:0px 0px 0px 0px;">Five services, one crew â€” from the first brief to the last guest.</p>
-      <a href="<?php echo esc_url( home_url( "/services/" ) ); ?>" style="font-weight:700; font-size:13px; color:#5B8DEF; border-bottom:1.5px solid #5B8DEF; padding-bottom:2px;">View All Services â†’</a>
+      <p style="max-width:500px; font-size:13px; color:#8E96BB; margin:0px 0px 0px 0px;">Five services, one crew — from the first brief to the last guest.</p>
+      <a href="<?php echo esc_url( home_url( "/services/" ) ); ?>" style="font-weight:700; font-size:13px; color:#5B8DEF; border-bottom:1.5px solid #5B8DEF; padding-bottom:2px;">View All Services →</a>
     </div>
     <div style="border-top:1.5px solid #1E2B5E;" class="reveal">
 
@@ -930,7 +930,7 @@ if ( ! defined( 'ABSPATH' ) ) {
           <h3 style="font-size:17px; margin:0px 0px 4px 0px; font-weight:700;">Event Management &amp; Planning</h3>
           <p style="font-size:13px; color:#A3A9C8; margin:0px 0px 0px 0px;">Meticulous coordination and planning for private and corporate events.</p>
         </div>
-        <span class="bebas" style="font-size:26px; color:#5B8DEF; flex:0 0 auto;">â†’</span>
+        <span class="bebas" style="font-size:26px; color:#5B8DEF; flex:0 0 auto;">→</span>
       </div>
 
       <div style="display:flex; align-items:center; gap:22px; padding:22px 28px 22px 28px; border-bottom:1.5px solid #1E2B5E; background:rgba(244,245,250,0.02);" data-m="svcrow">
@@ -940,7 +940,7 @@ if ( ! defined( 'ABSPATH' ) ) {
           <h3 style="font-size:17px; margin:0px 0px 4px 0px; font-weight:700;">Entertainment Booking &amp; Talent</h3>
           <p style="font-size:13px; color:#A3A9C8; margin:0px 0px 0px 0px;">Star power secured and run-of-show handled for every act on the bill.</p>
         </div>
-        <span class="bebas" style="font-size:26px; color:#5B8DEF; flex:0 0 auto;">â†’</span>
+        <span class="bebas" style="font-size:26px; color:#5B8DEF; flex:0 0 auto;">→</span>
       </div>
 
       <div style="display:flex; align-items:center; gap:22px; padding:22px 28px 22px 28px; border-bottom:1.5px solid #1E2B5E;" data-m="svcrow">
@@ -950,7 +950,7 @@ if ( ! defined( 'ABSPATH' ) ) {
           <h3 style="font-size:17px; margin:0px 0px 4px 0px; font-weight:700;">Event Designs &amp; Production</h3>
           <p style="font-size:13px; color:#A3A9C8; margin:0px 0px 0px 0px;">Themed, creative production for weddings, galas and private launches.</p>
         </div>
-        <span class="bebas" style="font-size:26px; color:#5B8DEF; flex:0 0 auto;">â†’</span>
+        <span class="bebas" style="font-size:26px; color:#5B8DEF; flex:0 0 auto;">→</span>
       </div>
 
       <div style="display:flex; align-items:center; gap:22px; padding:22px 28px 22px 28px; border-bottom:1.5px solid #1E2B5E; background:rgba(244,245,250,0.02);" data-m="svcrow">
@@ -960,7 +960,7 @@ if ( ! defined( 'ABSPATH' ) ) {
           <h3 style="font-size:17px; margin:0px 0px 4px 0px; font-weight:700;">On-Site Coordination</h3>
           <p style="font-size:13px; color:#A3A9C8; margin:0px 0px 0px 0px;">Vendor management and real-time floor coordination, start to close.</p>
         </div>
-        <span class="bebas" style="font-size:26px; color:#5B8DEF; flex:0 0 auto;">â†’</span>
+        <span class="bebas" style="font-size:26px; color:#5B8DEF; flex:0 0 auto;">→</span>
       </div>
 
       <div style="display:flex; align-items:center; gap:22px; padding:22px 28px 22px 28px; border-bottom:1.5px solid #1E2B5E;" data-m="svcrow">
@@ -970,18 +970,18 @@ if ( ! defined( 'ABSPATH' ) ) {
           <h3 style="font-size:17px; margin:0px 0px 4px 0px; font-weight:700;">Event Marketing &amp; Promotion</h3>
           <p style="font-size:13px; color:#A3A9C8; margin:0px 0px 0px 0px;">Strategic marketing and promotion that builds buzz and gets the right crowd through the door.</p>
         </div>
-        <span class="bebas" style="font-size:26px; color:#5B8DEF; flex:0 0 auto;">â†’</span>
+        <span class="bebas" style="font-size:26px; color:#5B8DEF; flex:0 0 auto;">→</span>
       </div>
     </div>
   </section>
 
-  <!-- EVENTS â€” ticket stub -->
+  <!-- EVENTS — ticket stub -->
   <section id="events" style="min-height:560px; display:flex; flex-direction:column; justify-content:center; padding:20px 20px 44px 20px;" data-m="nomin">
     <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:30px;" class="reveal" data-m="stack">
       <h2 class="bebas" style="font-size:34px; margin:0px 0px 0px 0px; color:#F4F5FA;">EVENTS</h2>
       <div style="text-align:right;">
         <p style="max-width:360px; font-size:13.5px; color:#A3A9C8; margin:0px 0px 8px 0px;">Every ticket we've printed, punched by the same crew.</p>
-        <a href="<?php echo esc_url( home_url( "/events/" ) ); ?>" style="font-weight:700; font-size:13px; color:#5B8DEF; border-bottom:1.5px solid #5B8DEF; padding-bottom:2px;">View All Events â†’</a>
+        <a href="<?php echo esc_url( home_url( "/events/" ) ); ?>" style="font-weight:700; font-size:13px; color:#5B8DEF; border-bottom:1.5px solid #5B8DEF; padding-bottom:2px;">View All Events →</a>
       </div>
     </div>
 
@@ -1010,7 +1010,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             <span class="eyebrow" style="color:#5B8DEF;"><?php echo esc_html( $fe_item['category'] ); ?></span>
             <h3 style="font-size:19px; margin:8px 0px 4px 0px; font-weight:700; color:#FFFFFF;"><?php echo esc_html( $fe_item['short_title'] ); ?></h3>
             <p style="font-size:12.5px; color:#C5CFF5; margin:0px 0px 10px 0px;"><?php echo esc_html( $sub_meta ); ?></p>
-            <span style="font-weight:700; font-size:12.5px; color:#5B8DEF; border-bottom:1.5px solid #5B8DEF; padding-bottom:2px;">View Details â†’</span>
+            <span style="font-weight:700; font-size:12.5px; color:#5B8DEF; border-bottom:1.5px solid #5B8DEF; padding-bottom:2px;">View Details →</span>
           </div>
         </div>
       </a>
@@ -1018,7 +1018,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     </div>
   </section>
 
-    <!-- ALSO FROM CRUX â€” consultancy fork -->
+    <!-- ALSO FROM CRUX — consultancy fork -->
   <section style="min-height:560px; display:flex; flex-direction:column; justify-content:center; padding:40px 20px 44px 20px;" data-m="nomin">
     <div style="display:grid; grid-template-columns:1fr 1fr; min-height:660px; border-radius:26px; overflow:hidden; border:1.5px solid #1E2B5E; background:#111838;" class="reveal" data-m="g1">
       <div style=" padding:44px 50px 44px 60px; display:flex; flex-direction:column; justify-content:center;" class="reveal also-from-crux-content">
@@ -1031,7 +1031,7 @@ if ( ! defined( 'ABSPATH' ) ) {
           <div style="display:flex; align-items:center; gap:14px;"><span class="bebas" style="font-size:22px; color:#B7A6FF; width:32px;">03</span><span style="font-size:14.5px; font-weight:600; color:#F4F5FA;">Scaling, Advisory &amp; Visas</span></div>
           <div style="display:flex; align-items:center; gap:14px;"><span class="bebas" style="font-size:22px; color:#B7A6FF; width:32px;">04</span><span style="font-size:14.5px; font-weight:600; color:#F4F5FA;">Go-to-Market Mastery</span></div>
         </div>
-        <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="background:#8C7AE6; color:#0A0F26; font-weight:700; font-size:15px; padding:16px 30px 16px 30px; display:inline-block; width:fit-content; --sl:10px;" class="bx">Explore Consultancy â†’</a>
+        <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="background:#8C7AE6; color:#0A0F26; font-weight:700; font-size:15px; padding:16px 30px 16px 30px; display:inline-block; width:fit-content; --sl:10px;" class="bx">Explore Consultancy →</a>
       </div>
       <div style="position:relative; overflow:hidden;" class="reveal" data-m="tile">
         <img src="<?php echo crux_get_blob_url( "5b1a6ab37f0230a96cac807ce57c7983" ); ?>" alt="A Crux Nxtion Consultancy session" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
@@ -1041,17 +1041,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 
         <div style="position:absolute; left:30px; bottom:30px; right:30px; display:flex; flex-direction:column; gap:10px; z-index:2;">
           <div class="float" style="--r:0deg; align-self:flex-end; max-width:85%; background:#1E2B5E; color:#F4F5FA; font-size:13px; line-height:1.5; padding:11px 15px; border-radius:16px 16px 4px 16px;">I've got an idea. I just don't know where to start.</div>
-          <div style="align-self:flex-start; max-width:85%; background:#8C7AE6; color:#0A0F26; font-size:13px; font-weight:600; line-height:1.5; padding:11px 15px; border-radius:16px 16px 16px 4px;">Good â€” that's the right place to start. Tell us about it.</div>
+          <div style="align-self:flex-start; max-width:85%; background:#8C7AE6; color:#0A0F26; font-size:13px; font-weight:600; line-height:1.5; padding:11px 15px; border-radius:16px 16px 16px 4px;">Good — that's the right place to start. Tell us about it.</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- GALLERY â€” ticket wall (matches the Gallery page) -->
+  <!-- GALLERY — ticket wall (matches the Gallery page) -->
   <section id="gallery" style=" padding:30px 20px 44px 20px;">
     <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:30px;" class="reveal" data-m="stack">
-      <div><span class="eyebrow">The Ticket Wall</span><h2 class="bebas" style="font-size:40px; margin:12px 0px 0px 0px; color:#F4F5FA;">GALLERY</h2><p style="font-size:15px; color:#A3A9C8; max-width:520px; margin:12px 0px 0px 0px;">Every frame, filed like a ticket â€” punched by the same crew.</p></div>
-      <a href="<?php echo esc_url( home_url( "/gallery/" ) ); ?>" style="font-weight:700; font-size:13px; color:#5B8DEF; border-bottom:1.5px solid #5B8DEF; padding-bottom:2px; white-space:nowrap;">View Full Gallery â†’</a>
+      <div><span class="eyebrow">The Ticket Wall</span><h2 class="bebas" style="font-size:40px; margin:12px 0px 0px 0px; color:#F4F5FA;">GALLERY</h2><p style="font-size:15px; color:#A3A9C8; max-width:520px; margin:12px 0px 0px 0px;">Every frame, filed like a ticket — punched by the same crew.</p></div>
+      <a href="<?php echo esc_url( home_url( "/gallery/" ) ); ?>" style="font-weight:700; font-size:13px; color:#5B8DEF; border-bottom:1.5px solid #5B8DEF; padding-bottom:2px; white-space:nowrap;">View Full Gallery →</a>
     </div>
     <div style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:34px 26px; align-items:start;" class="reveal" data-m="g2">
       <a href="#" style="display:flex; flex-direction:column; background:#111838; border:1.5px solid #1E2B5E; border-radius:12px; overflow:hidden; transform:rotate(-1deg);" class="reveal">
@@ -1075,7 +1075,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:22px;" class="reveal" data-m="g1">
       <div style="background:#111838; border:1.5px solid #1E2B5E; border-radius:18px; overflow:hidden;" class="reveal">
         <div style="height:220px; overflow:hidden;"><img src="<?php echo crux_get_blob_url( "2fe0208788cf2d50763c85dd2a44de66" ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
-        <div style=" padding:26px 28px 30px 28px;"><h3 class="bebas" style="font-size:30px; margin:0px 0px 10px 0px; color:#F4F5FA;">ONE CREW, START TO FINISH</h3><p style="font-size:14px; line-height:1.65; color:#A3A9C8; margin:0px 0px 0px 0px;">The people you brief are the people on the floor â€” no chain of subcontractors between you and your event.</p></div>
+        <div style=" padding:26px 28px 30px 28px;"><h3 class="bebas" style="font-size:30px; margin:0px 0px 10px 0px; color:#F4F5FA;">ONE CREW, START TO FINISH</h3><p style="font-size:14px; line-height:1.65; color:#A3A9C8; margin:0px 0px 0px 0px;">The people you brief are the people on the floor — no chain of subcontractors between you and your event.</p></div>
       </div>
       <div style="background:#111838; border:1.5px solid #1E2B5E; border-radius:18px; overflow:hidden;" class="reveal">
         <div style="height:220px; overflow:hidden;"><img src="<?php echo crux_get_blob_url( "6aa60ee4af0bdb49015bf4224786bd46" ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
@@ -1083,12 +1083,12 @@ if ( ! defined( 'ABSPATH' ) ) {
       </div>
       <div style="background:#111838; border:1.5px solid #1E2B5E; border-radius:18px; overflow:hidden;" class="reveal">
         <div style="height:220px; overflow:hidden;"><img src="<?php echo crux_get_blob_url( "a7f19688f4ec09c5590ca71c99b9f400" ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
-        <div style=" padding:26px 28px 30px 28px;"><h3 class="bebas" style="font-size:30px; margin:0px 0px 10px 0px; color:#F4F5FA;">SHEFFIELD-ROOTED, UK-WIDE</h3><p style="font-size:14px; line-height:1.65; color:#A3A9C8; margin:0px 0px 0px 0px;">We know the city, the venues and the vendors â€” and we book and produce across the UK.</p></div>
+        <div style=" padding:26px 28px 30px 28px;"><h3 class="bebas" style="font-size:30px; margin:0px 0px 10px 0px; color:#F4F5FA;">SHEFFIELD-ROOTED, UK-WIDE</h3><p style="font-size:14px; line-height:1.65; color:#A3A9C8; margin:0px 0px 0px 0px;">We know the city, the venues and the vendors — and we book and produce across the UK.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- PROCESS â€” how we run your event -->
+  <!-- PROCESS — how we run your event -->
   <section style="min-height:560px; display:flex; flex-direction:column; justify-content:center; padding:44px 20px 44px 20px;" data-m="nomin">
     <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:46px;" class="reveal" data-m="stack">
       <div><span class="eyebrow">How We Run Your Event</span><h2 class="bebas" style="font-size:34px; margin:12px 0px 0px 0px; color:#F4F5FA;">FOUR STEPS. ONE CREW. NO STRESS.</h2></div>
@@ -1108,7 +1108,7 @@ if ( ! defined( 'ABSPATH' ) ) {
       <div class="tilt-ticket reveal" style="display:flex; flex-direction:column; background:#111838; border:1.5px solid #1E2B5E; border-radius:14px; overflow:hidden; --r:-0.8deg; transform:rotate(var(--r));">
         <div style="height:190px; overflow:hidden;"><img src="<?php echo crux_get_blob_url( "8127c7ab2af037f167d7a8b67413ab45" ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
         <div class="strip-stub" style="background:#8C7AE6; padding:12px 18px 12px 18px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; font-weight:800; color:#0A0F26;">STEP 03</span><span class="bebas" style="font-size:18px; color:#0A0F26;">PRODUCE</span></div>
-        <div style=" padding:24px 22px 26px 22px;"><p style="font-size:14px; line-height:1.7; color:#A3A9C8; margin:0px 0px 0px 0px;">Staging, sound, dÃ©cor and promotion â€” handled by one crew.</p></div>
+        <div style=" padding:24px 22px 26px 22px;"><p style="font-size:14px; line-height:1.7; color:#A3A9C8; margin:0px 0px 0px 0px;">Staging, sound, décor and promotion — handled by one crew.</p></div>
       </div>
       <div class="tilt-ticket reveal" style="display:flex; flex-direction:column; background:#111838; border:1.5px solid #1E2B5E; border-radius:14px; overflow:hidden; --r:1deg; transform:rotate(var(--r));">
         <div style="height:190px; overflow:hidden;"><img src="<?php echo crux_get_blob_url( "f1ffd7a776c034eaead72759fb4440c6" ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
@@ -1118,10 +1118,10 @@ if ( ! defined( 'ABSPATH' ) ) {
     </div>
   </section>
 
-  <!-- MINI ABOUT â€” centered manifesto + photo strip -->
+  <!-- MINI ABOUT — centered manifesto + photo strip -->
   <section id="about" style="min-height:560px; display:flex; flex-direction:column; justify-content:center; background:#111838; padding:44px 20px 44px 20px; text-align:center;" data-m="nomin">
     <span class="eyebrow">Who We Are</span>
-    <p class="bebas reveal" style="font-size:34px; line-height:1.08; margin:18px auto 20px; max-width:840px; color:#F4F5FA;">A CREW THAT RUNS THE ROOM ITSELF â€” PLANNING, STAGING, SOUND, AND EVERY VENDOR, IN-HOUSE.</p>
+    <p class="bebas reveal" style="font-size:34px; line-height:1.08; margin:18px auto 20px; max-width:840px; color:#F4F5FA;">A CREW THAT RUNS THE ROOM ITSELF — PLANNING, STAGING, SOUND, AND EVERY VENDOR, IN-HOUSE.</p>
     <p style="font-size:14.5px; line-height:1.7; color:#A3A9C8; max-width:480px; margin:0 auto 46px;" class="reveal">Crux Nxtion Events is a UK-based events and production house, producing across the UK.</p>
 
     <div class="mini-about-strip reveal" style="display:flex; justify-content:center; align-items:center; gap:18px; margin-bottom:44px;">
@@ -1137,7 +1137,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     </div>
   </section>
 
-    <!-- FOUNDER â€” Curated Best Bits for Events -->
+    <!-- FOUNDER — Curated Best Bits for Events -->
   <section id="founder" style="padding:64px 20px; background:#111838; display:grid; grid-template-columns:0.8fr 1.2fr; gap:60px; align-items:center;" data-m="g1">
     <div class="tilt-straighten reveal" style="--r:-2deg; transform:rotate(var(--r)); border-radius:22px; overflow:hidden; border:2px solid #5B8DEF; height:470px;">
       <img src="<?php echo crux_get_blob_url( "a67d85c16f6df90ab7a657160bee9088" ); ?>" alt="Olabamidele 'Bambad' Badmos, founder of Crux Nxtion" style="width:100%; height:100%; object-fit:cover; object-position:58% 12%;">
@@ -1146,23 +1146,23 @@ if ( ! defined( 'ABSPATH' ) ) {
       <span class="eyebrow" style="color:#5B8DEF;">Meet The Team</span>
       <h2 class="bebas" style="font-size:54px; margin:14px 0 20px; color:#F4F5FA; line-height:0.95;">ABOUT CRUX NXTION EVENTS &amp; CONSULTANCY</h2>
       <p style="font-size:16px; line-height:1.75; color:#C5CADF; max-width:620px; margin:0 0 14px;">Our dynamic operations are led by <strong>Olabamidele Badmos (Bambad)</strong>, a recognized community leader and business strategic development officer with extensive expertise in enterprise growth, marketing, and digital public relations. Backed by a dedicated team of 10 active core members and specialized staff, we combine cultural authenticity with corporate execution.</p>
-      <p style="font-size:16px; line-height:1.75; color:#C5CADF; max-width:620px; margin:0 0 26px;">With an extraordinary track record spanning over <strong>70 cultural milestones activated across the United Kingdom</strong> â€” including <em>YAGI Awards</em>, <em>Black Award Events</em>, <em>Gangs of Lagos: Wedding Story (Parts 1 &amp; 2)</em>, <em>YAGI Trade Fair</em>, <em>Naija Food Carnival</em> (400+ attendees), and <em>Marketplace Festivals (Volumes 1 through 6)</em> â€” we turn visionary concepts into legendary live gatherings.</p>
+      <p style="font-size:16px; line-height:1.75; color:#C5CADF; max-width:620px; margin:0 0 26px;">With an extraordinary track record spanning over <strong>70 cultural milestones activated across the United Kingdom</strong> — including <em>YAGI Awards</em>, <em>Black Award Events</em>, <em>Gangs of Lagos: Wedding Story (Parts 1 &amp; 2)</em>, <em>YAGI Trade Fair</em>, <em>Naija Food Carnival</em> (400+ attendees), and <em>Marketplace Festivals (Volumes 1 through 6)</em> — we turn visionary concepts into legendary live gatherings.</p>
       <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:28px;" data-m="wrap">
         <span style="border:1.5px solid #2C3C78; color:#D5D9EA; font-weight:600; font-size:12.5px; padding:9px 18px;">70+ Cultural Milestones</span>
         <span style="border:1.5px solid #2C3C78; color:#D5D9EA; font-weight:600; font-size:12.5px; padding:9px 18px;">10 Core Production Members</span>
         <span style="border:1.5px solid #2C3C78; color:#D5D9EA; font-weight:600; font-size:12.5px; padding:9px 18px;">143+ UK Enterprises Scaled</span>
-        <span style="border:1.5px solid #2C3C78; color:#D5D9EA; font-weight:600; font-size:12.5px; padding:9px 18px;">Sheffield HQ â€¢ UK Operations</span>
+        <span style="border:1.5px solid #2C3C78; color:#D5D9EA; font-weight:600; font-size:12.5px; padding:9px 18px;">Sheffield HQ • UK Operations</span>
       </div>
       <a href="<?php echo esc_url( home_url( "/founder/" ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:14px; padding:15px 28px; --sl:10px;" class="bx">Read The Full Story &rarr;</a>
     </div>
   </section>
 
-    <!-- FAQ â€” interactive accordion (matching FAQS page design) -->
+    <!-- FAQ — interactive accordion (matching FAQS page design) -->
   <section id="faq" style="min-height:560px; display:flex; flex-direction:column; justify-content:center; padding:65px 64px;" data-m="nomin">
     <div style="text-align:center; margin-bottom:46px;" class="reveal">
       <span class="eyebrow">Good To Know</span>
       <h2 class="bebas" style="font-size:56px; margin:14px 0 10px; color:#F4F5FA;">FREQUENTLY ASKED</h2>
-      <p style="font-size:14px; color:#A3A9C8; margin:0;">Still curious? <a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="color:#5B8DEF; font-weight:700;">Ask us directly â†’</a></p>
+      <p style="font-size:14px; color:#A3A9C8; margin:0;">Still curious? <a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="color:#5B8DEF; font-weight:700;">Ask us directly →</a></p>
     </div>
     <div style="max-width:960px; width:100%; margin:0 auto; display:flex; flex-direction:column; gap:14px;" class="reveal">
       <details style="background:#111838; border:1.5px solid #1E2B5E; border-radius:14px; padding:0 26px; transition:border-color .25s ease;">
@@ -1210,7 +1210,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     </div>
   </section>
 
-    <!-- PREFOOTER CTA â€” cinematic band with spinning rosette badge -->
+    <!-- PREFOOTER CTA — cinematic band with spinning rosette badge -->
   <section style="position:relative; min-height:540px; overflow:hidden; display:flex; align-items:center;">
     <img src="<?php echo crux_get_blob_url( 'aa52e28c3ca12b7f14d33300c774fb48' ); ?>" alt="Crux Nxtion event crowd" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
     <div style="position:absolute; inset:0; background:linear-gradient(100deg, rgba(10,15,38,0.97) 0%, rgba(10,15,38,0.82) 52%, rgba(10,15,38,0.5) 100%);"></div>
@@ -1220,15 +1220,15 @@ if ( ! defined( 'ABSPATH' ) ) {
       <div style="max-width:760px; padding:40px 0;">
         <span class="eyebrow" style="color:#A9C0F5 !important;">Ready When You Are</span>
         <h2 class="bebas" style="font-size:clamp(44px, 5.5vw, 76px); line-height:0.95; margin:16px 0 18px; color:#FFFFFF; max-width:820px;">GOT A DATE, OR JUST A DIRECTION?</h2>
-        <p style="font-size:16px; line-height:1.7; color:#C5CADF; max-width:540px; margin:0 0 32px;">Planning an event or building a business â€” tell us what you have in mind and a real person will come back to you.</p>
+        <p style="font-size:16px; line-height:1.7; color:#C5CADF; max-width:540px; margin:0 0 32px;">Planning an event or building a business — tell us what you have in mind and a real person will come back to you.</p>
         <div style="display:flex; gap:16px;" data-m="ctas">
-          <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:15px; padding:17px 32px; --sl:10px;" class="bx">Plan An Event â†’</a>
-          <a href="<?php echo esc_url( home_url( "/contact/?type=consultancy" ) ); ?>" style="background:#8C7AE6; color:#10142E !important; font-weight:700; font-size:15px; padding:17px 32px; --sl:10px;" class="bx">Talk Business Strategy â†’</a>
+          <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:15px; padding:17px 32px; --sl:10px;" class="bx">Plan An Event →</a>
+          <a href="<?php echo esc_url( home_url( "/contact/?type=consultancy" ) ); ?>" style="background:#8C7AE6; color:#10142E !important; font-weight:700; font-size:15px; padding:17px 32px; --sl:10px;" class="bx">Talk Business Strategy →</a>
         </div>
       </div>
       <div class="prefooter__badge" style="width:160px; height:160px; flex:0 0 160px;">
         <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" class="prefooter__badge-link" aria-label="Plan An Event" style="display:block; width:100%; height:100%; text-decoration:none; transition:transform .3s ease;">
-          <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/prefooter-badge-events.svg' ); ?>" class="prefooter__badge-img" alt="Plan An Event â€” spinning badge" style="width:100%; height:100%; object-fit:contain; animation:rc-spin 14s linear infinite; filter:drop-shadow(0 12px 28px rgba(0,0,0,0.5));">
+          <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/prefooter-badge-events.svg' ); ?>" class="prefooter__badge-img" alt="Plan An Event — spinning badge" style="width:100%; height:100%; object-fit:contain; animation:rc-spin 14s linear infinite; filter:drop-shadow(0 12px 28px rgba(0,0,0,0.5));">
         </a>
       </div>
     </div>
@@ -1261,7 +1261,7 @@ if ( ! defined( 'ABSPATH' ) ) {
       <a href="<?php echo esc_url( home_url( "/terms-conditions/" ) ); ?>" style="font-size:12.5px; color:#8E96BB;">Terms &amp; Conditions</a>
     </div>
     <div style="width:100%; max-width:900px; height:1px; background:#1E2B5E; margin:0 auto 24px;"></div>
-    <p style="font-size:13px; color:#7A82A8; margin:0px 0px 0px 0px;">&copy; <?php echo date( "Y" ); ?> Crux Nxtion Events â€¢ Sheffield, United Kingdom â€¢ All Rights Reserved</p>
+    <p style="font-size:13px; color:#7A82A8; margin:0px 0px 0px 0px;">&copy; <?php echo date( "Y" ); ?> Crux Nxtion Events • Sheffield, United Kingdom • All Rights Reserved</p>
   </footer>
 
 <div class="msw">
