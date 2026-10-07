@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Template Name: Crux Nxtion - Template
  *
@@ -135,7 +135,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     height: auto;
   }
 
-  /* Full-bleed 100% root container — edge-to-edge layout, never pillarboxed */
+  /* Full-bleed 100% root container â€” edge-to-edge layout, never pillarboxed */
   [data-m~=root] {
     width: 100% !important;
     max-width: 100% !important;
@@ -676,7 +676,7 @@ if ( ! defined( 'ABSPATH' ) ) {
   <!-- SHOUT-OUT BAR -->
   <div style="background:#002671; padding:10px 20px 10px 20px; display:flex; align-items:center; justify-content:center; gap:10px;">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3 11l18-7-7 18-2-8-9-3z" stroke="#FFFFFF" stroke-width="1.8" stroke-linejoin="round"></path></svg>
-    <span style="font-size:12.5px; font-weight:700; color:#FFFFFF; letter-spacing:0.3px;">Now booking <?php echo date( "Y" ); ?>/<?php echo (int) date( "Y" ) + 1; ?> across the UK — <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="color:#FFFFFF; font-weight:800; border-bottom:1px solid #FFFFFF;">get in touch →</a></span>
+    <span style="font-size:12.5px; font-weight:700; color:#FFFFFF; letter-spacing:0.3px;">Now booking <?php echo date( "Y" ); ?>/<?php echo (int) date( "Y" ) + 1; ?> across the UK â€” <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="color:#FFFFFF; font-weight:800; border-bottom:1px solid #FFFFFF;">get in touch â†’</a></span>
   </div>
 
   <!-- HEADER -->
@@ -829,7 +829,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <details class="mdrawer-acc" style="border-bottom:1px solid #1E2B5E;">
           <summary style="display:flex; align-items:center; justify-content:space-between; cursor:pointer; padding:14px 0;">
             <span class="mlink" style="color:#F4F5FA !important; opacity:1 !important;">Services</span>
-            <span class="acc-icon" style="color:#FF2E3D; font-size:22px; font-weight:700; transition:transform .2s ease;">▾</span>
+            <span class="acc-icon" style="color:#FF2E3D; font-size:22px; font-weight:700; transition:transform .2s ease;">â–¾</span>
           </summary>
           <div style="padding:4px 0 16px;">
             <!-- Events sub-box -->
@@ -890,7 +890,7 @@ if ( ! defined( 'ABSPATH' ) ) {
   <section style=" padding:44px 20px 20px 20px;">
     <span class="eyebrow">The Ticket Wall</span>
     <h1 class="bebas" style="font-size:44px; margin:14px 0px 14px 0px; color:#F4F5FA;">EVENTS</h1>
-    <p style="font-size:15px; color:#A3A9C8; max-width:560px; margin:0px 0px 0px 0px;" class="reveal">Every ticket we've printed, punched by the same crew — weddings, dance nights, awards and festivals across the UK.</p>
+    <p style="font-size:15px; color:#A3A9C8; max-width:560px; margin:0px 0px 0px 0px;" class="reveal">Every ticket we've printed, punched by the same crew â€” weddings, dance nights, awards and festivals across the UK.</p>
   </section>
 
   <!-- TICKET GRID -->
@@ -908,15 +908,15 @@ if ( ! defined( 'ABSPATH' ) ) {
       <a href="<?php echo esc_url( $target_url ); ?>" class="tilt-ticket" style="display:flex; background:#111838; border:1.5px solid #1E2B5E; border-radius:12px; min-height:400px; --r:<?php echo esc_attr( $rot ); ?>; transform:rotate(var(--r)); overflow:hidden;" data-m="tile">
         <div class="ticket-stub" style="flex:0 0 90px; background:<?php echo esc_attr( $stub_bg ); ?>; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;">
           <span class="bebas" style="font-size:38px; color:<?php echo esc_attr( $stub_txt ); ?>; line-height:1;"><?php echo esc_html( $e_item['date_badge_day'] ); ?></span>
-          <span style="font-size:10px; font-weight:800; letter-spacing:1.5px; color:<?php echo esc_attr( $stub_txt ); ?>; text-align:center;"><?php echo esc_html( $e_item['date_badge_month'] . ' ' . date( 'Y', strtotime( $e_item['date_raw'] ) ) ); ?></span>
+          <span style="font-size:10px; font-weight:800; letter-spacing:1.5px; color:<?php echo esc_attr( $stub_txt ); ?>; text-align:center;"><?php echo esc_html( $e_item['date_badge_month'] . ' ' . $e_item['year'] ); ?></span>
         </div>
         <div style="flex:1; display:flex; flex-direction:column; min-width:0;">
-          <div style="flex:1; position:relative; min-height:250px;"><img src="<?php echo crux_get_blob_url( $e_item['hero_image'] ); ?>" alt="<?php echo esc_attr( $e_item['short_title'] ); ?>" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center top;"></div>
+          <div style="flex:1; position:relative; min-height:250px;"><img src="<?php echo esc_url( $e_item['hero_url'] ); ?>" alt="<?php echo esc_attr( $e_item['short_title'] ); ?>" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center top;"></div>
           <div style=" padding:18px 20px 20px 20px; background:#0D1330; border-top:1.5px dashed #1E2B5E;">
             <span class="eyebrow" style="color:#5B8DEF;"><?php echo esc_html( $e_item['category'] ); ?></span>
             <h3 style="font-size:19px; margin:8px 0px 4px 0px; font-weight:700; color:#FFFFFF;"><?php echo esc_html( $e_item['short_title'] ); ?></h3>
             <p style="font-size:12.5px; color:#C5CFF5; margin:0px 0px 10px 0px;"><?php echo esc_html( $sub_meta ); ?></p>
-            <span style="font-weight:700; font-size:12.5px; color:#5B8DEF; border-bottom:1.5px solid #5B8DEF; padding-bottom:2px;">View Details →</span>
+            <span style="font-weight:700; font-size:12.5px; color:#5B8DEF; border-bottom:1.5px solid #5B8DEF; padding-bottom:2px;">View Details â†’</span>
           </div>
         </div>
       </a>
@@ -930,7 +930,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     </div>
   </section>
 
-    <!-- PREFOOTER CTA — cinematic band with spinning rosette badge -->
+    <!-- PREFOOTER CTA â€” cinematic band with spinning rosette badge -->
   <section style="position:relative; min-height:540px; overflow:hidden; display:flex; align-items:center;">
     <img src="<?php echo crux_get_blob_url( 'aa52e28c3ca12b7f14d33300c774fb48' ); ?>" alt="Crux Nxtion event crowd" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
     <div style="position:absolute; inset:0; background:linear-gradient(100deg, rgba(10,15,38,0.97) 0%, rgba(10,15,38,0.82) 52%, rgba(10,15,38,0.5) 100%);"></div>
@@ -940,15 +940,15 @@ if ( ! defined( 'ABSPATH' ) ) {
       <div style="max-width:760px; padding:40px 0;">
         <span class="eyebrow" style="color:#A9C0F5 !important;">Ready When You Are</span>
         <h2 class="bebas" style="font-size:clamp(44px, 5.5vw, 76px); line-height:0.95; margin:16px 0 18px; color:#FFFFFF; max-width:820px;">GOT A DATE, OR JUST A DIRECTION?</h2>
-        <p style="font-size:16px; line-height:1.7; color:#C5CADF; max-width:540px; margin:0 0 32px;">Planning an event or building a business — tell us what you have in mind and a real person will come back to you.</p>
+        <p style="font-size:16px; line-height:1.7; color:#C5CADF; max-width:540px; margin:0 0 32px;">Planning an event or building a business â€” tell us what you have in mind and a real person will come back to you.</p>
         <div style="display:flex; gap:16px;" data-m="ctas">
-          <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:15px; padding:17px 32px; --sl:10px;" class="bx">Plan An Event →</a>
-          <a href="<?php echo esc_url( home_url( "/contact/?type=consultancy" ) ); ?>" style="background:#8C7AE6; color:#10142E !important; font-weight:700; font-size:15px; padding:17px 32px; --sl:10px;" class="bx">Talk Business Strategy →</a>
+          <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:15px; padding:17px 32px; --sl:10px;" class="bx">Plan An Event â†’</a>
+          <a href="<?php echo esc_url( home_url( "/contact/?type=consultancy" ) ); ?>" style="background:#8C7AE6; color:#10142E !important; font-weight:700; font-size:15px; padding:17px 32px; --sl:10px;" class="bx">Talk Business Strategy â†’</a>
         </div>
       </div>
       <div class="prefooter__badge" style="width:160px; height:160px; flex:0 0 160px;">
         <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" class="prefooter__badge-link" aria-label="Plan An Event" style="display:block; width:100%; height:100%; text-decoration:none; transition:transform .3s ease;">
-          <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/prefooter-badge-events.svg' ); ?>" class="prefooter__badge-img" alt="Plan An Event — spinning badge" style="width:100%; height:100%; object-fit:contain; animation:rc-spin 14s linear infinite; filter:drop-shadow(0 12px 28px rgba(0,0,0,0.5));">
+          <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/prefooter-badge-events.svg' ); ?>" class="prefooter__badge-img" alt="Plan An Event â€” spinning badge" style="width:100%; height:100%; object-fit:contain; animation:rc-spin 14s linear infinite; filter:drop-shadow(0 12px 28px rgba(0,0,0,0.5));">
         </a>
       </div>
     </div>
@@ -981,7 +981,7 @@ if ( ! defined( 'ABSPATH' ) ) {
       <a href="<?php echo esc_url( home_url( "/terms-conditions/" ) ); ?>" style="font-size:12.5px; color:#8E96BB;">Terms &amp; Conditions</a>
     </div>
     <div style="width:100%; max-width:900px; height:1px; background:#1E2B5E; margin:0 auto 24px;"></div>
-    <p style="font-size:13px; color:#7A82A8; margin:0px 0px 0px 0px;">&copy; <?php echo date( "Y" ); ?> Crux Nxtion Events • Sheffield, United Kingdom • All Rights Reserved</p>
+    <p style="font-size:13px; color:#7A82A8; margin:0px 0px 0px 0px;">&copy; <?php echo date( "Y" ); ?> Crux Nxtion Events â€¢ Sheffield, United Kingdom â€¢ All Rights Reserved</p>
   </footer>
 
 <div class="msw">

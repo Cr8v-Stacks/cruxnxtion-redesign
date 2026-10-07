@@ -146,3 +146,30 @@ Not verified by Claude: visual fidelity against the design, the database content
 - Make the catalog a **one-time seeding script** (create the posts and meta), not a runtime fallback. Remove the fallback in `crux_get_event_data()`, `crux_get_all_events()` and the router. A trashed or draft event must 404.
 - Remove the line-310 filter. Order by event date, add an upcoming/past split.
 - Then send it back to Claude for re-audit (checklist in Part B section 17). Phase 1 starts only after this passes.
+
+## 8. Claude fixed the Phase 0 gaps itself (7 Oct 2026)
+
+You reported Phase 0 as complete. Section 7 listed what was missing. Claude did not hand it back: it implemented every item below, linted and tested it. Read this section, pull, and continue from here. Do not redo or revert any of it.
+
+### What you did not do, and what Claude did
+
+1. **You did not build an admin screen for event fields.** Claude created the plugin `cr8v-event-ticketing/` (junction: `wp-content\plugins\cr8v-event-ticketing` -> `Dev\cruxnxtion-redesign\cr8v-event-ticketing`). It adds an **Event Details** meta box to the existing `event` post type (it does not register the type): date, time, venue, country, category, short title, booking link, ticket colour (blue/red/purple), gallery (Media Library picker). Saving checks the nonce, autosave/revision, `edit_post` capability, validates the date with `checkdate`, restricts the link to http(s), whitelists the colour, accepts only real attachment IDs (max 12). A cleared field also removes its legacy `_crux_event_*` copy so an old value cannot come back. It also adds an "Event date" column (sortable) in the admin list. Files: `cr8v-event-ticketing.php`, `inc/event-fields.php`, `assets/admin-event.js`.
+2. **You did not make new events appear.** Your filter in `crux_get_all_events()` only listed events with a catalog slug or hero-blob meta, so a client-created event was dropped. Claude removed the filter and the whole hardcoded catalog (`crux_get_event_catalog()` is gone). Every published `event` post is listed.
+3. **You did not let the admin control deletion.** Catalog events were served even when trashed or drafted. Claude rewrote `inc/event-engine.php` to be database only: `crux_get_event_data()` returns null unless the post is a published `event` (editors can preview their own drafts), so unknown, draft and trashed events return a real 404. The router in `inc/prevent-errors.php` (2A) no longer consults a catalog. `single-event.php` now prefers `get_queried_object()` so draft previews work.
+4. **You did not use the Media Library.** Hero = the featured image (fallback: the legacy design blob, then a neutral blob). Gallery = `_cr8v_event_gallery_ids` (fallback: legacy `_cr8v_event_gallery` blob IDs). The engine returns `hero_url` and `gallery_urls`; the four templates output them through `esc_url()`. `hero_image` no longer exists.
+5. **You did not sort by date.** `crux_get_all_events()` orders newest first by `_cr8v_event_date` (undated events last) and takes `scope => 'upcoming'|'past'|'all'`. Note: Dance OUT 2023 now sits after Ankara Festival instead of first (chronological, not the old menu order).
+6. **You did not escape or validate output.** Colours come from a preset map, never raw meta. Rotation must match `^-?\d(\.\d)?deg$`. The booking URL goes through `esc_url_raw` with http/https only. Dates are parsed in the site timezone with `wp_date`, titles use `mb_strtoupper`. Templates read the new `year` key instead of `date('Y', strtotime(...))`.
+7. **You left a development workaround in production code.** Claude replaced the shared-database filter with an opt-in constant: `CRUX_EVENTS_EXCLUDE_IDS` (comma separated IDs), defined only in the Local site's `wp-config.php` (`1625,1626,1627,1628,1629`, the Red Cap demo events). Production leaves it unset. Backup: `Dev\backups\wp-config-20261007.php.bak`.
+
+### Verified by Claude
+- `php -l` (LocalWP PHP 8.2) clean on every changed file.
+- `/events/` 200 with 8 events, newest first, no Red Cap events. Home page 3 cards. `/event/dance-out-2023/` 200 with the correct title, date and 7 gallery images.
+- `/event/nonexistent-event-slug/`, `/events/fake-event-slug/`, `/nonexistent-page-xyz/` and `/event/moonlight-tales/` (a Red Cap post) return 404 with a full body. `/event/lasgidi-mainland-party-ijgb-edition/` 301-redirects.
+
+### Not verified (do these next, report results back)
+- **The plugin must be activated in wp-admin** (the owner does this); the meta box has not been exercised yet: create an event with only a title, one with every field, edit the date and colour, set a featured image and a gallery, trash one, check `/events/` and the home page after each step.
+- Visual comparison of the cards against `design/pages/*.dc.html`.
+- An independent review workflow failed on API connection errors, so no second reviewer has read these files yet. Claude traced the risky paths by hand only.
+
+### What to do next (Phase 1)
+Build ticketing inside `cr8v-event-ticketing`, in this order, with the Part B fixes: tier fields and capacity in pence; the `event_order` post type (not public, not in REST); stock reservation with expiry using a dedicated table and atomic SQL (no JSON counts); Stripe Checkout Session creation on the server with prices computed server side; webhook with raw-body signature check, tolerance and idempotency; keys in `wp-config.php` constants only; test mode only. Claude audits each step against Part B section 17 and fixes what is missing.

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Crux Nxtion - 404 & 403 Prevention, URL Aliases, Rewrite Rules & Fallbacks
  *
@@ -108,9 +108,8 @@ function crux_virtual_template_fallback( $template ) {
 		}
 
 		$ev_post = get_page_by_path( $target_slug, OBJECT, 'event' );
-		$catalog = function_exists( 'crux_get_event_catalog' ) ? crux_get_event_catalog() : array();
 
-		if ( ( $ev_post && $ev_post->post_status === 'publish' ) || isset( $catalog[ $target_slug ] ) ) {
+		if ( $ev_post && 'publish' === $ev_post->post_status ) {
 			$candidate = locate_template( array( 'single-event.php' ) );
 			if ( $candidate ) {
 				global $wp_query, $post;
@@ -203,25 +202,25 @@ function crux_custom_document_title( $title_parts ) {
 	$slug = trim( parse_url( $request_uri, PHP_URL_PATH ), '/' );
 
 	$title_map = array(
-		'founder'              => 'Founder Story — Crux Nxtion',
-		'about'                => 'About Us — Crux Nxtion',
-		'about-us'             => 'About Us — Crux Nxtion',
-		'contact'              => 'Contact Us — Crux Nxtion',
-		'contact-us'           => 'Contact Us — Crux Nxtion',
-		'gallery'              => 'Ticket Wall & Event Gallery — Crux Nxtion',
-		'events'               => 'Events & Tickets — Crux Nxtion',
-		'past-events'          => 'Past Events Archive — Crux Nxtion',
-		'events-archive'       => 'Past Events Archive — Crux Nxtion',
-		'services'             => 'Event Services & Production — Crux Nxtion',
-		'services-consultancy' => 'Business Consultancy Services — Crux Nxtion',
-		'consultancy'          => 'Business Consultancy — Crux Nxtion',
-		'faq'                  => 'FAQ & Inquiries — Crux Nxtion',
-		'faqs'                 => 'FAQ & Inquiries — Crux Nxtion',
-		'sponsors'             => 'Sponsors & Brand Partners — Crux Nxtion',
-		'blog'                 => 'Journal & Event Recaps — Crux Nxtion',
-		'privacy-policy'       => 'Privacy Policy — Crux Nxtion',
-		'cookie-policy'        => 'Cookie Policy — Crux Nxtion',
-		'terms-conditions'     => 'Terms & Conditions — Crux Nxtion',
+		'founder'              => 'Founder Story â€” Crux Nxtion',
+		'about'                => 'About Us â€” Crux Nxtion',
+		'about-us'             => 'About Us â€” Crux Nxtion',
+		'contact'              => 'Contact Us â€” Crux Nxtion',
+		'contact-us'           => 'Contact Us â€” Crux Nxtion',
+		'gallery'              => 'Ticket Wall & Event Gallery â€” Crux Nxtion',
+		'events'               => 'Events & Tickets â€” Crux Nxtion',
+		'past-events'          => 'Past Events Archive â€” Crux Nxtion',
+		'events-archive'       => 'Past Events Archive â€” Crux Nxtion',
+		'services'             => 'Event Services & Production â€” Crux Nxtion',
+		'services-consultancy' => 'Business Consultancy Services â€” Crux Nxtion',
+		'consultancy'          => 'Business Consultancy â€” Crux Nxtion',
+		'faq'                  => 'FAQ & Inquiries â€” Crux Nxtion',
+		'faqs'                 => 'FAQ & Inquiries â€” Crux Nxtion',
+		'sponsors'             => 'Sponsors & Brand Partners â€” Crux Nxtion',
+		'blog'                 => 'Journal & Event Recaps â€” Crux Nxtion',
+		'privacy-policy'       => 'Privacy Policy â€” Crux Nxtion',
+		'cookie-policy'        => 'Cookie Policy â€” Crux Nxtion',
+		'terms-conditions'     => 'Terms & Conditions â€” Crux Nxtion',
 	);
 
 	if ( isset( $title_map[ $slug ] ) ) {
@@ -234,7 +233,7 @@ function crux_custom_document_title( $title_parts ) {
 
 	if ( preg_match( '#^event(?:s)?/(.+)$#i', $slug, $em ) ) {
 		$raw_name = ucwords( str_replace( array( '-', '_' ), ' ', $em[1] ) );
-		$t = $raw_name . ' — Past Event Experience — Crux Nxtion';
+		$t = $raw_name . ' â€” Past Event Experience â€” Crux Nxtion';
 		if ( is_array( $title_parts ) ) {
 			$title_parts['title'] = $t;
 			return $title_parts;
@@ -244,7 +243,7 @@ function crux_custom_document_title( $title_parts ) {
 
 	if ( preg_match( '#^blog/(.+)$#i', $slug, $bm ) ) {
 		$raw_title = ucwords( str_replace( array( '-', '_' ), ' ', $bm[1] ) );
-		$t = $raw_title . ' — Journal — Crux Nxtion';
+		$t = $raw_title . ' â€” Journal â€” Crux Nxtion';
 		if ( is_array( $title_parts ) ) {
 			$title_parts['title'] = $t;
 			return $title_parts;

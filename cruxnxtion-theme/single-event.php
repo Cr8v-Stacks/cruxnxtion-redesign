@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Template Name: Single Event Template
  *
@@ -9,15 +9,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// Query dynamic event catalog
-$all_events = function_exists( 'crux_get_all_events' ) ? crux_get_all_events() : ( function_exists( 'crux_get_event_catalog' ) ? crux_get_event_catalog() : array() );
+// Query events from the database
+$all_events = function_exists( 'crux_get_all_events' ) ? crux_get_all_events() : array();
 
 // Resolve requested event
 $req_uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
 $parts = array_filter( explode( '/', trim( parse_url( $req_uri, PHP_URL_PATH ), '/' ) ) );
 $current_slug = end( $parts );
 
-$ev_data = function_exists( 'crux_get_event_data' ) ? crux_get_event_data( $current_slug ) : null;
+// Prefer the queried post (works for draft previews), fall back to the URL slug.
+$queried = get_queried_object();
+$ev_data  = function_exists( 'crux_get_event_data' )
+	? crux_get_event_data( ( $queried instanceof WP_Post && 'event' === $queried->post_type ) ? $queried : $current_slug )
+	: null;
 
 // If event does not exist, trigger 404
 if ( ! $ev_data ) {
@@ -155,7 +159,7 @@ if ( ! $ev_data ) {
     height: auto;
   }
 
-  /* Full-bleed 100% root container — edge-to-edge layout, never pillarboxed */
+  /* Full-bleed 100% root container â€” edge-to-edge layout, never pillarboxed */
   [data-m~=root] {
     width: 100% !important;
     max-width: 100% !important;
@@ -696,7 +700,7 @@ if ( ! $ev_data ) {
   <!-- SHOUT-OUT BAR -->
   <div style="background:#002671; padding:10px 20px 10px 20px; display:flex; align-items:center; justify-content:center; gap:10px;">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3 11l18-7-7 18-2-8-9-3z" stroke="#FFFFFF" stroke-width="1.8" stroke-linejoin="round"></path></svg>
-    <span style="font-size:12.5px; font-weight:700; color:#FFFFFF; letter-spacing:0.3px;">Now booking <?php echo date( "Y" ); ?>/<?php echo (int) date( "Y" ) + 1; ?> across the UK — <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="color:#FFFFFF; font-weight:800; border-bottom:1px solid #FFFFFF;">get in touch →</a></span>
+    <span style="font-size:12.5px; font-weight:700; color:#FFFFFF; letter-spacing:0.3px;">Now booking <?php echo date( "Y" ); ?>/<?php echo (int) date( "Y" ) + 1; ?> across the UK â€” <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="color:#FFFFFF; font-weight:800; border-bottom:1px solid #FFFFFF;">get in touch â†’</a></span>
   </div>
 
   <!-- HEADER -->
@@ -849,7 +853,7 @@ if ( ! $ev_data ) {
         <details class="mdrawer-acc" style="border-bottom:1px solid #1E2B5E;">
           <summary style="display:flex; align-items:center; justify-content:space-between; cursor:pointer; padding:14px 0;">
             <span class="mlink" style="color:#F4F5FA !important; opacity:1 !important;">Services</span>
-            <span class="acc-icon" style="color:#FF2E3D; font-size:22px; font-weight:700; transition:transform .2s ease;">▾</span>
+            <span class="acc-icon" style="color:#FF2E3D; font-size:22px; font-weight:700; transition:transform .2s ease;">â–¾</span>
           </summary>
           <div style="padding:4px 0 16px;">
             <!-- Events sub-box -->
@@ -911,7 +915,7 @@ if ( ! $ev_data ) {
 
   <!-- HERO BANNER -->
   <section style="position:relative; margin:24px 20px 0px 20px; overflow:hidden; height:460px; clip-path:polygon(0 0,100% 0,100% 94%,0 100%); border:1.5px solid #1E2B5E;">
-    <img src="<?php echo crux_get_blob_url( $ev_data['hero_image'] ); ?>" alt="<?php echo esc_attr( $ev_data['short_title'] ); ?>" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;" class="drift">
+    <img src="<?php echo esc_url( $ev_data['hero_url'] ); ?>" alt="<?php echo esc_attr( $ev_data['short_title'] ); ?>" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;" class="drift">
     <div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(10,15,38,0.94) 0%, rgba(10,15,38,0.2) 60%);"></div>
     <div class="float" style="--r:-8deg; position:absolute; top:24px; right:24px; width:96px; height:96px; border-radius:50%; border:2px dashed #5B8DEF; display:flex; align-items:center; justify-content:center; background:rgba(10,15,38,0.55);" data-m="hide"><span class="bebas" style="font-size:16px; color:#5B8DEF; text-align:center; line-height:1.1;"><?php echo esc_html( $ev_data['date_badge_day'] ); ?><br><?php echo esc_html( $ev_data['date_badge_month'] ); ?></span></div>
     <div style="position:absolute; left:0; right:0; bottom:0; padding:36px 36px 36px 36px;"><span class="eyebrow"><?php echo esc_html( $ev_data['category'] ); ?></span><h1 class="bebas" style="font-size:40px; margin:12px 0px 0px 0px; color:#F4F5FA;"><?php echo esc_html( $ev_data['title'] ); ?></h1></div>
@@ -921,12 +925,12 @@ if ( ! $ev_data ) {
   <section style="min-height:560px; padding:56px 20px 56px 20px; display:grid; grid-template-columns:1.6fr 1fr; gap:56px; align-items:start;" data-m="g1 nomin">
     <div class="reveal">
       <h2 class="bebas" style="font-size:32px; margin:0px 0px 16px 0px; color:#F4F5FA;">ABOUT THIS EVENT</h2>
-      <p style="font-size:15px; line-height:1.8; color:#B4BCDD; margin:0px 0px 20px 0px;"><?php echo esc_html( $ev_data['desc_1'] ); ?></p>
-      <p style="font-size:15px; line-height:1.8; color:#B4BCDD; margin:0px 0px 32px 0px;"><?php echo esc_html( $ev_data['desc_2'] ); ?></p>
+      <?php if ( ! empty( $ev_data['desc_1'] ) ) : ?><p style="font-size:15px; line-height:1.8; color:#B4BCDD; margin:0px 0px 20px 0px;"><?php echo esc_html( $ev_data['desc_1'] ); ?></p><?php endif; ?>
+      <?php if ( ! empty( $ev_data['desc_2'] ) ) : ?><p style="font-size:15px; line-height:1.8; color:#B4BCDD; margin:0px 0px 32px 0px;"><?php echo esc_html( $ev_data['desc_2'] ); ?></p><?php endif; ?>
       <h3 style="font-size:16px; margin:0px 0px 14px 0px; font-weight:700; color:#F4F5FA;">From The Gallery</h3>
       <div style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:14px;" data-m="g1">
-        <?php foreach ( $ev_data['gallery'] as $img_id ) : ?>
-        <img src="<?php echo crux_get_blob_url( $img_id ); ?>" alt="" style="width:100%; height:170px; object-fit:cover; border-radius:10px; border:1.5px solid #1E2B5E;" class="reveal">
+        <?php foreach ( $ev_data['gallery_urls'] as $g_url ) : ?>
+        <img src="<?php echo esc_url( $g_url ); ?>" alt="" style="width:100%; height:170px; object-fit:cover; border-radius:10px; border:1.5px solid #1E2B5E;" class="reveal">
         <?php endforeach; ?>
       </div>
     </div>
@@ -967,9 +971,9 @@ if ( ! $ev_data ) {
           $rendered_count++;
       ?>
       <a href="<?php echo esc_url( home_url( "/event/" . $slug . "/" ) ); ?>" style="display:flex; flex-direction:column; background:#111838; border:1.5px solid #1E2B5E; border-radius:14px; overflow:hidden;" class="reveal">
-        <div style="height:200px;"><img src="<?php echo crux_get_blob_url( $e_item['hero_image'] ); ?>" alt="<?php echo esc_attr( $e_item['short_title'] ); ?>" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
+        <div style="height:200px;"><img src="<?php echo esc_url( $e_item['hero_url'] ); ?>" alt="<?php echo esc_attr( $e_item['short_title'] ); ?>" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
         <div style=" padding:20px 20px 20px 20px; display:flex; flex-direction:column; gap:8px;">
-          <span class="eyebrow"><?php echo esc_html( $e_item['category'] . ' • ' . $e_item['date_str'] ); ?></span>
+          <span class="eyebrow"><?php echo esc_html( $e_item['category'] . ' â€¢ ' . $e_item['date_str'] ); ?></span>
           <h3 style="font-size:17px; margin:0px 0px 0px 0px; font-weight:700; color:#F4F5FA;"><?php echo esc_html( $e_item['short_title'] ); ?></h3>
           <p style="font-size:12.5px; color:#A3A9C8; margin:0px 0px 0px 0px;"><?php echo esc_html( $e_item['location'] ); ?></p>
         </div>
@@ -978,7 +982,7 @@ if ( ! $ev_data ) {
     </div>
   </section>
 
-  <!-- PREFOOTER CTA — cinematic band with spinning rosette badge -->
+  <!-- PREFOOTER CTA â€” cinematic band with spinning rosette badge -->
   <section style="position:relative; min-height:540px; overflow:hidden; display:flex; align-items:center;">
     <img src="<?php echo crux_get_blob_url( 'aa52e28c3ca12b7f14d33300c774fb48' ); ?>" alt="Crux Nxtion event crowd" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
     <div style="position:absolute; inset:0; background:linear-gradient(100deg, rgba(10,15,38,0.97) 0%, rgba(10,15,38,0.82) 52%, rgba(10,15,38,0.5) 100%);"></div>
@@ -988,15 +992,15 @@ if ( ! $ev_data ) {
       <div style="max-width:760px; padding:40px 0;">
         <span class="eyebrow" style="color:#A9C0F5 !important;">Ready When You Are</span>
         <h2 class="bebas" style="font-size:clamp(44px, 5.5vw, 76px); line-height:0.95; margin:16px 0 18px; color:#FFFFFF; max-width:820px;">GOT A DATE, OR JUST A DIRECTION?</h2>
-        <p style="font-size:16px; line-height:1.7; color:#C5CADF; max-width:540px; margin:0 0 32px;">Planning an event or building a business — tell us what you have in mind and a real person will come back to you.</p>
+        <p style="font-size:16px; line-height:1.7; color:#C5CADF; max-width:540px; margin:0 0 32px;">Planning an event or building a business â€” tell us what you have in mind and a real person will come back to you.</p>
         <div style="display:flex; gap:16px;" data-m="ctas">
-          <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:15px; padding:17px 32px; --sl:10px;" class="bx">Plan An Event →</a>
-          <a href="<?php echo esc_url( home_url( "/contact/?type=consultancy" ) ); ?>" style="background:#8C7AE6; color:#10142E !important; font-weight:700; font-size:15px; padding:17px 32px; --sl:10px;" class="bx">Talk Business Strategy →</a>
+          <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:15px; padding:17px 32px; --sl:10px;" class="bx">Plan An Event â†’</a>
+          <a href="<?php echo esc_url( home_url( "/contact/?type=consultancy" ) ); ?>" style="background:#8C7AE6; color:#10142E !important; font-weight:700; font-size:15px; padding:17px 32px; --sl:10px;" class="bx">Talk Business Strategy â†’</a>
         </div>
       </div>
       <div class="prefooter__badge" style="width:160px; height:160px; flex:0 0 160px;">
         <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" class="prefooter__badge-link" aria-label="Plan An Event" style="display:block; width:100%; height:100%; text-decoration:none; transition:transform .3s ease;">
-          <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/prefooter-badge-events.svg' ); ?>" class="prefooter__badge-img" alt="Plan An Event — spinning badge" style="width:100%; height:100%; object-fit:contain; animation:rc-spin 14s linear infinite; filter:drop-shadow(0 12px 28px rgba(0,0,0,0.5));">
+          <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/prefooter-badge-events.svg' ); ?>" class="prefooter__badge-img" alt="Plan An Event â€” spinning badge" style="width:100%; height:100%; object-fit:contain; animation:rc-spin 14s linear infinite; filter:drop-shadow(0 12px 28px rgba(0,0,0,0.5));">
         </a>
       </div>
     </div>
@@ -1029,7 +1033,7 @@ if ( ! $ev_data ) {
       <a href="<?php echo esc_url( home_url( "/terms-conditions/" ) ); ?>" style="font-size:12.5px; color:#8E96BB;">Terms &amp; Conditions</a>
     </div>
     <div style="width:100%; max-width:900px; height:1px; background:#1E2B5E; margin:0 auto 24px;"></div>
-    <p style="font-size:13px; color:#7A82A8; margin:0px 0px 0px 0px;">&copy; <?php echo date( "Y" ); ?> Crux Nxtion Events • Sheffield, United Kingdom • All Rights Reserved</p>
+    <p style="font-size:13px; color:#7A82A8; margin:0px 0px 0px 0px;">&copy; <?php echo date( "Y" ); ?> Crux Nxtion Events â€¢ Sheffield, United Kingdom â€¢ All Rights Reserved</p>
   </footer>
 
 <div class="msw">

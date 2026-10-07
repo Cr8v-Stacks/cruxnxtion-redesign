@@ -1,9 +1,11 @@
-<?php
+﻿<?php
 /**
- * Crux Nxtion - Dynamic Event Engine & Query Helpers
+ * Crux Nxtion - Event Engine (database only)
  *
- * Provides centralized data-driven event queries and metadata resolution
- * across single-event.php, page-events.php, archive-event.php, and front-page.php.
+ * Reads events from the `event` post type. The WordPress admin is the single
+ * source of truth: a trashed, draft or deleted event does not render, and a
+ * new event appears as soon as it is published. Field editing lives in the
+ * `cr8v-event-ticketing` plugin (Event Details meta box, `_cr8v_event_*` keys).
  *
  * @package CruxNxtion
  */
@@ -13,320 +15,226 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * 1. Master Fallback Event Catalog (site.json & design reference)
- * Used as default metadata fallback if any specific meta field is empty.
+ * Badge presets. Free-form colours are never read from the database, so a bad
+ * value cannot reach an inline style attribute.
  */
-function crux_get_event_catalog() {
+function crux_event_badge_presets() {
 	return array(
-		'dance-out-2023' => array(
-			'title'            => 'DANCE OUT 2023 WITH CRUX NXTION EVENTS',
-			'short_title'      => 'Dance OUT 2023',
-			'category'         => 'Dance Night',
-			'date_badge_day'   => '16',
-			'date_badge_month' => 'DEC',
-			'date_str'         => 'Saturday, 16 December 2023',
-			'time_str'         => '10:00 PM — Late',
-			'date_raw'         => '2023-12-16',
-			'location'         => 'Sheffield',
-			'country'          => 'United Kingdom',
-			'hero_image'       => 'b094675514894aa0d8e7dd735d187b22',
-			'desc_1'           => 'Get ready to groove and move like never before with Dance Out 2023! This electrifying night is set to ignite the dance floor and send you home with a story to tell.',
-			'desc_2'           => 'Tickets and full details are on Eventbrite. Want a night like this for your own crowd? Our crew plans, books and runs it end to end.',
-			'gallery'          => array( 'c5afda4fc4e4d4b0682377d6eb272c90', '1d5292715423e2e83b56b3330a94b3b8', 'c5afda4fc4e4d4b0682377d6eb272c90' ),
-			'eventbrite'       => 'https://www.eventbrite.co.uk/e/dance-out-2023-with-crux-nxtion-events-tickets-769718547897',
-			'badge_bg'         => '#002671',
-			'badge_color'      => '#FFFFFF',
-			'rotation'         => '1deg',
-		),
-		'becoming-mr-mrs-crux-pt-3' => array(
-			'title'            => 'BECOMING MR & MRS CRUX PT.3',
-			'short_title'      => 'Becoming Mr & Mrs Crux Pt.3',
-			'category'         => 'Couples & Wedding Showcase',
-			'date_badge_day'   => '23',
-			'date_badge_month' => 'APR',
-			'date_str'         => 'Wednesday, 23 April 2025',
-			'time_str'         => '14:00 — Late',
-			'date_raw'         => '2025-04-23',
-			'location'         => 'Sheffield & Destination UK',
-			'country'          => 'United Kingdom',
-			'hero_image'       => '2f9f2834d9f0829e887b03bccc208656',
-			'desc_1'           => 'The premier cultural and luxury wedding experience by Crux Nxtion. A celebration of love, exquisite event styling, vibrant guest coordination, and world-class live entertainment.',
-			'desc_2'           => 'Tickets and full details are on Eventbrite. Planning a high-profile luxury wedding, cultural ceremony, or anniversary celebration? Our specialized team delivers bespoke decor, production, and seamless day-of management.',
-			'gallery'          => array( '53df70ef86c4b1d32979af070d98a399', '2f9f2834d9f0829e887b03bccc208656', 'a15ea8703f82f1d0f8577325e8d85a3b' ),
-			'eventbrite'       => 'https://www.eventbrite.co.uk/',
-			'badge_bg'         => '#002671',
-			'badge_color'      => '#FFFFFF',
-			'rotation'         => '-1deg',
-		),
-		'lasgidi-mainland-party' => array(
-			'title'            => 'LASGIDI MAINLAND PARTY (IJGB EDITION)',
-			'short_title'      => 'LASGIDI Mainland Party',
-			'category'         => 'Nightlife & Cultural Party',
-			'date_badge_day'   => '25',
-			'date_badge_month' => 'JAN',
-			'date_str'         => 'Saturday, 25 January 2025',
-			'time_str'         => '10:00 PM — Late',
-			'date_raw'         => '2025-01-25',
-			'location'         => 'Sheffield',
-			'country'          => 'United Kingdom',
-			'hero_image'       => 'a15ea8703f82f1d0f8577325e8d85a3b',
-			'desc_1'           => 'Bringing authentic Mainland energy straight to the UK club scene. Packed rooms, high-energy Afrobeats, Amapiano, and top DJs keeping the floor moving until the early hours.',
-			'desc_2'           => 'Tickets and full details are on Eventbrite. Looking to curate an unforgettable nightlife experience, college party, or club takeover? Crux Nxtion handles venue sourcing, talent booking, security, and full-scale promotion.',
-			'gallery'          => array( '1d5292715423e2e83b56b3330a94b3b8', 'b094675514894aa0d8e7dd735d187b22', 'c5afda4fc4e4d4b0682377d6eb272c90' ),
-			'eventbrite'       => 'https://www.eventbrite.co.uk/e/lasgidi-mainland-party-ijgb-edition-tickets-1134178371039',
-			'badge_bg'         => '#BA0000',
-			'badge_color'      => '#FFFFFF',
-			'rotation'         => '0.8deg',
-		),
-		'ankara-festival' => array(
-			'title'            => 'ANKARA FESTIVAL UK',
-			'short_title'      => 'Ankara Festival',
-			'category'         => 'Cultural Festival',
-			'date_badge_day'   => '30',
-			'date_badge_month' => 'NOV',
-			'date_str'         => 'Saturday, 30 November 2024',
-			'time_str'         => '14:00 — Late',
-			'date_raw'         => '2024-11-30',
-			'location'         => 'Sheffield',
-			'country'          => 'United Kingdom',
-			'hero_image'       => '11316a3d9c4317e3d5b7f755df227497',
-			'desc_1'           => 'A vibrant celebration of African heritage, runway fashion, culinary delights, and live musical performances uniting communities across Yorkshire and the UK.',
-			'desc_2'           => 'Tickets and full details are on Eventbrite. Crux Nxtion produces large-scale community festivals, multi-vendor marketplaces, and indoor/outdoor cultural exhibitions with complete staging and licensing.',
-			'gallery'          => array( '11316a3d9c4317e3d5b7f755df227497', '99a3c292f4b3a38d253144801b4a9ae3', 'c5afda4fc4e4d4b0682377d6eb272c90' ),
-			'eventbrite'       => 'https://www.eventbrite.co.uk/e/ankara-festival-tickets-1070427991939',
-			'badge_bg'         => '#8C7AE6',
-			'badge_color'      => '#10142E',
-			'rotation'         => '-0.6deg',
-		),
-		'yagi-awards' => array(
-			'title'            => 'YAGI AWARDS UK',
-			'short_title'      => 'YAGI Awards',
-			'category'         => 'Awards Gala',
-			'date_badge_day'   => '28',
-			'date_badge_month' => 'APR',
-			'date_str'         => 'Friday, 28 April 2023',
-			'time_str'         => '14:30 — Evening',
-			'date_raw'         => '2023-04-28',
-			'location'         => 'Sheffield',
-			'country'          => 'United Kingdom',
-			'hero_image'       => 'fa3286e8f930ebdb28b28c54198542fa',
-			'desc_1'           => 'Recognizing outstanding achievements and rising stars across entertainment, leadership, and culture. An elegant red carpet ceremony with banquet dining and prestige keynote honors.',
-			'desc_2'           => 'Tickets and full details are on Eventbrite. Planning a corporate awards night, charity gala, or recognition ceremony? Crux Nxtion provides red carpet production, awards logistics, and VIP hospitality.',
-			'gallery'          => array( 'fa3286e8f930ebdb28b28c54198542fa', '4795dc48859e2b9d81b42757c6317d14', 'c5afda4fc4e4d4b0682377d6eb272c90' ),
-			'eventbrite'       => 'https://www.eventbrite.co.uk/e/yagi-awards-tickets-623479482917',
-			'badge_bg'         => '#BA0000',
-			'badge_color'      => '#FFFFFF',
-			'rotation'         => '-1deg',
-		),
-		'millennials-vs-gen-z' => array(
-			'title'            => 'MILLENNIALS VS GEN Z',
-			'short_title'      => 'Millennials vs Gen Z',
-			'category'         => 'Games Night',
-			'date_badge_day'   => '29',
-			'date_badge_month' => 'JAN',
-			'date_str'         => 'Sunday, 29 January 2023',
-			'time_str'         => '17:00 — Late',
-			'date_raw'         => '2023-01-29',
-			'location'         => 'Sheffield',
-			'country'          => 'United Kingdom',
-			'hero_image'       => '317371ca97a92f79584d7ff4bae33069',
-			'desc_1'           => 'The ultimate trivia, games, karaoke, and banter clash between generations. Interactive team challenges with non-stop laughter and audience participation.',
-			'desc_2'           => 'Tickets and full details are on Eventbrite. We curate customized team-building games, corporate social mixers, and community trivia nights designed to break the ice and build genuine connections.',
-			'gallery'          => array( '317371ca97a92f79584d7ff4bae33069', 'c5afda4fc4e4d4b0682377d6eb272c90', '1d5292715423e2e83b56b3330a94b3b8' ),
-			'eventbrite'       => 'https://www.eventbrite.co.uk/e/millenials-vs-gen-z-tickets-494953558417',
-			'badge_bg'         => '#8C7AE6',
-			'badge_color'      => '#10142E',
-			'rotation'         => '0.8deg',
-		),
-		'the-wedding-party' => array(
-			'title'            => 'THE WEDDING PARTY',
-			'short_title'      => 'The Wedding Party',
-			'category'         => 'Wedding Showcase',
-			'date_badge_day'   => '27',
-			'date_badge_month' => 'AUG',
-			'date_str'         => 'Saturday, 27 August 2022',
-			'time_str'         => '15:00 — Late',
-			'date_raw'         => '2022-08-27',
-			'location'         => 'Sheffield',
-			'country'          => 'United Kingdom',
-			'hero_image'       => '53df70ef86c4b1d32979af070d98a399',
-			'desc_1'           => 'A magical wedding reception bringing together families and friends for an unforgettable feast, heartfelt toasts, and an electric after-party on the dance floor.',
-			'desc_2'           => 'Tickets and full details are on Eventbrite. Let Crux Nxtion take the stress out of your wedding planning. We coordinate decor, catering, photography, sound, and the master of ceremonies seamlessly.',
-			'gallery'          => array( '53df70ef86c4b1d32979af070d98a399', '2f9f2834d9f0829e887b03bccc208656', 'c5afda4fc4e4d4b0682377d6eb272c90' ),
-			'eventbrite'       => 'https://www.eventbrite.co.uk/e/the-wedding-party-tickets-356808492807',
-			'badge_bg'         => '#002671',
-			'badge_color'      => '#FFFFFF',
-			'rotation'         => '-0.6deg',
-		),
-		'crux-nxtion-hangout' => array(
-			'title'            => 'CRUX NXTION HANGOUT OUT',
-			'short_title'      => 'Crux Nxtion Hangout',
-			'category'         => 'Social Mixer',
-			'date_badge_day'   => '25',
-			'date_badge_month' => 'SEP',
-			'date_str'         => 'Saturday, 25 September 2021',
-			'time_str'         => '18:00 — Late',
-			'date_raw'         => '2021-09-25',
-			'location'         => 'Sheffield',
-			'country'          => 'United Kingdom',
-			'hero_image'       => '352a5c10108a75b7cb713fd1433b8b36',
-			'desc_1'           => 'An intimate gathering for networking, good music, drinks, and lively discussions with creative minds and entrepreneurs in Sheffield.',
-			'desc_2'           => 'Tickets and full details are on Eventbrite. We organize private mixers, brand launch parties, and influencer meetups crafted with an authentic, relaxed atmosphere.',
-			'gallery'          => array( '352a5c10108a75b7cb713fd1433b8b36', 'c5afda4fc4e4d4b0682377d6eb272c90', '1d5292715423e2e83b56b3330a94b3b8' ),
-			'eventbrite'       => 'https://www.eventbrite.co.uk/e/crux-nxtion-hangout-out-tickets-168482853751',
-			'badge_bg'         => '#BA0000',
-			'badge_color'      => '#FFFFFF',
-			'rotation'         => '1deg',
-		),
+		'blue'   => array( 'bg' => '#002671', 'color' => '#FFFFFF' ),
+		'red'    => array( 'bg' => '#BA0000', 'color' => '#FFFFFF' ),
+		'purple' => array( 'bg' => '#8C7AE6', 'color' => '#10142E' ),
 	);
 }
 
 /**
- * 2. Resolve Single Event Data (by Post ID, Post Object, or Slug)
- *
- * @param int|WP_Post|string|null $identifier Optional post ID, object, or slug.
- * @return array|null Complete structured event data array or null if not found.
+ * Read an event field: `_cr8v_event_{key}` first, then the legacy `_crux_event_{key}`.
+ */
+function crux_event_meta( $post_id, $key ) {
+	$value = get_post_meta( $post_id, '_cr8v_event_' . $key, true );
+	if ( '' === $value || null === $value || false === $value ) {
+		$value = get_post_meta( $post_id, '_crux_event_' . $key, true );
+	}
+	return is_scalar( $value ) ? (string) $value : '';
+}
+
+/**
+ * Resolve the badge colours for an event from a preset name or, for legacy
+ * seeded posts, from the stored background hex (matched against the presets).
+ */
+function crux_event_resolve_badge( $post_id ) {
+	$presets = crux_event_badge_presets();
+	$style   = sanitize_key( crux_event_meta( $post_id, 'badge_style' ) );
+	if ( isset( $presets[ $style ] ) ) {
+		return $presets[ $style ];
+	}
+	$legacy_bg = strtoupper( (string) get_post_meta( $post_id, '_cr8v_event_badge_bg', true ) );
+	foreach ( $presets as $preset ) {
+		if ( strtoupper( $preset['bg'] ) === $legacy_bg ) {
+			return $preset;
+		}
+	}
+	return $presets['blue'];
+}
+
+/**
+ * Event IDs to hide on this install only (development databases that share
+ * posts with another brand). Define CRUX_EVENTS_EXCLUDE_IDS in wp-config.php,
+ * e.g. define( 'CRUX_EVENTS_EXCLUDE_IDS', '1625,1626' ). Production: leave unset.
+ */
+function crux_event_excluded_ids() {
+	if ( ! defined( 'CRUX_EVENTS_EXCLUDE_IDS' ) ) {
+		return array();
+	}
+	return array_filter( array_map( 'absint', explode( ',', (string) CRUX_EVENTS_EXCLUDE_IDS ) ) );
+}
+
+/**
+ * Parse a stored Y-m-d date in the site timezone. Returns a DateTimeImmutable or null.
+ */
+function crux_event_parse_date( $raw ) {
+	$raw = trim( (string) $raw );
+	if ( ! preg_match( '/^\d{4}-\d{2}-\d{2}$/', $raw ) ) {
+		return null;
+	}
+	$dt = DateTimeImmutable::createFromFormat( '!Y-m-d', $raw, wp_timezone() );
+	return ( $dt && $dt->format( 'Y-m-d' ) === $raw ) ? $dt : null;
+}
+
+/**
+ * Resolve the hero image URL: featured image, else legacy design blob, else a neutral blob.
+ */
+function crux_event_hero_url( $post_id ) {
+	$thumb = get_the_post_thumbnail_url( $post_id, 'large' );
+	if ( $thumb ) {
+		return $thumb;
+	}
+	$blob = sanitize_key( get_post_meta( $post_id, '_cr8v_event_hero_blob', true ) );
+	if ( '' === $blob ) {
+		$blob = 'c5afda4fc4e4d4b0682377d6eb272c90';
+	}
+	return crux_get_blob_url( $blob );
+}
+
+/**
+ * Resolve gallery image URLs: Media Library IDs, else legacy design blob IDs.
+ */
+function crux_event_gallery_urls( $post_id ) {
+	$urls = array();
+	$ids  = array_filter( array_map( 'absint', explode( ',', (string) get_post_meta( $post_id, '_cr8v_event_gallery_ids', true ) ) ) );
+	foreach ( $ids as $att_id ) {
+		$url = wp_get_attachment_image_url( $att_id, 'large' );
+		if ( $url ) {
+			$urls[] = $url;
+		}
+	}
+	if ( $urls ) {
+		return $urls;
+	}
+	$legacy = get_post_meta( $post_id, '_cr8v_event_gallery', true );
+	foreach ( (array) $legacy as $blob ) {
+		$blob = sanitize_key( $blob );
+		if ( '' !== $blob ) {
+			$urls[] = crux_get_blob_url( $blob );
+		}
+	}
+	return $urls;
+}
+
+/**
+ * Build the structured data array for one published event post.
+ */
+function crux_event_build_data( $post ) {
+	$id    = $post->ID;
+	$date  = crux_event_parse_date( crux_event_meta( $id, 'date' ) );
+	$badge = crux_event_resolve_badge( $id );
+
+	$rotations = array( '1deg', '-1deg', '0.8deg', '-0.6deg' );
+	$rotation  = crux_event_meta( $id, 'rotation' );
+	if ( ! preg_match( '/^-?\d(\.\d)?deg$/', $rotation ) ) {
+		$rotation = $rotations[ $id % 4 ];
+	}
+
+	$booking = esc_url_raw( crux_event_meta( $id, 'eventbrite' ), array( 'http', 'https' ) );
+	$venue   = crux_event_meta( $id, 'venue' );
+
+	return array(
+		'id'               => $id,
+		'slug'             => $post->post_name,
+		'permalink'        => get_permalink( $id ),
+		'title'            => mb_strtoupper( $post->post_title, 'UTF-8' ),
+		'short_title'      => crux_event_meta( $id, 'short_title' ) ?: $post->post_title,
+		'category'         => crux_event_meta( $id, 'category' ),
+		'date_raw'         => $date ? $date->format( 'Y-m-d' ) : '',
+		'year'             => $date ? $date->format( 'Y' ) : '',
+		'date_badge_day'   => $date ? $date->format( 'd' ) : '',
+		'date_badge_month' => $date ? mb_strtoupper( wp_date( 'M', $date->getTimestamp(), wp_timezone() ) ) : '',
+		'date_str'         => $date ? wp_date( 'l, j F Y', $date->getTimestamp(), wp_timezone() ) : '',
+		'time_str'         => crux_event_meta( $id, 'time' ),
+		'location'         => $venue,
+		'country'          => crux_event_meta( $id, 'location' ),
+		'desc_1'           => $post->post_excerpt,
+		'desc_2'           => wp_strip_all_tags( $post->post_content ),
+		'hero_url'         => crux_event_hero_url( $id ),
+		'gallery_urls'     => crux_event_gallery_urls( $id ),
+		'eventbrite'       => $booking,
+		'badge_bg'         => $badge['bg'],
+		'badge_color'      => $badge['color'],
+		'rotation'         => $rotation,
+		'is_past'          => $date ? ( $date->getTimestamp() < strtotime( 'today', current_time( 'timestamp' ) ) ) : false,
+	);
+}
+
+/**
+ * Resolve one event by slug, post ID or WP_Post. Returns null unless the event
+ * is a published `event` post, so unknown, draft and trashed events 404.
  */
 function crux_get_event_data( $identifier = null ) {
-	$catalog = crux_get_event_catalog();
 	$post = null;
-
-	// Resolve post object
-	if ( is_a( $identifier, 'WP_Post' ) ) {
+	if ( $identifier instanceof WP_Post ) {
 		$post = $identifier;
 	} elseif ( is_numeric( $identifier ) ) {
 		$post = get_post( (int) $identifier );
-	} elseif ( is_string( $identifier ) && ! empty( $identifier ) ) {
-		$slug = sanitize_title( $identifier );
-		$post = get_page_by_path( $slug, OBJECT, 'event' );
-		if ( ! $post && isset( $catalog[ $slug ] ) ) {
-			// Found in catalog by slug
-			$cat_data = $catalog[ $slug ];
-			$cat_data['slug'] = $slug;
-			$cat_data['id'] = 0;
-			return $cat_data;
-		}
-	} else {
-		// Detect from current WordPress loop or global post
-		global $post;
-		if ( ! $post || $post->post_type !== 'event' ) {
-			// Check URL slug
-			$req_uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
-			$parts = array_filter( explode( '/', trim( parse_url( $req_uri, PHP_URL_PATH ), '/' ) ) );
-			$slug = end( $parts );
-			if ( $slug ) {
-				$post = get_page_by_path( $slug, OBJECT, 'event' );
-				if ( ! $post && isset( $catalog[ $slug ] ) ) {
-					$cat_data = $catalog[ $slug ];
-					$cat_data['slug'] = $slug;
-					$cat_data['id'] = 0;
-					return $cat_data;
-				}
-			}
-		}
+	} elseif ( is_string( $identifier ) && '' !== $identifier ) {
+		$post = get_page_by_path( sanitize_title( $identifier ), OBJECT, 'event' );
 	}
 
-	if ( ! $post || $post->post_status !== 'publish' ) {
+	if ( ! $post || 'event' !== $post->post_type ) {
 		return null;
 	}
-
-	$slug = $post->post_name;
-	$defaults = isset( $catalog[ $slug ] ) ? $catalog[ $slug ] : array();
-
-	// Read fields with _cr8v_* primary and _crux_* fallback
-	$date_raw = get_post_meta( $post->ID, '_cr8v_event_date', true ) ?: get_post_meta( $post->ID, '_crux_event_date', true ) ?: ( $defaults['date_raw'] ?? '' );
-	$time_str = get_post_meta( $post->ID, '_cr8v_event_time', true ) ?: get_post_meta( $post->ID, '_crux_event_time', true ) ?: ( $defaults['time_str'] ?? 'Evening — Late' );
-	$venue    = get_post_meta( $post->ID, '_cr8v_event_venue', true ) ?: get_post_meta( $post->ID, '_crux_event_venue', true ) ?: ( $defaults['location'] ?? 'Sheffield' );
-	$country  = get_post_meta( $post->ID, '_cr8v_event_location', true ) ?: ( $defaults['country'] ?? 'United Kingdom' );
-	$category = get_post_meta( $post->ID, '_cr8v_event_category', true ) ?: get_post_meta( $post->ID, '_crux_event_category', true ) ?: ( $defaults['category'] ?? 'Crux Event' );
-	$short_title = get_post_meta( $post->ID, '_cr8v_event_short_title', true ) ?: ( $defaults['short_title'] ?? $post->post_title );
-	$hero_blob = get_post_meta( $post->ID, '_cr8v_event_hero_blob', true ) ?: ( $defaults['hero_image'] ?? 'b094675514894aa0d8e7dd735d187b22' );
-	$gallery   = get_post_meta( $post->ID, '_cr8v_event_gallery', true ) ?: ( $defaults['gallery'] ?? array( 'c5afda4fc4e4d4b0682377d6eb272c90', '1d5292715423e2e83b56b3330a94b3b8', 'c5afda4fc4e4d4b0682377d6eb272c90' ) );
-	$eventbrite = get_post_meta( $post->ID, '_cr8v_event_eventbrite', true ) ?: get_post_meta( $post->ID, '_crux_event_eventbrite', true ) ?: ( $defaults['eventbrite'] ?? '' );
-	$badge_bg   = get_post_meta( $post->ID, '_cr8v_event_badge_bg', true ) ?: ( $defaults['badge_bg'] ?? '#002671' );
-	$badge_col  = get_post_meta( $post->ID, '_cr8v_event_badge_color', true ) ?: ( $defaults['badge_color'] ?? '#FFFFFF' );
-	$rotation   = get_post_meta( $post->ID, '_cr8v_event_rotation', true ) ?: ( $defaults['rotation'] ?? '0deg' );
-
-	// Date formatting
-	$ts = ! empty( $date_raw ) ? strtotime( $date_raw ) : time();
-	$badge_day   = date( 'd', $ts );
-	$badge_month = strtoupper( date( 'M', $ts ) );
-	$date_str    = date( 'l, j F Y', $ts );
-
-	// Excerpts & content
-	$desc_1 = $post->post_excerpt ?: ( $defaults['desc_1'] ?? 'Get ready to groove and move like never before. An electrifying experience curated and produced by Crux Nxtion Events.' );
-	$desc_2 = $post->post_content ? wp_strip_all_tags( $post->post_content ) : ( $defaults['desc_2'] ?? 'Tickets and full details are on Eventbrite. Want a night like this for your own crowd? Our crew plans, books and runs it end to end.' );
-
-	return array(
-		'id'               => $post->ID,
-		'slug'             => $slug,
-		'title'            => strtoupper( $post->post_title ),
-		'short_title'      => $short_title,
-		'category'         => $category,
-		'date_badge_day'   => $badge_day,
-		'date_badge_month' => $badge_month,
-		'date_str'         => $date_str,
-		'time_str'         => $time_str,
-		'date_raw'         => $date_raw,
-		'location'         => $venue,
-		'country'          => $country,
-		'hero_image'       => $hero_blob,
-		'desc_1'           => $desc_1,
-		'desc_2'           => $desc_2,
-		'gallery'          => is_array( $gallery ) ? $gallery : array( $gallery ),
-		'eventbrite'       => $eventbrite,
-		'badge_bg'         => $badge_bg,
-		'badge_color'      => $badge_col,
-		'rotation'         => $rotation,
-		'permalink'        => get_permalink( $post->ID ),
-	);
+	// Visitors only see published events. Editors may preview their own drafts.
+	if ( 'publish' !== $post->post_status && ! ( is_user_logged_in() && current_user_can( 'edit_post', $post->ID ) ) ) {
+		return null;
+	}
+	if ( in_array( (int) $post->ID, crux_event_excluded_ids(), true ) ) {
+		return null;
+	}
+	return crux_event_build_data( $post );
 }
 
 /**
- * 3. Query All Events (Ordered by menu_order & date)
+ * Query events, newest first by default.
  *
- * @param array $args Optional WP_Query parameters.
- * @return array Array of structured event data items.
+ * @param array $args {
+ *     @type string $scope          'all' (default), 'upcoming' (soonest first) or 'past' (latest first).
+ *     @type int    $posts_per_page Default -1.
+ * }
+ * @return array Slug-keyed array of event data. Empty when there are no events.
  */
 function crux_get_all_events( $args = array() ) {
-	$defaults = array(
-		'post_type'      => 'event',
-		'post_status'    => 'publish',
-		'posts_per_page' => -1,
-		'orderby'        => 'menu_order',
-		'order'          => 'ASC',
-	);
+	$args  = wp_parse_args( $args, array( 'scope' => 'all', 'posts_per_page' => -1 ) );
+	$scope = in_array( $args['scope'], array( 'all', 'upcoming', 'past' ), true ) ? $args['scope'] : 'all';
+	$today = wp_date( 'Y-m-d' );
 
-	$query_args = wp_parse_args( $args, $defaults );
-	$query = new WP_Query( $query_args );
+	$date_clause = array( 'key' => '_cr8v_event_date', 'compare' => 'EXISTS', 'type' => 'DATE' );
+	$order       = 'DESC';
 
-	$catalog = crux_get_event_catalog();
+	if ( 'upcoming' === $scope ) {
+		$date_clause = array( 'key' => '_cr8v_event_date', 'value' => $today, 'compare' => '>=', 'type' => 'DATE' );
+		$order       = 'ASC';
+	} elseif ( 'past' === $scope ) {
+		$date_clause = array( 'key' => '_cr8v_event_date', 'value' => $today, 'compare' => '<', 'type' => 'DATE' );
+	}
+
+	// 'all' also lists events that have no date yet (they sort last); 'upcoming' and 'past' need a date.
+	$meta_query = array( 'relation' => 'OR', 'ev_date' => $date_clause );
+	if ( 'all' === $scope ) {
+		$meta_query['ev_none'] = array( 'key' => '_cr8v_event_date', 'compare' => 'NOT EXISTS' );
+	}
+
+	$query = new WP_Query( array(
+		'post_type'           => 'event',
+		'post_status'         => 'publish',
+		'posts_per_page'      => (int) $args['posts_per_page'],
+		'post__not_in'        => crux_event_excluded_ids(),
+		'ignore_sticky_posts' => true,
+		'no_found_rows'       => true,
+		'meta_query'          => $meta_query,
+		'orderby'             => array( 'ev_date' => $order, 'title' => 'ASC' ),
+	) );
+
 	$events = array();
-	if ( $query->have_posts() ) {
-		while ( $query->have_posts() ) {
-			$query->the_post();
-			$post_obj = get_post();
-			// In shared database environments, ensure event belongs to Crux Nxtion
-			if ( isset( $catalog[ $post_obj->post_name ] ) || get_post_meta( $post_obj->ID, '_cr8v_event_hero_blob', true ) || get_post_meta( $post_obj->ID, '_crux_event_date', true ) ) {
-				$ev = crux_get_event_data( $post_obj );
-				if ( $ev ) {
-					$events[ $ev['slug'] ] = $ev;
-				}
-			}
-		}
-		wp_reset_postdata();
+	foreach ( $query->posts as $post ) {
+		$events[ $post->post_name ] = crux_event_build_data( $post );
 	}
-
-	// Fallback guarantee: if DB events are empty, load catalog
-	if ( empty( $events ) ) {
-		$catalog = crux_get_event_catalog();
-		foreach ( $catalog as $slug => $item ) {
-			$item['slug'] = $slug;
-			$item['id']   = 0;
-			$item['permalink'] = home_url( '/event/' . $slug . '/' );
-			$events[ $slug ] = $item;
-		}
-	}
-
 	return $events;
 }
