@@ -15,6 +15,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// This page carries secret tokens in its URL and shows personal data and tickets. Never let a page
+// cache store it, never let search engines index it, and never leak the URL through the Referer header.
+if ( ! defined( 'DONOTCACHEPAGE' ) ) {
+	define( 'DONOTCACHEPAGE', true );
+}
+nocache_headers();
+header( 'X-Robots-Tag: noindex, nofollow, noarchive' );
+header( 'Referrer-Policy: no-referrer' );
+
 // -----------------------------------------------------------------------------
 // 1. Process Staff Door Check-In Action (POST only, gated by capability & nonce)
 // -----------------------------------------------------------------------------
@@ -37,7 +46,20 @@ if ( 'POST' === ( $_SERVER['REQUEST_METHOD'] ?? '' ) && isset( $_POST['cr8v_do_c
 		$checkin_message = __( 'Ticket cryptographic verification failed.', 'cr8v-event-ticketing' );
 		$checkin_status  = 'error';
 	} else {
-		$order_tickets = get_post_meta( $p_order, '_cr8v_order_tickets', true );
+		// Serialise check-ins per order. Tickets live in one array, so two staff scanning the same
+			// pass at the same moment could otherwise both read "not checked in" and both succeed.
+			// The lock is released automatically when this request's database connection closes.
+			global $wpdb;
+			$checkin_lock = 'cr8v_checkin_' . DB_NAME . '_' . $wpdb->prefix . $p_order;
+			$got_lock     = (int) $wpdb->get_var( $wpdb->prepare( 'SELECT GET_LOCK( %s, 5 )', $checkin_lock ) );
+			if ( 1 === $got_lock ) {
+				wp_cache_delete( $p_order, 'post_meta' ); // Re-read tickets after taking the lock.
+				$order_tickets = get_post_meta( $p_order, '_cr8v_order_tickets', true );
+			} else {
+				$order_tickets   = null;
+				$checkin_message = __( 'The system is busy. Please try the check-in again.', 'cr8v-event-ticketing' );
+				$checkin_status  = 'error';
+			}
 		if ( is_array( $order_tickets ) ) {
 			$found = false;
 			foreach ( $order_tickets as $idx => $t ) {
@@ -127,6 +149,7 @@ if ( ! empty( $req_ticket_code ) && ! empty( $req_tix_secret ) ) {
 <head>
   <meta charset="<?php bloginfo( 'charset' ); ?>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow, noarchive">
   <title><?php esc_html_e( 'Booking Confirmation & Tickets — Crux Nxtion', 'cruxnxtion' ); ?></title>
   <?php wp_head(); ?>
 </head>
@@ -361,7 +384,7 @@ elseif ( 'bare_session' === $view_mode ) :
 				</a>
 			<?php endif; ?>
 			<a href="<?php echo esc_url( home_url( '/events/' ) ); ?>" class="bx" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:14px; padding:14px 24px; --sl:8px;">
-				<?php esc_html_e( 'Explore More Events &rarr;', 'cruxnxtion' ); ?>
+				<?php esc_html_e( 'Explore More Events →', 'cruxnxtion' ); ?>
 			</a>
 		</div>
 	</div>
@@ -487,7 +510,7 @@ elseif ( 'order_confirmed' === $view_mode && $order_post ) :
 							<?php echo cr8v_tix_render_svg_qr( $t_qr_url, 130 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 						<?php endif; ?>
 						<a href="<?php echo esc_url( $t_qr_url ); ?>" style="font-size:10px; color:#5B8DEF; margin-top:8px; text-transform:uppercase; letter-spacing:0.5px; font-weight:700;" class="no-print" target="_blank" rel="noopener">
-							<?php esc_html_e( 'Verify Link &rarr;', 'cruxnxtion' ); ?>
+							<?php esc_html_e( 'Verify Link →', 'cruxnxtion' ); ?>
 						</a>
 					</div>
 				</div>
@@ -511,7 +534,7 @@ else :
 			<?php esc_html_e( 'No booking reference was provided. If you recently purchased tickets, please check the link sent to your confirmation email or browse upcoming events below.', 'cruxnxtion' ); ?>
 		</p>
 		<a href="<?php echo esc_url( home_url( '/events/' ) ); ?>" class="bx" style="display:inline-block; background:#BA0000; color:#FFFFFF; font-weight:700; font-size:14.5px; padding:15px 32px; --sl:10px;">
-			<?php esc_html_e( 'Explore All Events &rarr;', 'cruxnxtion' ); ?>
+			<?php esc_html_e( 'Explore All Events →', 'cruxnxtion' ); ?>
 		</a>
 	</div>
 

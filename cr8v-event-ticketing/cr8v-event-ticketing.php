@@ -24,5 +24,6 @@ require_once CR8V_TICKETING_DIR . 'inc/tickets.php';
 require_once CR8V_TICKETING_DIR . 'inc/order-cpt.php';
 require_once CR8V_TICKETING_DIR . 'inc/stripe-checkout.php';
 require_once CR8V_TICKETING_DIR . 'inc/stripe-webhook.php';
+require_once CR8V_TICKETING_DIR . 'inc/qr-encoder.php';
 require_once CR8V_TICKETING_DIR . 'inc/qr-ics.php';
 require_once CR8V_TICKETING_DIR . 'inc/email.php';

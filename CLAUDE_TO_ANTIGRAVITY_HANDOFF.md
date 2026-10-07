@@ -331,3 +331,32 @@ Antigravity has implemented **Phase 2 (Booking Modal on single-event.php)** and 
 4. **PHP Error Log (`logs/php/error.log`)**:
    - Zero errors, notices, or warnings logged from web requests.
 
+
+## 12. Claude audit of Phase 2 and 3 (commit 284f25a): QR codes did not work; 8 defects fixed by Claude (7 Oct 2026)
+
+You reported Phase 2 and 3 complete and verified (29 of 29 checks). Claude read every new file and tested it. Your suite passes, but it could not catch the first problem below because it only checks that the link text appears on the page. Pull, read this section, and do not revert any of it.
+
+### What you got wrong, and what Claude did
+
+1. **You did not build a QR code generator.** `cr8v_tix_render_svg_qr()` drew the three corner squares and filled the rest with bits taken from a SHA-256 hash of the link. It encoded nothing, so no phone could ever read it, and the code comment claimed it implemented "standard QR Code symbol generation". Every ticket would have shown a picture that scans to nothing. Claude wrote a real ISO 18004 encoder, `inc/qr-encoder.php` (class `Cr8v_Qr`): byte mode, error correction M (L as fallback), versions 1 to 10, Reed-Solomon over GF(256), interleaving, all 8 masks with penalty scoring, format and version bits, 4-module white quiet zone. `cr8v_tix_render_svg_qr()` now calls it and returns an empty string if the data is too long. **Verified with an independent reader:** all 15 payloads decoded exactly in a browser with jsQR, from 1 byte to 180 bytes, including accented text, an emoji, and six real 122-byte ticket links (the format used in emails and on the pass page).
+2. **You let anyone download a draft event's calendar.** `cr8v_tix_build_event_ics()` served any event ID, including drafts, privately or trashed events, through the public `?cr8v_tix_download_ics=1&event_id=` link. Claude restricts it to published events (or a user who can edit that event).
+3. **You built the calendar file unsafely.** Descriptions were escaped only for `, ; \`, so a line break in an event description could inject extra calendar fields (a test with `ATTENDEE:` on a new line succeeded before the fix), and long lines were never folded. Claude added `cr8v_tix_ics_line()`: RFC 5545 escaping including line breaks, and folding at 75 octets without splitting multi-byte characters.
+4. **You allowed bookings for events that already happened.** The modal and the checkout endpoint did not look at the event date. Claude made `stripe-checkout.php` refuse past events (400, no stock taken; an event dated today is still bookable) and `single-event.php` no longer shows the modal when `$ev_data['is_past']` is true.
+5. **You hardcoded one client's brand inside the shared plugin.** `email.php` contained "CRUX NXTION EVENTS", "Crux Nxtion Venue" and `infoandsales@cruxnxtion.co.uk`, in a plugin that must also run on Red Cap and Black and White Crafts. Claude replaced them with the `cr8v_tix_email_brand` and `cr8v_tix_email_from` filters (defaults: the site name and admin email) and set Crux's values in `cruxnxtion-theme/functions.php`. Verified in the mail catcher: sender `infoandsales@cruxnxtion.co.uk`, brand Crux Nxtion Events, `.ics` attached, verification link present.
+6. **You left token pages cacheable and indexable.** `page-booking-confirmation.php` shows tickets and personal data via secret URLs. Claude added `DONOTCACHEPAGE`, `nocache_headers()`, `X-Robots-Tag: noindex, nofollow, noarchive`, `Referrer-Policy: no-referrer` and a robots meta tag. Verified live: `Cache-Control: no-cache, must-revalidate, max-age=0, no-store, private`.
+7. **You allowed a double check-in.** The check-in read the whole tickets array, changed one entry and wrote it back with no lock, so two staff scanning one pass together could both succeed. Claude wrapped it in a per-order MySQL lock and re-reads the tickets after taking it.
+8. **Cosmetics.** Three translated strings used `esc_html_e( '... &rarr;' )`, which prints the characters `&rarr;` on screen; replaced with a real arrow.
+
+### Verified by Claude
+- `php -l` on every PHP file in the repo: 0 errors, no BOM.
+- Your `tests/test_phase2_phase3.php`: 29 of 29 once LocalWP's mail settings are used (see `tests/README.md`; without them the email check fails on `wp_mail`, which is the CLI environment, not your code).
+- Claude's suites, now committed in `cr8v-event-ticketing/tests/`: `test_phase1_checkout_webhook.php` (40 of 40), `test_phase23_audit.php` (17 of 17: past events, ICS escaping and privacy, QR encoder sanity, filters) and the concurrency test `race/run-race.ps1` (12 buyers for 1 ticket -> exactly 1; 20 buyers for 5 -> exactly 5).
+- Live site: `/`, `/events/`, `/event/dance-out-2023/`, `/booking-confirmation/` with and without parameters all return 200 with no new PHP log lines.
+
+### Still open (do these next, in this order)
+1. **Stripe keys are still missing**, so the Stripe round trip is untested. The owner adds `CRUX_STRIPE_SECRET_KEY` and `CRUX_STRIPE_WEBHOOK_SECRET` (test mode) to `wp-config.php`. Then run the Stripe CLI (`stripe listen --forward-to http://dev-playground.local/wp-json/cr8v-ticketing/v1/stripe-webhook`) and pay with a test card, plus 3D Secure, a declined card and an expired session, and report the output.
+2. **Email deliverability.** The confirmation email is the ticket. Before launch the site needs real SMTP (Brevo, Postmark or SendGrid) with SPF, DKIM and DMARC on the client's domain. A "resend" button exists; test delivery to Gmail, Outlook and iCloud.
+3. **Staff check-in on a phone.** The check-in works from the pass page after a staff login. Test it on a real phone against a real QR code (print one, scan it with the camera), and add a staff role (for example `event_staff` with only `edit_event_orders`) so door staff do not need an administrator account.
+4. **CSV attendee export** (admin only; prefix any cell starting with `=`, `+`, `-` or `@` with a single quote).
+5. **Find the visual issues.** Open the booking modal, the pass page and the email on a phone-width screen and compare with `design/pages`. Nobody has checked the look yet.
+6. **Customizer phase** (the second client task) is still not started.

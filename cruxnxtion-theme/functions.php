@@ -267,3 +267,11 @@ if ( ! function_exists( 'crux_ajax_submit_inquiry' ) ) {
 	add_action( 'wp_ajax_crux_submit_inquiry', 'crux_ajax_submit_inquiry' );
 	add_action( 'wp_ajax_nopriv_crux_submit_inquiry', 'crux_ajax_submit_inquiry' );
 }
+
+// Ticketing emails (cr8v-event-ticketing plugin): Crux Nxtion brand name and sender address.
+add_filter( 'cr8v_tix_email_brand', function () {
+	return 'Crux Nxtion Events';
+} );
+add_filter( 'cr8v_tix_email_from', function () {
+	return 'infoandsales@cruxnxtion.co.uk';
+} );

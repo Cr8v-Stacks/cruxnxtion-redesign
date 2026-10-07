@@ -957,7 +957,8 @@ if ( ! $ev_data ) {
       <?php
       $event_id    = ! empty( $ev_data['id'] ) ? absint( $ev_data['id'] ) : 0;
       $event_tiers = ( $event_id && function_exists( 'cr8v_tix_get_event_tiers' ) ) ? cr8v_tix_get_event_tiers( $event_id, true ) : array();
-      $has_tiers   = ! empty( $event_tiers );
+      // Past events never show the booking modal (the server also refuses the booking).
+      $has_tiers   = ! empty( $event_tiers ) && empty( $ev_data['is_past'] );
       if ( $has_tiers ) : ?>
         <button type="button" id="cr8v-open-modal-btn" style="display:block; width:100%; text-align:center; background:#BA0000; color:#FFFFFF; font-weight:700; font-size:15px; padding:16px 16px; margin-bottom:12px; --sl:10px; cursor:pointer;" class="bx">
           <?php esc_html_e( 'Reserve Your Spot', 'cruxnxtion' ); ?>

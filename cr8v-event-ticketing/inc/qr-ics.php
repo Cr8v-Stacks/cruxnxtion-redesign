@@ -12,6 +12,33 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Build one iCalendar text property: escape per RFC 5545 (a raw line break in a value would let
+ * event text inject extra calendar fields) and fold lines longer than 75 octets.
+ */
+function cr8v_tix_ics_line( $name, $value ) {
+	$value = str_replace(
+		array( '\\', ';', ',', "\r\n", "\n", "\r" ),
+		array( '\\\\', '\\;', '\\,', '\\n', '\\n', '\\n' ),
+		(string) $value
+	);
+
+	$line   = $name . ':' . $value;
+	$folded = '';
+	$limit  = 75;
+	while ( strlen( $line ) > $limit ) {
+		$cut = $limit;
+		// Do not split inside a multi-byte UTF-8 character.
+		while ( $cut > 0 && ( ord( $line[ $cut ] ) & 0xC0 ) === 0x80 ) {
+			$cut--;
+		}
+		$folded .= substr( $line, 0, $cut ) . "\r\n ";
+		$line    = substr( $line, $cut );
+		$limit   = 74; // Continuation lines start with one space.
+	}
+	return $folded . $line;
+}
+
+/**
  * Generate iCalendar (.ics) content for an event.
  *
  * @param int $event_id Event post ID.
@@ -20,6 +47,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 function cr8v_tix_build_event_ics( $event_id ) {
 	$event = get_post( $event_id );
 	if ( ! $event || 'event' !== $event->post_type ) {
+		return '';
+	}
+	// The download link is public, so it must not reveal drafts, private or trashed events.
+	if ( 'publish' !== $event->post_status && ! current_user_can( 'edit_post', $event_id ) ) {
 		return '';
 	}
 
@@ -56,9 +87,9 @@ function cr8v_tix_build_event_ics( $event_id ) {
 	$ics .= "DTSTAMP:" . $dtstamp_utc . $eol;
 	$ics .= "DTSTART:" . $dtstart_utc . $eol;
 	$ics .= "DTEND:" . $dtend_utc . $eol;
-	$ics .= "SUMMARY:" . addcslashes( $title, ",;\\" ) . $eol;
-	$ics .= "DESCRIPTION:" . addcslashes( mb_substr( $description, 0, 250 ), ",;\\" ) . $eol;
-	$ics .= "LOCATION:" . addcslashes( $location, ",;\\" ) . $eol;
+	$ics .= cr8v_tix_ics_line( 'SUMMARY', $title ) . $eol;
+	$ics .= cr8v_tix_ics_line( 'DESCRIPTION', mb_substr( $description, 0, 250 ) ) . $eol;
+	$ics .= cr8v_tix_ics_line( 'LOCATION', $location ) . $eol;
 	$ics .= "STATUS:CONFIRMED" . $eol;
 	$ics .= "END:VEVENT" . $eol;
 	$ics .= "END:VCALENDAR" . $eol;
@@ -105,81 +136,14 @@ function cr8v_tix_handle_ics_download() {
 }
 add_action( 'template_redirect', 'cr8v_tix_handle_ics_download' );
 
+
 /**
- * Generate a clean standalone SVG QR Code for offline ticket verification.
+ * Generate a scannable QR code as a standalone SVG (real ISO 18004 symbol, no external requests).
  *
- * Implements standard QR Code symbol generation in pure PHP (no external APIs).
- *
- * @param string $data URL or string to encode.
- * @param int    $size Pixel width/height of the generated SVG.
- * @return string Valid SVG XML string.
+ * @param string $data URL or text to encode (up to roughly 210 bytes).
+ * @param int    $size Rendered width/height in pixels.
+ * @return string SVG markup, or an empty string if the data is too long to encode.
  */
 function cr8v_tix_render_svg_qr( $data, $size = 180 ) {
-	// Simple, clean matrix rendering engine for verification tokens
-	// Uses clean modules representation with finder patterns and data stream
-	$len = strlen( $data );
-	$grid_size = 25; // 25x25 Version 2 standard matrix
-	$matrix = array_fill( 0, $grid_size, array_fill( 0, $grid_size, 0 ) );
-
-	// 1. Finder patterns (Top-Left, Top-Right, Bottom-Left)
-	$finder = function( &$mat, $r_start, $c_start ) {
-		for ( $r = 0; $r < 7; $r++ ) {
-			for ( $c = 0; $c < 7; $c++ ) {
-				if ( 0 === $r || 6 === $r || 0 === $c || 6 === $c || ( $r >= 2 && $r <= 4 && $c >= 2 && $c <= 4 ) ) {
-					$mat[ $r_start + $r ][ $c_start + $c ] = 1;
-				}
-			}
-		}
-	};
-	$finder( $matrix, 0, 0 );
-	$finder( $matrix, 0, $grid_size - 7 );
-	$finder( $matrix, $grid_size - 7, 0 );
-
-	// 2. Timing patterns
-	for ( $i = 8; $i < $grid_size - 8; $i++ ) {
-		$matrix[6][ $i ] = ( 0 === $i % 2 ) ? 1 : 0;
-		$matrix[ $i ][6] = ( 0 === $i % 2 ) ? 1 : 0;
-	}
-
-	// 3. Deterministic hash dispersion for payload representation
-	$hash_bytes = hash( 'sha256', $data, true );
-	$h_len = strlen( $hash_bytes );
-	$byte_idx = 0;
-
-	for ( $r = 0; $r < $grid_size; $r++ ) {
-		for ( $c = 0; $c < $grid_size; $c++ ) {
-			// Skip finder pattern zones
-			if ( ( $r < 8 && $c < 8 ) || ( $r < 8 && $c >= $grid_size - 8 ) || ( $r >= $grid_size - 8 && $c < 8 ) ) {
-				continue;
-			}
-			// Skip timing lines
-			if ( 6 === $r || 6 === $c ) {
-				continue;
-			}
-
-			$val = ord( $hash_bytes[ $byte_idx % $h_len ] );
-			$bit = ( $val >> ( ( $r + $c ) % 8 ) ) & 1;
-			$matrix[ $r ][ $c ] = $bit;
-			$byte_idx++;
-		}
-	}
-
-	// 4. Render SVG path elements
-	$mod_size = round( $size / $grid_size, 2 );
-	$rects = '';
-	for ( $r = 0; $r < $grid_size; $r++ ) {
-		for ( $c = 0; $c < $grid_size; $c++ ) {
-			if ( 1 === $matrix[ $r ][ $c ] ) {
-				$x = $c * $mod_size;
-				$y = $r * $mod_size;
-				$rects .= sprintf( '<rect x="%.2f" y="%.2f" width="%.2f" height="%.2f" fill="#0A0F26" />', $x, $y, $mod_size, $mod_size );
-			}
-		}
-	}
-
-	$svg  = sprintf( '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %1$d %1$d" width="%1$d" height="%1$d" style="background:#FFFFFF; padding:10px; border-radius:8px; display:block; max-width:100%%; height:auto;">', $size );
-	$svg .= $rects;
-	$svg .= '</svg>';
-
-	return $svg;
+	return Cr8v_Qr::svg( (string) $data, (int) $size );
 }

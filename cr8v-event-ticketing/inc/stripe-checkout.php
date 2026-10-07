@@ -112,6 +112,12 @@ function cr8v_tix_handle_checkout_request( WP_REST_Request $request ) {
 		return cr8v_tix_checkout_error( __( 'The specified event is not currently available for booking.', 'cr8v-event-ticketing' ), 400 );
 	}
 
+	// 3b. No bookings for events that have already happened (the event date is end-of-day inclusive).
+	$event_date = (string) get_post_meta( $event_id, '_cr8v_event_date', true );
+	if ( preg_match( '/^\d{4}-\d{2}-\d{2}$/', $event_date ) && $event_date < wp_date( 'Y-m-d' ) ) {
+		return cr8v_tix_checkout_error( __( 'This event has already taken place, so tickets are no longer available.', 'cr8v-event-ticketing' ), 400 );
+	}
+
 	// 4. Customer details.
 	$name  = mb_substr( sanitize_text_field( (string) $request->get_param( 'customer_name' ) ), 0, 100 );
 	$email = sanitize_email( (string) $request->get_param( 'customer_email' ) );

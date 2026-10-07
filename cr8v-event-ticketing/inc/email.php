@@ -48,7 +48,7 @@ function cr8v_tix_send_order_confirmation_email( $order_id, $force_resend = fals
 	$event_id       = (int) get_post_meta( $order_id, '_cr8v_order_event_id', true );
 
 	$event = get_post( $event_id );
-	$event_title = $event ? sanitize_text_field( $event->post_title ) : 'Crux Nxtion Event';
+	$event_title = $event ? sanitize_text_field( $event->post_title ) : 'Event';
 
 	$date_raw = (string) get_post_meta( $event_id, '_cr8v_event_date', true );
 	$time_str = sanitize_text_field( (string) get_post_meta( $event_id, '_cr8v_event_time', true ) ) ?: 'Doors Open 19:00';
@@ -114,10 +114,15 @@ function cr8v_tix_send_order_confirmation_email( $order_id, $force_resend = fals
 		}
 	}
 
+	// Brand and addresses come from the site, so this shared plugin works on every Cr8v event site.
+	// A theme or plugin can override them with the cr8v_tix_email_brand, cr8v_tix_email_from filters.
+	$brand         = (string) apply_filters( 'cr8v_tix_email_brand', wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES ) );
+	$support_email = sanitize_email( (string) apply_filters( 'cr8v_tix_email_from', get_option( 'admin_email' ) ) );
+
 	$order_ref = strtoupper( substr( $order_token, 4, 8 ) );
 	$subject   = sprintf( 'Your Tickets: %s (Order #%s)', $event_title, $order_ref );
 
-	// Clean, responsive email template styled with Crux dark editorial aesthetic
+	// Clean, responsive email template styled with the dark editorial aesthetic
 	$html = '
 <!DOCTYPE html>
 <html>
@@ -134,7 +139,7 @@ function cr8v_tix_send_order_confirmation_email( $order_id, $force_resend = fals
 				<!-- Header -->
 				<tr>
 					<td style="padding:28px 32px; background:#0A0F26; border-bottom:1px solid #1E2B5E;">
-						<div style="font-size:12px; font-weight:800; letter-spacing:2px; color:#5B8DEF; text-transform:uppercase;">CRUX NXTION EVENTS</div>
+						<div style="font-size:12px; font-weight:800; letter-spacing:2px; color:#5B8DEF; text-transform:uppercase;">' . esc_html( $brand ) . '</div>
 						<h1 style="margin:8px 0 0 0; font-size:24px; color:#FFFFFF; font-weight:700;">Booking Confirmation</h1>
 					</td>
 				</tr>
@@ -153,7 +158,7 @@ function cr8v_tix_send_order_confirmation_email( $order_id, $force_resend = fals
 									<span style="font-size:16px; font-weight:700; color:#FFFFFF; display:block; margin-bottom:6px;">' . esc_html( $event_title ) . '</span>
 									<strong>Date:</strong> ' . esc_html( $formatted_date ) . '<br>
 									<strong>Time:</strong> ' . esc_html( $time_str ) . '<br>
-									<strong>Venue:</strong> ' . esc_html( $location ?: 'Crux Nxtion Venue' ) . '<br>
+									<strong>Venue:</strong> ' . esc_html( $location ?: 'See the event page' ) . '<br>
 									<strong>Order Ref:</strong> #' . esc_html( $order_ref ) . ' &bull; <strong>Total:</strong> ' . esc_html( $total_str ) . '
 								</td>
 							</tr>
@@ -174,8 +179,8 @@ function cr8v_tix_send_order_confirmation_email( $order_id, $force_resend = fals
 				<!-- Footer -->
 				<tr>
 					<td style="padding:22px 32px; background:#0A0F26; border-top:1px solid #1E2B5E; font-size:12px; color:#7A82A8; text-align:center; line-height:1.6;">
-						Crux Nxtion &bull; Premium Events &amp; Culture<br>
-						Questions or support? Reach us at <a href="mailto:infoandsales@cruxnxtion.co.uk" style="color:#5B8DEF; text-decoration:none;">infoandsales@cruxnxtion.co.uk</a>
+						'  . esc_html( $brand ) . ' &bull; Ticketing<br>
+						Questions or support? Reach us at <a href="mailto:' . esc_attr( $support_email ) . '" style="color:#5B8DEF; text-decoration:none;">' . esc_html( $support_email ) . '</a>
 					</td>
 				</tr>
 			</table>
@@ -185,8 +190,8 @@ function cr8v_tix_send_order_confirmation_email( $order_id, $force_resend = fals
 </body>
 </html>';
 
-	$from_name  = wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES ) ?: 'Crux Nxtion Events';
-	$from_email = 'infoandsales@cruxnxtion.co.uk';
+	$from_name  = wp_specialchars_decode( $brand, ENT_QUOTES );
+	$from_email = $support_email;
 
 	$headers = array(
 		'Content-Type: text/html; charset=UTF-8',
