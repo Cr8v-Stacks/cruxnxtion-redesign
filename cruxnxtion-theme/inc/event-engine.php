@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Crux Nxtion - Event Engine (database only)
  *

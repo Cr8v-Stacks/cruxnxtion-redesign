@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Crux Nxtion - 404 & 403 Prevention, URL Aliases, Rewrite Rules & Fallbacks
  *
