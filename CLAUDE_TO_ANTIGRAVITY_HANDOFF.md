@@ -121,3 +121,28 @@ Antigravity has resolved the routing bugs and completed **Phase 0 (Data-Driven E
 
 ### 6.4 Status & Ready for Claude's Audit
 Phase 0 is complete and ready for Claude's audit against Part B Section 17. Once verified, we will proceed to **Phase 1: Ticketing Engine Plugin (`cr8v-event-ticketing`)**.
+
+## 7. Claude audit of Phase 0 (7 Oct 2026): NOT PASSED, fixes required before Phase 1
+
+Verified by Claude: GET `/`, `/events/`, `/event/dance-out-2023/` return 200; `/nonexistent-page-xyz/` and `/event/nonexistent-event-slug/` return 404 with the full body (curl, status and size checked); `/event/lasgidi-mainland-party-ijgb-edition/` 301-redirects to the canonical slug; no new PHP log lines. Correction to section 2b: the "connection dropped" on real 404s seen from PowerShell's `Invoke-WebRequest` was not reproducible with curl, so it may have been a test-tool artifact. Treat the 404 behaviour as working.
+
+Not verified by Claude: visual fidelity against the design, the database contents (events 13029-13036), `php -l` (no PHP on Claude's PATH).
+
+### 7.1 Blockers (the client cannot do what he asked for)
+1. **No admin screen for event fields.** The only meta box in the repo is for `inquiry` (`crux-nxtion-core.php:188`). No event meta box, no `save_post_event`. The client can edit title, excerpt and content only. Date, time, venue, category, badge and so on exist only because they were written to the database by script.
+2. **A new event added by the client never appears in the listings.** `crux_get_all_events()` (`inc/event-engine.php:310`) only includes an event if its slug is in the hardcoded catalog, or it has `_cr8v_event_hero_blob`, or `_crux_event_date` meta. A client-created event has none of these, so it is silently dropped from the grid and the homepage.
+3. **The hardcoded catalog overrides admin control.** (a) The router (`prevent-errors.php` 2A) and `crux_get_event_data()` serve a catalog event even if its post is trashed or a draft, so an event cannot be removed. (b) Clearing a field in admin falls back to the catalog text. (c) If all events are deleted, the 8 catalog events reappear (`event-engine.php:321`).
+4. **Images are design blob IDs, not the Media Library.** Hero and gallery come from `_cr8v_event_hero_blob` / `_cr8v_event_gallery` blob IDs. The featured image is ignored, so the client cannot give an event its own photo.
+5. **Ordering is `menu_order`, not date.** New events get `menu_order` 0, and there is no upcoming/past split.
+
+### 7.2 Security and quality
+6. **Escaping needs a full pass.** Seen: `single-event.php:914` echoes `crux_get_blob_url()` into `src` without `esc_url()`. Badge background/colour and rotation come from meta into inline styles (verify, validate as hex colour and number-plus-`deg`). Eventbrite URL must go through `esc_url()` with an `http(s)` check. Descriptions must stay escaped.
+7. **The "shared database" filter (line 310) is a development workaround and must not ship.** Production sites have separate databases. It also causes blocker 2.
+8. Use `wp_date()` and the site timezone, not PHP `date()`. Store the date as `YYYY-MM-DD` and validate it.
+
+### 7.3 Required changes
+- Build the **event details meta box in the new shared plugin `cr8v-event-ticketing`** (not the theme): fields for date, time, venue, location, category, Eventbrite/booking URL, badge colours (or a fixed preset select), with nonce, `current_user_can('edit_post')`, autosave guard, sanitising and validation, `_cr8v_*` keys only.
+- Use the **featured image** for the hero and a Media Library picker for the gallery. Keep blob IDs only as a legacy fallback for the seeded events.
+- Make the catalog a **one-time seeding script** (create the posts and meta), not a runtime fallback. Remove the fallback in `crux_get_event_data()`, `crux_get_all_events()` and the router. A trashed or draft event must 404.
+- Remove the line-310 filter. Order by event date, add an upcoming/past split.
+- Then send it back to Claude for re-audit (checklist in Part B section 17). Phase 1 starts only after this passes.
