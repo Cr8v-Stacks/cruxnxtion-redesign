@@ -29,6 +29,7 @@ header( 'Referrer-Policy: no-referrer' );
 // -----------------------------------------------------------------------------
 $checkin_message = '';
 $checkin_status  = '';
+$staff_landing_url = function_exists( 'cr8v_tix_staff_landing_url' ) ? cr8v_tix_staff_landing_url() : home_url( '/booking-confirmation/' );
 
 if ( 'POST' === ( $_SERVER['REQUEST_METHOD'] ?? '' ) && isset( $_POST['cr8v_do_checkin'] ) ) {
 	$p_code  = cr8v_tix_normalize_ticket_code( sanitize_text_field( wp_unslash( $_POST['ticket_code'] ?? '' ) ) );
@@ -216,6 +217,7 @@ if ( ( ! empty( $req_ticket_code ) && ! empty( $req_tix_secret ) ) || $staff_loo
     }
     .conf-container { padding: 16px 12px 48px !important; }
     .conf-card { padding: 20px 14px !important; border-radius: 12px !important; margin-bottom: 18px !important; }
+    .staff-result-card { padding: 20px 14px !important; }
     h1.bebas, .conf-card h1.bebas { font-size: 26px !important; line-height: 1.1 !important; }
     .door-verify-box { padding: 14px 12px !important; max-width: 100% !important; width: 100% !important; box-sizing: border-box !important; }
     .door-verify-box > div { display: flex !important; flex-direction: column !important; gap: 4px !important; margin-bottom: 12px !important; }
@@ -346,7 +348,7 @@ if ( 'verify_ticket' === $view_mode ) :
 			<span style="font-size:13px; color:#5B8DEF; font-weight:700;">
 				✓ <?php esc_html_e( 'You are logged in as door staff.', 'cruxnxtion' ); ?>
 			</span>
-			<a href="<?php echo esc_url( home_url( '/booking-confirmation/' ) ); ?>" style="font-size:13px; color:#D5D9EA; text-decoration:underline; font-weight:600;">
+			<a href="<?php echo esc_url( $staff_landing_url ); ?>" style="font-size:13px; color:#D5D9EA; text-decoration:underline; font-weight:600;">
 				&larr; <?php esc_html_e( 'Back to Door Staff Check-In', 'cruxnxtion' ); ?>
 			</a>
 		</div>
@@ -354,36 +356,156 @@ if ( 'verify_ticket' === $view_mode ) :
 
 	<div class="conf-card" style="text-align:center;">
 		<?php if ( ! $ticket_found && ( $is_secret_valid || $staff_lookup ) ) : ?>
-			<div style="display:inline-block; width:64px; height:64px; border-radius:50%; background:rgba(186,0,0,0.2); border:2px solid #BA0000; line-height:64px; font-size:28px; margin-bottom:18px;">✕</div>
-			<div class="eyebrow" style="color:#FF2E3D;"><?php esc_html_e( 'DO NOT ADMIT', 'cruxnxtion' ); ?></div>
-			<h1 class="bebas" style="font-size:36px; margin:10px 0; color:#FFFFFF;"><?php esc_html_e( 'TICKET NOT FOUND', 'cruxnxtion' ); ?></h1>
-			<p style="font-size:15px; color:#A3A9C8; max-width:500px; margin:0 auto 20px; line-height:1.6;">
-				<?php esc_html_e( 'No ticket with this code exists. Check the code and try again. If it is correct, this is not a valid ticket.', 'cruxnxtion' ); ?>
-			</p>
-		<?php elseif ( ! $is_secret_valid ) : ?>
-			<div style="display:inline-block; width:64px; height:64px; border-radius:50%; background:rgba(186,0,0,0.2); border:2px solid #BA0000; line-height:64px; font-size:28px; margin-bottom:18px;">✕</div>
-			<div class="eyebrow" style="color:#FF2E3D;"><?php esc_html_e( 'AUTHENTICATION FAILED', 'cruxnxtion' ); ?></div>
-			<h1 class="bebas" style="font-size:36px; margin:10px 0; color:#FFFFFF;"><?php esc_html_e( 'INVALID TICKET TOKEN', 'cruxnxtion' ); ?></h1>
-			<p style="font-size:15px; color:#A3A9C8; max-width:500px; margin:0 auto 20px; line-height:1.6;">
-				<?php esc_html_e( 'The ticket cryptographic secret does not match. This ticket pass is invalid or has been tampered with.', 'cruxnxtion' ); ?>
-			</p>
-		<?php elseif ( ! empty( $tix_record['void'] ) ) : ?>
-			<div style="display:inline-block; width:64px; height:64px; border-radius:50%; background:rgba(220,53,69,0.2); border:2px solid #dc3545; line-height:64px; font-size:28px; margin-bottom:18px;">⛔</div>
-			<div class="eyebrow" style="color:#dc3545;"><?php esc_html_e( 'TICKET VOIDED', 'cruxnxtion' ); ?></div>
-			<h1 class="bebas" style="font-size:36px; margin:10px 0; color:#FFFFFF;"><?php esc_html_e( 'TICKET REFUNDED OR CANCELLED', 'cruxnxtion' ); ?></h1>
-			<p style="font-size:15px; color:#A3A9C8; max-width:500px; margin:0 auto; line-height:1.6;">
-				<?php esc_html_e( 'This ticket was refunded or voided. It is no longer valid for venue entry.', 'cruxnxtion' ); ?>
-			</p>
-		<?php else : ?>
-			<?php
-			$is_checked_in = ! empty( $tix_record['checked_in'] );
-			?>
-			<div style="display:inline-block; width:64px; height:64px; border-radius:50%; background:<?php echo $is_checked_in ? 'rgba(255,193,7,0.2)' : 'rgba(40,167,69,0.2)'; ?>; border:2px solid <?php echo $is_checked_in ? '#ffc107' : '#28a745'; ?>; line-height:64px; font-size:28px; margin-bottom:18px;">
-				<?php echo $is_checked_in ? '⚠️' : '✓'; ?>
+			<div class="staff-result-card" style="border:2px solid #dc3545; background:#1A0709; border-radius:14px; padding:28px 20px; box-shadow:0 4px 24px rgba(220,53,69,0.15);">
+				<div style="display:inline-block; width:80px; height:80px; border-radius:50%; background:rgba(220,53,69,0.2); border:2px solid #dc3545; line-height:80px; font-size:36px; margin-bottom:18px; color:#FF2E3D;">✕</div>
+				<div class="eyebrow" style="color:#FF2E3D; font-size:12px; letter-spacing:2px;"><?php esc_html_e( 'DO NOT ADMIT', 'cruxnxtion' ); ?></div>
+				<h1 class="bebas" style="font-size:42px; margin:10px 0; color:#FFFFFF;"><?php esc_html_e( 'TICKET NOT FOUND', 'cruxnxtion' ); ?></h1>
+				<div style="background:rgba(220,53,69,0.18); border-left:4px solid #dc3545; border-radius:6px; padding:14px 16px; margin:18px auto 24px; max-width:520px; text-align:left; font-size:14px; color:#F4F5FA; line-height:1.5;">
+					<strong style="color:#FF2E3D;"><?php esc_html_e( 'Reason:', 'cruxnxtion' ); ?></strong>
+					<?php
+					if ( '' !== $ticket_raw ) {
+						/* translators: %s: ticket code string */
+						echo ' ' . sprintf( esc_html__( 'No ticket with code "%s" exists in the database. Check the code and try again. If it is correct, this is not a valid ticket.', 'cruxnxtion' ), esc_html( $ticket_raw ) );
+					} else {
+						esc_html_e( 'No ticket with this code exists. Check the code and try again. If it is correct, this is not a valid ticket.', 'cruxnxtion' );
+					}
+					?>
+				</div>
+				<?php if ( current_user_can( 'edit_event_orders' ) ) : ?>
+					<a href="<?php echo esc_url( $staff_landing_url ); ?>" class="bx no-print" style="display:block; width:100%; max-width:400px; margin:0 auto; background:#dc3545; color:#FFFFFF; font-weight:700; font-size:15px; padding:15px 24px; min-height:48px; box-sizing:border-box; text-decoration:none; text-transform:uppercase; --sl:8px;">
+						<?php esc_html_e( 'Scan next →', 'cruxnxtion' ); ?>
+					</a>
+				<?php endif; ?>
 			</div>
+		<?php elseif ( ! $is_secret_valid ) : ?>
+			<div class="staff-result-card" style="border:2px solid #dc3545; background:#1A0709; border-radius:14px; padding:28px 20px; box-shadow:0 4px 24px rgba(220,53,69,0.15);">
+				<div style="display:inline-block; width:80px; height:80px; border-radius:50%; background:rgba(220,53,69,0.2); border:2px solid #dc3545; line-height:80px; font-size:36px; margin-bottom:18px; color:#FF2E3D;">✕</div>
+				<div class="eyebrow" style="color:#FF2E3D; font-size:12px; letter-spacing:2px;"><?php esc_html_e( 'AUTHENTICATION FAILED', 'cruxnxtion' ); ?></div>
+				<h1 class="bebas" style="font-size:42px; margin:10px 0; color:#FFFFFF;"><?php esc_html_e( 'INVALID TICKET TOKEN', 'cruxnxtion' ); ?></h1>
+				<div style="background:rgba(220,53,69,0.18); border-left:4px solid #dc3545; border-radius:6px; padding:14px 16px; margin:18px auto 24px; max-width:520px; text-align:left; font-size:14px; color:#F4F5FA; line-height:1.5;">
+					<strong style="color:#FF2E3D;"><?php esc_html_e( 'Reason:', 'cruxnxtion' ); ?></strong>
+					<?php esc_html_e( 'The ticket cryptographic secret does not match. This ticket pass is invalid or has been tampered with.', 'cruxnxtion' ); ?>
+				</div>
+				<?php if ( current_user_can( 'edit_event_orders' ) ) : ?>
+					<a href="<?php echo esc_url( $staff_landing_url ); ?>" class="bx no-print" style="display:block; width:100%; max-width:400px; margin:0 auto; background:#dc3545; color:#FFFFFF; font-weight:700; font-size:15px; padding:15px 24px; min-height:48px; box-sizing:border-box; text-decoration:none; text-transform:uppercase; --sl:8px;">
+						<?php esc_html_e( 'Scan next →', 'cruxnxtion' ); ?>
+					</a>
+				<?php endif; ?>
+			</div>
+		<?php elseif ( ! empty( $tix_record['void'] ) ) : ?>
+			<div class="staff-result-card" style="border:2px solid #dc3545; background:#1A0709; border-radius:14px; padding:28px 20px; box-shadow:0 4px 24px rgba(220,53,69,0.15);">
+				<div style="display:inline-block; width:80px; height:80px; border-radius:50%; background:rgba(220,53,69,0.2); border:2px solid #dc3545; line-height:80px; font-size:36px; margin-bottom:18px;">⛔</div>
+				<div class="eyebrow" style="color:#dc3545; font-size:12px; letter-spacing:2px;"><?php esc_html_e( 'TICKET VOIDED', 'cruxnxtion' ); ?></div>
+				<h1 class="bebas" style="font-size:42px; margin:10px 0; color:#FFFFFF;"><?php esc_html_e( 'TICKET REFUNDED OR CANCELLED', 'cruxnxtion' ); ?></h1>
+				<div style="background:rgba(220,53,69,0.18); border-left:4px solid #dc3545; border-radius:6px; padding:14px 16px; margin:18px auto 24px; max-width:520px; text-align:left; font-size:14px; color:#F4F5FA; line-height:1.5;">
+					<strong style="color:#FF2E3D;"><?php esc_html_e( 'Reason:', 'cruxnxtion' ); ?></strong>
+					<?php esc_html_e( 'This ticket was refunded or voided. It is no longer valid for venue entry.', 'cruxnxtion' ); ?>
+				</div>
+				<?php if ( current_user_can( 'edit_event_orders' ) ) : ?>
+					<a href="<?php echo esc_url( $staff_landing_url ); ?>" class="bx no-print" style="display:block; width:100%; max-width:400px; margin:0 auto; background:#dc3545; color:#FFFFFF; font-weight:700; font-size:15px; padding:15px 24px; min-height:48px; box-sizing:border-box; text-decoration:none; text-transform:uppercase; --sl:8px;">
+						<?php esc_html_e( 'Scan next →', 'cruxnxtion' ); ?>
+					</a>
+				<?php endif; ?>
+			</div>
+		<?php elseif ( 'success' === $checkin_status ) : ?>
+			<?php
+			$checkin_time_display   = ! empty( $tix_record['checked_in_at'] ) ? $tix_record['checked_in_at'] : current_time( 'mysql' );
+			$checkin_time_formatted = ( 'Door' !== $checkin_time_display && false !== strtotime( $checkin_time_display ) ) ? wp_date( 'g:i A, j F Y', strtotime( $checkin_time_display ) ) : $checkin_time_display;
+			$attendee_display       = ! empty( $tix_record['attendee_name'] ) ? $tix_record['attendee_name'] : 'Guest';
+			$tier_display           = ! empty( $tix_record['tier_name'] ) ? $tix_record['tier_name'] : 'General';
+			?>
+			<div class="staff-result-card" style="border:2px solid #28a745; background:#071D0F; border-radius:14px; padding:28px 20px; box-shadow:0 4px 24px rgba(40,167,69,0.15);">
+				<div style="display:inline-block; width:80px; height:80px; border-radius:50%; background:rgba(40,167,69,0.25); border:2px solid #28a745; line-height:80px; font-size:36px; margin-bottom:18px; color:#28a745;">✓</div>
+				<div class="eyebrow" style="color:#28a745; font-size:12px; letter-spacing:2px;"><?php esc_html_e( 'DOOR CHECK-IN SUCCESSFUL', 'cruxnxtion' ); ?></div>
+				<h1 class="bebas" style="font-size:46px; margin:8px 0 6px 0; color:#FFFFFF;"><?php esc_html_e( 'CHECKED IN', 'cruxnxtion' ); ?></h1>
+				<div style="font-size:14px; color:#A3A9C8; margin-bottom:20px; word-break:break-word; line-height:1.5;">
+					<?php echo esc_html( $v_event_title ); ?>
+				</div>
 
-			<div class="eyebrow" style="color:<?php echo $is_checked_in ? '#ffc107' : '#28a745'; ?>;">
-				<?php echo $is_checked_in ? esc_html__( 'ALREADY CHECKED IN', 'cruxnxtion' ) : esc_html__( 'OFFICIAL VERIFIED PASS', 'cruxnxtion' ); ?>
+				<div class="door-verify-box" style="background:#0D1330; border:1px solid #1E2B5E; border-radius:12px; padding:20px; max-width:520px; margin:0 auto 24px; text-align:left; box-sizing:border-box;">
+					<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid #1E2B5E; padding-bottom:10px;">
+						<span style="color:#7A82A8; font-size:13px;"><?php esc_html_e( 'Attendee Name:', 'cruxnxtion' ); ?></span>
+						<strong style="color:#FFFFFF; font-size:15px;"><?php echo esc_html( $attendee_display ); ?></strong>
+					</div>
+					<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid #1E2B5E; padding-bottom:10px;">
+						<span style="color:#7A82A8; font-size:13px;"><?php esc_html_e( 'Ticket Tier:', 'cruxnxtion' ); ?></span>
+						<strong style="color:#5B8DEF; font-size:14px;"><?php echo esc_html( $tier_display ); ?></strong>
+					</div>
+					<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid #1E2B5E; padding-bottom:10px;">
+						<span style="color:#7A82A8; font-size:13px;"><?php esc_html_e( 'Check-In Time:', 'cruxnxtion' ); ?></span>
+						<strong style="color:#28a745; font-size:14px;"><?php echo esc_html( $checkin_time_formatted ); ?></strong>
+					</div>
+					<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid #1E2B5E; padding-bottom:10px;">
+						<span style="color:#7A82A8; font-size:13px;"><?php esc_html_e( 'Pass Code:', 'cruxnxtion' ); ?></span>
+						<code style="color:#FFFFFF; font-weight:700;"><?php echo esc_html( $req_ticket_code ); ?></code>
+					</div>
+					<div style="display:flex; justify-content:space-between;">
+						<span style="color:#7A82A8; font-size:13px;"><?php esc_html_e( 'Gate Status:', 'cruxnxtion' ); ?></span>
+						<span style="color:#28a745; font-weight:700;"><?php esc_html_e( 'ADMITTED • PASS VERIFIED', 'cruxnxtion' ); ?></span>
+					</div>
+				</div>
+
+				<a href="<?php echo esc_url( $staff_landing_url ); ?>" class="bx no-print" style="display:block; width:100%; max-width:400px; margin:0 auto; background:#28a745; color:#FFFFFF; font-weight:700; font-size:16px; padding:16px 24px; min-height:48px; box-sizing:border-box; text-decoration:none; text-transform:uppercase; --sl:8px;">
+					<?php esc_html_e( 'Scan next →', 'cruxnxtion' ); ?>
+				</a>
+			</div>
+		<?php elseif ( ! empty( $tix_record['checked_in'] ) ) : ?>
+			<?php
+			$checkin_time_display   = ! empty( $tix_record['checked_in_at'] ) ? $tix_record['checked_in_at'] : 'Door';
+			$checkin_time_formatted = ( 'Door' !== $checkin_time_display && false !== strtotime( $checkin_time_display ) ) ? wp_date( 'g:i A, j F Y', strtotime( $checkin_time_display ) ) : $checkin_time_display;
+			$attendee_display       = ! empty( $tix_record['attendee_name'] ) ? $tix_record['attendee_name'] : 'Guest';
+			$tier_display           = ! empty( $tix_record['tier_name'] ) ? $tix_record['tier_name'] : 'General';
+			?>
+			<div class="staff-result-card" style="border:2px solid #ffc107; background:#1C1604; border-radius:14px; padding:28px 20px; box-shadow:0 4px 24px rgba(255,193,7,0.15);">
+				<div style="display:inline-block; width:80px; height:80px; border-radius:50%; background:rgba(255,193,7,0.2); border:2px solid #ffc107; line-height:80px; font-size:36px; margin-bottom:18px;">⚠️</div>
+				<div class="eyebrow" style="color:#ffc107; font-size:12px; letter-spacing:2px;"><?php esc_html_e( 'DO NOT ADMIT • DUPLICATE ENTRY', 'cruxnxtion' ); ?></div>
+				<h1 class="bebas" style="font-size:44px; margin:8px 0 6px 0; color:#FFFFFF;"><?php esc_html_e( 'ALREADY CHECKED IN', 'cruxnxtion' ); ?></h1>
+				<div style="font-size:14px; color:#A3A9C8; margin-bottom:18px; word-break:break-word; line-height:1.5;">
+					<?php echo esc_html( $v_event_title ); ?>
+				</div>
+
+				<div style="background:rgba(255,193,7,0.18); border-left:4px solid #ffc107; border-radius:6px; padding:14px 16px; margin:0 auto 20px; max-width:520px; text-align:left; font-size:14px; color:#F4F5FA; line-height:1.5;">
+					<strong style="color:#ffc107;"><?php esc_html_e( 'Reason:', 'cruxnxtion' ); ?></strong>
+					<?php
+					/* translators: %s: check-in timestamp */
+					echo ' ' . sprintf( esc_html__( 'This ticket was already checked in at %s. Do not admit a duplicate entry.', 'cruxnxtion' ), esc_html( $checkin_time_formatted ) );
+					?>
+				</div>
+
+				<div class="door-verify-box" style="background:#0D1330; border:1px solid #1E2B5E; border-radius:12px; padding:20px; max-width:520px; margin:0 auto 24px; text-align:left; box-sizing:border-box;">
+					<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid #1E2B5E; padding-bottom:10px;">
+						<span style="color:#7A82A8; font-size:13px;"><?php esc_html_e( 'Attendee Name:', 'cruxnxtion' ); ?></span>
+						<strong style="color:#FFFFFF; font-size:15px;"><?php echo esc_html( $attendee_display ); ?></strong>
+					</div>
+					<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid #1E2B5E; padding-bottom:10px;">
+						<span style="color:#7A82A8; font-size:13px;"><?php esc_html_e( 'Ticket Tier:', 'cruxnxtion' ); ?></span>
+						<strong style="color:#5B8DEF; font-size:14px;"><?php echo esc_html( $tier_display ); ?></strong>
+					</div>
+					<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid #1E2B5E; padding-bottom:10px;">
+						<span style="color:#7A82A8; font-size:13px;"><?php esc_html_e( 'Checked In At:', 'cruxnxtion' ); ?></span>
+						<strong style="color:#ffc107; font-size:14px;"><?php echo esc_html( $checkin_time_formatted ); ?></strong>
+					</div>
+					<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid #1E2B5E; padding-bottom:10px;">
+						<span style="color:#7A82A8; font-size:13px;"><?php esc_html_e( 'Pass Code:', 'cruxnxtion' ); ?></span>
+						<code style="color:#FFFFFF; font-weight:700;"><?php echo esc_html( $req_ticket_code ); ?></code>
+					</div>
+					<div style="display:flex; justify-content:space-between;">
+						<span style="color:#7A82A8; font-size:13px;"><?php esc_html_e( 'Gate Status:', 'cruxnxtion' ); ?></span>
+						<span style="color:#ffc107; font-weight:700;"><?php echo sprintf( esc_html__( 'Already Checked In (%s)', 'cruxnxtion' ), esc_html( $checkin_time_formatted ) ); ?></span>
+					</div>
+				</div>
+
+				<?php if ( current_user_can( 'edit_event_orders' ) ) : ?>
+					<a href="<?php echo esc_url( $staff_landing_url ); ?>" class="bx no-print" style="display:block; width:100%; max-width:400px; margin:0 auto; background:#ffc107; color:#0A0F26; font-weight:700; font-size:16px; padding:16px 24px; min-height:48px; box-sizing:border-box; text-decoration:none; text-transform:uppercase; --sl:8px;">
+						<?php esc_html_e( 'Scan next →', 'cruxnxtion' ); ?>
+					</a>
+				<?php endif; ?>
+			</div>
+		<?php else : ?>
+			<div style="display:inline-block; width:72px; height:72px; border-radius:50%; background:rgba(40,167,69,0.2); border:2px solid #28a745; line-height:72px; font-size:32px; margin-bottom:18px; color:#28a745;">✓</div>
+
+			<div class="eyebrow" style="color:#28a745;">
+				<?php esc_html_e( 'OFFICIAL VERIFIED PASS', 'cruxnxtion' ); ?>
 			</div>
 
 			<h1 class="bebas" style="font-size:38px; margin:10px 0 6px 0; color:#FFFFFF;"><?php echo esc_html( $v_event_title ); ?></h1>
@@ -406,32 +528,22 @@ if ( 'verify_ticket' === $view_mode ) :
 				</div>
 				<div style="display:flex; justify-content:space-between;">
 					<span style="color:#7A82A8; font-size:13px;"><?php esc_html_e( 'Gate Status:', 'cruxnxtion' ); ?></span>
-					<?php if ( $is_checked_in ) : ?>
-						<span style="color:#ffc107; font-weight:700;"><?php echo sprintf( esc_html__( 'Checked in at %s', 'cruxnxtion' ), esc_html( $tix_record['checked_in_at'] ?? 'Door' ) ); ?></span>
-					<?php else : ?>
-						<span style="color:#28a745; font-weight:700;"><?php esc_html_e( 'VALID FOR ENTRY', 'cruxnxtion' ); ?></span>
-					<?php endif; ?>
+					<span style="color:#28a745; font-weight:700;"><?php esc_html_e( 'VALID FOR ENTRY', 'cruxnxtion' ); ?></span>
 				</div>
 			</div>
 
 			<!-- Staff Door Check-In Action Button -->
 			<?php if ( current_user_can( 'edit_event_orders' ) || current_user_can( 'manage_options' ) ) : ?>
-				<?php if ( ! $is_checked_in ) : ?>
-					<form method="post" style="max-width:400px; margin:0 auto;" class="no-print">
-						<?php wp_nonce_field( 'cr8v_checkin_' . $req_ticket_code, '_cr8v_checkin_nonce' ); ?>
-						<input type="hidden" name="ticket_code" value="<?php echo esc_attr( $req_ticket_code ); ?>">
-						<input type="hidden" name="ticket_secret" value="<?php echo esc_attr( $req_tix_secret ); ?>">
-						<input type="hidden" name="order_id" value="<?php echo esc_attr( $order_match ? $order_match->ID : 0 ); ?>">
-						<input type="hidden" name="cr8v_do_checkin" value="1">
-						<button type="submit" class="bx" style="width:100%; background:#28a745; color:#FFFFFF; font-weight:700; font-size:16px; padding:16px 24px; --sl:8px;">
-							<?php esc_html_e( '✓ CONFIRM DOOR CHECK-IN', 'cruxnxtion' ); ?>
-						</button>
-					</form>
-				<?php else : ?>
-					<div style="color:#A3A9C8; font-size:13px;" class="no-print">
-						<?php esc_html_e( 'Pass already scanned by door staff.', 'cruxnxtion' ); ?>
-					</div>
-				<?php endif; ?>
+				<form method="post" style="max-width:400px; margin:0 auto;" class="no-print">
+					<?php wp_nonce_field( 'cr8v_checkin_' . $req_ticket_code, '_cr8v_checkin_nonce' ); ?>
+					<input type="hidden" name="ticket_code" value="<?php echo esc_attr( $req_ticket_code ); ?>">
+					<input type="hidden" name="ticket_secret" value="<?php echo esc_attr( $req_tix_secret ); ?>">
+					<input type="hidden" name="order_id" value="<?php echo esc_attr( $order_match ? $order_match->ID : 0 ); ?>">
+					<input type="hidden" name="cr8v_do_checkin" value="1">
+					<button type="submit" class="bx" style="width:100%; min-height:48px; display:block; background:#28a745; color:#FFFFFF; font-weight:700; font-size:16px; padding:15px 24px; --sl:8px; box-sizing:border-box;">
+						<?php esc_html_e( '✓ CONFIRM DOOR CHECK-IN', 'cruxnxtion' ); ?>
+					</button>
+				</form>
 			<?php else : ?>
 				<p style="font-size:12.5px; color:#7A82A8;">
 					<?php esc_html_e( 'Door staff: log in to your account to record check-in attendance.', 'cruxnxtion' ); ?>
@@ -665,13 +777,13 @@ else :
 				</p>
 			</div>
 
-			<form method="GET" action="<?php echo esc_url( home_url( '/booking-confirmation/' ) ); ?>" style="max-width:540px;">
-				<label for="cr8v_staff_tix_input" style="display:block; font-size:12.5px; font-weight:700; color:#D5D9EA; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px;">
+			<form method="GET" action="<?php echo esc_url( $staff_landing_url ); ?>" style="max-width:540px; width:100%;">
+				<label for="cr8v_staff_tix_input" style="display:block; font-size:12.5px; font-weight:700; color:#D5D9EA; margin-bottom:10px; text-transform:uppercase; letter-spacing:0.5px;">
 					<?php esc_html_e( 'Manual Ticket Code Lookup:', 'cruxnxtion' ); ?>
 				</label>
-				<div style="display:flex; gap:10px; flex-wrap:wrap;">
-					<input type="text" id="cr8v_staff_tix_input" name="cr8v_ticket" placeholder="TIX-XXXXXXXXXXXX" required style="flex:1; min-width:220px; padding:12px 16px; background:#0A0F26; border:1.5px solid #1E2B5E; border-radius:6px; color:#FFFFFF; font-family:monospace; font-size:15px; font-weight:600; text-transform:uppercase;" autocomplete="off" autocorrect="off" autocapitalize="characters">
-					<button type="submit" class="bx" style="background:#002671; border:1px solid #5B8DEF; color:#FFFFFF; font-weight:700; font-size:14px; padding:12px 24px; --sl:8px;">
+				<div style="display:flex; flex-direction:column; gap:12px; width:100%;">
+					<input type="text" id="cr8v_staff_tix_input" name="cr8v_ticket" placeholder="TIX-XXXXXXXXXXXX" required style="width:100%; min-height:48px; height:52px; padding:12px 16px; background:#0A0F26; border:1.5px solid #1E2B5E; border-radius:6px; color:#FFFFFF; font-family:monospace; font-size:16px; font-weight:600; text-transform:uppercase; box-sizing:border-box;" autocomplete="off" autocorrect="off" autocapitalize="characters" inputmode="text" spellcheck="false">
+					<button type="submit" class="bx" style="width:100%; min-height:48px; display:block; background:#002671; border:1px solid #5B8DEF; color:#FFFFFF; font-weight:700; font-size:15px; padding:14px 24px; --sl:8px; box-sizing:border-box;">
 						<?php esc_html_e( 'Look Up Ticket →', 'cruxnxtion' ); ?>
 					</button>
 				</div>
