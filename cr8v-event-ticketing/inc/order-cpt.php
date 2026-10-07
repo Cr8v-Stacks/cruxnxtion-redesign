@@ -110,7 +110,7 @@ function cr8v_tix_render_order_columns( $column, $post_id ) {
 			$name  = get_post_meta( $post_id, '_cr8v_order_customer_name', true );
 			$email = get_post_meta( $post_id, '_cr8v_order_customer_email', true );
 			$phone = get_post_meta( $post_id, '_cr8v_order_customer_phone', true );
-			echo '<strong>' . esc_html( $name ?: '&mdash;' ) . '</strong><br>';
+			echo '<strong>' . esc_html( $name ?: '—' ) . '</strong><br>';
 			if ( $email ) {
 				echo '<a href="mailto:' . esc_attr( $email ) . '">' . esc_html( $email ) . '</a>';
 			}
@@ -210,6 +210,25 @@ function cr8v_tix_render_order_details_meta_box( $post ) {
 			<?php endif; ?>
 			<?php if ( $stripe_pi ) : ?>
 				<p><strong><?php esc_html_e( 'Payment Intent:', 'cr8v-event-ticketing' ); ?></strong> <code><?php echo esc_html( $stripe_pi ); ?></code></p>
+			<?php endif; ?>
+			<?php
+			$email_sent = get_post_meta( $post->ID, '_cr8v_order_email_sent', true );
+			?>
+			<p>
+				<strong><?php esc_html_e( 'Confirmation Email:', 'cr8v-event-ticketing' ); ?></strong>
+				<?php if ( $email_sent ) : ?>
+					<span style="color:#28a745; font-weight:700;"><?php echo sprintf( esc_html__( 'Sent on %s', 'cr8v-event-ticketing' ), esc_html( $email_sent ) ); ?></span>
+				<?php else : ?>
+					<span style="color:#6c757d;"><?php esc_html_e( 'Not sent yet', 'cr8v-event-ticketing' ); ?></span>
+				<?php endif; ?>
+			</p>
+			<?php if ( 'completed' === $status ) : ?>
+				<form method="post" style="margin-top:10px;">
+					<?php wp_nonce_field( 'cr8v_resend_order_' . $post->ID, '_cr8v_resend_nonce' ); ?>
+					<input type="hidden" name="order_id" value="<?php echo esc_attr( $post->ID ); ?>">
+					<input type="hidden" name="cr8v_resend_order_email" value="1">
+					<button type="submit" class="button button-secondary button-small"><?php esc_html_e( 'Resend Confirmation Email', 'cr8v-event-ticketing' ); ?></button>
+				</form>
 			<?php endif; ?>
 		</div>
 	</div>

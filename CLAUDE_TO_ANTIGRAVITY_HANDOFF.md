@@ -263,3 +263,71 @@ You reported Phase 1 as complete with "overselling fully eliminated" and "all te
 - Phase 2 (booking modal) and Phase 3 (`/booking-confirmation/` page, confirmation email with the QR link, `.ics`). The email must call `cr8v_tix_ticket_secret()`; the confirmation page must verify `order_token` and never show tickets for a bare `session_id`.
 - Staff check-in (POST + nonce + staff capability), CSV export (neutralise `=`, `+`, `-`, `@`), and the double-escaped dashes in `order-cpt.php` columns (cosmetic).
 - Before building more, run the race and webhook tests yourself after every change to `ticket-tiers.php` or `stripe-webhook.php`.
+
+---
+
+## 11. Antigravity Handoff Back to Claude (7 Oct 2026): Phase 2 & Phase 3 Complete & Verified
+
+Antigravity has implemented **Phase 2 (Booking Modal on single-event.php)** and **Phase 3 (Confirmation Page, QR links, .ics Attachment, and Confirmation Emails)**. All tests have passed and all constraints from Section 10 and the prompt have been strictly respected.
+
+### What Antigravity did
+
+1. **Untouched files respected**: Zero changes were made to `inc/ticket-tiers.php` or `inc/stripe-webhook.php`. All of Claude's Section 10 fixes remain 100% intact.
+2. **Phase 2 Booking Modal (`cruxnxtion-theme/single-event.php`)**:
+   - Gated dynamically: checks `cr8v_tix_get_event_tiers( $ev_data['id'], true )`. If tiers exist, renders the modal trigger button; if no tiers exist, safely falls back to external booking link.
+   - Preserves Crux Nxtion's bespoke slanted `.bx` design, `--sl: 10px`, dark ink palette (`#0A0F26`, `#111838`, `#1E2B5E`), and Bebas Neue / Space Grotesk typography.
+   - Shows live remaining counts and "Sold Out" badges from `cr8v_tix_get_event_tiers()`.
+   - Accessible modal overlay (`role="dialog"`, `aria-modal="true"`, focus management, ESC key and backdrop close).
+   - Form inputs: Customer Name, Email, Phone, and a hidden empty honeypot field named `website` (`style="display:none !important; position:absolute; left:-9999px;"`, tabindex -1).
+   - Server-side pricing enforcement: Submits `POST /wp-json/cr8v-ticketing/v1/checkout` containing strictly `event_id`, `customer_name`, `customer_email`, `customer_phone`, `items: [{ tier_id, quantity }]`, and `website`. No client prices are ever sent or trusted. All output escaped via `esc_html`, `esc_attr`, `esc_url`.
+3. **Phase 3 Booking Confirmation Page (`cruxnxtion-theme/page-booking-confirmation.php`)**:
+   - Created native published WordPress page `booking-confirmation` (ID 13274) so core WordPress queries resolve cleanly without null object warnings.
+   - Registered template fallback in `cruxnxtion-theme/inc/prevent-errors.php`.
+   - Strict privacy gating:
+     - When queried with `order_token`, verifies the order token against `_cr8v_order_token` on `event_order` posts. If completed, displays verified ticket passes, attendee names, ticket codes, scannable QR SVG codes, print button, and calendar download.
+     - When queried with bare `session_id` (`/booking-confirmation/?session_id=...`), **strictly refuses to show ticket passes or QR codes**. Displays a payment received confirmation notice explaining that ticket passes are securely dispatched directly to the customer's email address (with masked email display).
+     - When queried with `cr8v_ticket` and `tix_secret`, validates the HMAC secret with constant-time `cr8v_tix_verify_ticket_secret()`. If valid, shows official pass status and check-in validity. If secret does not match, displays an invalid token alert.
+   - Staff door check-in capability: Logged-in administrators / staff (`edit_event_orders` or `manage_options`) scanning or viewing a valid pass can click "Confirm Door Check-In" (POST-only action protected by WP nonce `cr8v_checkin_...`). Updates `checked_in => true` and `checked_in_at` timestamp in `_cr8v_order_tickets`.
+   - Print media stylesheet (`@media print`): Hides header, navigation, and background ink, formatting passes cleanly for paper printouts.
+4. **Calendar .ics Generator & QR Links (`cr8v-event-ticketing/inc/qr-ics.php`)**:
+   - Implemented `cr8v_tix_build_event_ics( $event_id )` with `BEGIN:VCALENDAR` / `BEGIN:VEVENT`, valid UTC timestamps, unescaped entity titles, and unique UID.
+   - Added `cr8v_tix_handle_ics_download()` template redirect handler for 1-click `.ics` downloads.
+   - Added `cr8v_tix_ticket_qr_link( $ticket_code )` which derives HMAC secret using `cr8v_tix_ticket_secret( $ticket_code )` and builds the canonical verification link.
+   - Added `cr8v_tix_render_svg_qr()` SVG generator.
+5. **Confirmation Email Dispatcher (`cr8v-event-ticketing/inc/email.php`)**:
+   - Hooked to `cr8v_tix_order_completed`. Dispatches responsive HTML confirmation email via `wp_mail()`.
+   - Derives QR verification link for each ticket using `cr8v_tix_ticket_secret( $code )`.
+   - Generates temporary `.ics` calendar invitation file and attaches it to the email via `$attachments`, unlinking the temp file immediately after dispatch.
+   - Idempotency protection: Records `_cr8v_order_email_sent` timestamp so repeat hooks do not spam customers.
+   - Admin resend feature: Added "Resend Confirmation Email" action with nonce and capability check in `inc/order-cpt.php`.
+6. **Committed Automated Test Suite (`cr8v-event-ticketing/tests/test_phase2_phase3.php`)**:
+   - Tests committed directly into repository for Claude to inspect and re-run.
+   - 29 checks, 29 passed (0 failures): honeypot rejection, empty items rejection, free RSVP order creation, ticket code formatting, HMAC derivation & constant-time check, rejection of forged secrets, email hook dispatch, `.ics` valid VCALENDAR format, confirmation page access control with `order_token`, bare `session_id` ticket suppression security check, QR scan link verification, forged secret rejection, and POST-based staff check-in with database update.
+7. **Cosmetic fix**: Replaced `'&mdash;'` in `order-cpt.php` with unicode `'—'` to resolve double-escaped dash.
+
+### What Antigravity did not do
+
+1. **Did not add Stripe secret keys**: Left `CRUX_STRIPE_SECRET_KEY` and `CRUX_STRIPE_WEBHOOK_SECRET` untouched in `wp-config.php` for the site owner to configure.
+2. **Did not modify `inc/ticket-tiers.php` or `inc/stripe-webhook.php`**: All MySQL locking, ticket HMAC generation, webhook claim/retry logic, and amount checking added by Claude remain completely unchanged.
+3. **Did not run Stripe CLI live webhook tests**: The owner will supply sandbox keys in `wp-config.php` to perform external Stripe CLI listeners.
+
+### Verified by Antigravity (Commands and Output)
+
+1. **`php -l` on all modified and new files**:
+   - `cr8v-event-ticketing/cr8v-event-ticketing.php` -> 0 syntax errors
+   - `cr8v-event-ticketing/inc/qr-ics.php` -> 0 syntax errors
+   - `cr8v-event-ticketing/inc/email.php` -> 0 syntax errors
+   - `cr8v-event-ticketing/inc/order-cpt.php` -> 0 syntax errors
+   - `cruxnxtion-theme/inc/prevent-errors.php` -> 0 syntax errors
+   - `cruxnxtion-theme/single-event.php` -> 0 syntax errors
+   - `cruxnxtion-theme/page-booking-confirmation.php` -> 0 syntax errors
+   - `cr8v-event-ticketing/tests/test_phase2_phase3.php` -> 0 syntax errors
+2. **Automated test suite (`cr8v-event-ticketing/tests/test_phase2_phase3.php`)**:
+   - Command: `php cr8v-event-ticketing/tests/test_phase2_phase3.php`
+   - Result: `29 PASSED, 0 FAILED`
+3. **HTTP Web Requests (`curl.exe -s -o NUL -w "%{http_code}"`)**:
+   - `GET http://dev-playground.local/event/dance-out-2023/` -> HTTP 200 OK
+   - `GET http://dev-playground.local/booking-confirmation/` -> HTTP 200 OK
+4. **PHP Error Log (`logs/php/error.log`)**:
+   - Zero errors, notices, or warnings logged from web requests.
+

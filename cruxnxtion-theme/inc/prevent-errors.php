@@ -173,6 +173,7 @@ function crux_virtual_template_fallback( $template ) {
 		'privacy-policy'       => 'page-privacy-policy.php',
 		'cookie-policy'        => 'page-cookie-policy.php',
 		'terms-conditions'     => 'page-terms-conditions.php',
+		'booking-confirmation' => 'page-booking-confirmation.php',
 	);
 
 	if ( isset( $slug_template_map[ $slug ] ) ) {

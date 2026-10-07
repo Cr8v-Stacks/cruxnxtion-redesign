@@ -954,7 +954,17 @@ if ( ! $ev_data ) {
           </div>
         </div>
       </div>
-      <a href="<?php echo !empty($ev_data['eventbrite']) ? esc_url($ev_data['eventbrite']) : esc_url( home_url('/contact/') ); ?>" style="display:block; text-align:center; background:#BA0000; color:#FFFFFF; font-weight:700; font-size:15px; padding:16px 16px 16px 16px; margin-bottom:12px; --sl:10px;" class="bx" <?php echo !empty($ev_data['eventbrite']) ? 'target="_blank" rel="noopener"' : ''; ?>>Reserve Your Spot</a>
+      <?php
+      $event_id    = ! empty( $ev_data['id'] ) ? absint( $ev_data['id'] ) : 0;
+      $event_tiers = ( $event_id && function_exists( 'cr8v_tix_get_event_tiers' ) ) ? cr8v_tix_get_event_tiers( $event_id, true ) : array();
+      $has_tiers   = ! empty( $event_tiers );
+      if ( $has_tiers ) : ?>
+        <button type="button" id="cr8v-open-modal-btn" style="display:block; width:100%; text-align:center; background:#BA0000; color:#FFFFFF; font-weight:700; font-size:15px; padding:16px 16px; margin-bottom:12px; --sl:10px; cursor:pointer;" class="bx">
+          <?php esc_html_e( 'Reserve Your Spot', 'cruxnxtion' ); ?>
+        </button>
+      <?php else : ?>
+        <a href="<?php echo !empty($ev_data['eventbrite']) ? esc_url($ev_data['eventbrite']) : esc_url( home_url('/contact/') ); ?>" style="display:block; text-align:center; background:#BA0000; color:#FFFFFF; font-weight:700; font-size:15px; padding:16px 16px 16px 16px; margin-bottom:12px; --sl:10px;" class="bx" <?php echo !empty($ev_data['eventbrite']) ? 'target="_blank" rel="noopener"' : ''; ?>>Reserve Your Spot</a>
+      <?php endif; ?>
       <a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="display:block; text-align:center; color:#F4F5FA; font-weight:700; font-size:14px; padding:14px 14px 14px 14px; --sl:10px; --bc:#F4F5FA;" class="bx">Ask A Question</a>
     </div>
   </section>
@@ -1052,6 +1062,297 @@ if ( ! $ev_data ) {
 
 
 
+
+<?php if ( ! empty( $has_tiers ) ) : ?>
+<!-- ========================================================================= -->
+<!-- CR8V EVENT TICKETING - SLANTED BOOKING MODAL (PHASE 2)                    -->
+<!-- ========================================================================= -->
+<div id="cr8v-booking-modal" class="cr8v-modal-overlay" style="display:none; position:fixed; inset:0; z-index:99999; background:rgba(5,8,26,0.88); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); overflow-y:auto; padding:24px 16px; align-items:center; justify-content:center;" role="dialog" aria-modal="true" aria-labelledby="cr8v-modal-title">
+  <div class="cr8v-modal-dialog" style="position:relative; width:100%; max-width:600px; background:#111838; border:1.5px solid #1E2B5E; border-radius:16px; padding:32px 28px; box-shadow:0 24px 50px rgba(0,0,0,0.6); margin:auto;">
+    <!-- Close button -->
+    <button type="button" id="cr8v-close-modal-btn" aria-label="<?php esc_attr_e( 'Close booking modal', 'cruxnxtion' ); ?>" style="position:absolute; top:20px; right:20px; background:rgba(255,255,255,0.06); border:1px solid #1E2B5E; border-radius:50%; width:36px; height:36px; color:#F4F5FA; font-size:18px; line-height:34px; text-align:center; cursor:pointer;">✕</button>
+
+    <!-- Modal Header -->
+    <div style="margin-bottom:24px; padding-right:40px;">
+      <span class="eyebrow" style="color:#5B8DEF; font-size:11px;"><?php esc_html_e( 'SECURE TICKETING', 'cruxnxtion' ); ?></span>
+      <h2 id="cr8v-modal-title" class="bebas" style="font-size:32px; color:#FFFFFF; margin:6px 0 4px 0;"><?php echo esc_html( $ev_data['title'] ); ?></h2>
+      <p style="font-size:13.5px; color:#A3A9C8; margin:0;"><?php echo esc_html( $ev_data['date_str'] . ( ! empty( $ev_data['time_str'] ) ? ' • ' . $ev_data['time_str'] : '' ) . ( ! empty( $ev_data['location'] ) ? ' • ' . $ev_data['location'] : '' ) ); ?></p>
+    </div>
+
+    <!-- Error message alert -->
+    <div id="cr8v-modal-error" style="display:none; background:#721c24; border:1px solid #f5c6cb; color:#FFFFFF; padding:12px 16px; border-radius:8px; font-size:13.5px; margin-bottom:18px; line-height:1.5;" role="alert"></div>
+
+    <form id="cr8v-booking-form">
+      <!-- Honeypot: must remain empty -->
+      <div style="display:none !important; position:absolute; left:-9999px;">
+        <label for="cr8v-hp-website"><?php esc_html_e( 'Leave this field empty', 'cruxnxtion' ); ?></label>
+        <input type="text" id="cr8v-hp-website" name="website" tabindex="-1" autocomplete="off" value="">
+      </div>
+
+      <!-- Ticket Tiers List -->
+      <div style="margin-bottom:22px;">
+        <label style="display:block; font-size:11px; font-weight:700; color:#7A82A8; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;"><?php esc_html_e( 'Select Tickets', 'cruxnxtion' ); ?></label>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <?php foreach ( $event_tiers as $tier ) :
+            $is_sold_out = ! empty( $tier['is_sold_out'] );
+            $avail       = isset( $tier['available_count'] ) ? (int) $tier['available_count'] : 0;
+            $max_order   = isset( $tier['max_per_order'] ) ? (int) $tier['max_per_order'] : 10;
+            $max_select  = min( $max_order, $avail, 20 );
+          ?>
+          <div style="background:#0D1330; border:1.5px solid <?php echo $is_sold_out ? '#242a47' : '#1E2B5E'; ?>; border-radius:10px; padding:16px 18px; display:flex; justify-content:space-between; align-items:center; gap:16px; opacity:<?php echo $is_sold_out ? '0.6' : '1'; ?>;">
+            <div style="flex:1; min-width:0;">
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:4px;">
+                <span style="font-weight:700; font-size:15px; color:#FFFFFF;"><?php echo esc_html( $tier['name'] ); ?></span>
+                <?php if ( $is_sold_out ) : ?>
+                  <span style="background:#dc3545; color:#FFFFFF; font-size:10px; font-weight:800; padding:2px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:0.5px;"><?php esc_html_e( 'Sold Out', 'cruxnxtion' ); ?></span>
+                <?php else : ?>
+                  <span style="background:rgba(91,141,239,0.15); color:#5B8DEF; font-size:10px; font-weight:800; padding:2px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:0.5px;">
+                    <?php echo sprintf( esc_html__( '%d remaining', 'cruxnxtion' ), $avail ); ?>
+                  </span>
+                <?php endif; ?>
+              </div>
+              <?php if ( ! empty( $tier['description'] ) ) : ?>
+                <div style="font-size:12px; color:#A3A9C8; line-height:1.4; margin-bottom:6px;"><?php echo esc_html( $tier['description'] ); ?></div>
+              <?php endif; ?>
+              <div style="font-size:14px; font-weight:700; color:#5B8DEF;"><?php echo esc_html( $tier['price_formatted'] ); ?></div>
+            </div>
+
+            <div>
+              <?php if ( $is_sold_out ) : ?>
+                <span style="font-size:12px; color:#7A82A8; font-weight:600;"><?php esc_html_e( 'Unavailable', 'cruxnxtion' ); ?></span>
+              <?php else : ?>
+                <select class="cr8v-tier-qty" data-tier-id="<?php echo esc_attr( $tier['id'] ); ?>" data-price-pence="<?php echo esc_attr( (int) $tier['price_pence'] ); ?>" style="background:#111838; color:#F4F5FA; border:1.5px solid #1E2B5E; border-radius:6px; padding:8px 12px; font-weight:700; font-size:14px; cursor:pointer;">
+                  <option value="0">0</option>
+                  <?php for ( $q = 1; $q <= $max_select; $q++ ) : ?>
+                    <option value="<?php echo esc_attr( $q ); ?>"><?php echo esc_html( $q ); ?></option>
+                  <?php endfor; ?>
+                </select>
+              <?php endif; ?>
+            </div>
+          </div>
+          <?php endforeach; ?>
+        </div>
+      </div>
+
+      <!-- Attendee Contact Information -->
+      <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:22px;">
+        <label style="display:block; font-size:11px; font-weight:700; color:#7A82A8; text-transform:uppercase; letter-spacing:1px;"><?php esc_html_e( 'Your Contact Details', 'cruxnxtion' ); ?></label>
+        <div>
+          <input type="text" id="cr8v-buyer-name" required placeholder="<?php esc_attr_e( 'Full Name *', 'cruxnxtion' ); ?>" maxlength="100" style="width:100%; background:#0D1330; border:1.5px solid #1E2B5E; border-radius:8px; padding:12px 14px; color:#F4F5FA; font-size:14px; box-sizing:border-box;">
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;" data-m="g1">
+          <div>
+            <input type="email" id="cr8v-buyer-email" required placeholder="<?php esc_attr_e( 'Email Address *', 'cruxnxtion' ); ?>" style="width:100%; background:#0D1330; border:1.5px solid #1E2B5E; border-radius:8px; padding:12px 14px; color:#F4F5FA; font-size:14px; box-sizing:border-box;">
+          </div>
+          <div>
+            <input type="tel" id="cr8v-buyer-phone" placeholder="<?php esc_attr_e( 'Phone (Optional)', 'cruxnxtion' ); ?>" maxlength="30" style="width:100%; background:#0D1330; border:1.5px solid #1E2B5E; border-radius:8px; padding:12px 14px; color:#F4F5FA; font-size:14px; box-sizing:border-box;">
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Order Summary Badge -->
+      <div style="background:#0D1330; border:1px solid #1E2B5E; border-radius:8px; padding:14px 18px; margin-bottom:22px; display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <span style="font-size:12px; color:#7A82A8;"><?php esc_html_e( 'Estimated Total:', 'cruxnxtion' ); ?></span>
+          <div id="cr8v-summary-tickets" style="font-size:12px; color:#5B8DEF; font-weight:600;"><?php esc_html_e( '0 tickets selected', 'cruxnxtion' ); ?></div>
+        </div>
+        <div id="cr8v-summary-price" style="font-size:22px; font-weight:700; color:#FFFFFF;">£0.00</div>
+      </div>
+
+      <!-- Submit CTA button -->
+      <button type="submit" id="cr8v-submit-booking-btn" class="bx" style="width:100%; background:#BA0000; color:#FFFFFF; font-weight:700; font-size:15px; padding:16px 20px; --sl:10px; cursor:pointer;" disabled>
+        <span id="cr8v-btn-text"><?php esc_html_e( 'Select Tickets To Continue', 'cruxnxtion' ); ?></span>
+      </button>
+
+      <p style="font-size:11.5px; color:#7A82A8; text-align:center; margin:12px 0 0 0; line-height:1.5;">
+        <?php esc_html_e( 'All pricing computed securely on server. Payments processed via encrypted Stripe checkout.', 'cruxnxtion' ); ?>
+      </p>
+    </form>
+  </div>
+</div>
+
+<script>
+(function() {
+  var modal = document.getElementById('cr8v-booking-modal');
+  var openBtn = document.getElementById('cr8v-open-modal-btn');
+  var closeBtn = document.getElementById('cr8v-close-modal-btn');
+  var form = document.getElementById('cr8v-booking-form');
+  var submitBtn = document.getElementById('cr8v-submit-booking-btn');
+  var btnText = document.getElementById('cr8v-btn-text');
+  var errorBox = document.getElementById('cr8v-modal-error');
+  var qtySelects = document.querySelectorAll('.cr8v-tier-qty');
+  var summaryQty = document.getElementById('cr8v-summary-tickets');
+  var summaryPrice = document.getElementById('cr8v-summary-price');
+
+  if (!modal || !openBtn) return;
+
+  function updateTotals() {
+    var totalQty = 0;
+    var totalPence = 0;
+    qtySelects.forEach(function(sel) {
+      var q = parseInt(sel.value, 10) || 0;
+      var pricePence = parseInt(sel.getAttribute('data-price-pence'), 10) || 0;
+      totalQty += q;
+      totalPence += (q * pricePence);
+    });
+
+    if (summaryQty) {
+      summaryQty.textContent = totalQty === 1 ? '1 ticket selected' : totalQty + ' tickets selected';
+    }
+    if (summaryPrice) {
+      summaryPrice.textContent = totalPence === 0 ? '£0.00' : '£' + (totalPence / 100).toFixed(2);
+    }
+
+    if (submitBtn) {
+      if (totalQty > 0) {
+        submitBtn.removeAttribute('disabled');
+        submitBtn.style.opacity = '1';
+        submitBtn.style.cursor = 'pointer';
+        if (btnText) {
+          btnText.textContent = totalPence === 0 ? 'Confirm Free RSVP →' : 'Proceed to Checkout (' + '£' + (totalPence / 100).toFixed(2) + ') →';
+        }
+      } else {
+        submitBtn.setAttribute('disabled', 'disabled');
+        submitBtn.style.opacity = '0.5';
+        submitBtn.style.cursor = 'not-allowed';
+        if (btnText) {
+          btnText.textContent = 'Select Tickets To Continue';
+        }
+      }
+    }
+  }
+
+  qtySelects.forEach(function(sel) {
+    sel.addEventListener('change', updateTotals);
+  });
+
+  function openModal() {
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    updateTotals();
+    var firstInput = document.getElementById('cr8v-buyer-name');
+    if (firstInput) firstInput.focus();
+  }
+
+  function closeModal() {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+    if (errorBox) {
+      errorBox.style.display = 'none';
+      errorBox.textContent = '';
+    }
+    openBtn.focus();
+  }
+
+  openBtn.addEventListener('click', openModal);
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modal.style.display === 'flex') {
+      closeModal();
+    }
+  });
+
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (errorBox) {
+        errorBox.style.display = 'none';
+        errorBox.textContent = '';
+      }
+
+      var items = [];
+      qtySelects.forEach(function(sel) {
+        var q = parseInt(sel.value, 10) || 0;
+        if (q > 0) {
+          items.push({
+            tier_id: sel.getAttribute('data-tier-id'),
+            quantity: q
+          });
+        }
+      });
+
+      if (items.length === 0) {
+        if (errorBox) {
+          errorBox.textContent = 'Please select at least one ticket.';
+          errorBox.style.display = 'block';
+        }
+        return;
+      }
+
+      var customerName = (document.getElementById('cr8v-buyer-name') || {}).value || '';
+      var customerEmail = (document.getElementById('cr8v-buyer-email') || {}).value || '';
+      var customerPhone = (document.getElementById('cr8v-buyer-phone') || {}).value || '';
+      var websiteHp = (document.getElementById('cr8v-hp-website') || {}).value || '';
+
+      var payload = {
+        event_id: <?php echo absint( $event_id ); ?>,
+        customer_name: customerName.trim(),
+        customer_email: customerEmail.trim(),
+        customer_phone: customerPhone.trim(),
+        items: items,
+        website: websiteHp
+      };
+
+      if (submitBtn) {
+        submitBtn.setAttribute('disabled', 'disabled');
+        submitBtn.style.opacity = '0.7';
+      }
+      if (btnText) {
+        btnText.textContent = 'Securing Tickets...';
+      }
+
+      fetch('<?php echo esc_url_raw( rest_url( 'cr8v-ticketing/v1/checkout' ) ); ?>', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+      .then(function(res) {
+        return res.json().then(function(data) {
+          return { status: res.status, ok: res.ok, data: data };
+        });
+      })
+      .then(function(result) {
+        if (result.ok && result.data && result.data.success && result.data.redirect_url) {
+          window.location.href = result.data.redirect_url;
+        } else {
+          var msg = (result.data && result.data.message) ? result.data.message : 'Unable to reserve tickets. Please try again.';
+          if (errorBox) {
+            errorBox.textContent = msg;
+            errorBox.style.display = 'block';
+          }
+          if (submitBtn) {
+            submitBtn.removeAttribute('disabled');
+            submitBtn.style.opacity = '1';
+          }
+          updateTotals();
+        }
+      })
+      .catch(function(err) {
+        if (errorBox) {
+          errorBox.textContent = 'A network error occurred. Please check your connection and try again.';
+          errorBox.style.display = 'block';
+        }
+        if (submitBtn) {
+          submitBtn.removeAttribute('disabled');
+          submitBtn.style.opacity = '1';
+        }
+        updateTotals();
+      });
+    });
+  }
+})();
+</script>
+<?php endif; ?>
 
 <?php wp_footer(); ?>
 </body>
