@@ -1,0 +1,79 @@
+<?php
+/**
+ * Ticket issuing and verification.
+ *
+ * Each ticket has a public code (TIX-XXXXXXXXXXXX) and a secret. The secret is derived
+ * from the code with an HMAC keyed by the site's auth salt, so it can be recomputed to
+ * build the emailed QR link and to verify a scan, without storing the secret itself.
+ * Nobody can forge a secret without the salt, and the code alone is not enough.
+ *
+ * @package Cr8v_Event_Ticketing
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/**
+ * Derive the secret for a ticket code.
+ */
+function cr8v_tix_ticket_secret( $ticket_code ) {
+	return substr( hash_hmac( 'sha256', (string) $ticket_code, wp_salt( 'auth' ) ), 0, 32 );
+}
+
+/**
+ * Constant-time check of a code and secret pair.
+ */
+function cr8v_tix_verify_ticket_secret( $ticket_code, $secret ) {
+	return hash_equals( cr8v_tix_ticket_secret( $ticket_code ), (string) $secret );
+}
+
+/**
+ * Issue one ticket per purchased seat. Safe to call twice: existing tickets are kept.
+ *
+ * @param int    $order_id Order post ID.
+ * @param array  $items    Order items: tier_id, tier_name, quantity.
+ * @param string $attendee Attendee name.
+ * @return array Tickets stored on the order.
+ */
+function cr8v_tix_issue_tickets( $order_id, $items, $attendee ) {
+	$existing = get_post_meta( $order_id, '_cr8v_order_tickets', true );
+	if ( is_array( $existing ) && ! empty( $existing ) ) {
+		return $existing;
+	}
+
+	$issued = array();
+	foreach ( (array) $items as $item ) {
+		$qty = absint( $item['quantity'] ?? 0 );
+		for ( $i = 0; $i < $qty; $i++ ) {
+			$code     = 'TIX-' . strtoupper( bin2hex( random_bytes( 6 ) ) );
+			$issued[] = array(
+				'ticket_code'   => $code,
+				'token_hash'    => hash( 'sha256', cr8v_tix_ticket_secret( $code ) ),
+				'tier_id'       => sanitize_key( $item['tier_id'] ?? '' ),
+				'tier_name'     => sanitize_text_field( $item['tier_name'] ?? 'General Admission' ),
+				'attendee_name' => $attendee,
+				'checked_in'    => false,
+				'checked_in_at' => '',
+				'void'          => false,
+			);
+		}
+	}
+
+	update_post_meta( $order_id, '_cr8v_order_tickets', $issued );
+	return $issued;
+}
+
+/**
+ * Void every ticket on an order (full refund or chargeback).
+ */
+function cr8v_tix_void_order_tickets( $order_id ) {
+	$tickets = get_post_meta( $order_id, '_cr8v_order_tickets', true );
+	if ( ! is_array( $tickets ) ) {
+		return;
+	}
+	foreach ( $tickets as $i => $tix ) {
+		$tickets[ $i ]['void'] = true;
+	}
+	update_post_meta( $order_id, '_cr8v_order_tickets', $tickets );
+}

@@ -88,6 +88,32 @@ function cr8v_tix_get_event_tiers( $event_id, $with_live_counts = true ) {
 function cr8v_tix_atomic_reserve_stock( $event_id, $requested_items, $session_id, $expires_in_seconds = 1800 ) {
 	global $wpdb;
 
+	// Serialise every reservation for one event. A transaction alone is NOT enough: under
+	// MySQL's default REPEATABLE READ isolation concurrent buyers all read the same free
+	// stock and all insert (verified: 12 simultaneous buyers took a single last ticket).
+	// A named lock makes the read-check-insert sequence run one buyer at a time.
+	$lock_name = 'cr8v_tix_' . DB_NAME . '_' . $wpdb->prefix . (int) $event_id;
+	$got_lock  = (int) $wpdb->get_var( $wpdb->prepare( 'SELECT GET_LOCK( %s, 10 )', $lock_name ) );
+	if ( 1 !== $got_lock ) {
+		return new WP_Error( 'busy', __( 'Tickets are in high demand right now. Please try again in a moment.', 'cr8v-event-ticketing' ) );
+	}
+
+	try {
+		return cr8v_tix_reserve_stock_locked( $event_id, $requested_items, $session_id, $expires_in_seconds );
+	} finally {
+		$wpdb->get_var( $wpdb->prepare( 'SELECT RELEASE_LOCK( %s )', $lock_name ) );
+	}
+}
+
+/**
+ * Check capacity and insert reservation rows. Must only be called while holding the
+ * per-event lock taken by cr8v_tix_atomic_reserve_stock().
+ *
+ * @return true|WP_Error
+ */
+function cr8v_tix_reserve_stock_locked( $event_id, $requested_items, $session_id, $expires_in_seconds ) {
+	global $wpdb;
+
 	if ( empty( $requested_items ) || ! is_array( $requested_items ) ) {
 		return new WP_Error( 'invalid_items', __( 'No ticket tiers selected.', 'cr8v-event-ticketing' ) );
 	}
@@ -111,18 +137,24 @@ function cr8v_tix_atomic_reserve_stock( $event_id, $requested_items, $session_id
 	$created_at= $now_dt->format( 'Y-m-d H:i:s' );
 	$expires_at= $expires_dt->format( 'Y-m-d H:i:s' );
 
-	// Begin atomic transaction
+	// Merge repeated lines for the same tier so the per-order maximum cannot be bypassed
+	// by sending the same tier twice.
+	$merged = array();
+	foreach ( $requested_items as $item ) {
+		$m_tid = sanitize_key( $item['tier_id'] ?? '' );
+		$m_qty = absint( $item['quantity'] ?? 0 );
+		if ( $m_qty > 0 ) {
+			$merged[ $m_tid ] = ( $merged[ $m_tid ] ?? 0 ) + $m_qty;
+		}
+	}
+
+	// Begin transaction (the per-event lock above is what prevents the race)
 	$wpdb->query( 'START TRANSACTION' );
 
 	$reservations_to_insert = array();
 
-	foreach ( $requested_items as $item ) {
-		$tid = sanitize_key( $item['tier_id'] ?? '' );
-		$qty = absint( $item['quantity'] ?? 0 );
-
-		if ( $qty <= 0 ) {
-			continue;
-		}
+	foreach ( $merged as $tid => $qty ) {
+		$tid = (string) $tid;
 
 		if ( ! isset( $tier_map[ $tid ] ) ) {
 			$wpdb->query( 'ROLLBACK' );
@@ -224,10 +256,19 @@ function cr8v_tix_release_reservation( $session_id ) {
 function cr8v_tix_complete_reservation( $session_id, $order_id ) {
 	global $wpdb;
 	$res_table = cr8v_tix_reservations_table();
-	return (int) $wpdb->query(
+	$wpdb->query(
 		$wpdb->prepare(
 			"UPDATE {$res_table} SET status = 'completed', order_id = %d WHERE session_id = %s",
 			$order_id,
+			$session_id
+		)
+	);
+
+	// Count rows that are completed for this session. UPDATE's affected-row count is 0 when the
+	// rows were already completed (a webhook retry), which must not look like a missing hold.
+	return (int) $wpdb->get_var(
+		$wpdb->prepare(
+			"SELECT COUNT(*) FROM {$res_table} WHERE session_id = %s AND status = 'completed'",
 			$session_id
 		)
 	);
@@ -344,8 +385,11 @@ function cr8v_tix_render_tiers_meta_box( $post ) {
 	<script>
 	jQuery(document).ready(function($) {
 		var tbody = $('#cr8v-tiers-tbody');
+		// Monotonic index: using the row count would reuse an index after a row is removed
+		// and silently overwrite another tier on save.
+		var nextIdx = tbody.find('tr').length;
 		$('#cr8v-add-tier-btn').on('click', function() {
-			var idx = tbody.find('tr').length;
+			var idx = nextIdx++;
 			var uid = 'tier_' + Math.random().toString(36).substr(2, 9);
 			var row = '<tr class="cr8v-tier-row">' +
 				'<td>' +
@@ -395,21 +439,29 @@ function cr8v_tix_save_tiers_meta_box( $post_id, $post ) {
 	$raw_tiers = isset( $_POST['cr8v_tiers'] ) && is_array( $_POST['cr8v_tiers'] ) ? $_POST['cr8v_tiers'] : array();
 	$clean_tiers = array();
 
+	$seen_ids = array();
+
 	foreach ( $raw_tiers as $entry ) {
+		if ( ! is_array( $entry ) ) {
+			continue;
+		}
 		$name = sanitize_text_field( wp_unslash( $entry['name'] ?? '' ) );
 		if ( '' === $name ) {
 			continue;
 		}
 
-		$tid = sanitize_key( wp_unslash( $entry['id'] ?? '' ) );
-		if ( '' === $tid ) {
-			$tid = 'tier_' . substr( md5( uniqid( (string) mt_rand(), true ) ), 0, 10 );
+		// Tier IDs must be unique within an event: reservations and orders are keyed by them.
+		$tid = substr( sanitize_key( wp_unslash( $entry['id'] ?? '' ) ), 0, 40 );
+		if ( '' === $tid || isset( $seen_ids[ $tid ] ) ) {
+			$tid = 'tier_' . bin2hex( random_bytes( 5 ) );
 		}
+		$seen_ids[ $tid ] = true;
 
+		// Price: pence, 0 to GBP 10,000.00 per ticket.
 		$price_float = floatval( $entry['price'] ?? 0 );
-		$price_pence = max( 0, (int) round( $price_float * 100 ) );
+		$price_pence = min( 1000000, max( 0, (int) round( $price_float * 100 ) ) );
 
-		$capacity = max( 1, absint( $entry['capacity'] ?? 100 ) );
+		$capacity = min( 100000, max( 1, absint( $entry['capacity'] ?? 100 ) ) );
 		$max_per  = max( 1, min( 50, absint( $entry['max_per_order'] ?? 10 ) ) );
 		$desc     = sanitize_text_field( wp_unslash( $entry['description'] ?? '' ) );
 

@@ -41,12 +41,37 @@ function cr8v_tix_register_order_cpt() {
 			'has_archive'         => false,
 			'hierarchical'        => false,
 			'supports'            => array( 'title' ),
-			'capability_type'     => 'post',
+			// Own capability set: orders hold customer names, emails and phone numbers, so they
+			// must not be readable by every user who can edit ordinary posts (Authors, Contributors).
+			'capability_type'     => array( 'event_order', 'event_orders' ),
 			'map_meta_cap'        => true,
+			'capabilities'        => array( 'create_posts' => 'do_not_allow' ), // Orders are only created by checkout.
 		)
 	);
 }
 add_action( 'init', 'cr8v_tix_register_order_cpt', 20 );
+
+/**
+ * Give the Administrator role the order capabilities (once per capability-set version).
+ * Other roles can be granted them with a role-editor plugin if the client wants staff access.
+ */
+function cr8v_tix_grant_order_caps() {
+	if ( '1' === get_option( 'cr8v_tix_order_caps_v' ) ) {
+		return;
+	}
+	$type = get_post_type_object( 'event_order' );
+	$role = get_role( 'administrator' );
+	if ( ! $type || ! $role ) {
+		return;
+	}
+	foreach ( (array) $type->cap as $cap ) {
+		if ( 'do_not_allow' !== $cap ) { // Never grant the capability that blocks manual order creation.
+			$role->add_cap( $cap );
+		}
+	}
+	update_option( 'cr8v_tix_order_caps_v', '1' );
+}
+add_action( 'init', 'cr8v_tix_grant_order_caps', 30 );
 
 /**
  * Custom admin columns for `event_order`.
@@ -124,6 +149,10 @@ function cr8v_tix_render_order_columns( $column, $post_id ) {
 				'failed'    => 'background:#f8d7da; color:#721c24;',
 				'refunded'  => 'background:#e2e3e5; color:#383d41;',
 				'cancelled' => 'background:#f8d7da; color:#721c24;',
+				'awaiting_payment'   => 'background:#fff3cd; color:#856404;',
+				'partially_refunded' => 'background:#e2e3e5; color:#383d41;',
+				'disputed'           => 'background:#f8d7da; color:#721c24;',
+				'needs_review'       => 'background:#f8d7da; color:#721c24; outline:2px solid #dc3545;',
 			);
 			$style = $status_styles[ $status ] ?? 'background:#f0f0f1; color:#3c434a;';
 			echo '<span style="display:inline-block; padding:3px 8px; border-radius:4px; font-weight:700; font-size:11px; text-transform:uppercase; ' . esc_attr( $style ) . '">' . esc_html( $status ) . '</span>';
@@ -169,7 +198,7 @@ function cr8v_tix_render_order_details_meta_box( $post ) {
 			<h4 style="margin-top:0;"><?php esc_html_e( 'Customer Details', 'cr8v-event-ticketing' ); ?></h4>
 			<p><strong><?php esc_html_e( 'Name:', 'cr8v-event-ticketing' ); ?></strong> <?php echo esc_html( $name ); ?></p>
 			<p><strong><?php esc_html_e( 'Email:', 'cr8v-event-ticketing' ); ?></strong> <a href="mailto:<?php echo esc_attr( $email ); ?>"><?php echo esc_html( $email ); ?></a></p>
-			<p><strong><?php esc_html_e( 'Phone:', 'cr8v-event-ticketing' ); ?></strong> <?php echo esc_html( $phone ?: '&mdash;' ); ?></p>
+			<p><strong><?php esc_html_e( 'Phone:', 'cr8v-event-ticketing' ); ?></strong> <?php echo $phone ? esc_html( $phone ) : '&mdash;'; ?></p>
 		</div>
 
 		<div style="background:#f9f9f9; padding:15px; border-radius:6px; border:1px solid #ccd0d4;">
@@ -199,7 +228,7 @@ function cr8v_tix_render_order_details_meta_box( $post ) {
 			<?php if ( ! empty( $tickets ) ) : ?>
 				<?php foreach ( $tickets as $tix ) : ?>
 					<tr>
-						<td><code><?php echo esc_html( $tix['ticket_code'] ?? '&mdash;' ); ?></code></td>
+						<td><code><?php echo esc_html( $tix['ticket_code'] ?? '' ); ?></code><?php echo ! empty( $tix['void'] ) ? ' <strong style="color:#dc3545;">' . esc_html__( 'VOID', 'cr8v-event-ticketing' ) . '</strong>' : ''; ?></td>
 						<td><strong><?php echo esc_html( $tix['tier_name'] ?? 'General' ); ?></strong></td>
 						<td><?php echo esc_html( $tix['attendee_name'] ?? $name ); ?></td>
 						<td>
