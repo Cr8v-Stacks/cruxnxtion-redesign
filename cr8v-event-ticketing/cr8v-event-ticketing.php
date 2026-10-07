@@ -17,4 +17,9 @@ define( 'CR8V_TICKETING_VERSION', '0.1.0' );
 define( 'CR8V_TICKETING_DIR', plugin_dir_path( __FILE__ ) );
 define( 'CR8V_TICKETING_URL', plugin_dir_url( __FILE__ ) );
 
+require_once CR8V_TICKETING_DIR . 'inc/db-schema.php';
 require_once CR8V_TICKETING_DIR . 'inc/event-fields.php';
+require_once CR8V_TICKETING_DIR . 'inc/ticket-tiers.php';
+require_once CR8V_TICKETING_DIR . 'inc/order-cpt.php';
+require_once CR8V_TICKETING_DIR . 'inc/stripe-checkout.php';
+require_once CR8V_TICKETING_DIR . 'inc/stripe-webhook.php';
