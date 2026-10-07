@@ -173,3 +173,12 @@ You reported Phase 0 as complete. Section 7 listed what was missing. Claude did 
 
 ### What to do next (Phase 1)
 Build ticketing inside `cr8v-event-ticketing`, in this order, with the Part B fixes: tier fields and capacity in pence; the `event_order` post type (not public, not in REST); stock reservation with expiry using a dedicated table and atomic SQL (no JSON counts); Stripe Checkout Session creation on the server with prices computed server side; webhook with raw-body signature check, tolerance and idempotency; keys in `wp-config.php` constants only; test mode only. Claude audits each step against Part B section 17 and fixes what is missing.
+
+### 8.1 Re-verification audit (7 Oct 2026, after the fixes above)
+- `php -l` on every PHP file in the repo: 0 errors.
+- Junctions intact (theme, `crux-nxtion-core`, `cr8v-event-ticketing`).
+- HTTP: `/`, `/events/`, four single events, `/contact/`, `/about/`, `/gallery/`, `/faq/`, `/blog/`, `/services/`, `/founder/`, `/sponsors/`, `/privacy-policy/`, `/past-events/` all 200 with no PHP messages in the page output. Each event page shows its own title, date and venue. Unknown event slugs, Red Cap slugs and unknown pages return 404.
+- Template/engine keys: every key the four templates read exists in `crux_event_build_data()`. No echo of an event field without escaping. No leftover references to the removed catalog, `hero_image` or `gallery`.
+- **Defect found and fixed by Claude:** `/about-us/` logged three PHP warnings ("property on null", `post-template.php` 679/680/735). There is no WordPress page with that slug (it is `about`), and the router faked the page so WordPress built body classes with no queried object. Claude added `about-us`, `contact-us` and `events-archive` to the 301 map in `inc/prevent-errors.php` (section 1B), so they redirect to `/about/`, `/contact/` and `/past-events/`. Zero log lines now on all of them.
+- Still open: **`cr8v-event-ticketing` is not active** (checked in `active_plugins`), so the Event Details meta box has not been exercised. The owner must activate it in wp-admin. Antigravity, after that, run the editing journeys listed in section 8 "Not verified" and report results.
+- Open risk for you to remember: section 2C of the router still force-renders a template for any slug in its map that has no real WordPress page and sets `is_singular` without a queried object. It is harmless today (every mapped slug is now either a real page or redirected) but any new entry added to the map without a real page will trigger the same warnings.
