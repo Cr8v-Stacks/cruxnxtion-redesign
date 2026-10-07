@@ -972,4 +972,41 @@ Evaluated via CDP headless automation (`window-size=375,812`, measuring `documen
     "overflowingElementsCount": 0,
     "overflowingElements": []
   }
-  ```
+  ```
+## 16. Claude audit of the door staff login flow (commit 7786168) (8 Oct 2026)
+
+You reported the door staff flow complete (62 of 62). Claude reproduced your suite, then tested the flow the way a door steward uses it: real logins through wp-login.php with real cookies, real HTTP requests, typed ticket codes, and real check-in form posts. Most of it works. Two things you shipped were wrong, one of them dangerous. Claude fixed both. Pull, read this section, do not revert it.
+
+### What held up (verified over real HTTP, not simulated)
+- Protected files untouched. Your suite reproduces (62 of 62), hygiene 0 problems, race tests exact.
+- Login redirect: a door staff login lands on /booking-confirmation/ even when wp-login was asked for /wp-admin/; administrator, editor and subscriber logins are untouched; a wrong password stays on the login page with an error and no PHP warning.
+- The staff landing page shows "You are logged in as door staff.", the lookup box and a logout link, and a subscriber or visitor sees none of it.
+- Check-in: bad nonce rejected, forged secret rejected, a visitor cannot post it, the correct scan checks in, a repeat scan says "already checked in at <time>".
+
+### What you got wrong, and what Claude did
+1. **DANGEROUS: any made-up ticket code showed a green "OFFICIAL VERIFIED PASS" with a check-in button.** For staff you derived the secret from whatever they typed (`cr8v_tix_ticket_secret( $req_ticket_code )`), so the secret check always passed and proved nothing. Claude tested it live as a logged-in steward: `TIX-000000000000`, `TIX-DOESNOTEXIST`, the text `TIX`, and `a:2` all showed a green valid pass with attendee "Guest", and a real code typed in lowercase showed "Guest" too. The old `LIKE %typed%` match made any substring of stored data hit an order. A forged ticket would have been waved in. Fix (in `inc/tickets.php` and `page-booking-confirmation.php`):
+   - `cr8v_tix_normalize_ticket_code()`: trims, removes spaces, upper-cases, and accepts only `TIX-` plus 12 hexadecimal characters, otherwise returns an empty string.
+   - `cr8v_tix_find_ticket()`: exact match on the quoted code, then an exact comparison inside the order's tickets.
+   - Staff secrets are derived only after the ticket is confirmed to exist. A valid secret is no longer treated as proof of existence anywhere: the view needs both the secret and an existing ticket.
+   - New red screen "TICKET NOT FOUND / DO NOT ADMIT" with no check-in button, for staff lookups that find nothing and for genuine-looking links whose ticket no longer exists.
+   - The check-in POST also normalises the code.
+   Live result after the fix: real code in any case or with spaces -> verified pass with the right attendee; the five fake inputs -> "TICKET NOT FOUND", no button; script text is not echoed.
+2. **Your wp-admin block did not do what you reported.** You hooked it to `admin_init`. WordPress answers Posts, Settings, Plugins and the orders list with its own 403 page before `admin_init` runs, so over real HTTP those screens returned a raw 403 and never redirected (index.php, profile.php and users.php did redirect). Your tests could not see this because they call the function directly instead of making a request. Claude moved the block to the `init` hook (priority 1, wp-admin requests only; admin-ajax.php and admin-post.php still pass). Live result: all eight wp-admin screens tested now redirect to the check-in page.
+3. **You locked out anyone who is staff and something else.** The block and the login redirect treated every user with the `event_staff` role as door staff only, so an account that is both staff and editor could never open wp-admin. Claude added `cr8v_tix_is_door_staff_only()`: the `event_staff` role and no `edit_posts` and no `manage_options`. Live result: a staff-and-editor account keeps wp-admin and its normal login destination.
+4. **You hardcoded a theme page inside the shared plugin.** `home_url( '/booking-confirmation/' )` appeared in `inc/order-cpt.php`. That page belongs to the Crux theme; Red Cap and Black and White Crafts have their own. Claude added `cr8v_tix_staff_landing_url()` with the filter `cr8v_tix_staff_landing_url` (default is the same URL). A site that uses a different page sets the filter in its theme.
+5. **Your tests could not catch 1, 2 or 3.** They exercised internal functions with simulated values. Claude's 28 new checks in `test_phase23_audit.php` cover them (49 of 49 now), and your three wp-admin tests now mark the process as being in wp-admin (`set_current_screen( 'dashboard' )`), because the real block only acts on wp-admin requests. 62 of 62 still pass.
+
+### Rules from now on (add to your checklist)
+- "The secret is valid" never means "the ticket exists". Any screen that says a ticket is valid must first prove the ticket exists in the database.
+- For any access-control feature, test it over real HTTP with real login cookies (create temporary users with known passwords, log in through wp-login.php, request the real URLs, and delete the users afterwards). A test that calls the function directly proves nothing about the order WordPress runs things in.
+- Try to break your own feature with garbage input before you report it: random text, partial text, lowercase, spaces, SQL-looking text, script tags.
+- Do not hardcode a path that a theme owns inside cr8v-event-ticketing. Use a filter.
+
+### Notes for the owner
+- Door staff cannot open wp-admin, so they cannot change their own password there. Use the owner's account to reset it, or the "lost your password" link on the login page.
+- This dev site has WooCommerce, which also redirects users without `edit_posts` away from wp-admin. The plugin no longer relies on that.
+
+### Still open
+1. Stripe test keys (the owner adds `CRUX_STRIPE_SECRET_KEY` and `CRUX_STRIPE_WEBHOOK_SECRET` to wp-config.php): the real payment round trip is untested.
+2. Real SMTP (Brevo, Postmark or SendGrid) with SPF, DKIM and DMARC on the client's domain before launch.
+3. Customizer phase: not started. Do not start it until the owner says so.

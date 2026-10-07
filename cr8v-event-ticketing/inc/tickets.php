@@ -77,3 +77,51 @@ function cr8v_tix_void_order_tickets( $order_id ) {
 	}
 	update_post_meta( $order_id, '_cr8v_order_tickets', $tickets );
 }
+
+/**
+ * Normalise a typed or scanned ticket code: remove spaces, upper-case, and accept only the real
+ * format TIX- followed by 12 hexadecimal characters. Returns '' for anything else, so partial
+ * text such as "TIX" can never match a ticket.
+ */
+function cr8v_tix_normalize_ticket_code( $raw ) {
+	$code = strtoupper( preg_replace( '/\s+/', '', (string) $raw ) );
+	return preg_match( '/^TIX-[A-F0-9]{12}$/', $code ) ? $code : '';
+}
+
+/**
+ * Find the order and ticket for an exact ticket code.
+ *
+ * A valid secret only proves the code was typed or scanned correctly; it does not prove the
+ * ticket exists (door staff can look a code up without a secret). Anything that shows a pass
+ * as valid must call this first.
+ *
+ * @param string $raw_code Code as typed or scanned.
+ * @return array|null array( 'order_id' => int, 'ticket' => array, 'code' => string ), or null.
+ */
+function cr8v_tix_find_ticket( $raw_code ) {
+	$code = cr8v_tix_normalize_ticket_code( $raw_code );
+	if ( '' === $code ) {
+		return null;
+	}
+
+	global $wpdb;
+	$order_id = (int) $wpdb->get_var(
+		$wpdb->prepare(
+			"SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_cr8v_order_tickets' AND meta_value LIKE %s LIMIT 1",
+			'%' . $wpdb->esc_like( '"' . $code . '"' ) . '%'
+		)
+	);
+	if ( ! $order_id ) {
+		return null;
+	}
+
+	$tickets = get_post_meta( $order_id, '_cr8v_order_tickets', true );
+	if ( is_array( $tickets ) ) {
+		foreach ( $tickets as $ticket ) {
+			if ( ( $ticket['ticket_code'] ?? '' ) === $code ) {
+				return array( 'order_id' => $order_id, 'ticket' => $ticket, 'code' => $code );
+			}
+		}
+	}
+	return null;
+}

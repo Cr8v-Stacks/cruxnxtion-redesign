@@ -117,64 +117,69 @@ function cr8v_tix_restrict_staff_admin_menus() {
 add_action( 'admin_menu', 'cr8v_tix_restrict_staff_admin_menus', 999 );
 
 /**
- * Redirect event_staff users to front-end check-in after login.
+ * Where door staff land: the front-end check-in page. The shared plugin does not own that page (the
+ * theme does), so sites can change it with the cr8v_tix_staff_landing_url filter.
+ */
+function cr8v_tix_staff_landing_url() {
+	return (string) apply_filters( 'cr8v_tix_staff_landing_url', home_url( '/booking-confirmation/' ) );
+}
+
+/**
+ * True for a user whose ONLY purpose here is door check-in: they have the event_staff role and cannot
+ * edit posts or manage the site. Someone who is also an editor or administrator is not "door staff only"
+ * and must keep normal wp-admin access.
  *
- * Runs at high priority (99) so it takes precedence over default or WooCommerce redirects.
- * Administrators and editors are unaffected.
+ * @param WP_User|null $user User to test.
+ */
+function cr8v_tix_is_door_staff_only( $user ) {
+	if ( ! ( $user instanceof WP_User ) || ! $user->exists() ) {
+		return false;
+	}
+	return in_array( 'event_staff', (array) $user->roles, true )
+		&& ! user_can( $user, 'edit_posts' )
+		&& ! user_can( $user, 'manage_options' );
+}
+
+/**
+ * Send door-staff-only users to the front-end check-in page after login, whatever page they asked for.
+ * Runs at priority 99 so it wins over other plugins' redirects (for example WooCommerce).
  *
  * @param string           $redirect_to           Default redirect URL.
  * @param string           $requested_redirect_to URL requested before login.
- * @param WP_User|WP_Error $user                  Logged in user object.
+ * @param WP_User|WP_Error $user                  Logged in user, or WP_Error when login failed.
  * @return string Redirect destination URL.
  */
 function cr8v_tix_staff_login_redirect( $redirect_to, $requested_redirect_to, $user ) {
-	if ( $user instanceof WP_User ) {
-		$roles = (array) $user->roles;
-		if ( in_array( 'event_staff', $roles, true ) && ! in_array( 'administrator', $roles, true ) ) {
-			return home_url( '/booking-confirmation/' );
-		}
+	if ( cr8v_tix_is_door_staff_only( $user ) ) {
+		return cr8v_tix_staff_landing_url();
 	}
 	return $redirect_to;
 }
 add_filter( 'login_redirect', 'cr8v_tix_staff_login_redirect', 99, 3 );
 
 /**
- * Block event_staff users from accessing wp-admin.
+ * Keep door-staff-only users out of wp-admin and send them to the check-in page instead.
  *
- * Redirects event_staff users away from wp-admin screens (index.php, profile.php, edit.php, etc.)
- * to the front-end check-in experience on /booking-confirmation/.
- * Allows admin-ajax.php and admin-post.php requests to pass through.
- * Runs at priority 1 on admin_init to precede WooCommerce or core redirects.
- * Administrators and editors are unaffected.
+ * Hooked to init, not admin_init: WordPress shows its own "not allowed" 403 page for screens such as
+ * Posts, Settings and Plugins BEFORE admin_init runs, so an admin_init hook never gets the chance to
+ * redirect there (verified over HTTP). admin-ajax.php and admin-post.php must keep working.
  */
 function cr8v_tix_staff_block_admin_access() {
-	if ( wp_doing_ajax() ) {
+	if ( ! is_admin() || wp_doing_ajax() ) {
 		return;
 	}
 
 	global $pagenow;
-	$script = (string) ( $_SERVER['SCRIPT_NAME'] ?? '' );
-	if (
-		'admin-ajax.php' === $pagenow ||
-		'admin-post.php' === $pagenow ||
-		false !== strpos( $script, 'admin-ajax.php' ) ||
-		false !== strpos( $script, 'admin-post.php' )
-	) {
+	if ( in_array( $pagenow, array( 'admin-ajax.php', 'admin-post.php' ), true ) ) {
 		return;
 	}
 
-	$user = wp_get_current_user();
-	if ( ! $user || ! $user->exists() ) {
-		return;
-	}
-
-	$roles = (array) $user->roles;
-	if ( in_array( 'event_staff', $roles, true ) && ! current_user_can( 'manage_options' ) ) {
-		wp_safe_redirect( home_url( '/booking-confirmation/' ) );
+	if ( cr8v_tix_is_door_staff_only( wp_get_current_user() ) ) {
+		wp_safe_redirect( cr8v_tix_staff_landing_url() );
 		exit;
 	}
 }
-add_action( 'admin_init', 'cr8v_tix_staff_block_admin_access', 1 );
+add_action( 'init', 'cr8v_tix_staff_block_admin_access', 1 );
 
 /**
  * Custom admin columns for `event_order`.

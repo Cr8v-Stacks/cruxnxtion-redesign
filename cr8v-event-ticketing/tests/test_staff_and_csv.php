@@ -161,7 +161,9 @@ $intercept_redirect = function( $callable ) {
 	return $caught;
 };
 
-// 2. admin_init wp-admin access blocking tests
+// 2. wp-admin access blocking tests (the block only acts on wp-admin requests, so mark this process as being in wp-admin)
+require_once ABSPATH . 'wp-admin/includes/admin.php';
+set_current_screen( 'dashboard' );
 global $pagenow;
 $saved_pagenow = $pagenow;
 $saved_script  = $_SERVER['SCRIPT_NAME'] ?? '';
@@ -218,6 +220,7 @@ $loc = $intercept_redirect( function() { cr8v_tix_staff_block_admin_access(); } 
 t( 'wp-admin/index.php allows editor through (no redirect)', '' === $loc, "got $loc" );
 
 // Restore globals
+unset( $GLOBALS['current_screen'] );
 $pagenow = $saved_pagenow;
 $_SERVER['SCRIPT_NAME'] = $saved_script;
 

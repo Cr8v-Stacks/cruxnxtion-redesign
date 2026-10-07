@@ -94,6 +94,97 @@ foreach ( $csv_orders as $o ) { wp_delete_post( $o, true ); }
 $page_src = file_get_contents( dirname( __DIR__, 2 ) . '/cruxnxtion-theme/page-booking-confirmation.php' );
 t( 'pass page toolbar has a single class attribute that includes no-print', false !== strpos( $page_src, 'class="conf-actions no-print"' ) && ! preg_match( '/class="[^"]*"[^>]*\sclass="/', $page_src ) );
 
+// ---- Door staff: who counts as staff, login redirect, wp-admin block, ticket lookup ----
+require_once ABSPATH . 'wp-admin/includes/user.php';
+$mkuser = function ( $login, $roles ) {
+	$old = get_user_by( 'login', $login );
+	if ( $old ) { wp_delete_user( $old->ID ); }
+	$uid  = wp_insert_user( array( 'user_login' => $login, 'user_pass' => wp_generate_password( 20 ), 'user_email' => $login . '@example.com', 'role' => $roles[0] ) );
+	$user = new WP_User( $uid );
+	for ( $i = 1; $i < count( $roles ); $i++ ) { $user->add_role( $roles[ $i ] ); }
+	return new WP_User( $uid );
+};
+$u_staff = $mkuser( 'zz_t_staff', array( 'event_staff' ) );
+$u_both  = $mkuser( 'zz_t_both', array( 'event_staff', 'editor' ) );
+$u_ed    = $mkuser( 'zz_t_editor', array( 'editor' ) );
+
+t( 'door-staff-only: a user with only the staff role', cr8v_tix_is_door_staff_only( $u_staff ) );
+t( 'door-staff-only: staff who is also an editor is NOT locked down', ! cr8v_tix_is_door_staff_only( $u_both ) );
+t( 'door-staff-only: editor and a missing user are not staff', ! cr8v_tix_is_door_staff_only( $u_ed ) && ! cr8v_tix_is_door_staff_only( null ) && ! cr8v_tix_is_door_staff_only( new WP_Error( 'x', 'y' ) ) );
+t( 'login redirect: staff-only goes to the check-in page', cr8v_tix_staff_login_redirect( '/wp-admin/', '', $u_staff ) === cr8v_tix_staff_landing_url() );
+t( 'login redirect: staff who is also an editor keeps the normal destination', '/wp-admin/' === cr8v_tix_staff_login_redirect( '/wp-admin/', '', $u_both ) );
+t( 'login redirect: a failed login (WP_Error) is passed through untouched', '/x/' === cr8v_tix_staff_login_redirect( '/x/', '', new WP_Error( 'a', 'b' ) ) );
+add_filter( 'cr8v_tix_staff_landing_url', function () { return 'https://example.test/door/'; } );
+t( 'staff landing page is filterable (no theme path hardcoded in the plugin)', 'https://example.test/door/' === cr8v_tix_staff_landing_url() );
+remove_all_filters( 'cr8v_tix_staff_landing_url' );
+
+$redir = function ( $fn ) {
+	$loc = '';
+	$h   = function ( $l ) use ( &$loc ) { $loc = $l; throw new RuntimeException( 'redirect' ); };
+	add_filter( 'wp_redirect', $h, 1 );
+	try { $fn(); } catch ( RuntimeException $e ) { /* expected */ }
+	remove_filter( 'wp_redirect', $h, 1 );
+	return $loc;
+};
+set_current_screen( 'dashboard' );
+global $pagenow;
+foreach ( array( 'edit.php', 'options-general.php', 'plugins.php', 'users.php' ) as $pg ) {
+	$pagenow = $pg;
+	wp_set_current_user( $u_staff->ID );
+	t( "staff-only is redirected away from wp-admin/$pg (not shown a 403)", cr8v_tix_staff_landing_url() === $redir( 'cr8v_tix_staff_block_admin_access' ) );
+}
+$pagenow = 'edit.php';
+wp_set_current_user( $u_both->ID );
+t( 'staff who is also an editor can still open wp-admin/edit.php', '' === $redir( 'cr8v_tix_staff_block_admin_access' ) );
+wp_set_current_user( $u_ed->ID );
+t( 'an editor can still open wp-admin/edit.php', '' === $redir( 'cr8v_tix_staff_block_admin_access' ) );
+unset( $GLOBALS['current_screen'] );
+wp_set_current_user( 0 );
+
+// Ticket codes: strict format, exact match, case and spacing tolerated.
+$lk_event = wp_insert_post( array( 'post_type' => 'event', 'post_title' => 'ZZ LOOKUP EVENT', 'post_status' => 'publish' ) );
+$ids[]    = $lk_event;
+$lk_items = array( array( 'tier_id' => 'tier_free', 'tier_name' => 'Free', 'quantity' => 1, 'unit_price_pence' => 0, 'total_pence' => 0 ) );
+$lk_order = cr8v_tix_create_order( $lk_event, 'Lookup Person', 'zz-lookup@example.com', '', 0, 'completed', $lk_items, 'res_' . bin2hex( random_bytes( 6 ) ) );
+$lk_tix   = cr8v_tix_issue_tickets( $lk_order, $lk_items, 'Lookup Person' );
+$real     = $lk_tix[0]['ticket_code'];
+
+t( 'normalise: lowercase and spaces become the canonical code', $real === cr8v_tix_normalize_ticket_code( '  ' . strtolower( $real ) . ' ' ) );
+t( 'normalise: partial text, wrong characters and SQL-ish text are rejected', '' === cr8v_tix_normalize_ticket_code( 'TIX' ) && '' === cr8v_tix_normalize_ticket_code( 'TIX-ZZZZZZZZZZZZ' ) && '' === cr8v_tix_normalize_ticket_code( "' OR 1=1 --" ) && '' === cr8v_tix_normalize_ticket_code( 'a:2' ) );
+$found = cr8v_tix_find_ticket( strtolower( $real ) );
+t( 'find: a real code (any case) returns its order and ticket', $found && (int) $found['order_id'] === (int) $lk_order && $found['code'] === $real );
+t( 'find: a well-formed code that does not exist returns nothing', null === cr8v_tix_find_ticket( 'TIX-000000000000' ) );
+t( 'find: "TIX", "a:2" and empty text return nothing', null === cr8v_tix_find_ticket( 'TIX' ) && null === cr8v_tix_find_ticket( 'a:2' ) && null === cr8v_tix_find_ticket( '' ) );
+
+// The pass page itself, as door staff typing a code and as a visitor.
+$page_file = dirname( __DIR__, 2 ) . '/cruxnxtion-theme/page-booking-confirmation.php';
+$render    = function ( $get, $user_id ) use ( $page_file ) {
+	$_GET = $get;
+	$_POST = array();
+	wp_set_current_user( $user_id );
+	ob_start();
+	include $page_file;
+	return ob_get_clean();
+};
+$h_real = $render( array( 'cr8v_ticket' => strtolower( $real ) ), $u_staff->ID );
+t( 'page: staff typing a real code (lowercase) sees the verified pass and the check-in button', false !== strpos( $h_real, 'OFFICIAL VERIFIED PASS' ) && false !== strpos( $h_real, 'CONFIRM DOOR CHECK-IN' ) && false !== strpos( $h_real, 'Lookup Person' ) );
+foreach ( array( 'TIX-000000000000', 'TIX-DOESNOTEXIST', 'TIX', 'a:2', "' OR 1=1 --" ) as $fake ) {
+	$h_fake = $render( array( 'cr8v_ticket' => $fake ), $u_staff->ID );
+	t( 'page: staff typing "' . $fake . '" gets TICKET NOT FOUND, no pass, no check-in button', false !== strpos( $h_fake, 'TICKET NOT FOUND' ) && false === strpos( $h_fake, 'OFFICIAL VERIFIED PASS' ) && false === strpos( $h_fake, 'CONFIRM DOOR CHECK-IN' ) );
+}
+$h_vis = $render( array( 'cr8v_ticket' => $real ), 0 );
+t( 'page: a visitor with only the code (no secret) sees no pass', false === strpos( $h_vis, 'OFFICIAL VERIFIED PASS' ) && false === strpos( $h_vis, 'Lookup Person' ) );
+$h_qr = $render( array( 'cr8v_ticket' => $real, 'tix_secret' => cr8v_tix_ticket_secret( $real ) ), 0 );
+t( 'page: a visitor scanning the real QR link sees the pass but no check-in button', false !== strpos( $h_qr, 'OFFICIAL VERIFIED PASS' ) && false === strpos( $h_qr, 'CONFIRM DOOR CHECK-IN' ) );
+$h_forged = $render( array( 'cr8v_ticket' => $real, 'tix_secret' => 'forged' ), 0 );
+t( 'page: a real code with a forged secret is rejected', false === strpos( $h_forged, 'OFFICIAL VERIFIED PASS' ) && false !== strpos( $h_forged, 'INVALID TICKET' ) );
+$gone  = cr8v_tix_ticket_secret( 'TIX-0123456789AB' );
+$h_gh  = $render( array( 'cr8v_ticket' => 'TIX-0123456789AB', 'tix_secret' => $gone ), 0 );
+t( 'page: a genuine-looking link for a ticket that no longer exists says NOT FOUND, not valid', false !== strpos( $h_gh, 'TICKET NOT FOUND' ) && false === strpos( $h_gh, 'OFFICIAL VERIFIED PASS' ) );
+$_GET = array();
+wp_set_current_user( 0 );
+wp_delete_post( $lk_order, true );
+foreach ( array( $u_staff, $u_both, $u_ed ) as $du ) { wp_delete_user( $du->ID ); }
 foreach ( $ids as $i ) { wp_delete_post( $i, true ); }
 $wpdb->query( $wpdb->prepare( 'DELETE FROM ' . cr8v_tix_reservations_table() . ' WHERE event_id IN (' . implode( ',', array_map( 'intval', $ids ) ) . ')' ) );
 foreach ( get_posts( array( 'post_type' => 'event_order', 'post_status' => 'any', 'posts_per_page' => -1, 'fields' => 'ids', 'meta_key' => '_cr8v_order_customer_email', 'meta_value' => 'today@example.com' ) ) as $o ) { wp_delete_post( $o, true ); }

@@ -31,7 +31,7 @@ $checkin_message = '';
 $checkin_status  = '';
 
 if ( 'POST' === ( $_SERVER['REQUEST_METHOD'] ?? '' ) && isset( $_POST['cr8v_do_checkin'] ) ) {
-	$p_code  = sanitize_text_field( wp_unslash( $_POST['ticket_code'] ?? '' ) );
+	$p_code  = cr8v_tix_normalize_ticket_code( sanitize_text_field( wp_unslash( $_POST['ticket_code'] ?? '' ) ) );
 	$p_sec   = sanitize_text_field( wp_unslash( $_POST['ticket_secret'] ?? '' ) );
 	$p_order = absint( $_POST['order_id'] ?? 0 );
 	$nonce   = sanitize_text_field( wp_unslash( $_POST['_cr8v_checkin_nonce'] ?? '' ) );
@@ -98,8 +98,12 @@ if ( 'POST' === ( $_SERVER['REQUEST_METHOD'] ?? '' ) && isset( $_POST['cr8v_do_c
 // -----------------------------------------------------------------------------
 $req_order_token = sanitize_text_field( wp_unslash( $_GET['order_token'] ?? '' ) );
 $req_session_id  = sanitize_text_field( wp_unslash( $_GET['session_id'] ?? '' ) );
-$req_ticket_code = sanitize_text_field( wp_unslash( $_GET['cr8v_ticket'] ?? '' ) );
+$ticket_raw      = sanitize_text_field( wp_unslash( $_GET['cr8v_ticket'] ?? '' ) );
+// Strict format (TIX- plus 12 hex characters); '' when the typed or scanned text is not a real code.
+$req_ticket_code = cr8v_tix_normalize_ticket_code( $ticket_raw );
 $req_tix_secret  = sanitize_text_field( wp_unslash( $_GET['tix_secret'] ?? '' ) );
+// Door staff may look a code up by typing it. Visitors need the secret that is inside the QR link.
+$staff_lookup    = '' !== $ticket_raw && current_user_can( 'edit_event_orders' );
 
 // View mode state
 $view_mode   = 'default';
@@ -108,15 +112,13 @@ $event_post  = null;
 $event_data  = array();
 $verified_ticket = null;
 
-if ( ! empty( $req_ticket_code ) ) {
-	if ( empty( $req_tix_secret ) && current_user_can( 'edit_event_orders' ) ) {
-		if ( function_exists( 'cr8v_tix_ticket_secret' ) ) {
-			$req_tix_secret = cr8v_tix_ticket_secret( $req_ticket_code );
-		}
-	}
+// Derive the secret for a staff lookup ONLY after the ticket is confirmed to exist. Deriving it for any
+// typed text would make every made-up code look genuine.
+if ( '' !== $req_ticket_code && empty( $req_tix_secret ) && $staff_lookup && cr8v_tix_find_ticket( $req_ticket_code ) ) {
+	$req_tix_secret = cr8v_tix_ticket_secret( $req_ticket_code );
 }
 
-if ( ! empty( $req_ticket_code ) && ! empty( $req_tix_secret ) ) {
+if ( ( ! empty( $req_ticket_code ) && ! empty( $req_tix_secret ) ) || $staff_lookup ) {
 	// Mode 1: Individual Ticket QR Verification
 	$view_mode = 'verify_ticket';
 } elseif ( ! empty( $req_order_token ) ) {
@@ -307,33 +309,19 @@ if ( ! empty( $req_ticket_code ) && ! empty( $req_tix_secret ) ) {
 // VIEW 1: INDIVIDUAL TICKET QR VERIFICATION (DOOR SCAN / ATTENDEE PASS)
 // =============================================================================
 if ( 'verify_ticket' === $view_mode ) :
-	$is_secret_valid = function_exists( 'cr8v_tix_verify_ticket_secret' ) && cr8v_tix_verify_ticket_secret( $req_ticket_code, $req_tix_secret );
+	$is_secret_valid = '' !== $req_ticket_code && '' !== $req_tix_secret && cr8v_tix_verify_ticket_secret( $req_ticket_code, $req_tix_secret );
+	// A valid secret is not enough: the ticket must actually exist.
+	$ticket_found = '' !== $req_ticket_code ? cr8v_tix_find_ticket( $req_ticket_code ) : null;
 
 	// Lookup order containing this ticket
 	$order_match = null;
 	$tix_record  = null;
 
-	if ( $is_secret_valid ) {
-		global $wpdb;
-		$order_id_found = (int) $wpdb->get_var(
-			$wpdb->prepare(
-				"SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_cr8v_order_tickets' AND meta_value LIKE %s LIMIT 1",
-				'%' . $wpdb->esc_like( $req_ticket_code ) . '%'
-			)
-		);
-		if ( $order_id_found ) {
-			$order_match = get_post( $order_id_found );
-			$all_tix = get_post_meta( $order_id_found, '_cr8v_order_tickets', true );
-			if ( is_array( $all_tix ) ) {
-				foreach ( $all_tix as $item ) {
-					if ( ( $item['ticket_code'] ?? '' ) === $req_ticket_code ) {
-						$tix_record = $item;
-						break;
-					}
-				}
-			}
-		}
+	if ( $is_secret_valid && $ticket_found ) {
+		$order_match = get_post( $ticket_found['order_id'] );
+		$tix_record  = $ticket_found['ticket'];
 	}
+
 
 	$v_event_id    = $order_match ? (int) get_post_meta( $order_match->ID, '_cr8v_order_event_id', true ) : 0;
 	$v_event       = $v_event_id ? get_post( $v_event_id ) : null;
@@ -365,7 +353,14 @@ if ( 'verify_ticket' === $view_mode ) :
 	<?php endif; ?>
 
 	<div class="conf-card" style="text-align:center;">
-		<?php if ( ! $is_secret_valid ) : ?>
+		<?php if ( ! $ticket_found && ( $is_secret_valid || $staff_lookup ) ) : ?>
+			<div style="display:inline-block; width:64px; height:64px; border-radius:50%; background:rgba(186,0,0,0.2); border:2px solid #BA0000; line-height:64px; font-size:28px; margin-bottom:18px;">✕</div>
+			<div class="eyebrow" style="color:#FF2E3D;"><?php esc_html_e( 'DO NOT ADMIT', 'cruxnxtion' ); ?></div>
+			<h1 class="bebas" style="font-size:36px; margin:10px 0; color:#FFFFFF;"><?php esc_html_e( 'TICKET NOT FOUND', 'cruxnxtion' ); ?></h1>
+			<p style="font-size:15px; color:#A3A9C8; max-width:500px; margin:0 auto 20px; line-height:1.6;">
+				<?php esc_html_e( 'No ticket with this code exists. Check the code and try again. If it is correct, this is not a valid ticket.', 'cruxnxtion' ); ?>
+			</p>
+		<?php elseif ( ! $is_secret_valid ) : ?>
 			<div style="display:inline-block; width:64px; height:64px; border-radius:50%; background:rgba(186,0,0,0.2); border:2px solid #BA0000; line-height:64px; font-size:28px; margin-bottom:18px;">✕</div>
 			<div class="eyebrow" style="color:#FF2E3D;"><?php esc_html_e( 'AUTHENTICATION FAILED', 'cruxnxtion' ); ?></div>
 			<h1 class="bebas" style="font-size:36px; margin:10px 0; color:#FFFFFF;"><?php esc_html_e( 'INVALID TICKET TOKEN', 'cruxnxtion' ); ?></h1>
