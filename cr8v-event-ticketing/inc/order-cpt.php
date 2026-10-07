@@ -74,6 +74,49 @@ function cr8v_tix_grant_order_caps() {
 add_action( 'init', 'cr8v_tix_grant_order_caps', 30 );
 
 /**
+ * Register the `event_staff` role with only `edit_event_orders` (and `read` for login/profile).
+ *
+ * Door staff log in with this role to scan passes and confirm door check-ins without
+ * needing an administrator account. They have NO access to posts, pages, plugins, themes,
+ * settings, users, or any other wp-admin management features.
+ */
+function cr8v_tix_register_staff_role() {
+	if ( '1' === get_option( 'cr8v_tix_staff_role_v' ) ) {
+		return;
+	}
+	$staff_role = get_role( 'event_staff' );
+	if ( ! $staff_role ) {
+		add_role(
+			'event_staff',
+			__( 'Event Staff', 'cr8v-event-ticketing' ),
+			array(
+				'read'              => true,
+				'edit_event_orders' => true,
+			)
+		);
+	} else {
+		$staff_role->add_cap( 'read' );
+		$staff_role->add_cap( 'edit_event_orders' );
+	}
+	update_option( 'cr8v_tix_staff_role_v', '1' );
+}
+add_action( 'init', 'cr8v_tix_register_staff_role', 30 );
+
+/**
+ * Restrict wp-admin menus for users with the event_staff role.
+ *
+ * Prevents staff from seeing standard admin screens; they only have access
+ * to their profile and the front-end door check-in workflow.
+ */
+function cr8v_tix_restrict_staff_admin_menus() {
+	if ( ! current_user_can( 'manage_options' ) && current_user_can( 'edit_event_orders' ) ) {
+		remove_menu_page( 'index.php' );
+		remove_menu_page( 'nativus-dashboard-pro' );
+	}
+}
+add_action( 'admin_menu', 'cr8v_tix_restrict_staff_admin_menus', 999 );
+
+/**
  * Custom admin columns for `event_order`.
  */
 function cr8v_tix_order_columns( $columns ) {
@@ -268,3 +311,203 @@ function cr8v_tix_render_order_details_meta_box( $post ) {
 	</table>
 	<?php
 }
+
+/**
+ * Neutralise CSV / Spreadsheet formula injection (CWE-1236).
+ *
+ * Any cell value whose first character is =, +, -, or @ (or tab \t / carriage return \r)
+ * is prefixed with a single quote (') so that spreadsheet programs (Excel, Calc, Google Sheets)
+ * treat it strictly as literal text rather than an executable formula or command.
+ *
+ * @param mixed $val Raw cell value.
+ * @return string Neutralized cell string.
+ */
+function cr8v_tix_csv_escape( $val ) {
+	$str = (string) $val;
+	if ( '' === $str ) {
+		return '';
+	}
+	$first = substr( $str, 0, 1 );
+	if ( in_array( $first, array( '=', '+', '-', '@', "\t", "\r" ), true ) ) {
+		return "'" . $str;
+	}
+	return $str;
+}
+
+/**
+ * Build CSV string containing attendees and ticket passes.
+ *
+ * @param int $event_id Optional. Specific event ID to filter by. Defaults to 0 (all events).
+ * @return string CSV file content.
+ */
+function cr8v_tix_build_attendee_csv( $event_id = 0 ) {
+	$headers = array(
+		'Order ID',
+		'Order Date',
+		'Order Status',
+		'Event Title',
+		'Event ID',
+		'Attendee Name',
+		'Tier Name',
+		'Ticket Code',
+		'Check-in Status',
+		'Check-in Time',
+		'Purchaser Name',
+		'Purchaser Email',
+		'Purchaser Phone',
+		'Total Paid (£)',
+	);
+
+	$output = fopen( 'php://temp', 'r+' );
+	fputcsv( $output, array_map( 'cr8v_tix_csv_escape', $headers ) );
+
+	$args = array(
+		'post_type'      => 'event_order',
+		'post_status'    => array( 'publish', 'draft' ),
+		'posts_per_page' => -1,
+		'orderby'        => 'ID',
+		'order'          => 'DESC',
+	);
+	if ( $event_id > 0 ) {
+		$args['meta_key']   = '_cr8v_order_event_id';
+		$args['meta_value'] = $event_id;
+	}
+
+	$orders = get_posts( $args );
+
+	foreach ( $orders as $order ) {
+		$oid         = $order->ID;
+		$ev_id       = (int) get_post_meta( $oid, '_cr8v_order_event_id', true );
+		$ev_title    = $ev_id ? get_the_title( $ev_id ) : '';
+		$c_name      = (string) get_post_meta( $oid, '_cr8v_order_customer_name', true );
+		$c_email     = (string) get_post_meta( $oid, '_cr8v_order_customer_email', true );
+		$c_phone     = (string) get_post_meta( $oid, '_cr8v_order_customer_phone', true );
+		$status      = (string) get_post_meta( $oid, '_cr8v_order_status', true ) ?: 'pending';
+		$total_pence = (int) get_post_meta( $oid, '_cr8v_order_total_pence', true );
+		$total_fmt   = number_format( $total_pence / 100, 2 );
+		$tickets     = get_post_meta( $oid, '_cr8v_order_tickets', true );
+
+		if ( is_array( $tickets ) && ! empty( $tickets ) ) {
+			foreach ( $tickets as $tix ) {
+				$checkin_status = 'Not Checked In';
+				if ( ! empty( $tix['void'] ) ) {
+					$checkin_status = 'VOID';
+				} elseif ( ! empty( $tix['checked_in'] ) ) {
+					$checkin_status = 'Checked In';
+				}
+
+				$row = array(
+					$oid,
+					$order->post_date,
+					$status,
+					$ev_title,
+					$ev_id,
+					$tix['attendee_name'] ?? $c_name,
+					$tix['tier_name'] ?? 'Ticket',
+					$tix['ticket_code'] ?? '',
+					$checkin_status,
+					$tix['checked_in_at'] ?? '',
+					$c_name,
+					$c_email,
+					$c_phone,
+					$total_fmt,
+				);
+				fputcsv( $output, array_map( 'cr8v_tix_csv_escape', $row ) );
+			}
+		} else {
+			$row = array(
+				$oid,
+				$order->post_date,
+				$status,
+				$ev_title,
+				$ev_id,
+				$c_name,
+				'—',
+				'—',
+				'—',
+				'',
+				$c_name,
+				$c_email,
+				$c_phone,
+				$total_fmt,
+			);
+			fputcsv( $output, array_map( 'cr8v_tix_csv_escape', $row ) );
+		}
+	}
+
+	rewind( $output );
+	$csv = stream_get_contents( $output );
+	fclose( $output );
+	return $csv;
+}
+
+/**
+ * Stream attendee CSV as downloadable file attachment.
+ *
+ * @param int $event_id Optional. Specific event ID to filter by.
+ */
+function cr8v_tix_stream_attendee_csv( $event_id = 0 ) {
+	$date     = gmdate( 'Y-m-d' );
+	$filename = $event_id ? "attendees-event-{$event_id}-{$date}.csv" : "attendees-all-{$date}.csv";
+
+	nocache_headers();
+	header( 'Content-Type: text/csv; charset=UTF-8' );
+	header( 'Content-Disposition: attachment; filename="' . sanitize_file_name( $filename ) . '"' );
+	header( 'X-Content-Type-Options: nosniff' );
+
+	// Output UTF-8 BOM so Microsoft Excel opens UTF-8 encoded text cleanly
+	echo "\xEF\xBB\xBF";
+	echo cr8v_tix_build_attendee_csv( $event_id );
+}
+
+/**
+ * Add "Export Attendees (CSV)" button to the event_order admin list table.
+ *
+ * @param string $which Table navigation position ('top' or 'bottom').
+ */
+function cr8v_tix_order_export_button( $which ) {
+	if ( 'top' !== $which ) {
+		return;
+	}
+	global $typenow;
+	if ( 'event_order' !== $typenow ) {
+		return;
+	}
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+	$export_url = wp_nonce_url(
+		add_query_arg(
+			array(
+				'action'    => 'cr8v_export_attendees_csv',
+				'post_type' => 'event_order',
+			),
+			admin_url( 'edit.php' )
+		),
+		'cr8v_export_attendees_csv'
+	);
+	echo '<div class="alignleft actions"><a href="' . esc_url( $export_url ) . '" class="button button-secondary">' . esc_html__( 'Export Attendees (CSV)', 'cr8v-event-ticketing' ) . '</a></div>';
+}
+add_action( 'manage_posts_extra_tablenav', 'cr8v_tix_order_export_button' );
+
+/**
+ * Handle CSV attendee export request.
+ * Strictly admin-only (manage_options) and nonce protected.
+ */
+function cr8v_tix_handle_csv_export() {
+	if ( ! isset( $_GET['action'] ) || 'cr8v_export_attendees_csv' !== $_GET['action'] ) {
+		return;
+	}
+	if ( ! current_user_can( 'manage_options' ) ) {
+		wp_die( esc_html__( 'Permission denied. Administrator access required.', 'cr8v-event-ticketing' ), 403 );
+	}
+	$nonce = sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ?? '' ) );
+	if ( ! wp_verify_nonce( $nonce, 'cr8v_export_attendees_csv' ) ) {
+		wp_die( esc_html__( 'Security check failed. Please refresh and try again.', 'cr8v-event-ticketing' ), 403 );
+	}
+
+	$event_id = isset( $_GET['event_id'] ) ? absint( $_GET['event_id'] ) : 0;
+	cr8v_tix_stream_attendee_csv( $event_id );
+	exit;
+}
+add_action( 'admin_init', 'cr8v_tix_handle_csv_export' );

@@ -158,8 +158,19 @@ if ( ! empty( $req_ticket_code ) && ! empty( $req_tix_secret ) ) {
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-  * { box-sizing: border-box; }
-  body { margin: 0; background: #0A0F26; color: #F4F5FA; }
+  * {
+    box-sizing: border-box !important;
+  }
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100% !important;
+    max-width: 100vw !important;
+    background: #0A0F26;
+    color: #F4F5FA;
+    overflow-x: hidden !important;
+    box-sizing: border-box;
+  }
   a { color: #5B8DEF; text-decoration: none; }
   a:hover { color: #BA0000; }
   .bebas { font-family: 'Bebas Neue', 'Arial Narrow', sans-serif; letter-spacing: 0.5px; line-height: 0.95; text-transform: uppercase; }
@@ -178,8 +189,86 @@ if ( ! empty( $req_ticket_code ) && ! empty( $req_tix_secret ) ) {
   .ticket-stub::after { bottom: -10px; }
 
   /* Confirmation container */
-  .conf-container { max-width: 900px; margin: 0 auto; padding: 40px 20px 80px; }
-  .conf-card { background: #111838; border: 1.5px solid #1E2B5E; border-radius: 16px; padding: 36px; margin-bottom: 30px; }
+  .conf-container { width: 100% !important; max-width: 900px; margin: 0 auto; padding: 40px 20px 80px; box-sizing: border-box; }
+  .conf-card { width: 100% !important; background: #111838; border: 1.5px solid #1E2B5E; border-radius: 16px; padding: 36px; margin-bottom: 30px; box-sizing: border-box; overflow-wrap: break-word; word-break: break-word; }
+
+  /* Mobile Responsive Optimization (<= 640px) */
+  @media (max-width: 640px) {
+    header.no-print {
+      padding: 14px 16px !important;
+      gap: 12px !important;
+    }
+    footer.no-print {
+      padding: 24px 14px !important;
+      font-size: 11.5px !important;
+      line-height: 1.6 !important;
+      word-break: break-word !important;
+    }
+    .conf-container { padding: 16px 12px 48px !important; }
+    .conf-card { padding: 20px 14px !important; border-radius: 12px !important; margin-bottom: 18px !important; }
+    h1.bebas, .conf-card h1.bebas { font-size: 26px !important; line-height: 1.1 !important; }
+    .door-verify-box { padding: 14px 12px !important; max-width: 100% !important; width: 100% !important; box-sizing: border-box !important; }
+    .door-verify-box > div { display: flex !important; flex-direction: column !important; gap: 4px !important; margin-bottom: 12px !important; }
+    
+    /* Ticket Card: Stacks cleanly as a mobile pass */
+    .ticket-card {
+      flex-direction: column !important;
+      min-height: auto !important;
+      border-radius: 12px !important;
+      box-sizing: border-box !important;
+      width: 100% !important;
+    }
+    .ticket-card .ticket-stub {
+      flex: 0 0 auto !important;
+      width: 100% !important;
+      flex-direction: row !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      padding: 12px 16px !important;
+      box-sizing: border-box !important;
+    }
+    .ticket-card .ticket-stub::before,
+    .ticket-card .ticket-stub::after {
+      display: none !important;
+    }
+    .ticket-card .ticket-details {
+      padding: 18px 14px !important;
+      box-sizing: border-box !important;
+    }
+    .ticket-card .ticket-qr-area {
+      flex: 0 0 auto !important;
+      width: 100% !important;
+      border-left: 0 !important;
+      border-top: 1.5px dashed #1E2B5E !important;
+      padding: 22px 14px !important;
+      box-sizing: border-box !important;
+      position: relative !important;
+    }
+    .ticket-card .ticket-qr-area::before,
+    .ticket-card .ticket-qr-area::after {
+      content: '';
+      position: absolute;
+      top: -10px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #0A0F26;
+      z-index: 2;
+    }
+    .ticket-card .ticket-qr-area::before { left: -10px; }
+    .ticket-card .ticket-qr-area::after { right: -10px; }
+    
+    /* Action toolbars */
+    .conf-actions {
+      flex-direction: column !important;
+      width: 100% !important;
+    }
+    .conf-actions .bx {
+      width: 100% !important;
+      display: block !important;
+      box-sizing: border-box !important;
+    }
+  }
 
   /* Print Stylesheet */
   @media print {
@@ -194,7 +283,7 @@ if ( ! empty( $req_ticket_code ) && ! empty( $req_tix_secret ) ) {
 </style>
 
 <!-- Minimal Site Header -->
-<header style="background:rgba(10,15,38,0.92); border-bottom:1px solid #1E2B5E; padding:18px 24px; display:flex; align-items:center; justify-content:space-between;" class="no-print">
+<header style="background:rgba(10,15,38,0.92); border-bottom:1px solid #1E2B5E; padding:18px 24px; display:flex; align-items:center; justify-content:space-between; box-sizing:border-box; width:100%;" class="no-print">
   <a href="<?php echo esc_url( home_url( '/' ) ); ?>" style="text-decoration:none;">
     <span class="bebas" style="font-size:26px; color:#F4F5FA; letter-spacing:1px;">CRUX<span style="color:#5B8DEF;">NXTION</span></span>
   </a>
@@ -280,11 +369,11 @@ if ( 'verify_ticket' === $view_mode ) :
 			</div>
 
 			<h1 class="bebas" style="font-size:38px; margin:10px 0 6px 0; color:#FFFFFF;"><?php echo esc_html( $v_event_title ); ?></h1>
-			<div style="font-size:14px; color:#A3A9C8; margin-bottom:24px;">
+			<div style="font-size:14px; color:#A3A9C8; margin-bottom:24px; word-break:break-word; line-height:1.5;">
 				<?php echo esc_html( $v_date_raw . ( $v_time ? ' • ' . $v_time : '' ) . ( $v_venue ? ' • ' . $v_venue : '' ) ); ?>
 			</div>
 
-			<div style="background:#0D1330; border:1px solid #1E2B5E; border-radius:12px; padding:24px; max-width:520px; margin:0 auto 28px; text-align:left;">
+			<div class="door-verify-box" style="background:#0D1330; border:1px solid #1E2B5E; border-radius:12px; padding:24px; max-width:520px; margin:0 auto 28px; text-align:left; box-sizing:border-box;">
 				<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid #1E2B5E; padding-bottom:10px;">
 					<span style="color:#7A82A8; font-size:13px;"><?php esc_html_e( 'Attendee Name:', 'cruxnxtion' ); ?></span>
 					<strong style="color:#FFFFFF;"><?php echo esc_html( $tix_record['attendee_name'] ?? 'Guest' ); ?></strong>
@@ -453,7 +542,7 @@ elseif ( 'order_confirmed' === $view_mode && $order_post ) :
 			</div>
 
 			<!-- Action Toolbar -->
-			<div style="display:flex; gap:12px; margin-top:24px; flex-wrap:wrap;" class="no-print">
+			<div class="conf-actions" style="display:flex; gap:12px; margin-top:24px; flex-wrap:wrap;" class="no-print">
 				<?php if ( $o_ev_id ) : ?>
 					<a href="<?php echo esc_url( add_query_arg( array( 'cr8v_tix_download_ics' => '1', 'event_id' => $o_ev_id ), home_url( '/' ) ) ); ?>" class="bx" style="background:#002671; border:1px solid #5B8DEF; color:#FFFFFF; font-weight:700; font-size:13.5px; padding:12px 20px; --sl:8px;">
 						📅 <?php esc_html_e( 'Add to Calendar (.ics)', 'cruxnxtion' ); ?>
@@ -487,7 +576,7 @@ elseif ( 'order_confirmed' === $view_mode && $order_post ) :
 					</div>
 
 					<!-- Details -->
-					<div style="flex:1; padding:24px 28px; display:flex; flex-direction:column; justify-content:center; min-width:0;">
+					<div class="ticket-details" style="flex:1; padding:24px 28px; display:flex; flex-direction:column; justify-content:center; min-width:0;">
 						<div style="font-size:11px; font-weight:700; color:#5B8DEF; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;"><?php echo esc_html( $t_tier ); ?></div>
 						<h3 style="font-size:22px; margin:0 0 8px 0; color:#FFFFFF; font-weight:700;"><?php echo esc_html( $t_guest ); ?></h3>
 						<div style="font-size:13px; color:#A3A9C8; font-family:monospace; margin-bottom:12px;">
@@ -505,7 +594,7 @@ elseif ( 'order_confirmed' === $view_mode && $order_post ) :
 					</div>
 
 					<!-- QR Code Area -->
-					<div style="flex:0 0 180px; padding:20px; display:flex; flex-direction:column; align-items:center; justify-content:center; border-left:1.5px dashed #1E2B5E; background:#0D1330;">
+					<div class="ticket-qr-area" style="flex:0 0 180px; padding:20px; display:flex; flex-direction:column; align-items:center; justify-content:center; border-left:1.5px dashed #1E2B5E; background:#0D1330;">
 						<?php if ( function_exists( 'cr8v_tix_render_svg_qr' ) ) : ?>
 							<?php echo cr8v_tix_render_svg_qr( $t_qr_url, 130 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 						<?php endif; ?>
@@ -542,7 +631,7 @@ else :
 
 </main>
 
-<footer style="background:#0A0F26; border-top:1px solid #1E2B5E; padding:32px 24px; text-align:center; font-size:13px; color:#7A82A8;" class="no-print">
+<footer style="background:#0A0F26; border-top:1px solid #1E2B5E; padding:32px 24px; text-align:center; font-size:13px; color:#7A82A8; box-sizing:border-box; width:100%;" class="no-print">
   &copy; <?php echo esc_html( gmdate( 'Y' ) ); ?> Crux Nxtion Events &bull; Sheffield &amp; London, United Kingdom &bull; All Rights Reserved
 </footer>
 

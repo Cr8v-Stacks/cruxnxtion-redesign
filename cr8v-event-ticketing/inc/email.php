@@ -106,7 +106,7 @@ function cr8v_tix_send_order_confirmation_email( $order_id, $force_resend = fals
 						<div style="font-size:18px; font-weight:700; color:#F4F5FA; margin-bottom:4px;">' . esc_html( $attendee ) . '</div>
 						<div style="font-size:13px; color:#A3A9C8; font-family:monospace; margin-bottom:12px;">Pass Code: <strong style="color:#FFFFFF;">' . esc_html( $code ) . '</strong></div>
 						<div>
-							<a href="' . esc_url( $qr_link ) . '" style="display:inline-block; background:#BA0000; color:#FFFFFF; font-size:12px; font-weight:700; text-decoration:none; padding:8px 16px; border-radius:4px; text-transform:uppercase; letter-spacing:0.5px;">View Digital Pass &amp; QR Code &rarr;</a>
+							<a href="' . esc_url( $qr_link ) . '" class="email-btn-block" style="display:inline-block; background:#BA0000; color:#FFFFFF; font-size:12px; font-weight:700; text-decoration:none; padding:10px 18px; border-radius:4px; text-transform:uppercase; letter-spacing:0.5px;">View Digital Pass &amp; QR Code →</a>
 						</div>
 					</td>
 				</tr>
@@ -130,15 +130,25 @@ function cr8v_tix_send_order_confirmation_email( $order_id, $force_resend = fals
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>' . esc_html( $subject ) . '</title>
+<style>
+  @media only screen and (max-width: 480px) {
+    .email-container { padding: 16px 8px !important; }
+    .email-wrapper { max-width: 100% !important; border-radius: 8px !important; }
+    .email-header { padding: 20px 16px !important; }
+    .email-content { padding: 20px 16px !important; }
+    .email-footer { padding: 18px 16px !important; }
+    .email-btn-block { display: block !important; width: 100% !important; text-align: center !important; box-sizing: border-box !important; }
+  }
+</style>
 </head>
-<body style="margin:0; padding:0; background:#0A0F26; font-family:\'Space Grotesk\', -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, sans-serif; color:#F4F5FA;">
-<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:#0A0F26; min-height:100vh; padding:30px 15px;">
+<body style="margin:0; padding:0; background:#0A0F26; font-family:\'Space Grotesk\', -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, Helvetica, Arial, sans-serif; color:#F4F5FA;">
+<table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="email-container" style="background:#0A0F26; min-height:100vh; padding:30px 15px;">
 	<tr>
 		<td align="center">
-			<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px; background:#0E1432; border:1px solid #1E2B5E; border-radius:12px; overflow:hidden; text-align:left;">
+			<table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="email-wrapper" style="max-width:600px; background:#0E1432; border:1px solid #1E2B5E; border-radius:12px; overflow:hidden; text-align:left;">
 				<!-- Header -->
 				<tr>
-					<td style="padding:28px 32px; background:#0A0F26; border-bottom:1px solid #1E2B5E;">
+					<td class="email-header" style="padding:28px 32px; background:#0A0F26; border-bottom:1px solid #1E2B5E;">
 						<div style="font-size:12px; font-weight:800; letter-spacing:2px; color:#5B8DEF; text-transform:uppercase;">' . esc_html( $brand ) . '</div>
 						<h1 style="margin:8px 0 0 0; font-size:24px; color:#FFFFFF; font-weight:700;">Booking Confirmation</h1>
 					</td>
@@ -146,7 +156,7 @@ function cr8v_tix_send_order_confirmation_email( $order_id, $force_resend = fals
 
 				<!-- Content Body -->
 				<tr>
-					<td style="padding:32px;">
+					<td class="email-content" style="padding:32px;">
 						<p style="font-size:15px; color:#D5D9EA; line-height:1.6; margin-top:0;">Hello ' . esc_html( $customer_name ) . ',</p>
 						<p style="font-size:15px; color:#D5D9EA; line-height:1.6;">Thank you for your booking! Your tickets for <strong>' . esc_html( $event_title ) . '</strong> are confirmed. Your digital passes are listed below, and your calendar invitation (.ics) is attached to this email.</p>
 
@@ -171,14 +181,14 @@ function cr8v_tix_send_order_confirmation_email( $order_id, $force_resend = fals
 						<!-- Web Portal Access -->
 						<div style="margin-top:28px; padding-top:20px; border-top:1px solid #1E2B5E; text-align:center;">
 							<p style="font-size:13.5px; color:#A3A9C8; margin-bottom:14px;">Access your live tickets, printable pass, and QR codes anytime online:</p>
-							<a href="' . esc_url( $portal_url ) . '" style="display:inline-block; background:#002671; border:1px solid #5B8DEF; color:#FFFFFF; font-size:13px; font-weight:700; text-decoration:none; padding:12px 24px; border-radius:6px; letter-spacing:0.5px;">View Online Ticket Pass &rarr;</a>
+							<a href="' . esc_url( $portal_url ) . '" class="email-btn-block" style="display:inline-block; background:#002671; border:1px solid #5B8DEF; color:#FFFFFF; font-size:13px; font-weight:700; text-decoration:none; padding:12px 24px; border-radius:6px; letter-spacing:0.5px;">View Online Ticket Pass →</a>
 						</div>
 					</td>
 				</tr>
 
 				<!-- Footer -->
 				<tr>
-					<td style="padding:22px 32px; background:#0A0F26; border-top:1px solid #1E2B5E; font-size:12px; color:#7A82A8; text-align:center; line-height:1.6;">
+					<td class="email-footer" style="padding:22px 32px; background:#0A0F26; border-top:1px solid #1E2B5E; font-size:12px; color:#7A82A8; text-align:center; line-height:1.6;">
 						'  . esc_html( $brand ) . ' &bull; Ticketing<br>
 						Questions or support? Reach us at <a href="mailto:' . esc_attr( $support_email ) . '" style="color:#5B8DEF; text-decoration:none;">' . esc_html( $support_email ) . '</a>
 					</td>

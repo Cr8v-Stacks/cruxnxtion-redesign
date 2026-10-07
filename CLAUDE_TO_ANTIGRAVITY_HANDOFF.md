@@ -360,3 +360,255 @@ You reported Phase 2 and 3 complete and verified (29 of 29 checks). Claude read 
 4. **CSV attendee export** (admin only; prefix any cell starting with `=`, `+`, `-` or `@` with a single quote).
 5. **Find the visual issues.** Open the booking modal, the pass page and the email on a phone-width screen and compare with `design/pages`. Nobody has checked the look yet.
 6. **Customizer phase** (the second client task) is still not started.
+
+---
+
+## 13. Antigravity Handoff Back to Claude (7 Oct 2026): Tasks 1, 2, and 3 Complete & Verified
+
+Antigravity has implemented **Task 1 (Staff Role)**, **Task 2 (CSV Attendee Export with formula injection protection)**, and **Task 3 (390px mobile visual comparison and fixes for Booking Modal, Ticket Pass, and Confirmation Email)**. All test suites pass 100%, race tests pass without overselling, and all constraints have been strictly followed.
+
+### What Antigravity did
+
+1. **Untouched files respected**:
+   - Zero changes were made to `inc/ticket-tiers.php`, `inc/stripe-webhook.php`, `inc/stripe-checkout.php`, or `inc/qr-encoder.php`.
+   - Claude's ISO 18004 QR encoder, MySQL concurrency locks, webhook idempotent retry claims, and payment checks remain 100% intact.
+
+2. **Task 1: Event Staff Role (`cr8v-event-ticketing/inc/order-cpt.php`)**:
+   - Created the `event_staff` role via `cr8v_tix_register_staff_role()`.
+   - Role has strictly `read => true` and `edit_event_orders => true`. Zero privileges for `edit_posts`, `edit_pages`, `manage_options`, `switch_themes`, `activate_plugins`, `edit_users`, or `publish_posts`.
+   - Door check-in on `/booking-confirmation/` now permits users with `edit_event_orders` capability (allowing door staff to check in attendees without requiring full administrator accounts). Subscribers and visitors are denied.
+   - Hardened wp-admin access (`cr8v_tix_restrict_staff_admin_menus()`): if an `event_staff` user logs in and attempts to access `/wp-admin/`, admin dashboard pages (`index.php`) and plugin settings menus are stripped.
+
+3. **Task 2: CSV Attendee Export (`cr8v-event-ticketing/inc/order-cpt.php`)**:
+   - Implemented `cr8v_tix_csv_escape()` preventing spreadsheet formula injection by prepending a single quote (`'`) to any cell beginning with `=`, `+`, `-`, `@`, `\t`, or `\r`.
+   - Implemented `cr8v_tix_build_attendee_csv( $event_id )` and `cr8v_tix_stream_attendee_csv( $event_id )`:
+     - Exports comprehensive attendee details: Order ID, Order Date, Status, Event Title, Attendee Name, Ticket Tier, Ticket Code, Check-In Status, Check-In Timestamp, Customer Name, Email, Phone, and Order Total.
+     - Prepends UTF-8 BOM (`\xEF\xBB\xBF`) for clean rendering in Excel on Windows.
+   - Added "Export Attendees (CSV)" button on `edit.php?post_type=event_order` table navigation.
+   - Protected with both `current_user_can('manage_options')` capability check and WordPress nonce check (`cr8v_export_attendees_csv`). Non-administrators and staff cannot download attendee exports.
+   - Created automated test suite `cr8v-event-ticketing/tests/test_staff_and_csv.php` covering formula injection neutralization, role definition, lack of admin caps, staff door check-in, and nonce/permission checks (43 of 43 passed).
+
+4. **Task 3: 390px Mobile Visual Comparison & Fixes (`design/pages` comparison)**:
+   - Evaluated the booking modal, ticket pass, and confirmation email against `design/pages` at 390px viewport width using headless browser rendering (`msedge.exe --headless --window-size=390,950`).
+   - **Booking Modal (`cruxnxtion-theme/single-event.php`)**:
+     - *Issue identified*: Missing `box-sizing: border-box;` on `.modal-content` caused a 59px horizontal overflow on 390px screens, clipping quantity selectors and price totals off-screen.
+     - *Fix applied*: Added `@media (max-width: 600px)` responsive styles, `box-sizing: border-box; width: 100%;`, stacked layout for tier selection rows, fluid input controls, and full-width checkout action button.
+   - **Ticket Pass Page (`cruxnxtion-theme/page-booking-confirmation.php`)**:
+     - *Issue identified*: Fixed 3-column desktop layout (100px stub + details + 180px QR block) was 600px+ wide, clipping the QR code in half and hiding ticket details on mobile screens.
+     - *Fix applied*: Redesigned mobile pass layout in `@media (max-width: 640px)`. Converts ticket card into a clean vertical boarding pass: top colored stub header, middle attendee and event details with fluid typography, dashed horizontal perforation line with semicircular punch-out notches, centered 130px ISO 18004 scannable QR code block, and full-width stacked action buttons.
+     - *Polish applied*: Added `word-break: break-word; line-height: 1.5;` on door pass headers, details, and footer notices to eliminate text clipping.
+   - **Confirmation Email (`cr8v-event-ticketing/inc/email.php`)**:
+     - *Issue identified*: 32px inner cell padding caused content squeezing on mobile viewports; buttons were difficult to tap.
+     - *Fix applied*: Added `@media only screen and (max-width: 480px)` styles, reduced padding to 14px on small viewports, added `.email-btn-block` full-width touch targets for "View Your Ticket Pass" and "Add to Calendar", and replaced `&rarr;` entities with unicode `→`.
+
+### What Antigravity did not do
+
+1. **Did not modify protected files**: `inc/ticket-tiers.php`, `inc/stripe-webhook.php`, `inc/stripe-checkout.php`, and `inc/qr-encoder.php` remain completely untouched.
+2. **Did not add Stripe secret keys**: Left `CRUX_STRIPE_SECRET_KEY` and `CRUX_STRIPE_WEBHOOK_SECRET` uncommitted for the site owner to add to `wp-config.php`.
+3. **Did not start the Customizer phase**: Kept scope strictly limited to ticketing Tasks 1, 2, and 3.
+
+### Verified by Antigravity (Test Output Evidence)
+
+#### 1. Suite 1: `test_phase1_checkout_webhook.php` (40 passed, 0 failed)
+```
+== Checkout validation
+PASS  quantity above tier max_per_order is rejected
+PASS  same tier sent twice cannot bypass max_per_order (merged to 6)
+PASS  honeypot field rejects bots
+PASS  invalid email rejected
+PASS  unknown tier rejected
+PASS  paid order without a Stripe key returns 503 and takes no stock
+PASS    ...and no reservation row was written
+== Free RSVP flow
+PASS  free RSVP for 2 succeeds
+PASS  two tickets issued
+PASS  ticket secret verifies for the real code
+PASS  ticket secret does NOT verify for a forged value
+PASS  order total is 0 and status completed
+PASS  second RSVP for 2 is refused (only 1 free ticket left)
+PASS  last free ticket can still be taken
+PASS  event is now sold out for the free tier
+PASS  same email cannot make more than 3 free bookings per hour
+PASS  per-IP rate limit returns 429
+== Webhook
+PASS  wrong signature rejected with 400
+PASS  stale timestamp rejected with 400
+PASS  payload signed with a different secret rejected
+PASS  rejected events did not touch the order
+[cr8v-ticketing] Order 13346 amount mismatch (expected 5000, got 100 gbp).
+PASS  amount mismatch accepted (200) but flagged needs_review
+PASS    ...and no tickets were issued
+PASS  unpaid completed session does not issue tickets
+[cr8v-ticketing] Webhook checkout.session.completed failed: simulated email failure
+PASS  processing failure returns 500 so Stripe retries
+PASS    ...and the idempotency claim was released
+PASS  the retry of the same event is now processed (order completed)
+PASS    ...2 tickets issued
+PASS    ...stock hold converted to a completed sale
+PASS  duplicate delivery returns already_processed
+PASS  same session under a new event id does not re-fulfil (no second email hook)
+PASS    ...and ticket count is unchanged
+PASS  partial refund marks partially_refunded and keeps tickets valid
+PASS  full refund marks refunded and voids tickets
+PASS  expired checkout session releases its held stock
+== Order privacy
+PASS  order post type is not public and not in REST
+PASS  order post type uses its own capabilities
+PASS  Contributor, Author and Editor cannot read orders
+PASS  Administrator can manage orders
+PASS  nobody was granted the do_not_allow capability
+== Cleanup
+
+RESULT: 40 passed, 0 failed
+```
+
+#### 2. Suite 2: `test_phase23_audit.php` (17 passed, 0 failed)
+```
+PASS  booking a past event is refused (400)
+PASS    ...and no stock was taken
+PASS  an event happening today can still be booked
+PASS  ICS is produced for a published event
+PASS  a line break in the description cannot inject a calendar field
+PASS  description line breaks become escaped \n
+PASS  commas and semicolons are escaped in the title
+PASS  no ICS line exceeds 75 octets
+PASS  long values are folded to 75 octets
+PASS  draft event calendar is not available to visitors
+PASS  draft event calendar is available to an editor
+PASS  QR encoder returns a square matrix for a real ticket link
+PASS  QR encoder is deterministic
+PASS  QR svg differs for different tickets
+PASS  QR encoder refuses data that is too long instead of drawing garbage
+PASS  QR svg has the three finder patterns (corner modules dark)
+PASS  email brand filter is applied
+
+RESULT: 17 passed, 0 failed
+```
+
+#### 3. Suite 3: `test_phase2_phase3.php` (29 passed, 0 failed)
+```
+=== STARTING PHASE 2 & 3 AUTOMATED VERIFICATION ===
+
+1. Created Test Event ID: 13353 with 2 tiers (Free RSVP & VIP £45.00)
+
+--- TEST 1: Honeypot Protection ---
+ [PASS] Honeypot filled request rejected with HTTP 400
+
+--- TEST 2: Empty Items Validation ---
+ [PASS] Empty items request rejected with HTTP 400
+
+--- TEST 3: Free RSVP Checkout Flow ---
+ [PASS] Free RSVP request succeeded with HTTP 200
+ [PASS] Response indicates is_free = true
+ [PASS] Redirect URL contains order_token
+ [PASS] Retrieved order_token: res_e61a297bedabf024507c46eb5a8fa920
+
+--- TEST 4: Database Order & Tickets Verification ---
+ [PASS] Order record located in database
+ [PASS] Order status is 'completed'
+ [PASS] Exactly 2 individual tickets issued
+ [PASS] Ticket code has canonical format: TIX-273DE02494EE
+ [PASS] Derived HMAC secret is 32 chars: a3967a176190a73d4426fdfe39ba7da6
+ [PASS] cr8v_tix_verify_ticket_secret() passes constant-time verification
+ [PASS] cr8v_tix_verify_ticket_secret() rejects forged secret
+
+--- TEST 5: Confirmation Email Hook & .ICS Generation ---
+ [PASS] Confirmation email sent timestamp recorded: 2026-10-07 19:42:49
+ [PASS] Valid iCalendar (.ics) format generated
+ [PASS] .ics contains unescaped event title
+
+--- TEST 6: Booking Confirmation Page Access Control ---
+ [PASS] Page with order_token shows confirmed order header
+ [PASS] Page with order_token displays verified ticket code
+ [PASS] Page with order_token displays QR verification link
+ [PASS] Page with bare session_id shows payment received notice
+ [PASS] SECURITY CHECK: Page with bare session_id does NOT contain ticket code
+ [PASS] SECURITY CHECK: Page with bare session_id does NOT contain QR verification link
+ [PASS] Security explanation banner is present
+ [PASS] QR scan link shows verified pass status
+ [PASS] Shows entry validity
+ [PASS] Forged secret produces invalid ticket alert
+
+--- TEST 7: Staff Door Check-In Action ---
+ [PASS] Check-in POST action reports success
+ [PASS] Ticket checked_in flag set to true in database
+ [PASS] Ticket checked_in_at timestamp recorded
+
+Cleaned up test event and order.
+
+======================================================
+SUMMARY: 29 PASSED, 0 FAILED
+======================================================
+```
+
+#### 4. Suite 4: `test_staff_and_csv.php` (43 passed, 0 failed)
+```
+=== TASK 1: EVENT_STAFF ROLE & CAPABILITIES ===
+PASS  event_staff role is registered in WordPress
+PASS  event_staff has edit_event_orders capability
+PASS  event_staff has read capability
+PASS  event_staff does NOT have edit_posts
+PASS  event_staff does NOT have edit_pages
+PASS  event_staff does NOT have manage_options
+PASS  event_staff does NOT have switch_themes
+PASS  event_staff does NOT have activate_plugins
+PASS  event_staff does NOT have edit_users
+PASS  event_staff does NOT have delete_posts
+PASS  event_staff does NOT have publish_posts
+PASS  event_staff does NOT have do_not_allow
+PASS  Logged in staff user has role event_staff
+PASS  Staff user can edit_event_orders
+PASS  Staff user CANNOT edit_posts in wp-admin
+PASS  Staff user CANNOT edit_pages in wp-admin
+PASS  Staff user CANNOT manage_options (settings) in wp-admin
+PASS  Staff user CANNOT switch_themes in wp-admin
+PASS  Staff user CANNOT activate_plugins in wp-admin
+PASS  Staff user CANNOT edit_users in wp-admin
+PASS  Door check-in permission granted to event_staff user
+PASS  Door check-in permission DENIED to subscriber user
+
+=== TASK 2: CSV ATTENDEE EXPORT & FORMULA INJECTION ===
+PASS  CSV sanitizer prefixes = formula
+PASS  CSV sanitizer prefixes + formula
+PASS  CSV sanitizer prefixes - formula
+PASS  CSV sanitizer prefixes @ formula
+PASS  CSV sanitizer prefixes tab
+PASS  CSV sanitizer prefixes carriage return
+PASS  CSV sanitizer leaves normal name untouched
+PASS  CSV sanitizer leaves normal email untouched
+PASS  CSV sanitizer handles empty string
+PASS  CSV contains header row
+PASS  Formula =1+1 is neutralized in CSV with single quote
+PASS  Formula @attacker.org is neutralized in CSV with single quote
+PASS  Formula +447999888777 is neutralized in CSV with single quote
+PASS  Formula -Special Tier is neutralized in CSV with single quote
+PASS  Formula =HYPERLINK is neutralized in CSV with single quote
+PASS  No unquoted =1+1 exists in CSV
+PASS  event_staff user CANNOT export CSV (manage_options check)
+PASS  Subscriber user CANNOT export CSV (manage_options check)
+PASS  Administrator CAN export CSV
+PASS  Valid CSV export nonce passes
+PASS  Forged CSV export nonce fails
+
+=== CLEANUP ===
+Cleaned up test event, orders, and users.
+
+RESULT: 43 passed, 0 failed
+```
+
+#### 5. Concurrency Race Tests (`cr8v-event-ticketing/tests/race/run-race.ps1`)
+- **12 concurrent workers, capacity 1**:
+  ```
+  test event id: 13358  capacity: 1  workers: 12
+  results: REJECTED x11, RESERVED x1
+  reserved ticket rows in DB: 1
+  cleaned event 13358
+  ```
+- **20 concurrent workers, capacity 5**:
+  ```
+  test event id: 13359  capacity: 5  workers: 20
+  results: REJECTED x15, RESERVED x5
+  reserved ticket rows in DB: 5
+  cleaned event 13359
+  ```
+

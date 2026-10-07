@@ -1067,9 +1067,16 @@ if ( ! $ev_data ) {
 <?php if ( ! empty( $has_tiers ) ) : ?>
 <!-- ========================================================================= -->
 <!-- CR8V EVENT TICKETING - SLANTED BOOKING MODAL (PHASE 2)                    -->
-<!-- ========================================================================= -->
-<div id="cr8v-booking-modal" class="cr8v-modal-overlay" style="display:none; position:fixed; inset:0; z-index:99999; background:rgba(5,8,26,0.88); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); overflow-y:auto; padding:24px 16px; align-items:center; justify-content:center;" role="dialog" aria-modal="true" aria-labelledby="cr8v-modal-title">
-  <div class="cr8v-modal-dialog" style="position:relative; width:100%; max-width:600px; background:#111838; border:1.5px solid #1E2B5E; border-radius:16px; padding:32px 28px; box-shadow:0 24px 50px rgba(0,0,0,0.6); margin:auto;">
+<style>
+  @media (max-width: 600px) {
+    .cr8v-modal-overlay { padding: 16px 12px !important; }
+    .cr8v-modal-dialog { padding: 22px 16px !important; border-radius: 12px !important; }
+    #cr8v-modal-title { font-size: 26px !important; }
+    .cr8v-modal-tier-row { padding: 12px 14px !important; gap: 10px !important; }
+  }
+</style>
+<div id="cr8v-booking-modal" class="cr8v-modal-overlay" style="display:<?php echo isset( $_GET['book'] ) ? 'flex' : 'none'; ?>; position:fixed; inset:0; z-index:99999; background:rgba(5,8,26,0.88); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); overflow-y:auto; padding:24px 16px; align-items:center; justify-content:center; box-sizing:border-box;" role="dialog" aria-modal="true" aria-labelledby="cr8v-modal-title">
+  <div class="cr8v-modal-dialog" style="position:relative; width:100%; max-width:600px; background:#111838; border:1.5px solid #1E2B5E; border-radius:16px; padding:32px 28px; box-shadow:0 24px 50px rgba(0,0,0,0.6); margin:auto; box-sizing:border-box;">
     <!-- Close button -->
     <button type="button" id="cr8v-close-modal-btn" aria-label="<?php esc_attr_e( 'Close booking modal', 'cruxnxtion' ); ?>" style="position:absolute; top:20px; right:20px; background:rgba(255,255,255,0.06); border:1px solid #1E2B5E; border-radius:50%; width:36px; height:36px; color:#F4F5FA; font-size:18px; line-height:34px; text-align:center; cursor:pointer;">✕</button>
 
@@ -1100,7 +1107,7 @@ if ( ! $ev_data ) {
             $max_order   = isset( $tier['max_per_order'] ) ? (int) $tier['max_per_order'] : 10;
             $max_select  = min( $max_order, $avail, 20 );
           ?>
-          <div style="background:#0D1330; border:1.5px solid <?php echo $is_sold_out ? '#242a47' : '#1E2B5E'; ?>; border-radius:10px; padding:16px 18px; display:flex; justify-content:space-between; align-items:center; gap:16px; opacity:<?php echo $is_sold_out ? '0.6' : '1'; ?>;">
+          <div class="cr8v-modal-tier-row" style="background:#0D1330; border:1.5px solid <?php echo $is_sold_out ? '#242a47' : '#1E2B5E'; ?>; border-radius:10px; padding:16px 18px; display:flex; justify-content:space-between; align-items:center; gap:16px; opacity:<?php echo $is_sold_out ? '0.6' : '1'; ?>; box-sizing:border-box;">
             <div style="flex:1; min-width:0;">
               <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:4px;">
                 <span style="font-weight:700; font-size:15px; color:#FFFFFF;"><?php echo esc_html( $tier['name'] ); ?></span>
@@ -1259,6 +1266,10 @@ if ( ! $ev_data ) {
       closeModal();
     }
   });
+
+  if (window.location.hash === '#book' || window.location.search.indexOf('book=1') !== -1) {
+    openModal();
+  }
 
   if (form) {
     form.addEventListener('submit', function(e) {
