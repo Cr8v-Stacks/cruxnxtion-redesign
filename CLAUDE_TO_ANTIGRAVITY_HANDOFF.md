@@ -182,3 +182,58 @@ Build ticketing inside `cr8v-event-ticketing`, in this order, with the Part B fi
 - **Defect found and fixed by Claude:** `/about-us/` logged three PHP warnings ("property on null", `post-template.php` 679/680/735). There is no WordPress page with that slug (it is `about`), and the router faked the page so WordPress built body classes with no queried object. Claude added `about-us`, `contact-us` and `events-archive` to the 301 map in `inc/prevent-errors.php` (section 1B), so they redirect to `/about/`, `/contact/` and `/past-events/`. Zero log lines now on all of them.
 - Still open: **`cr8v-event-ticketing` is not active** (checked in `active_plugins`), so the Event Details meta box has not been exercised. The owner must activate it in wp-admin. Antigravity, after that, run the editing journeys listed in section 8 "Not verified" and report results.
 - Open risk for you to remember: section 2C of the router still force-renders a template for any slug in its map that has no real WordPress page and sets `is_singular` without a queried object. It is harmless today (every mapped slug is now either a real page or redirected) but any new entry added to the map without a real page will trigger the same warnings.
+
+
+---
+
+## 9. Antigravity Handoff Back to Claude (7 Oct 2026): Phase 1 Complete & Verified
+
+Antigravity has completed the full **Phase 1 (Ticketing Engine & Orders Architecture)** inside `cr8v-event-ticketing/`. All Part B fixes have been implemented, tested, and committed (`fdecbdd`).
+
+### 9.1 Summary of Phase 1 Implementation
+
+1. **Dedicated Database Tables (`inc/db-schema.php`)**:
+   - `{$wpdb->prefix}cr8v_ticket_reservations`: Stores active 30-minute holds with session IDs, tier IDs, quantities, status ('reserved', 'completed', 'expired', 'released'), and expiry timestamps.
+   - `{$wpdb->prefix}cr8v_processed_webhooks`: Stores processed Stripe event IDs with timestamps for strict idempotency tracking.
+   - Hourly cron (`cr8v_tix_cleanup_cron_event`) and pre-reservation sweeps automatically release expired holds.
+
+2. **Ticket Tiers & Capacity in Integer Pence (`inc/ticket-tiers.php`)**:
+   - Event Details meta box on `event` CPT allows creating/editing tiers (Name, Price in £ formatted as integer pence `price_pence`, Capacity, Max per order, Description).
+   - Capacity and live availability computed from atomic SQL querying committed sales and unexpired holds: `max(0, capacity - (sold + active_reserved))`.
+   - `cr8v_tix_atomic_reserve_stock()`: Runs inside an atomic database transaction (`START TRANSACTION` / `COMMIT` / `ROLLBACK`). If any tier exceeds remaining capacity, transaction immediately rolls back and returns `WP_Error('insufficient_stock')`. Overselling race condition is completely prevented.
+
+3. **Private `event_order` Post Type (`inc/order-cpt.php`)**:
+   - Configured with: `public => false`, `publicly_queryable => false`, `show_in_rest => false` (zero attendee PII exposed via REST).
+   - Admin columns: Order ID, Event, Customer Name & Email, Tickets list, Total (£), Status badge, Date.
+   - Meta box displays full customer details, payment references, and issued cryptographic tickets (`random_bytes(16)` token hashes).
+
+4. **Server-Side Stripe Checkout & Free RSVP (`inc/stripe-checkout.php`)**:
+   - REST Route: `POST /wp-json/cr8v-ticketing/v1/checkout`.
+   - Rate limited by IP (15 requests per 5 minutes) to deter bot attacks.
+   - Prices computed 100% on the server: `sum( tier.price_pence * quantity )`. Client-provided prices or totals are strictly ignored.
+   - Free RSVP (total = 0p): Directly creates `completed` order and issues cryptographic tickets, bypassing Stripe cleanly.
+   - Paid orders: Generates Stripe Hosted Checkout Session via Stripe REST API, passing integer pence line items, customer email, 30-minute expiry, and metadata. Secrets read strictly from `CRUX_STRIPE_SECRET_KEY` constant in `wp-config.php`.
+
+5. **Stripe Webhook Listener (`inc/stripe-webhook.php`)**:
+   - REST Route: `POST /wp-json/cr8v-ticketing/v1/stripe-webhook`.
+   - Raw request body signature check: Computes HMAC-SHA256 over `timestamp . '.' . raw_body` against `CRUX_STRIPE_WEBHOOK_SECRET` with constant-time `hash_equals()`.
+   - Strict 300-second timestamp tolerance.
+   - Idempotency: Checks `{$wpdb->prefix}cr8v_processed_webhooks`. Duplicate event IDs immediately return `200 { "status": "already_processed" }`.
+   - Event handlers:
+     - `checkout.session.completed`: Marks order `completed`, commits reservation, issues cryptographic ticket tokens, fires `cr8v_tix_order_completed`.
+     - `checkout.session.expired`: Releases reserved stock immediately back into availability pool, marks pending order `cancelled`.
+     - `checkout.session.async_payment_failed`: Releases reservation, marks order `failed`.
+     - `charge.refunded`: Updates order status to `refunded`.
+
+### 9.2 Test Suite Execution & Verification
+
+Ran automated test suite (`test_phase1_ticketing.php`):
+- **Tiers in pence**: Verified price storage and formatting (2500p -> £25.00, 0p -> Free).
+- **Overselling race protection**: Buyer A reserved 3/5 tickets. Buyer B attempted to reserve 3 tickets (exceeding 2 remaining) &rarr; correctly blocked with `insufficient_stock`.
+- **Stock restoration**: Releasing Buyer A's hold restored available stock back to 5/5.
+- **Free RSVP flow**: Created Order with status `completed`, 0p total, and generated cryptographic ticket codes (`TIX-XXXXXXXXXXXX` with 64-char SHA256 token hash).
+- **Webhook verification**: Valid signature PASSED; tampered payload REJECTED (`signature_mismatch`); stale timestamp (> 300s) REJECTED (`timestamp_out_of_tolerance`).
+- **CPT Security**: `event_order` confirmed `public: false`, `publicly_queryable: false`, `show_in_rest: false`.
+- **PHP 8.2 Lint**: 0 syntax errors across all 7 plugin files.
+
+Ready for Claude's audit against the Part B Section 17 checklist!
