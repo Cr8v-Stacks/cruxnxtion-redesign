@@ -648,3 +648,328 @@ Every `/event/<slug>/` browser title was built from the URL and labelled "Past E
 2. **Real SMTP** (Brevo, Postmark or SendGrid) with SPF, DKIM and DMARC before launch.
 3. **Door staff login redirect** (point 6 above) and a test that proves an `event_staff` user lands on the check-in flow.
 4. **Customizer phase** (second client task): not started. Do not start it until the owner says so.
+
+---
+
+## 15. Antigravity Handoff Back to Claude (8 Oct 2026): Door Staff Login Flow & Front-End Check-In Verified
+
+Antigravity has implemented the **Door Staff Login Flow** and front-end check-in experience. Door staff (`event_staff`) now land directly on the front-end check-in portal upon logging in, are completely blocked from accessing `wp-admin`, and are provided with a dedicated check-in control center with manual ticket code lookup. All test suites pass 100%, hygiene checks report 0 problems, and layout measurements verify zero overflow at 375px.
+
+### What Antigravity did
+
+1. **Untouched files respected**:
+   - Zero changes made to `inc/ticket-tiers.php`, `inc/stripe-webhook.php`, `inc/stripe-checkout.php`, `inc/qr-encoder.php`, or `inc/tickets.php`.
+   - Claude's ISO 18004 QR encoder, MySQL concurrency locks, webhook idempotent retry claims, payment checks, and CSV export logic remain 100% intact.
+
+2. **Door Staff Login Redirect (`cr8v-event-ticketing/inc/order-cpt.php`)**:
+   - Implemented `cr8v_tix_staff_login_redirect( $redirect_to, $requested_redirect_to, $user )` hooked into `login_redirect` at priority 99.
+   - Users with the `event_staff` role (and without `administrator`) are redirected directly to `home_url( '/booking-confirmation/' )`.
+   - Runs at priority 99 so it takes precedence over default WordPress redirects and WooCommerce's `/my-account/` redirect.
+   - Administrators and editors are unaffected and retain their normal admin redirection destinations.
+
+3. **wp-admin Access Block on `admin_init` (`cr8v-event-ticketing/inc/order-cpt.php`)**:
+   - Implemented `cr8v_tix_staff_block_admin_access()` hooked into `admin_init` at priority 1 (preceding WooCommerce and core redirects).
+   - If an `event_staff` user attempts to access any wp-admin screen (`wp-admin/index.php`, `wp-admin/profile.php`, `wp-admin/edit.php`, etc.), they are immediately redirected to `home_url( '/booking-confirmation/' )` via `wp_safe_redirect()` and execution terminates.
+   - Whitelists and permits `wp_doing_ajax()`, `admin-ajax.php`, and `admin-post.php` requests so background tasks and form submissions can process unimpeded.
+   - Administrators and editors (`manage_options` or non-staff) are completely unaffected and navigate wp-admin normally.
+
+4. **Front-End Door Staff Portal & Manual Code Lookup (`cruxnxtion-theme/page-booking-confirmation.php`)**:
+   - In View 4 (default view when landing with no parameters, where `login_redirect` delivers staff):
+     - When `current_user_can( 'edit_event_orders' )`, displays a dedicated staff check-in card styled to the Crux design system (Bebas Neue, dark ink `#0D163F`, `#1E2B5E` borders, slanted `.bx` button).
+     - Prominent status indicator: green dot with "Door Check-In Active", display name of logged-in staff member, and logout link.
+     - Clear notice: **"You are logged in as door staff."** with instructions to scan attendee QR passes or look up ticket codes manually.
+     - Manual ticket code lookup form: text input (`name="cr8v_ticket"`) with uppercase formatting and submit button ("Look Up Ticket →").
+   - Manual Code Lookup Handling:
+     - When a ticket code is looked up (`?cr8v_ticket=TIX-...`) by an authenticated staff member (`current_user_can('edit_event_orders')`), the HMAC secret is automatically derived using `cr8v_tix_ticket_secret()`.
+     - Loads the ticket verification view, verifies the cryptographic token, displays attendee name, ticket tier, pass code, and renders the "CONFIRM DOOR CHECK-IN" button.
+     - Anonymous users querying `?cr8v_ticket=...` without a secret cannot view pass details or check-in buttons.
+   - In View 1 (pass verification view):
+     - Displays a top door staff banner with "✓ You are logged in as door staff." and a direct "← Back to Door Staff Check-In" link.
+   - Hygiene integrity: Zero duplicate `class` attributes introduced; passes all regex and hygiene tests.
+
+5. **Automated Test Battery (`cr8v-event-ticketing/tests/test_staff_and_csv.php`)**:
+   - Expanded from 43 to 62 automated assertions (all 62 passing).
+   - Verifies `login_redirect` sends `event_staff` to `/booking-confirmation/`.
+   - Verifies `login_redirect` leaves `administrator` and `editor` redirects untouched.
+   - Verifies `admin_init` redirection away from `wp-admin/index.php`, `wp-admin/profile.php`, and `wp-admin/edit.php` for `event_staff`.
+   - Verifies `admin-ajax.php` and `admin-post.php` pass through without redirection.
+   - Verifies administrators and editors are allowed into `wp-admin/index.php` without redirection.
+   - Verifies front-end "You are logged in as door staff." notice and code lookup input on `/booking-confirmation/`.
+   - Verifies anonymous visitors do not see the door staff notice.
+   - Verifies authenticated code-only lookup derives secret and displays attendee pass and check-in button.
+   - Verifies anonymous code-only lookup is rejected.
+
+### What Antigravity did not do
+
+1. **Did not modify protected files**: `inc/ticket-tiers.php`, `inc/stripe-webhook.php`, `inc/stripe-checkout.php`, `inc/qr-encoder.php`, and `inc/tickets.php` remain completely untouched.
+2. **Did not add Stripe secret keys**: Left `CRUX_STRIPE_SECRET_KEY` and `CRUX_STRIPE_WEBHOOK_SECRET` uncommitted for the site owner to configure in `wp-config.php`.
+3. **Did not touch SMTP / email service**: Left production email deliverability configuration for the site owner.
+4. **Did not start the Customizer phase**: Kept scope strictly limited to ticketing Task 1.
+
+### Verified by Antigravity (Test Output Evidence)
+
+#### 1. Repository Hygiene: `test_repo_hygiene.php` (0 problems)
+```
+RESULT: scanned 54 files, 0 problem(s)
+```
+
+#### 2. Suite 1: `test_phase1_checkout_webhook.php` (40 passed, 0 failed)
+```
+== Checkout validation
+PASS  quantity above tier max_per_order is rejected
+PASS  same tier sent twice cannot bypass max_per_order (merged to 6)
+PASS  honeypot field rejects bots
+PASS  invalid email rejected
+PASS  unknown tier rejected
+PASS  paid order without a Stripe key returns 503 and takes no stock
+PASS    ...and no reservation row was written
+== Free RSVP flow
+PASS  free RSVP for 2 succeeds
+PASS  two tickets issued
+PASS  ticket secret verifies for the real code
+PASS  ticket secret does NOT verify for a forged value
+PASS  order total is 0 and status completed
+PASS  second RSVP for 2 is refused (only 1 free ticket left)
+PASS  last free ticket can still be taken
+PASS  event is now sold out for the free tier
+PASS  same email cannot make more than 3 free bookings per hour
+PASS  per-IP rate limit returns 429
+== Webhook
+PASS  wrong signature rejected with 400
+PASS  stale timestamp rejected with 400
+PASS  payload signed with a different secret rejected
+PASS  rejected events did not touch the order
+[cr8v-ticketing] Order 13428 amount mismatch (expected 5000, got 100 gbp).
+PASS  amount mismatch accepted (200) but flagged needs_review
+PASS    ...and no tickets were issued
+PASS  unpaid completed session does not issue tickets
+[cr8v-ticketing] Webhook checkout.session.completed failed: simulated email failure
+PASS  processing failure returns 500 so Stripe retries
+PASS    ...and the idempotency claim was released
+PASS  the retry of the same event is now processed (order completed)
+PASS    ...2 tickets issued
+PASS    ...stock hold converted to a completed sale
+PASS  duplicate delivery returns already_processed
+PASS  same session under a new event id does not re-fulfil (no second email hook)
+PASS    ...and ticket count is unchanged
+PASS  partial refund marks partially_refunded and keeps tickets valid
+PASS  full refund marks refunded and voids tickets
+PASS  expired checkout session releases its held stock
+== Order privacy
+PASS  order post type is not public and not in REST
+PASS  order post type uses its own capabilities
+PASS  Contributor, Author and Editor cannot read orders
+PASS  Administrator can manage orders
+PASS  nobody was granted the do_not_allow capability
+== Cleanup
+
+RESULT: 40 passed, 0 failed
+```
+
+#### 3. Suite 2: `test_phase23_audit.php` (21 passed, 0 failed)
+```
+PASS  booking a past event is refused (400)
+PASS    ...and no stock was taken
+PASS  an event happening today can still be booked
+PASS  ICS is produced for a published event
+PASS  a line break in the description cannot inject a calendar field
+PASS  description line breaks become escaped \n
+PASS  commas and semicolons are escaped in the title
+PASS  no ICS line exceeds 75 octets
+PASS  long values are folded to 75 octets
+PASS  draft event calendar is not available to visitors
+PASS  draft event calendar is available to an editor
+PASS  QR encoder returns a square matrix for a real ticket link
+PASS  QR encoder is deterministic
+PASS  QR svg differs for different tickets
+PASS  QR encoder refuses data that is too long instead of drawing garbage
+PASS  QR svg has the three finder patterns (corner modules dark)
+PASS  email brand filter is applied
+PASS  CSV includes a completed order
+PASS  CSV includes a refunded order (so door staff can turn it away)
+PASS  CSV leaves out pending, failed and cancelled orders (no ticket, so no personal data on the door list)
+PASS  pass page toolbar has a single class attribute that includes no-print
+
+RESULT: 21 passed, 0 failed
+```
+
+#### 4. Suite 3: `test_phase2_phase3.php` (29 passed, 0 failed)
+```
+=== STARTING PHASE 2 & 3 AUTOMATED VERIFICATION ===
+
+1. Created Test Event ID: 13441 with 2 tiers (Free RSVP & VIP £45.00)
+
+--- TEST 1: Honeypot Protection ---
+ [PASS] Honeypot filled request rejected with HTTP 400
+
+--- TEST 2: Empty Items Validation ---
+ [PASS] Empty items request rejected with HTTP 400
+
+--- TEST 3: Free RSVP Checkout Flow ---
+ [PASS] Free RSVP request succeeded with HTTP 200
+ [PASS] Response indicates is_free = true
+ [PASS] Redirect URL contains order_token
+ [PASS] Retrieved order_token: res_e6a174cfad89c8e68281de523561503e
+
+--- TEST 4: Database Order & Tickets Verification ---
+ [PASS] Order record located in database
+ [PASS] Order status is 'completed'
+ [PASS] Exactly 2 individual tickets issued
+ [PASS] Ticket code has canonical format: TIX-8673A0E71C98
+ [PASS] Derived HMAC secret is 32 chars: 3b00ae088be8c309ea19726a601418f9
+ [PASS] cr8v_tix_verify_ticket_secret() passes constant-time verification
+ [PASS] cr8v_tix_verify_ticket_secret() rejects forged secret
+
+--- TEST 5: Confirmation Email Hook & .ICS Generation ---
+ [PASS] Confirmation email sent timestamp recorded: 2026-10-07 20:14:56
+ [PASS] Valid iCalendar (.ics) format generated
+ [PASS] .ics contains unescaped event title
+
+--- TEST 6: Booking Confirmation Page Access Control ---
+ [PASS] Page with order_token shows confirmed order header
+ [PASS] Page with order_token displays verified ticket code
+ [PASS] Page with order_token displays QR verification link
+ [PASS] Page with bare session_id shows payment received notice
+ [PASS] SECURITY CHECK: Page with bare session_id does NOT contain ticket code
+ [PASS] SECURITY CHECK: Page with bare session_id does NOT contain QR verification link
+ [PASS] Security explanation banner is present
+ [PASS] QR scan link shows verified pass status
+ [PASS] Shows entry validity
+ [PASS] Forged secret produces invalid ticket alert
+
+--- TEST 7: Staff Door Check-In Action ---
+ [PASS] Check-in POST action reports success
+ [PASS] Ticket checked_in flag set to true in database
+ [PASS] Ticket checked_in_at timestamp recorded
+
+Cleaned up test event and order.
+
+======================================================
+SUMMARY: 29 PASSED, 0 FAILED
+======================================================
+```
+
+#### 5. Suite 4: `test_staff_and_csv.php` (62 passed, 0 failed)
+```
+=== TASK 1: EVENT_STAFF ROLE & CAPABILITIES ===
+PASS  event_staff role is registered in WordPress
+PASS  event_staff has edit_event_orders capability
+PASS  event_staff has read capability
+PASS  event_staff does NOT have edit_posts
+PASS  event_staff does NOT have edit_pages
+PASS  event_staff does NOT have manage_options
+PASS  event_staff does NOT have switch_themes
+PASS  event_staff does NOT have activate_plugins
+PASS  event_staff does NOT have edit_users
+PASS  event_staff does NOT have delete_posts
+PASS  event_staff does NOT have publish_posts
+PASS  event_staff does NOT have do_not_allow
+PASS  Logged in staff user has role event_staff
+PASS  Staff user can edit_event_orders
+PASS  Staff user CANNOT edit_posts in wp-admin
+PASS  Staff user CANNOT edit_pages in wp-admin
+PASS  Staff user CANNOT manage_options (settings) in wp-admin
+PASS  Staff user CANNOT switch_themes in wp-admin
+PASS  Staff user CANNOT activate_plugins in wp-admin
+PASS  Staff user CANNOT edit_users in wp-admin
+PASS  Door check-in permission granted to event_staff user
+PASS  Door check-in permission DENIED to subscriber user
+
+=== TASK 1B: DOOR STAFF LOGIN FLOW & WP-ADMIN LOCKDOWN ===
+PASS  event_staff login redirects to the check-in page
+PASS  cr8v_tix_staff_login_redirect leaves administrator redirect untouched
+PASS  Administrator login redirect does NOT redirect to booking-confirmation
+PASS  cr8v_tix_staff_login_redirect leaves editor redirect untouched
+PASS  Editor login redirect does NOT redirect to booking-confirmation
+PASS  wp-admin/index.php redirects event_staff away to /booking-confirmation/
+PASS  wp-admin/profile.php redirects event_staff away to /booking-confirmation/
+PASS  wp-admin/edit.php redirects event_staff away to /booking-confirmation/
+PASS  wp-admin/admin-ajax.php allows event_staff through (no redirect)
+PASS  wp-admin/admin-post.php allows event_staff through (no redirect)
+PASS  wp-admin/index.php allows administrator through (no redirect)
+PASS  wp-admin/index.php allows editor through (no redirect)
+PASS  Door staff landing page shows "You are logged in as door staff." notice
+PASS  Door staff landing page includes manual ticket code lookup input
+PASS  Door staff landing page indicates "Door Check-In Active"
+PASS  Anonymous visitor does NOT see door staff notice
+PASS  Anonymous visitor does NOT see "Door Check-In Active"
+PASS  Staff code-only lookup derives secret and displays attendee pass
+PASS  Anonymous user code-only lookup does NOT show ticket details or check-in button
+
+=== TASK 2: CSV ATTENDEE EXPORT & FORMULA INJECTION ===
+PASS  CSV sanitizer prefixes = formula
+PASS  CSV sanitizer prefixes + formula
+PASS  CSV sanitizer prefixes - formula
+PASS  CSV sanitizer prefixes @ formula
+PASS  CSV sanitizer prefixes tab
+PASS  CSV sanitizer prefixes carriage return
+PASS  CSV sanitizer leaves normal name untouched
+PASS  CSV sanitizer leaves normal email untouched
+PASS  CSV sanitizer handles empty string
+PASS  CSV contains header row
+PASS  Formula =1+1 is neutralized in CSV with single quote
+PASS  Formula @attacker.org is neutralized in CSV with single quote
+PASS  Formula +447999888777 is neutralized in CSV with single quote
+PASS  Formula -Special Tier is neutralized in CSV with single quote
+PASS  Formula =HYPERLINK is neutralized in CSV with single quote
+PASS  No unquoted =1+1 exists in CSV
+PASS  event_staff user CANNOT export CSV (manage_options check)
+PASS  Subscriber user CANNOT export CSV (manage_options check)
+PASS  Administrator CAN export CSV
+PASS  Valid CSV export nonce passes
+PASS  Forged CSV export nonce fails
+
+=== CLEANUP ===
+Cleaned up test event, orders, and users.
+
+RESULT: 62 passed, 0 failed
+```
+
+#### 6. Concurrency Race Tests (`cr8v-event-ticketing/tests/race/run-race.ps1`)
+- **12 concurrent workers, capacity 1**:
+  ```
+  test event id: 13446  capacity: 1  workers: 12
+  results: REJECTED x11, RESERVED x1
+  reserved ticket rows in DB: 1
+  cleaned event 13446
+  ```
+- **20 concurrent workers, capacity 5**:
+  ```
+  test event id: 13447  capacity: 5  workers: 20
+  results: REJECTED x15, RESERVED x5
+  reserved ticket rows in DB: 5
+  cleaned event 13447
+  ```
+
+#### 7. Layout Measurements at 375px Viewport Width (Chrome DevTools Protocol)
+Evaluated via CDP headless automation (`window-size=375,812`, measuring `document.documentElement.scrollWidth` against `window.innerWidth` and searching for elements where `boundingClientRect.right > innerWidth + 1`):
+- `http://dev-playground.local/booking-confirmation/`:
+  ```json
+  {
+    "viewportWidth": 375,
+    "scrollWidth": 375,
+    "isOverflown": false,
+    "overflowingElementsCount": 0,
+    "overflowingElements": []
+  }
+  ```
+- `http://dev-playground.local/events/`:
+  ```json
+  {
+    "viewportWidth": 375,
+    "scrollWidth": 375,
+    "isOverflown": false,
+    "overflowingElementsCount": 0,
+    "overflowingElements": []
+  }
+  ```
+- `http://dev-playground.local/event/dance-out-2023/?book=1`:
+  ```json
+  {
+    "viewportWidth": 375,
+    "scrollWidth": 375,
+    "isOverflown": false,
+    "overflowingElementsCount": 0,
+    "overflowingElements": []
+  }
+  ```

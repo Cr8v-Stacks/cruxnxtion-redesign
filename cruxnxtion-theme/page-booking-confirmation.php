@@ -108,6 +108,14 @@ $event_post  = null;
 $event_data  = array();
 $verified_ticket = null;
 
+if ( ! empty( $req_ticket_code ) ) {
+	if ( empty( $req_tix_secret ) && current_user_can( 'edit_event_orders' ) ) {
+		if ( function_exists( 'cr8v_tix_ticket_secret' ) ) {
+			$req_tix_secret = cr8v_tix_ticket_secret( $req_ticket_code );
+		}
+	}
+}
+
 if ( ! empty( $req_ticket_code ) && ! empty( $req_tix_secret ) ) {
 	// Mode 1: Individual Ticket QR Verification
 	$view_mode = 'verify_ticket';
@@ -342,6 +350,17 @@ if ( 'verify_ticket' === $view_mode ) :
 	<?php if ( ! empty( $checkin_message ) ) : ?>
 		<div style="background:<?php echo 'success' === $checkin_status ? '#155724' : ( 'warning' === $checkin_status ? '#856404' : '#721c24' ); ?>; color:#FFFFFF; padding:16px 20px; border-radius:8px; margin-bottom:24px; font-weight:700;">
 			<?php echo esc_html( $checkin_message ); ?>
+		</div>
+	<?php endif; ?>
+
+	<?php if ( current_user_can( 'edit_event_orders' ) ) : ?>
+		<div style="background:rgba(91,141,239,0.12); border:1px solid #1E2B5E; border-radius:8px; padding:12px 18px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;" class="no-print">
+			<span style="font-size:13px; color:#5B8DEF; font-weight:700;">
+				✓ <?php esc_html_e( 'You are logged in as door staff.', 'cruxnxtion' ); ?>
+			</span>
+			<a href="<?php echo esc_url( home_url( '/booking-confirmation/' ) ); ?>" style="font-size:13px; color:#D5D9EA; text-decoration:underline; font-weight:600;">
+				&larr; <?php esc_html_e( 'Back to Door Staff Check-In', 'cruxnxtion' ); ?>
+			</a>
 		</div>
 	<?php endif; ?>
 
@@ -624,16 +643,57 @@ elseif ( 'order_confirmed' === $view_mode && $order_post ) :
 else :
 ?>
 
-	<div class="conf-card" style="text-align:center;">
-		<div class="eyebrow"><?php esc_html_e( 'TICKET PORTAL', 'cruxnxtion' ); ?></div>
-		<h1 class="bebas" style="font-size:38px; margin:10px 0; color:#FFFFFF;"><?php esc_html_e( 'BOOKING LOOKUP', 'cruxnxtion' ); ?></h1>
-		<p style="font-size:15px; color:#A3A9C8; max-width:550px; margin:0 auto 28px; line-height:1.6;">
-			<?php esc_html_e( 'No booking reference was provided. If you recently purchased tickets, please check the link sent to your confirmation email or browse upcoming events below.', 'cruxnxtion' ); ?>
-		</p>
-		<a href="<?php echo esc_url( home_url( '/events/' ) ); ?>" class="bx" style="display:inline-block; background:#BA0000; color:#FFFFFF; font-weight:700; font-size:14.5px; padding:15px 32px; --sl:10px;">
-			<?php esc_html_e( 'Explore All Events →', 'cruxnxtion' ); ?>
-		</a>
-	</div>
+	<?php if ( current_user_can( 'edit_event_orders' ) ) :
+		$current_staff = wp_get_current_user();
+	?>
+		<!-- Staff Door Check-In Control Center -->
+		<div class="conf-card" style="text-align:left; border:2px solid #5B8DEF; background:#0D163F; padding:32px;">
+			<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; border-bottom:1px solid #1E2B5E; padding-bottom:16px; margin-bottom:20px;">
+				<div style="display:flex; align-items:center; gap:10px;">
+					<span style="display:inline-block; width:12px; height:12px; border-radius:50%; background:#28a745; box-shadow:0 0 8px #28a745;"></span>
+					<span style="font-size:12.5px; font-weight:700; color:#5B8DEF; text-transform:uppercase; letter-spacing:1.5px;">
+						<?php esc_html_e( 'Door Check-In Active', 'cruxnxtion' ); ?>
+					</span>
+				</div>
+				<div style="font-size:13px; color:#A3A9C8;">
+					<?php echo sprintf( esc_html__( 'Logged in as %s', 'cruxnxtion' ), '<strong style="color:#FFFFFF;">' . esc_html( $current_staff->display_name ?: $current_staff->user_login ) . '</strong>' ); ?>
+					&bull; <a href="<?php echo esc_url( wp_logout_url( home_url( '/' ) ) ); ?>" style="color:#BA0000; font-weight:600; text-decoration:underline;"><?php esc_html_e( 'Log out', 'cruxnxtion' ); ?></a>
+				</div>
+			</div>
+
+			<div style="background:rgba(91,141,239,0.12); border-left:4px solid #5B8DEF; padding:16px 20px; margin-bottom:28px; border-radius:4px;">
+				<h2 style="font-size:18px; margin:0 0 6px 0; color:#FFFFFF; font-weight:700;">
+					<?php esc_html_e( 'You are logged in as door staff.', 'cruxnxtion' ); ?>
+				</h2>
+				<p style="margin:0; font-size:14px; color:#D5D9EA; line-height:1.5;">
+					<?php esc_html_e( 'Scan an attendee’s QR pass with your mobile camera to verify and check them in automatically, or look up their ticket code below to confirm entry.', 'cruxnxtion' ); ?>
+				</p>
+			</div>
+
+			<form method="GET" action="<?php echo esc_url( home_url( '/booking-confirmation/' ) ); ?>" style="max-width:540px;">
+				<label for="cr8v_staff_tix_input" style="display:block; font-size:12.5px; font-weight:700; color:#D5D9EA; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px;">
+					<?php esc_html_e( 'Manual Ticket Code Lookup:', 'cruxnxtion' ); ?>
+				</label>
+				<div style="display:flex; gap:10px; flex-wrap:wrap;">
+					<input type="text" id="cr8v_staff_tix_input" name="cr8v_ticket" placeholder="TIX-XXXXXXXXXXXX" required style="flex:1; min-width:220px; padding:12px 16px; background:#0A0F26; border:1.5px solid #1E2B5E; border-radius:6px; color:#FFFFFF; font-family:monospace; font-size:15px; font-weight:600; text-transform:uppercase;" autocomplete="off" autocorrect="off" autocapitalize="characters">
+					<button type="submit" class="bx" style="background:#002671; border:1px solid #5B8DEF; color:#FFFFFF; font-weight:700; font-size:14px; padding:12px 24px; --sl:8px;">
+						<?php esc_html_e( 'Look Up Ticket →', 'cruxnxtion' ); ?>
+					</button>
+				</div>
+			</form>
+		</div>
+	<?php else : ?>
+		<div class="conf-card" style="text-align:center;">
+			<div class="eyebrow"><?php esc_html_e( 'TICKET PORTAL', 'cruxnxtion' ); ?></div>
+			<h1 class="bebas" style="font-size:38px; margin:10px 0; color:#FFFFFF;"><?php esc_html_e( 'BOOKING LOOKUP', 'cruxnxtion' ); ?></h1>
+			<p style="font-size:15px; color:#A3A9C8; max-width:550px; margin:0 auto 28px; line-height:1.6;">
+				<?php esc_html_e( 'No booking reference was provided. If you recently purchased tickets, please check the link sent to your confirmation email or browse upcoming events below.', 'cruxnxtion' ); ?>
+			</p>
+			<a href="<?php echo esc_url( home_url( '/events/' ) ); ?>" class="bx" style="display:inline-block; background:#BA0000; color:#FFFFFF; font-weight:700; font-size:14.5px; padding:15px 32px; --sl:10px;">
+				<?php esc_html_e( 'Explore All Events →', 'cruxnxtion' ); ?>
+			</a>
+		</div>
+	<?php endif; ?>
 
 <?php endif; ?>
 

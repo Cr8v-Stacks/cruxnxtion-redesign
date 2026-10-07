@@ -117,6 +117,149 @@ wp_set_current_user( $sub_user_id );
 $can_sub_checkin = current_user_can( 'edit_event_orders' ) || current_user_can( 'manage_options' );
 t( 'Door check-in permission DENIED to subscriber user', ! $can_sub_checkin );
 
+echo "\n=== TASK 1B: DOOR STAFF LOGIN FLOW & WP-ADMIN LOCKDOWN ===\n";
+
+// 1. login_redirect tests
+$staff_redirect = apply_filters( 'login_redirect', admin_url(), '', $staff_user );
+t( 'event_staff login redirects to the check-in page', home_url( '/booking-confirmation/' ) === $staff_redirect, "got $staff_redirect" );
+
+// Find or create administrator user
+$admin_user = get_user_by( 'email', get_option( 'admin_email' ) );
+if ( ! $admin_user ) {
+	$admins = get_users( array( 'role' => 'administrator', 'number' => 1 ) );
+	$admin_user = $admins[0] ?? null;
+}
+if ( $admin_user ) {
+	t( 'cr8v_tix_staff_login_redirect leaves administrator redirect untouched', admin_url() === cr8v_tix_staff_login_redirect( admin_url(), '', $admin_user ) );
+	$admin_redirect = apply_filters( 'login_redirect', admin_url(), '', $admin_user );
+	t( 'Administrator login redirect does NOT redirect to booking-confirmation', false === strpos( $admin_redirect, '/booking-confirmation/' ) );
+}
+
+// Create editor user
+$editor_user_id = wp_create_user( 'editor_' . bin2hex( random_bytes( 4 ) ), 'Pass_Editor_123!', 'editor_' . time() . '@example.com' );
+$editor_user    = new WP_User( $editor_user_id );
+$editor_user->set_role( 'editor' );
+
+t( 'cr8v_tix_staff_login_redirect leaves editor redirect untouched', admin_url() === cr8v_tix_staff_login_redirect( admin_url(), '', $editor_user ) );
+$editor_redirect = apply_filters( 'login_redirect', admin_url(), '', $editor_user );
+t( 'Editor login redirect does NOT redirect to booking-confirmation', false === strpos( $editor_redirect, '/booking-confirmation/' ) );
+
+// Helper to intercept wp_safe_redirect without exiting
+$intercept_redirect = function( $callable ) {
+	$caught = '';
+	$filter = function( $location ) use ( &$caught ) {
+		$caught = $location;
+		throw new Exception( "INTERCEPTED_REDIRECT:$location" );
+	};
+	add_filter( 'wp_redirect', $filter, 1 );
+	try {
+		$callable();
+	} catch ( Exception $e ) {
+		// caught redirect
+	}
+	remove_filter( 'wp_redirect', $filter, 1 );
+	return $caught;
+};
+
+// 2. admin_init wp-admin access blocking tests
+global $pagenow;
+$saved_pagenow = $pagenow;
+$saved_script  = $_SERVER['SCRIPT_NAME'] ?? '';
+
+// Test event_staff accessing wp-admin/index.php
+$pagenow = 'index.php';
+$_SERVER['SCRIPT_NAME'] = '/wp-admin/index.php';
+wp_set_current_user( $staff_user_id );
+$loc = $intercept_redirect( function() { cr8v_tix_staff_block_admin_access(); } );
+t( 'wp-admin/index.php redirects event_staff away to /booking-confirmation/', home_url( '/booking-confirmation/' ) === $loc, "got $loc" );
+
+// Test event_staff accessing wp-admin/profile.php
+$pagenow = 'profile.php';
+$_SERVER['SCRIPT_NAME'] = '/wp-admin/profile.php';
+wp_set_current_user( $staff_user_id );
+$loc = $intercept_redirect( function() { cr8v_tix_staff_block_admin_access(); } );
+t( 'wp-admin/profile.php redirects event_staff away to /booking-confirmation/', home_url( '/booking-confirmation/' ) === $loc, "got $loc" );
+
+// Test event_staff accessing wp-admin/edit.php
+$pagenow = 'edit.php';
+$_SERVER['SCRIPT_NAME'] = '/wp-admin/edit.php';
+wp_set_current_user( $staff_user_id );
+$loc = $intercept_redirect( function() { cr8v_tix_staff_block_admin_access(); } );
+t( 'wp-admin/edit.php redirects event_staff away to /booking-confirmation/', home_url( '/booking-confirmation/' ) === $loc, "got $loc" );
+
+// Test event_staff accessing wp-admin/admin-ajax.php (allowed through, no redirect)
+$pagenow = 'admin-ajax.php';
+$_SERVER['SCRIPT_NAME'] = '/wp-admin/admin-ajax.php';
+wp_set_current_user( $staff_user_id );
+$loc = $intercept_redirect( function() { cr8v_tix_staff_block_admin_access(); } );
+t( 'wp-admin/admin-ajax.php allows event_staff through (no redirect)', '' === $loc, "got $loc" );
+
+// Test event_staff accessing wp-admin/admin-post.php (allowed through, no redirect)
+$pagenow = 'admin-post.php';
+$_SERVER['SCRIPT_NAME'] = '/wp-admin/admin-post.php';
+wp_set_current_user( $staff_user_id );
+$loc = $intercept_redirect( function() { cr8v_tix_staff_block_admin_access(); } );
+t( 'wp-admin/admin-post.php allows event_staff through (no redirect)', '' === $loc, "got $loc" );
+
+// Test administrator accessing wp-admin/index.php (unaffected, no redirect)
+$pagenow = 'index.php';
+$_SERVER['SCRIPT_NAME'] = '/wp-admin/index.php';
+if ( $admin_user ) {
+	wp_set_current_user( $admin_user->ID );
+	$loc = $intercept_redirect( function() { cr8v_tix_staff_block_admin_access(); } );
+	t( 'wp-admin/index.php allows administrator through (no redirect)', '' === $loc, "got $loc" );
+}
+
+// Test editor accessing wp-admin/index.php (unaffected, no redirect)
+$pagenow = 'index.php';
+$_SERVER['SCRIPT_NAME'] = '/wp-admin/index.php';
+wp_set_current_user( $editor_user_id );
+$loc = $intercept_redirect( function() { cr8v_tix_staff_block_admin_access(); } );
+t( 'wp-admin/index.php allows editor through (no redirect)', '' === $loc, "got $loc" );
+
+// Restore globals
+$pagenow = $saved_pagenow;
+$_SERVER['SCRIPT_NAME'] = $saved_script;
+
+// 3. Front-end door staff notice on /booking-confirmation/
+$page_file = dirname( __DIR__, 2 ) . '/cruxnxtion-theme/page-booking-confirmation.php';
+
+// Logged in as staff -> renders notice and code lookup form
+wp_set_current_user( $staff_user_id );
+$_GET = array();
+ob_start();
+include $page_file;
+$staff_html = ob_get_clean();
+t( 'Door staff landing page shows "You are logged in as door staff." notice', false !== strpos( $staff_html, 'You are logged in as door staff.' ) );
+t( 'Door staff landing page includes manual ticket code lookup input', false !== strpos( $staff_html, 'name="cr8v_ticket"' ) );
+t( 'Door staff landing page indicates "Door Check-In Active"', false !== strpos( $staff_html, 'Door Check-In Active' ) );
+
+// Anonymous visitor -> does NOT render staff notice or staff check-in box
+wp_set_current_user( 0 );
+$_GET = array();
+ob_start();
+include $page_file;
+$anon_html = ob_get_clean();
+t( 'Anonymous visitor does NOT see door staff notice', false === strpos( $anon_html, 'You are logged in as door staff.' ) );
+t( 'Anonymous visitor does NOT see "Door Check-In Active"', false === strpos( $anon_html, 'Door Check-In Active' ) );
+
+// Staff lookup by ticket code alone (without secret): derives secret and enters verify mode
+wp_set_current_user( $staff_user_id );
+$_GET = array( 'cr8v_ticket' => $code_1 );
+ob_start();
+include $page_file;
+$lookup_html = ob_get_clean();
+t( 'Staff code-only lookup derives secret and displays attendee pass', false !== strpos( $lookup_html, 'Alice Door' ) && false !== strpos( $lookup_html, 'CONFIRM DOOR CHECK-IN' ) );
+
+// Anonymous lookup with only ticket code (no secret): refuses verify mode
+wp_set_current_user( 0 );
+$_GET = array( 'cr8v_ticket' => $code_1 );
+ob_start();
+include $page_file;
+$anon_lookup_html = ob_get_clean();
+t( 'Anonymous user code-only lookup does NOT show ticket details or check-in button', false === strpos( $anon_lookup_html, 'Alice Door' ) && false === strpos( $anon_lookup_html, 'CONFIRM DOOR CHECK-IN' ) );
+$_GET = array();
+
 echo "\n=== TASK 2: CSV ATTENDEE EXPORT & FORMULA INJECTION ===\n";
 
 // 1. Escaping function unit tests
@@ -195,6 +338,7 @@ wp_delete_post( $order_id, true );
 wp_delete_post( $test_event_id, true );
 wp_delete_user( $staff_user_id );
 wp_delete_user( $sub_user_id );
+wp_delete_user( $editor_user_id );
 echo "Cleaned up test event, orders, and users.\n";
 
 echo "\nRESULT: $pass passed, $fail failed\n";
