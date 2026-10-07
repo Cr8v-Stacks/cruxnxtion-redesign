@@ -986,51 +986,35 @@ if ( ! defined( 'ABSPATH' ) ) {
     </div>
 
     <div style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:22px;" data-m="g1">
-      <a href="<?php echo esc_url( home_url( "/event/lasgidi-mainland-party/" ) ); ?>" class="tilt-ticket" style="display:flex; background:#111838; border:1.5px solid #1E2B5E; border-radius:12px; min-height:330px; --r:-1deg; transform:rotate(var(--r)); overflow:hidden;" data-m="tile">
-        <div class="ticket-stub" style="flex:0 0 90px; background:#002671; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;">
-          <span class="bebas" style="font-size:38px; color:#FFFFFF; line-height:1;">25</span>
-          <span style="font-size:10px; font-weight:800; letter-spacing:1.5px; color:#FFFFFF; text-align:center;">JAN 2025</span>
+      <?php
+      $featured_events = function_exists( 'crux_get_all_events' ) ? crux_get_all_events( array( 'posts_per_page' => 3 ) ) : array();
+      $feat_idx = 0;
+      $default_rotations = array( '-1deg', '0.8deg', '-0.6deg' );
+      foreach ( $featured_events as $fe_slug => $fe_item ) :
+          if ( $feat_idx >= 3 ) break;
+          $stub_bg = ! empty( $fe_item['badge_bg'] ) ? $fe_item['badge_bg'] : '#002671';
+          $stub_txt = ! empty( $fe_item['badge_color'] ) ? $fe_item['badge_color'] : '#FFFFFF';
+          $rot = $default_rotations[ $feat_idx % 3 ];
+          $target_url = ! empty( $fe_item['permalink'] ) ? $fe_item['permalink'] : home_url( '/event/' . $fe_slug . '/' );
+          $sub_meta = ! empty( $fe_item['eventbrite'] ) ? 'Tickets on Eventbrite' : ( ! empty( $fe_item['time_str'] ) ? $fe_item['time_str'] : $fe_item['location'] );
+          $feat_idx++;
+      ?>
+      <a href="<?php echo esc_url( $target_url ); ?>" class="tilt-ticket" style="display:flex; background:#111838; border:1.5px solid #1E2B5E; border-radius:12px; min-height:330px; --r:<?php echo esc_attr( $rot ); ?>; transform:rotate(var(--r)); overflow:hidden;" data-m="tile">
+        <div class="ticket-stub" style="flex:0 0 90px; background:<?php echo esc_attr( $stub_bg ); ?>; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;">
+          <span class="bebas" style="font-size:38px; color:<?php echo esc_attr( $stub_txt ); ?>; line-height:1;"><?php echo esc_html( $fe_item['date_badge_day'] ); ?></span>
+          <span style="font-size:10px; font-weight:800; letter-spacing:1.5px; color:<?php echo esc_attr( $stub_txt ); ?>; text-align:center;"><?php echo esc_html( $fe_item['date_badge_month'] . ' ' . date( 'Y', strtotime( $fe_item['date_raw'] ) ) ); ?></span>
         </div>
         <div style="flex:1; display:flex; flex-direction:column; min-width:0;">
-          <div style="flex:1; position:relative; min-height:180px;"><img src="<?php echo crux_get_blob_url( "a15ea8703f82f1d0f8577325e8d85a3b" ); ?>" alt="LASGIDI Mainland Party" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center top;"></div>
+          <div style="flex:1; position:relative; min-height:180px;"><img src="<?php echo crux_get_blob_url( $fe_item['hero_image'] ); ?>" alt="<?php echo esc_attr( $fe_item['short_title'] ); ?>" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center top;"></div>
           <div style=" padding:16px 18px 18px 18px; background:#0D1330; border-top:1.5px dashed #1E2B5E;">
-            <span class="eyebrow" style="color:#5B8DEF;">IJGB Edition</span>
-            <h3 style="font-size:19px; margin:8px 0px 4px 0px; font-weight:700; color:#FFFFFF;">LASGIDI Mainland Party</h3>
-            <p style="font-size:12.5px; color:#C5CFF5; margin:0px 0px 10px 0px;">Tickets on Eventbrite</p>
+            <span class="eyebrow" style="color:#5B8DEF;"><?php echo esc_html( $fe_item['category'] ); ?></span>
+            <h3 style="font-size:19px; margin:8px 0px 4px 0px; font-weight:700; color:#FFFFFF;"><?php echo esc_html( $fe_item['short_title'] ); ?></h3>
+            <p style="font-size:12.5px; color:#C5CFF5; margin:0px 0px 10px 0px;"><?php echo esc_html( $sub_meta ); ?></p>
             <span style="font-weight:700; font-size:12.5px; color:#5B8DEF; border-bottom:1.5px solid #5B8DEF; padding-bottom:2px;">View Details →</span>
           </div>
         </div>
       </a>
-      <a href="<?php echo esc_url( home_url( "/event/becoming-mr-mrs-crux-pt-3/" ) ); ?>" class="tilt-ticket" style="display:flex; background:#111838; border:1.5px solid #1E2B5E; border-radius:12px; min-height:330px; --r:0.8deg; transform:rotate(var(--r)); overflow:hidden;" data-m="tile">
-        <div class="ticket-stub" style="flex:0 0 90px; background:#BA0000; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;">
-          <span class="bebas" style="font-size:38px; color:#FFFFFF; line-height:1;">23</span>
-          <span style="font-size:10px; font-weight:800; letter-spacing:1.5px; color:#FFFFFF; text-align:center;">APR 2025</span>
-        </div>
-        <div style="flex:1; display:flex; flex-direction:column; min-width:0;">
-          <div style="flex:1; position:relative; min-height:180px;"><img src="<?php echo crux_get_blob_url( "2f9f2834d9f0829e887b03bccc208656" ); ?>" alt="Becoming Mr &amp; Mrs Crux Pt.3" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center top;"></div>
-          <div style=" padding:16px 18px 18px 18px; background:#0D1330; border-top:1.5px dashed #1E2B5E;">
-            <span class="eyebrow" style="color:#5B8DEF;">Part 3</span>
-            <h3 style="font-size:19px; margin:8px 0px 4px 0px; font-weight:700; color:#FFFFFF;">Becoming Mr &amp; Mrs Crux Pt.3</h3>
-            <p style="font-size:12.5px; color:#C5CFF5; margin:0px 0px 10px 0px;">Tickets on Eventbrite</p>
-            <span style="font-weight:700; font-size:12.5px; color:#5B8DEF; border-bottom:1.5px solid #5B8DEF; padding-bottom:2px;">View Details →</span>
-          </div>
-        </div>
-      </a>
-      <a href="<?php echo esc_url( home_url( "/event/dance-out-2023/" ) ); ?>" class="tilt-ticket" style="display:flex; background:#111838; border:1.5px solid #1E2B5E; border-radius:12px; min-height:330px; --r:-0.6deg; transform:rotate(var(--r)); overflow:hidden;" data-m="tile">
-        <div class="ticket-stub" style="flex:0 0 90px; background:#8C7AE6; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;">
-          <span class="bebas" style="font-size:38px; color:#10142E; line-height:1;">16</span>
-          <span style="font-size:10px; font-weight:800; letter-spacing:1.5px; color:#10142E; text-align:center;">DEC 2023</span>
-        </div>
-        <div style="flex:1; display:flex; flex-direction:column; min-width:0;">
-          <div style="flex:1; position:relative; min-height:180px;"><img src="<?php echo crux_get_blob_url( "1d5292715423e2e83b56b3330a94b3b8" ); ?>" alt="Dance OUT 2023" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center top;"></div>
-          <div style=" padding:16px 18px 18px 18px; background:#0D1330; border-top:1.5px dashed #1E2B5E;">
-            <span class="eyebrow" style="color:#5B8DEF;">Dance night</span>
-            <h3 style="font-size:19px; margin:8px 0px 4px 0px; font-weight:700; color:#FFFFFF;">Dance OUT 2023</h3>
-            <p style="font-size:12.5px; color:#C5CFF5; margin:0px 0px 10px 0px;">Sheffield · Late</p>
-            <span style="font-weight:700; font-size:12.5px; color:#5B8DEF; border-bottom:1.5px solid #5B8DEF; padding-bottom:2px;">View Details →</span>
-          </div>
-        </div>
-      </a>
+      <?php endforeach; ?>
     </div>
   </section>
 

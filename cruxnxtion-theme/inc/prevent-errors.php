@@ -96,17 +96,38 @@ function crux_virtual_template_fallback( $template ) {
 		return $template;
 	}
 
-	// 2A. Single event wildcard routing (/event/slug/ or /events/slug/)
-	if ( preg_match( '#^event(?:s)?/(.+)$#i', $slug ) ) {
-		$candidate = locate_template( array( 'single-event.php' ) );
-		if ( $candidate ) {
-			global $wp_query;
-			$wp_query->is_404 = false;
-			$wp_query->is_single = true;
-			$wp_query->is_singular = true;
-			status_header( 200 );
-			return $candidate;
+	// 2A. Single event routing (/event/slug/ or legacy /events/slug/)
+	if ( preg_match( '#^event(?:s)?/(.+)$#i', $slug, $matches ) ) {
+		$target_slug = sanitize_title( $matches[1] );
+		$alias_map = array(
+			'lasgidi-mainland-party-ijgb-edition' => 'lasgidi-mainland-party',
+			'crux-nxtion-hangout-out'             => 'crux-nxtion-hangout',
+		);
+		if ( isset( $alias_map[ $target_slug ] ) ) {
+			$target_slug = $alias_map[ $target_slug ];
 		}
+
+		$ev_post = get_page_by_path( $target_slug, OBJECT, 'event' );
+		$catalog = function_exists( 'crux_get_event_catalog' ) ? crux_get_event_catalog() : array();
+
+		if ( ( $ev_post && $ev_post->post_status === 'publish' ) || isset( $catalog[ $target_slug ] ) ) {
+			$candidate = locate_template( array( 'single-event.php' ) );
+			if ( $candidate ) {
+				global $wp_query, $post;
+				if ( $ev_post ) {
+					$post = $ev_post;
+					setup_postdata( $post );
+				}
+				$wp_query->is_404      = false;
+				$wp_query->is_single   = true;
+				$wp_query->is_singular = true;
+				status_header( 200 );
+				return $candidate;
+			}
+		}
+
+		// Nonexistent event slug -> DO NOT fake 200! Let WordPress return real 404.
+		return $template;
 	}
 
 	// 2B. Blog single post wildcard routing (/blog/slug/)

@@ -1,3 +1,9 @@
 design/preview/
 node_modules/
 dist/
+
+# Unreferenced raw photo drafts from Local site (kept on disk, untracked in git)
+cruxnxtion-theme/assets/images/crux-photos/
+cruxnxtion-theme/assets/images/live-site/
+cruxnxtion-theme/assets/images/reference/
+cruxnxtion-theme/assets/images/stock/
