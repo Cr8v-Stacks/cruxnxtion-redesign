@@ -33,7 +33,7 @@ echo "=== TASK: MOBILE DOOR STAFF CHECK-IN POLISH ===\n";
 $page_file = dirname( __DIR__, 2 ) . '/cruxnxtion-theme/page-booking-confirmation.php';
 
 // Setup test staff user
-$staff_user_id = wp_create_user( 'mobstaff_' . bin2hex( random_bytes( 4 ) ), 'Mob_Staff_123!', 'mobstaff_' . time() . '@example.com' );
+$staff_user_id = wp_create_user( 'mobstaff_' . bin2hex( random_bytes( 4 ) ), wp_generate_password( 24 ), 'mobstaff_' . time() . '@example.com' );
 $staff_user    = new WP_User( $staff_user_id );
 $staff_user->set_role( 'event_staff' );
 
@@ -228,7 +228,7 @@ $refresh_html = ob_get_clean();
 t( 'Refreshing GET within 60s keeps green CHECKED IN confirmation', false !== strpos( $refresh_html, 'CHECKED IN' ) && false !== strpos( $refresh_html, 'DOOR CHECK-IN SUCCESSFUL' ) );
 
 // 4D. Another staff user requesting the flag does NOT get the green card
-$staff_user_2_id = wp_create_user( 'staff2_' . bin2hex( random_bytes( 4 ) ), 'Staff2_Pass_123!', 'staff2_' . time() . '@example.com' );
+$staff_user_2_id = wp_create_user( 'staff2_' . bin2hex( random_bytes( 4 ) ), wp_generate_password( 24 ), 'staff2_' . time() . '@example.com' );
 $staff_user_2    = new WP_User( $staff_user_2_id );
 $staff_user_2->set_role( 'event_staff' );
 

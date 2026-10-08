@@ -58,7 +58,7 @@ t( 'event_staff does NOT have publish_posts', empty( $role->capabilities['publis
 t( 'event_staff does NOT have do_not_allow', empty( $role->capabilities['do_not_allow'] ) );
 
 // 3. User simulation for wp-admin lockdown
-$staff_user_id = wp_create_user( 'staff_' . bin2hex( random_bytes( 4 ) ), 'Pass_Staff_123!', 'staff_' . time() . '@example.com' );
+$staff_user_id = wp_create_user( 'staff_' . bin2hex( random_bytes( 4 ) ), wp_generate_password( 24 ), 'staff_' . time() . '@example.com' );
 $staff_user    = new WP_User( $staff_user_id );
 $staff_user->set_role( 'event_staff' );
 
@@ -112,7 +112,7 @@ $can_staff_checkin = current_user_can( 'edit_event_orders' ) || current_user_can
 t( 'Door check-in permission granted to event_staff user', $can_staff_checkin );
 
 // Test subscriber check-in denial
-$sub_user_id = wp_create_user( 'sub_' . bin2hex( random_bytes( 4 ) ), 'Pass_Sub_123!', 'sub_' . time() . '@example.com' );
+$sub_user_id = wp_create_user( 'sub_' . bin2hex( random_bytes( 4 ) ), wp_generate_password( 24 ), 'sub_' . time() . '@example.com' );
 wp_set_current_user( $sub_user_id );
 $can_sub_checkin = current_user_can( 'edit_event_orders' ) || current_user_can( 'manage_options' );
 t( 'Door check-in permission DENIED to subscriber user', ! $can_sub_checkin );
@@ -136,7 +136,7 @@ if ( $admin_user ) {
 }
 
 // Create editor user
-$editor_user_id = wp_create_user( 'editor_' . bin2hex( random_bytes( 4 ) ), 'Pass_Editor_123!', 'editor_' . time() . '@example.com' );
+$editor_user_id = wp_create_user( 'editor_' . bin2hex( random_bytes( 4 ) ), wp_generate_password( 24 ), 'editor_' . time() . '@example.com' );
 $editor_user    = new WP_User( $editor_user_id );
 $editor_user->set_role( 'editor' );
 

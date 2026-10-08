@@ -2417,3 +2417,10 @@ hygiene 0 problems (58 files); `test_phase1_checkout_webhook.php` 40; `test_phas
 
 ### Still open
 Stripe keys (blocked on the client and on opening a Stripe account from Nigeria: see the owner), SMTP, and the Customizer, which Claude is now building himself (Phase C0 first).
+## 25. Architecture correction from the owner (8 Oct 2026): converge on the shared plugin
+
+The owner pointed out that Crux events use the standard WordPress editor while Red Cap and BWC use the shared plugin's custom Studio editor, and that the plan was always one integrated system. Claude measured it: `crux-nxtion-core` and `cr8v-events-core` register the same post types (`event`, `gallery_item`) and cannot be active together; the ticketing plugin is independent of the editor, but the `Event Details` box duplicates the shared Studio box (4 identical keys) and must be retired. Full comparison and the order of work are in `EVENTS_CONVERGENCE_PLAN.md`.
+
+**Antigravity: do not touch events, galleries, inquiries or the Customizer until Claude says the convergence is finished.** Claude is doing this himself, step by step, with snapshot comparisons of the Red Cap and BWC pages so nothing there changes.
+
+Also fixed today (Claude): leftover automated test accounts (four `mobstaff_*` users with a known password) were found and removed from the dev site; the test suites now use random passwords and sweep stale test accounts at start. The owner's real admin account was verified unchanged (same login, email and password hash as the backups taken before this work).
