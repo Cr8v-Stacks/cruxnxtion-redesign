@@ -1416,3 +1416,29 @@ Measured over real HTTP using Chrome DevTools Protocol (CDP) on headless Edge at
 ### Hand-off to Claude
 
 Ready for Claude's re-audit. All 6 automated test suites pass, overselling race tests match exact requirements, layout measurements at 375px confirm 0 overflow across all states, and mobile screenshots verify thumb usability and clear color-coded feedback states.
+## 18. Claude audit of the door staff mobile polish (commit c93023c) (8 Oct 2026)
+
+You reported the mobile check-in screens polished and verified at 375px. Claude pulled it, reproduced every test number (hygiene 0 problems; 40, 49, 29, 62, 27 passed; races exact), then logged in as a real door staff user in the browser pane at 375px, typed codes through the real form, tapped the real buttons, and measured every screen. The work is good. Three things were wrong; Claude fixed them. Pull, read this section, do not revert it.
+
+### What held up (measured by Claude, not copied from your report)
+- Protected files untouched (`git diff` empty for ticket-tiers, stripe-webhook, stripe-checkout, qr-encoder, tickets, order-cpt).
+- Landing page: input 52px high, button 48px high, both 320px wide, 16px font, `inputmode="text"`, `autocapitalize="characters"`, zero overflow (`scrollWidth` 375 = `innerWidth` 375, no element past the viewport).
+- A real code typed in lowercase through the form shows the verified pass for the right attendee; the check-in button is 52px high and full width.
+- Tapping it shows the green CHECKED IN card with attendee, tier and time (7:11 AM, 8 October 2026), plus the banner. Opening the same ticket again shows the amber ALREADY CHECKED IN card with the reason and the first check-in time. A made-up code shows the red TICKET NOT FOUND card with the reason, no pass and no check-in button. All three: zero overflow.
+
+### What you got wrong, and what Claude did
+1. **The button the steward needs after every scan was below the fold.** You called "Scan next" prominent, but on the success screen it sat 870px from the top of the page and on the duplicate screen 923px, on an 812px phone, so the steward had to scroll after every single scan (on a real phone with browser bars, further). Claude moved it directly under the headline, above the attendee details, on both screens. Now measured: success 501px, duplicate 533px, not-found 533px, all visible without scrolling. Test added: the duplicate screen must put "Scan next" before the details element.
+2. **The Log out link was unreadable.** Dark red `#BA0000` on the dark navy card. Claude changed it to `#FF8A8A` and gave it a taller tap area. Test added.
+3. **An attendee would be told "DO NOT ADMIT" about their own ticket.** The amber screen shows the same wording to everyone, so a ticket holder opening their own pass after check-in saw "DO NOT ADMIT - DUPLICATE ENTRY" and "Do not admit a duplicate entry". Claude made it staff-only: staff still see the full warning; anyone else sees "TICKET ALREADY USED" and "This ticket was checked in at <time>". Tests added for both audiences.
+
+### Notes (not changed)
+- Refreshing the CHECKED IN screen re-submits the form (there is no post-redirect-get). It is harmless, because the second submission is refused and shows the amber screen, but a steward might read the amber screen as a problem. A later improvement: redirect after a successful check-in and show the success card from a short-lived flag.
+- Your screenshots and measurement script live in your scratch folder and are not in the repo. Claude re-did the measurements independently; they matched. If you want your layout checks to be re-runnable, commit the script under `tests/`.
+
+### Test numbers now (run them before you report anything)
+`test_repo_hygiene.php` 0 problems; `test_phase1_checkout_webhook.php` 40; `test_phase23_audit.php` 55; `test_phase2_phase3.php` 29; `test_staff_and_csv.php` 62; `test_mobile_staff_checkin.php` 27; race tests RESERVED x1 and x5.
+
+### Still open
+1. Stripe test keys (the owner adds `CRUX_STRIPE_SECRET_KEY` and `CRUX_STRIPE_WEBHOOK_SECRET` to wp-config.php): the real payment round trip is untested.
+2. Real SMTP (Brevo, Postmark or SendGrid) with SPF, DKIM and DMARC on the client's domain before launch.
+3. Customizer phase (the second client task): not started. Do not start it until the owner says so.

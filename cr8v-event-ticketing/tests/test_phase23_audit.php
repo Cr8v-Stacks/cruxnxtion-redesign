@@ -181,6 +181,22 @@ t( 'page: a real code with a forged secret is rejected', false === strpos( $h_fo
 $gone  = cr8v_tix_ticket_secret( 'TIX-0123456789AB' );
 $h_gh  = $render( array( 'cr8v_ticket' => 'TIX-0123456789AB', 'tix_secret' => $gone ), 0 );
 t( 'page: a genuine-looking link for a ticket that no longer exists says NOT FOUND, not valid', false !== strpos( $h_gh, 'TICKET NOT FOUND' ) && false === strpos( $h_gh, 'OFFICIAL VERIFIED PASS' ) );
+// Door staff result screens (phone): the "Scan next" button must come before the long details, so it is
+// reachable without scrolling after every scan; the Log out link must be readable on the dark card.
+$lk_ticket_list = get_post_meta( $lk_order, '_cr8v_order_tickets', true );
+$lk_ticket_list[0]['checked_in']    = true;
+$lk_ticket_list[0]['checked_in_at'] = current_time( 'mysql' );
+update_post_meta( $lk_order, '_cr8v_order_tickets', $lk_ticket_list );
+$h_dup = $render( array( 'cr8v_ticket' => $real ), $u_staff->ID );
+t( 'duplicate screen puts Scan next before the attendee details', false !== strpos( $h_dup, 'ALREADY CHECKED IN' ) && strpos( $h_dup, 'Scan next' ) < strpos( $h_dup, 'class="door-verify-box"' ) );
+$h_nf = $render( array( 'cr8v_ticket' => 'TIX-000000000000' ), $u_staff->ID );
+t( 'not-found screen has Scan next', false !== strpos( $h_nf, 'TICKET NOT FOUND' ) && false !== strpos( $h_nf, 'Scan next' ) );
+$h_land = $render( array(), $u_staff->ID );
+t( 'staff landing page: Log out link is not the unreadable dark red', false !== strpos( $h_land, 'Log out' ) && false === strpos( $h_land, 'color:#BA0000; font-weight:600; text-decoration:underline;' ) );
+$h_used = $render( array( 'cr8v_ticket' => $real, 'tix_secret' => cr8v_tix_ticket_secret( $real ) ), 0 );
+t( 'an attendee viewing their own used pass is not told DO NOT ADMIT (that wording is for door staff)', false !== strpos( $h_used, 'ALREADY CHECKED IN' ) && false === stripos( $h_used, 'do not admit' ) && false !== strpos( $h_used, 'TICKET ALREADY USED' ) );
+t( 'door staff viewing the same used pass is told DO NOT ADMIT', false !== stripos( $h_dup, 'do not admit' ) );
+t( 'visitor never sees a Scan next button or the staff portal', false === strpos( $render( array( 'cr8v_ticket' => 'TIX-000000000000' ), 0 ), 'Scan next' ) );
 $_GET = array();
 wp_set_current_user( 0 );
 wp_delete_post( $lk_order, true );
