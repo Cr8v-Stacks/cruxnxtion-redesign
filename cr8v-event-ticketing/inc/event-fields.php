@@ -57,6 +57,9 @@ add_action( 'add_meta_boxes', 'cr8v_tix_add_meta_box' );
 function cr8v_tix_render_meta_box( $post ) {
 	wp_nonce_field( 'cr8v_tix_save_event', 'cr8v_tix_nonce' );
 
+	// Tell the editor where each part of the event page comes from, so nothing looks hidden.
+	echo '<p class="description" style="margin:0 0 12px;">' . esc_html__( 'Where things come from: the event name is the title above; the short summary is the Excerpt (right-hand panel); the main text is the editor above; the main photo is the Featured Image. Everything else is in this box.', 'cr8v-event-ticketing' ) . '</p>';
+
 	$get = function ( $key ) use ( $post ) {
 		$value = get_post_meta( $post->ID, '_cr8v_event_' . $key, true );
 		if ( '' === $value ) {
@@ -117,7 +120,7 @@ function cr8v_tix_render_meta_box( $post ) {
 			</div>
 			<button type="button" class="button" id="cr8v-tix-pick"><?php esc_html_e( 'Choose images', 'cr8v-event-ticketing' ); ?></button>
 			<button type="button" class="button-link-delete" id="cr8v-tix-clear"><?php esc_html_e( 'Clear', 'cr8v-event-ticketing' ); ?></button>
-			<p class="cr8v-tix-hint"><?php esc_html_e( 'The main picture is the Featured Image (right-hand panel). If no gallery is chosen, older events keep their original gallery.', 'cr8v-event-ticketing' ); ?></p>
+			<p class="cr8v-tix-hint"><?php esc_html_e( 'The main picture is the Featured Image (right-hand panel). The gallery photos are shown under From the Gallery on the event page.', 'cr8v-event-ticketing' ); ?></p>
 		</div>
 	</div>
 	<?php

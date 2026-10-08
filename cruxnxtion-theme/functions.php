@@ -14,6 +14,7 @@ define( 'CRUX_THEME_VERSION', '1.5.3' );
 // Include Core Theme Engines
 require_once get_template_directory() . '/inc/prevent-errors.php';
 require_once get_template_directory() . '/inc/event-engine.php';
+require_once get_template_directory() . '/inc/event-seeder.php';
 require_once get_template_directory() . '/inc/media-importer.php';
 require_once get_template_directory() . '/inc/demo-importer.php';
 

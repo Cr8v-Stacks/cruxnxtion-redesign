@@ -2393,3 +2393,27 @@ Never edit PHP/JS/CSS with a PowerShell Get-Content/Set-Content round trip. Befo
 1. Stripe test keys (the owner adds `CRUX_STRIPE_SECRET_KEY` and `CRUX_STRIPE_WEBHOOK_SECRET` to wp-config.php).
 2. Real SMTP (Brevo, Postmark or SendGrid) with SPF, DKIM and DMARC on the client's domain before launch.
 3. Customizer implementation: waiting for the owner to approve the revised plan in `CUSTOMIZER_MAPPING.md` section 7. Do not start it. Phase C0 (the header and footer extraction) is the first step when the owner says go.
+## 24. Claude built the event seeder and proved every event field is editable (8 Oct 2026)
+
+The owner asked: when the theme is installed on the client's site, can every existing event be edited from the admin without omissions? Claude checked and found a real gap, then fixed it himself. Pull and read this before touching events.
+
+### What was wrong
+- On a fresh install the importer (`inc/demo-importer.php`) created the 8 events with only five fields (date, time, venue, category, booking link): no summary, no description, no photos, no gallery, and two web addresses that differ from the live ones. All the rich content on this dev site had been written into the database by hand, so it would not exist on the client's site.
+- Even here, the event photos were stored in a hidden field (`_cr8v_event_hero_blob`, `_cr8v_event_gallery`). On the admin edit screen the Featured Image box was empty and nothing could change the gallery: the page showed photos the client could not edit.
+
+### What Claude did
+1. `inc/event-seed-data.php`: the original content of all 8 events recovered from git history (the catalog removed in `d3723c7`), used only for seeding, never when a page is shown.
+2. `inc/event-seeder.php`: `crux_seed_events()` creates missing events with every field, fills only EMPTY fields on existing ones, renames old addresses (`lasgidi-mainland-party-ijgb-edition`, `crux-nxtion-hangout-out`) to the clean ones, never overwrites the client's text, never recreates a trashed event, and attaches the Featured Image and Gallery from the Media Library once (after that the client's changes are never overruled; the theme's own photo copy stays as a fallback until then). It runs once per install on `init`/`admin_init`; the media import is only triggered from wp-admin. The importer now calls it.
+3. Found and fixed in testing: a trashed event was recreated, because WordPress renames trashed posts to `<slug>__trashed`.
+4. The 8 real events on this site are now complete in the admin (verified): each has a Featured Image, its gallery and the seed marker; their existing text is unchanged (lengths compared).
+5. The Event Details box now explains where each part of the page comes from; the gallery hint was corrected.
+
+### Proof
+- `tests/test_event_seeder.php`, 59 checks. The key section types a unique value into every field through WordPress's own save routine (`edit_post`, what the Update button runs) and requires it on the public event page: title, short title, category, date, time, venue, country, summary, description, booking link, Featured Image, both gallery images, plus ticket colour on the cards. A cleared field stays cleared. The Event Details box is rendered and shows every field filled.
+- A real browser check as an administrator: the edit screen of a real event shows the title, the description in the editor, the poster in the Featured Image panel, the Excerpt, and the Event Details box with all fields populated and 3 gallery thumbnails.
+
+### Test numbers now
+hygiene 0 problems (58 files); `test_phase1_checkout_webhook.php` 40; `test_phase23_audit.php` 55; `test_phase2_phase3.php` 30; `test_staff_and_csv.php` 62; `test_mobile_staff_checkin.php` 66; `test_event_seeder.php` 59; race RESERVED x1 and x5.
+
+### Still open
+Stripe keys (blocked on the client and on opening a Stripe account from Nigeria: see the owner), SMTP, and the Customizer, which Claude is now building himself (Phase C0 first).
