@@ -15,6 +15,7 @@ define( 'CRUX_THEME_VERSION', '1.5.3' );
 require_once get_template_directory() . '/inc/prevent-errors.php';
 require_once get_template_directory() . '/inc/event-engine.php';
 require_once get_template_directory() . '/inc/event-seeder.php';
+require_once get_template_directory() . '/inc/layout.php';
 // Events are edited in the shared plugin's Studio box (one place per field), so the default editor and Excerpt box are hidden.
 add_filter( 'cr8v_events_hide_default_editor', '__return_true' );
 // Crux keeps its own web addresses (/event/<name>/, and /events/ is an ordinary page), and keeps its own enquiry form and admin.
