@@ -1442,3 +1442,446 @@ You reported the mobile check-in screens polished and verified at 375px. Claude 
 1. Stripe test keys (the owner adds `CRUX_STRIPE_SECRET_KEY` and `CRUX_STRIPE_WEBHOOK_SECRET` to wp-config.php): the real payment round trip is untested.
 2. Real SMTP (Brevo, Postmark or SendGrid) with SPF, DKIM and DMARC on the client's domain before launch.
 3. Customizer phase (the second client task): not started. Do not start it until the owner says so.
+
+---
+
+## 19. Door Check-In Post-Redirect-Get (PRG) & Signed Flag Implementation (8 Oct 2026)
+
+### What I did:
+
+1. **Implemented Post-Redirect-Get (HTTP 303 See Other) in `cruxnxtion-theme/page-booking-confirmation.php`**:
+   - On successful door check-in POST (`cr8v_do_checkin`), instead of rendering the success state in the POST response, the server issues an HTTP `303 See Other` redirect via `wp_safe_redirect( $redirect_url, 303 )` to the ticket URL.
+   - The redirect carries a short-lived signed capability token in query parameters:
+     - `cr8v_ticket=<ticket_code>`
+     - `checked=1`
+     - `chk_staff=<staff_user_id>`
+     - `chk_time=<unix_timestamp>`
+     - `chk_token=<hmac_token>`
+     - (and `tix_secret=<secret>` preserved if checked in via QR pass).
+   - Hooked via filters: `apply_filters( 'cr8v_checkin_redirect_url', $redirect_url, $p_code, $redirect_staff_id )` and `apply_filters( 'cr8v_do_checkin_redirect', ! headers_sent(), $redirect_url )`.
+
+2. **Cryptographic Token Generator & Validator (`cr8v_tix_generate_checkin_token`, `cr8v_tix_verify_checkin_token`)**:
+   - `cr8v_tix_generate_checkin_token( $ticket_code, $staff_id, $time )`: Derives a 32-character HMAC-SHA256 token keyed with WordPress `wp_salt( 'nonce' )`, uniquely binding the token to the ticket code, the staff member's ID, and timestamp.
+   - `cr8v_tix_verify_checkin_token( $ticket_code, $staff_id, $time, $token )`:
+     - Checks user capability: must have `edit_event_orders` or `manage_options`.
+     - Strict identity match: `(int) $staff_id === get_current_user_id()`.
+     - 60-second validity window: `time() - $time <= 60` and `$time <= time() + 5` (clock skew protection).
+     - Constant-time verification using `hash_equals()`.
+
+3. **GET Request Rendering & Safe Refresh**:
+   - On GET, when `?checked=1` is present with valid token parameters for the logged-in staff member, `$checkin_status` is set to `'success'`.
+   - The green `CHECKED IN` card renders with eyebrow `DOOR CHECK-IN SUCCESSFUL`, attendee name, tier, check-in timestamp, and prominent `Scan next →` button.
+   - Hitting browser refresh (F5 / Cmd+R) sends a GET request to the same URL; no "Confirm form resubmission" popup appears, and the green `CHECKED IN` card remains displayed.
+   - Once the 60-second window expires, refreshing falls cleanly through to the amber `ALREADY CHECKED IN` card.
+
+4. **Access Control & Rejection Cases**:
+   - **Visitor / Attendee**: If an unauthenticated visitor appends `?checked=1` or visits a copied staff URL, `cr8v_tix_verify_checkin_token` returns `false`. They never see the green card or staff controls; they see the attendee-safe amber message (`TICKET ALREADY USED`).
+   - **Another Staff User**: If Staff Member B visits Staff Member A's check-in URL, the user ID check rejects the request. Staff Member B sees the amber duplicate warning (`ALREADY CHECKED IN • DO NOT ADMIT`).
+   - **Expired Flag (> 60s)**: Fails time check; falls through to amber card.
+   - **Forged Flag**: Fails HMAC verification; falls through to amber card.
+   - **Bare `?checked=1`**: Fails verification; falls through to amber card.
+
+5. **Automated Unit Tests Expanded in `test_mobile_staff_checkin.php` (now 54 passed)**:
+   - Added tests for 303 redirect on POST, redirect URL parameter structure, GET rendering of green card, refresh retention within 60s, user isolation (Staff B rejected), visitor rejection, expired flag rejection, forged flag rejection, and bare `?checked=1` rejection.
+
+6. **Real HTTP Network Verification via curl & Headless Edge**:
+   - Logged in through real `wp-login.php` over HTTP.
+   - Submitted live POST check-in: HTTP response `303 See Other` with `Location` header.
+   - Followed Location header with staff cookie: HTTP 200 with green `CHECKED IN` card.
+   - Reloaded Location header: HTTP 200 with green `CHECKED IN` card.
+   - Requested Location header without cookies: HTTP 200 with amber `TICKET ALREADY USED` card (no `Scan next`).
+   - Measured layout at 375px across all states: `scrollWidth === 375px`, `innerWidth === 375px`, 0 overflow elements.
+
+---
+
+### What I did not do:
+
+- Did NOT touch protected files (`inc/ticket-tiers.php`, `inc/stripe-webhook.php`, `inc/stripe-checkout.php`, `inc/qr-encoder.php`, `inc/tickets.php`, `inc/order-cpt.php`).
+- Did NOT hardcode any client name or theme path in `cr8v-event-ticketing`.
+- Did NOT edit any PHP, JS, or CSS files with PowerShell `Get-Content`/`Set-Content`.
+- Did NOT start the Customizer phase.
+- Did NOT add Stripe keys or configure SMTP.
+
+---
+
+### Test Suite Outputs (All 7 Suites Passing 100%)
+
+#### 1. Suite 1: `test_repo_hygiene.php` (0 problems)
+```
+RESULT: scanned 55 files, 0 problem(s)
+```
+
+#### 2. Suite 2: `test_phase1_checkout_webhook.php` (40 passed, 0 failed)
+```
+== Checkout validation
+PASS  quantity above tier max_per_order is rejected
+PASS  same tier sent twice cannot bypass max_per_order (merged to 6)
+PASS  honeypot field rejects bots
+PASS  invalid email rejected
+PASS  unknown tier rejected
+PASS  paid order without a Stripe key returns 503 and takes no stock
+PASS    ...and no reservation row was written
+== Free RSVP flow
+PASS  free RSVP for 2 succeeds
+PASS  two tickets issued
+PASS  ticket secret verifies for the real code
+PASS  ticket secret does NOT verify for a forged value
+PASS  order total is 0 and status completed
+PASS  second RSVP for 2 is refused (only 1 free ticket left)
+PASS  last free ticket can still be taken
+PASS  event is now sold out for the free tier
+PASS  same email cannot make more than 3 free bookings per hour
+PASS  per-IP rate limit returns 429
+== Webhook
+PASS  wrong signature rejected with 400
+PASS  stale timestamp rejected with 400
+PASS  payload signed with a different secret rejected
+PASS  rejected events did not touch the order
+[cr8v-ticketing] Order 13807 amount mismatch (expected 5000, got 100 gbp).
+PASS  amount mismatch accepted (200) but flagged needs_review
+PASS    ...and no tickets were issued
+PASS  unpaid completed session does not issue tickets
+[cr8v-ticketing] Webhook checkout.session.completed failed: simulated email failure
+PASS  processing failure returns 500 so Stripe retries
+PASS    ...and the idempotency claim was released
+PASS  the retry of the same event is now processed (order completed)
+PASS    ...2 tickets issued
+PASS    ...stock hold converted to a completed sale
+PASS  duplicate delivery returns already_processed
+PASS  same session under a new event id does not re-fulfil (no second email hook)
+PASS    ...and ticket count is unchanged
+PASS  partial refund marks partially_refunded and keeps tickets valid
+PASS  full refund marks refunded and voids tickets
+PASS  expired checkout session releases its held stock
+== Order privacy
+PASS  order post type is not public and not in REST
+PASS  order post type uses its own capabilities
+PASS  Contributor, Author and Editor cannot read orders
+PASS  Administrator can manage orders
+PASS  nobody was granted the do_not_allow capability
+== Cleanup
+
+RESULT: 40 passed, 0 failed
+```
+
+#### 3. Suite 3: `test_phase23_audit.php` (55 passed, 0 failed)
+```
+PASS  booking a past event is refused (400)
+PASS    ...and no stock was taken
+PASS  an event happening today can still be booked
+PASS  ICS is produced for a published event
+PASS  a line break in the description cannot inject a calendar field
+PASS  description line breaks become escaped \n
+PASS  commas and semicolons are escaped in the title
+PASS  no ICS line exceeds 75 octets
+PASS  long values are folded to 75 octets
+PASS  draft event calendar is not available to visitors
+PASS  draft event calendar is available to an editor
+PASS  QR encoder returns a square matrix for a real ticket link
+PASS  QR encoder is deterministic
+PASS  QR svg differs for different tickets
+PASS  QR encoder refuses data that is too long instead of drawing garbage
+PASS  QR svg has the three finder patterns (corner modules dark)
+PASS  email brand filter is applied
+PASS  CSV includes a completed order
+PASS  CSV includes a refunded order (so door staff can turn it away)
+PASS  CSV leaves out pending, failed and cancelled orders (no ticket, so no personal data on the door list)
+PASS  pass page toolbar has a single class attribute that includes no-print
+PASS  door-staff-only: a user with only the staff role
+PASS  door-staff-only: staff who is also an editor is NOT locked down
+PASS  door-staff-only: editor and a missing user are not staff
+PASS  login redirect: staff-only goes to the check-in page
+PASS  login redirect: staff who is also an editor keeps the normal destination
+PASS  login redirect: a failed login (WP_Error) is passed through untouched
+PASS  staff landing page is filterable (no theme path hardcoded in the plugin)
+PASS  staff-only is redirected away from wp-admin/edit.php (not shown a 403)
+PASS  staff-only is redirected away from wp-admin/options-general.php (not shown a 403)
+PASS  staff-only is redirected away from wp-admin/plugins.php (not shown a 403)
+PASS  staff-only is redirected away from wp-admin/users.php (not shown a 403)
+PASS  staff who is also an editor can still open wp-admin/edit.php
+PASS  an editor can still open wp-admin/edit.php
+PASS  normalise: lowercase and spaces become the canonical code
+PASS  normalise: partial text, wrong characters and SQL-ish text are rejected
+PASS  find: a real code (any case) returns its order and ticket
+PASS  find: a well-formed code that does not exist returns nothing
+PASS  find: "TIX", "a:2" and empty text return nothing
+PASS  page: staff typing a real code (lowercase) sees the verified pass and the check-in button
+PASS  page: staff typing "TIX-000000000000" gets TICKET NOT FOUND, no pass, no check-in button
+PASS  page: staff typing "TIX-DOESNOTEXIST" gets TICKET NOT FOUND, no pass, no check-in button
+PASS  page: staff typing "TIX" gets TICKET NOT FOUND, no pass, no check-in button
+PASS  page: staff typing "a:2" gets TICKET NOT FOUND, no pass, no check-in button
+PASS  page: staff typing "' OR 1=1 --" gets TICKET NOT FOUND, no pass, no check-in button
+PASS  page: a visitor with only the code (no secret) sees no pass
+PASS  page: a visitor scanning the real QR link sees the pass but no check-in button
+PASS  page: a real code with a forged secret is rejected
+PASS  page: a genuine-looking link for a ticket that no longer exists says NOT FOUND, not valid
+PASS  duplicate screen puts Scan next before the attendee details
+PASS  not-found screen has Scan next
+PASS  staff landing page: Log out link is not the unreadable dark red
+PASS  an attendee viewing their own used pass is not told DO NOT ADMIT (that wording is for door staff)
+PASS  door staff viewing the same used pass is told DO NOT ADMIT
+PASS  visitor never sees a Scan next button or the staff portal
+
+RESULT: 55 passed, 0 failed
+```
+
+#### 4. Suite 4: `test_phase2_phase3.php` (29 passed, 0 failed)
+```
+=== STARTING PHASE 2 & 3 AUTOMATED VERIFICATION ===
+
+1. Created Test Event ID: 13813 with 2 tiers (Free RSVP & VIP £45.00)
+
+--- TEST 1: Honeypot Protection ---
+ [PASS] Honeypot filled request rejected with HTTP 400
+
+--- TEST 2: Empty Items Validation ---
+ [PASS] Empty items request rejected with HTTP 400
+
+--- TEST 3: Free RSVP Checkout Flow ---
+ [PASS] Free RSVP request succeeded with HTTP 200
+ [PASS] Response indicates is_free = true
+ [PASS] Redirect URL contains order_token
+ [PASS] Retrieved order_token: res_894c2eefef18f7754eb5e7090b848dd2
+
+--- TEST 4: Database Order & Tickets Verification ---
+ [PASS] Order record located in database
+ [PASS] Order status is 'completed'
+ [PASS] Exactly 2 individual tickets issued
+ [PASS] Ticket code has canonical format: TIX-CEB47B8092B0
+ [PASS] Derived HMAC secret is 32 chars: cc332a6bc29cf05b0be2514197609ee3
+ [PASS] cr8v_tix_verify_ticket_secret() passes constant-time verification
+ [PASS] cr8v_tix_verify_ticket_secret() rejects forged secret
+
+--- TEST 5: Confirmation Email Hook & .ICS Generation ---
+ [PASS] Confirmation email sent timestamp recorded: 2026-10-08 07:55:34
+ [PASS] Valid iCalendar (.ics) format generated
+ [PASS] .ics contains unescaped event title
+
+--- TEST 6: Booking Confirmation Page Access Control ---
+ [PASS] Page with order_token shows confirmed order header
+ [PASS] Page with order_token displays verified ticket code
+ [PASS] Page with order_token displays QR verification link
+ [PASS] Page with bare session_id shows payment received notice
+ [PASS] SECURITY CHECK: Page with bare session_id does NOT contain ticket code
+ [PASS] SECURITY CHECK: Page with bare session_id does NOT contain QR verification link
+ [PASS] Security explanation banner is present
+ [PASS] QR scan link shows verified pass status
+ [PASS] Shows entry validity
+ [PASS] Forged secret produces invalid ticket alert
+
+--- TEST 7: Staff Door Check-In Action ---
+ [PASS] Check-in POST action reports success
+ [PASS] Ticket checked_in flag set to true in database
+ [PASS] Ticket checked_in_at timestamp recorded
+
+Cleaned up test event and order.
+
+======================================================
+SUMMARY: 29 PASSED, 0 FAILED
+======================================================
+
+ALL PHASE 2 & PHASE 3 VERIFICATIONS PASSED 100%!
+```
+
+#### 5. Suite 5: `test_staff_and_csv.php` (62 passed, 0 failed)
+```
+=== TASK 1: EVENT_STAFF ROLE & CAPABILITIES ===
+PASS  event_staff role is registered in WordPress
+PASS  event_staff has edit_event_orders capability
+PASS  event_staff has read capability
+PASS  event_staff does NOT have edit_posts
+PASS  event_staff does NOT have edit_pages
+PASS  event_staff does NOT have manage_options
+PASS  event_staff does NOT have switch_themes
+PASS  event_staff does NOT have activate_plugins
+PASS  event_staff does NOT have edit_users
+PASS  event_staff does NOT have delete_posts
+PASS  event_staff does NOT have publish_posts
+PASS  event_staff does NOT have do_not_allow
+PASS  Logged in staff user has role event_staff
+PASS  Staff user can edit_event_orders
+PASS  Staff user CANNOT edit_posts in wp-admin
+PASS  Staff user CANNOT edit_pages in wp-admin
+PASS  Staff user CANNOT manage_options (settings) in wp-admin
+PASS  Staff user CANNOT switch_themes in wp-admin
+PASS  Staff user CANNOT activate_plugins in wp-admin
+PASS  Staff user CANNOT edit_users in wp-admin
+PASS  Door check-in permission granted to event_staff user
+PASS  Door check-in permission DENIED to subscriber user
+
+=== TASK 1B: DOOR STAFF LOGIN FLOW & WP-ADMIN LOCKDOWN ===
+PASS  event_staff login redirects to the check-in page
+PASS  cr8v_tix_staff_login_redirect leaves administrator redirect untouched
+PASS  Administrator login redirect does NOT redirect to booking-confirmation
+PASS  cr8v_tix_staff_login_redirect leaves editor redirect untouched
+PASS  Editor login redirect does NOT redirect to booking-confirmation
+PASS  wp-admin/index.php redirects event_staff away to /booking-confirmation/
+PASS  wp-admin/profile.php redirects event_staff away to /booking-confirmation/
+PASS  wp-admin/edit.php redirects event_staff away to /booking-confirmation/
+PASS  wp-admin/admin-ajax.php allows event_staff through (no redirect)
+PASS  wp-admin/admin-post.php allows event_staff through (no redirect)
+PASS  wp-admin/index.php allows administrator through (no redirect)
+PASS  wp-admin/index.php allows editor through (no redirect)
+PASS  Door staff landing page shows "You are logged in as door staff." notice
+PASS  Door staff landing page includes manual ticket code lookup input
+PASS  Door staff landing page indicates "Door Check-In Active"
+PASS  Anonymous visitor does NOT see door staff notice
+PASS  Anonymous visitor does NOT see "Door Check-In Active"
+PASS  Staff code-only lookup derives secret and displays attendee pass
+PASS  Anonymous user code-only lookup does NOT show ticket details or check-in button
+
+=== TASK 2: CSV ATTENDEE EXPORT & FORMULA INJECTION ===
+PASS  CSV sanitizer prefixes = formula
+PASS  CSV sanitizer prefixes + formula
+PASS  CSV sanitizer prefixes - formula
+PASS  CSV sanitizer prefixes @ formula
+PASS  CSV sanitizer prefixes tab
+PASS  CSV sanitizer prefixes carriage return
+PASS  CSV sanitizer leaves normal name untouched
+PASS  CSV sanitizer leaves normal email untouched
+PASS  CSV sanitizer handles empty string
+PASS  CSV contains header row
+PASS  Formula =1+1 is neutralized in CSV with single quote
+PASS  Formula @attacker.org is neutralized in CSV with single quote
+PASS  Formula +447999888777 is neutralized in CSV with single quote
+PASS  Formula -Special Tier is neutralized in CSV with single quote
+PASS  Formula =HYPERLINK is neutralized in CSV with single quote
+PASS  No unquoted =1+1 exists in CSV
+PASS  event_staff user CANNOT export CSV (manage_options check)
+PASS  Subscriber user CANNOT export CSV (manage_options check)
+PASS  Administrator CAN export CSV
+PASS  Valid CSV export nonce passes
+PASS  Forged CSV export nonce fails
+
+=== CLEANUP ===
+Cleaned up test event, orders, and users.
+
+RESULT: 62 passed, 0 failed
+```
+
+#### 6. Suite 6: `test_mobile_staff_checkin.php` (54 passed, 0 failed)
+```
+=== TASK: MOBILE DOOR STAFF CHECK-IN POLISH ===
+PASS  Staff landing page lookup input has inputmode="text"
+PASS  Staff landing page lookup input has autocapitalize="characters"
+PASS  Staff landing page lookup input has min-height: 48px or height: 52px
+PASS  Staff landing page submit button is full width (width: 100%)
+PASS  Staff landing page submit button has min-height: 48px
+PASS  Valid unchecked pass displays OFFICIAL VERIFIED PASS
+PASS  Valid unchecked pass displays VALID FOR ENTRY
+PASS  Valid unchecked pass displays attendee name
+PASS  Valid unchecked pass displays CONFIRM DOOR CHECK-IN button for staff
+PASS  Check-in POST shows large green CHECKED IN confirmation
+PASS  Check-in POST shows DOOR CHECK-IN SUCCESSFUL eyebrow
+PASS  Check-in POST shows attendee name
+PASS  Check-in POST shows ticket tier
+PASS  Check-in POST shows check-in time
+PASS  Check-in POST shows prominent "Scan next" button
+PASS  Check-in POST "Scan next" button links to staff check-in landing page
+PASS  Database records ticket as checked_in
+PASS  Check-in POST issues HTTP 303 See Other redirect
+PASS  Check-in POST redirect URL points to ticket with ?checked=1
+PASS  Check-in POST redirect URL includes chk_staff parameter
+PASS  Check-in POST redirect URL includes chk_time parameter
+PASS  Check-in POST redirect URL includes chk_token parameter
+PASS  PRG GET displays large green CHECKED IN confirmation for staff
+PASS  PRG GET displays DOOR CHECK-IN SUCCESSFUL eyebrow
+PASS  PRG GET displays attendee name
+PASS  PRG GET displays ticket tier
+PASS  PRG GET displays gate status ADMITTED • PASS VERIFIED
+PASS  PRG GET does NOT display ALREADY CHECKED IN warning
+PASS  PRG GET does NOT display DO NOT ADMIT warning
+PASS  Refreshing GET within 60s keeps green CHECKED IN confirmation
+PASS  Another staff user requesting flag does NOT see DOOR CHECK-IN SUCCESSFUL
+PASS  Another staff user sees ALREADY CHECKED IN warning instead
+PASS  Another staff user sees DO NOT ADMIT warning
+PASS  Visitor with flag does NOT see DOOR CHECK-IN SUCCESSFUL
+PASS  Visitor with flag does NOT see ADMITTED • PASS VERIFIED
+PASS  Visitor with flag sees TICKET ALREADY USED notice
+PASS  Visitor with flag never sees Scan next button
+PASS  Expired flag (>60s) does NOT see DOOR CHECK-IN SUCCESSFUL
+PASS  Expired flag falls through to ALREADY CHECKED IN amber card
+PASS  Expired flag displays DO NOT ADMIT warning
+PASS  Forged flag does NOT see DOOR CHECK-IN SUCCESSFUL
+PASS  Forged flag falls through to ALREADY CHECKED IN amber card
+PASS  Bare ?checked=1 without token does NOT see DOOR CHECK-IN SUCCESSFUL
+PASS  Bare ?checked=1 falls through to ALREADY CHECKED IN amber card
+PASS  Already checked-in ticket displays ALREADY CHECKED IN heading
+PASS  Already checked-in ticket displays DO NOT ADMIT warning
+PASS  Already checked-in ticket displays unmistakable Reason banner
+PASS  Already checked-in ticket displays attendee details
+PASS  Already checked-in ticket displays prominent "Scan next" button
+PASS  Not-found ticket displays TICKET NOT FOUND heading
+PASS  Not-found ticket displays DO NOT ADMIT warning
+PASS  Not-found ticket displays unmistakable Reason banner
+PASS  Not-found ticket displays prominent "Scan next" button
+PASS  Not-found ticket does NOT display check-in button or verified pass
+
+=== CLEANUP ===
+Cleaned up test event, order, and staff users.
+RESULT: 54 passed, 0 failed
+```
+
+#### 7. Suite 7: Concurrency & Overselling Tests (`run-race.ps1`)
+```
+test event id: 13822  capacity: 1  workers: 12
+results: REJECTED x11, RESERVED x1
+reserved ticket rows in DB: 1
+cleaned event 13822
+
+test event id: 13823  capacity: 5  workers: 20
+results: REJECTED x15, RESERVED x5
+reserved ticket rows in DB: 5
+cleaned event 13823
+```
+
+---
+
+### Real HTTP & 375px Headless Browser Verification Evidence
+
+#### 1. Live HTTP Curl Flow (with real `wp-login.php` authentication)
+```
+=== 1. Log In via wp-login.php over HTTP ===
+wp-login.php HTTP Status: 302
+
+=== 2. Request Pass Page to Extract Nonce ===
+Extracted check-in nonce from real HTML: a4dff383f1
+
+=== 3. Submit Check-In POST over HTTP ===
+POST HTTP Status: 303
+POST Redirect Location: http://dev-playground.local/booking-confirmation/?cr8v_ticket=TIX-919B28A99B3F&checked=1&chk_staff=128&chk_time=1791446089&chk_token=0fa2ecd0225e452c5ea6ade410577522&tix_secret=714bf615cc785c26b8c170c5ddaf4191
+
+=== 4. Follow Redirect (GET) with Staff Cookie ===
+Staff GET HTTP Status: 200
+Staff GET contains 'CHECKED IN': YES
+Staff GET contains 'DOOR CHECK-IN SUCCESSFUL': YES
+Staff GET contains 'ADMITTED • PASS VERIFIED': YES
+Staff GET contains 'ALREADY CHECKED IN': NO
+
+=== 5. Browser Refresh (GET) on Same URL within 60s ===
+Refresh GET contains 'CHECKED IN': YES
+Refresh GET contains 'DOOR CHECK-IN SUCCESSFUL': YES
+Refresh GET contains 'ALREADY CHECKED IN': NO
+
+=== 6. Visitor GET on Same Redirect URL (No Cookies) ===
+Visitor GET HTTP Status: 200
+Visitor GET contains 'DOOR CHECK-IN SUCCESSFUL': NO
+Visitor GET contains 'TICKET ALREADY USED': YES
+Visitor GET contains 'Scan next': NO
+```
+
+#### 2. Layout Measurements at 375px (Headless Edge via CDP)
+| State | Screen / Action | Viewport Width | `scrollWidth` | Overflowing Elements (`right > 376px`) | Result |
+| :--- | :--- | :---: | :---: | :---: | :---: |
+| **State 1** | Staff Landing Lookup Screen (`/booking-confirmation/`) | **375px** | **375px** | **0** | **PASS (0 overflow)** |
+| **State 2** | Valid Unchecked Pass Screen (`/booking-confirmation/?cr8v_ticket=...`) | **375px** | **375px** | **0** | **PASS (0 overflow)** |
+| **State 3** | Check-In Success (PRG GET Redirect) | **375px** | **375px** | **0** | **PASS (0 overflow)** |
+| **State 3B**| Check-In Success After Browser Refresh (GET) | **375px** | **375px** | **0** | **PASS (0 overflow)** |
+| **State 4** | Duplicate Entry Warning Screen (`ALREADY CHECKED IN`) | **375px** | **375px** | **0** | **PASS (0 overflow)** |
+| **State 5** | Non-Existent Code Rejection Screen (`TICKET NOT FOUND`) | **375px** | **375px** | **0** | **PASS (0 overflow)** |
+
+---
+
+### Hand-off to Claude
+
+Ready for Claude's re-audit. All 7 test suites pass, PRG 303 redirect works over real HTTP and in automated suites, GET refresh retains the green confirmation card within 60s without re-posting, and visitor/unauthorized access is locked down.

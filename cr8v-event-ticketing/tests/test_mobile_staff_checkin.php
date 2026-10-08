@@ -127,7 +127,165 @@ t( 'Check-in POST "Scan next" button links to staff check-in landing page', fals
 $tickets_after = get_post_meta( $order_id, '_cr8v_order_tickets', true );
 t( 'Database records ticket as checked_in', ! empty( $tickets_after[0]['checked_in'] ) );
 
-// 4. Already checked in state (re-visiting the checked-in ticket)
+// 4. Post-Redirect-Get (PRG) 303 redirect & signed flag verification
+$code_2   = 'TIX-' . strtoupper( bin2hex( random_bytes( 6 ) ) );
+$secret_2 = cr8v_tix_ticket_secret( $code_2 );
+
+$order_tickets   = get_post_meta( $order_id, '_cr8v_order_tickets', true );
+$order_tickets[] = array(
+	'ticket_code'   => $code_2,
+	'tier_name'     => 'General Admission',
+	'attendee_name' => 'Elena VIP Friend',
+	'checked_in'    => false,
+);
+update_post_meta( $order_id, '_cr8v_order_tickets', $order_tickets );
+
+// 4A. Check-in POST issues 303 redirect with signed flag
+if ( ! defined( 'CR8V_TESTING_NO_EXIT' ) ) {
+	define( 'CR8V_TESTING_NO_EXIT', true );
+}
+wp_set_current_user( $staff_user_id );
+$_SERVER['REQUEST_METHOD'] = 'POST';
+$_POST = array(
+	'cr8v_do_checkin'     => '1',
+	'ticket_code'         => $code_2,
+	'ticket_secret'       => $secret_2,
+	'order_id'            => $order_id,
+	'_cr8v_checkin_nonce' => wp_create_nonce( 'cr8v_checkin_' . $code_2 ),
+);
+$_GET = array( 'cr8v_ticket' => $code_2 );
+
+$captured_redirect = array( 'url' => '', 'status' => 0 );
+$filter_do_redirect = function( $do, $url ) use ( &$captured_redirect ) {
+	$captured_redirect['url'] = $url;
+	return true;
+};
+$filter_redirect_status = function( $status ) use ( &$captured_redirect ) {
+	$captured_redirect['status'] = $status;
+	return $status;
+};
+$filter_wp_redirect = function( $location ) {
+	return false; // prevent actual header send in CLI
+};
+
+add_filter( 'cr8v_do_checkin_redirect', $filter_do_redirect, 10, 2 );
+add_filter( 'wp_redirect_status', $filter_redirect_status, 10, 1 );
+add_filter( 'wp_redirect', $filter_wp_redirect, 10, 1 );
+
+ob_start();
+include $page_file;
+ob_end_clean();
+
+remove_filter( 'cr8v_do_checkin_redirect', $filter_do_redirect, 10 );
+remove_filter( 'wp_redirect_status', $filter_redirect_status, 10 );
+remove_filter( 'wp_redirect', $filter_wp_redirect, 10 );
+
+t( 'Check-in POST issues HTTP 303 See Other redirect', 303 === $captured_redirect['status'] );
+t( 'Check-in POST redirect URL points to ticket with ?checked=1', false !== strpos( $captured_redirect['url'], 'checked=1' ) && false !== strpos( $captured_redirect['url'], $code_2 ) );
+t( 'Check-in POST redirect URL includes chk_staff parameter', false !== strpos( $captured_redirect['url'], 'chk_staff=' . $staff_user_id ) );
+t( 'Check-in POST redirect URL includes chk_time parameter', false !== strpos( $captured_redirect['url'], 'chk_time=' ) );
+t( 'Check-in POST redirect URL includes chk_token parameter', false !== strpos( $captured_redirect['url'], 'chk_token=' ) );
+
+$query_str = (string) parse_url( $captured_redirect['url'], PHP_URL_QUERY );
+parse_str( $query_str, $redirect_params );
+
+// 4B. The green card renders from the flag for that staff user (GET request)
+$_SERVER['REQUEST_METHOD'] = 'GET';
+$_POST = array();
+$_GET  = $redirect_params;
+ob_start();
+include $page_file;
+$prg_get_html = ob_get_clean();
+
+t( 'PRG GET displays large green CHECKED IN confirmation for staff', false !== strpos( $prg_get_html, 'CHECKED IN' ) );
+t( 'PRG GET displays DOOR CHECK-IN SUCCESSFUL eyebrow', false !== strpos( $prg_get_html, 'DOOR CHECK-IN SUCCESSFUL' ) );
+t( 'PRG GET displays attendee name', false !== strpos( $prg_get_html, 'Elena VIP Friend' ) );
+t( 'PRG GET displays ticket tier', false !== strpos( $prg_get_html, 'General Admission' ) );
+t( 'PRG GET displays gate status ADMITTED • PASS VERIFIED', false !== strpos( $prg_get_html, 'ADMITTED • PASS VERIFIED' ) );
+t( 'PRG GET does NOT display ALREADY CHECKED IN warning', false === strpos( $prg_get_html, 'ALREADY CHECKED IN' ) );
+t( 'PRG GET does NOT display DO NOT ADMIT warning', false === strpos( $prg_get_html, 'DO NOT ADMIT' ) );
+
+// 4C. Refreshing GET within 60s keeps green CHECKED IN confirmation
+$_GET = $redirect_params;
+ob_start();
+include $page_file;
+$refresh_html = ob_get_clean();
+t( 'Refreshing GET within 60s keeps green CHECKED IN confirmation', false !== strpos( $refresh_html, 'CHECKED IN' ) && false !== strpos( $refresh_html, 'DOOR CHECK-IN SUCCESSFUL' ) );
+
+// 4D. Another staff user requesting the flag does NOT get the green card
+$staff_user_2_id = wp_create_user( 'staff2_' . bin2hex( random_bytes( 4 ) ), 'Staff2_Pass_123!', 'staff2_' . time() . '@example.com' );
+$staff_user_2    = new WP_User( $staff_user_2_id );
+$staff_user_2->set_role( 'event_staff' );
+
+wp_set_current_user( $staff_user_2_id );
+$_GET = $redirect_params;
+ob_start();
+include $page_file;
+$staff2_html = ob_get_clean();
+
+t( 'Another staff user requesting flag does NOT see DOOR CHECK-IN SUCCESSFUL', false === strpos( $staff2_html, 'DOOR CHECK-IN SUCCESSFUL' ) );
+t( 'Another staff user sees ALREADY CHECKED IN warning instead', false !== strpos( $staff2_html, 'ALREADY CHECKED IN' ) );
+t( 'Another staff user sees DO NOT ADMIT warning', false !== strpos( $staff2_html, 'DO NOT ADMIT' ) );
+
+// 4E. A visitor requesting the flag does NOT get the green card
+wp_set_current_user( 0 );
+$_GET = $redirect_params;
+ob_start();
+include $page_file;
+$visitor_html = ob_get_clean();
+
+t( 'Visitor with flag does NOT see DOOR CHECK-IN SUCCESSFUL', false === strpos( $visitor_html, 'DOOR CHECK-IN SUCCESSFUL' ) );
+t( 'Visitor with flag does NOT see ADMITTED • PASS VERIFIED', false === strpos( $visitor_html, 'ADMITTED • PASS VERIFIED' ) );
+t( 'Visitor with flag sees TICKET ALREADY USED notice', false !== strpos( $visitor_html, 'TICKET ALREADY USED' ) );
+t( 'Visitor with flag never sees Scan next button', false === strpos( $visitor_html, 'Scan next' ) );
+
+// 4F. Expired flag (> 60s) does NOT get the green card
+wp_set_current_user( $staff_user_id );
+$expired_time  = time() - 65;
+$expired_token = cr8v_tix_generate_checkin_token( $code_2, $staff_user_id, $expired_time );
+$_GET = array(
+	'cr8v_ticket' => $code_2,
+	'checked'     => '1',
+	'chk_staff'   => $staff_user_id,
+	'chk_time'    => $expired_time,
+	'chk_token'   => $expired_token,
+);
+ob_start();
+include $page_file;
+$expired_html = ob_get_clean();
+
+t( 'Expired flag (>60s) does NOT see DOOR CHECK-IN SUCCESSFUL', false === strpos( $expired_html, 'DOOR CHECK-IN SUCCESSFUL' ) );
+t( 'Expired flag falls through to ALREADY CHECKED IN amber card', false !== strpos( $expired_html, 'ALREADY CHECKED IN' ) );
+t( 'Expired flag displays DO NOT ADMIT warning', false !== strpos( $expired_html, 'DO NOT ADMIT' ) );
+
+// 4G. Forged flag does NOT get the green card
+$_GET = array(
+	'cr8v_ticket' => $code_2,
+	'checked'     => '1',
+	'chk_staff'   => $staff_user_id,
+	'chk_time'    => time(),
+	'chk_token'   => 'forged_token_000000000000000000',
+);
+ob_start();
+include $page_file;
+$forged_html = ob_get_clean();
+
+t( 'Forged flag does NOT see DOOR CHECK-IN SUCCESSFUL', false === strpos( $forged_html, 'DOOR CHECK-IN SUCCESSFUL' ) );
+t( 'Forged flag falls through to ALREADY CHECKED IN amber card', false !== strpos( $forged_html, 'ALREADY CHECKED IN' ) );
+
+// 4H. Bare ?checked=1 without token does NOT get the green card
+$_GET = array(
+	'cr8v_ticket' => $code_2,
+	'checked'     => '1',
+);
+ob_start();
+include $page_file;
+$bare_html = ob_get_clean();
+
+t( 'Bare ?checked=1 without token does NOT see DOOR CHECK-IN SUCCESSFUL', false === strpos( $bare_html, 'DOOR CHECK-IN SUCCESSFUL' ) );
+t( 'Bare ?checked=1 falls through to ALREADY CHECKED IN amber card', false !== strpos( $bare_html, 'ALREADY CHECKED IN' ) );
+
+// 5. Already checked in state (re-visiting the checked-in ticket)
 $_SERVER['REQUEST_METHOD'] = 'GET';
 $_POST = array();
 $_GET  = array( 'cr8v_ticket' => $code_1 );
@@ -141,7 +299,7 @@ t( 'Already checked-in ticket displays unmistakable Reason banner', false !== st
 t( 'Already checked-in ticket displays attendee details', false !== strpos( $already_html, 'Marcus VIP Attendee' ) );
 t( 'Already checked-in ticket displays prominent "Scan next" button', false !== strpos( $already_html, 'Scan next' ) );
 
-// 5. Not-found state (staff enters non-existent ticket code)
+// 6. Not-found state (staff enters non-existent ticket code)
 $_GET = array( 'cr8v_ticket' => 'TIX-000000000000' );
 ob_start();
 include $page_file;
@@ -157,7 +315,8 @@ t( 'Not-found ticket does NOT display check-in button or verified pass', false =
 wp_delete_post( $order_id, true );
 wp_delete_post( $test_event_id, true );
 wp_delete_user( $staff_user_id );
+wp_delete_user( $staff_user_2_id );
 
-echo "\n=== CLEANUP ===\nCleaned up test event, order, and staff user.\n";
+echo "\n=== CLEANUP ===\nCleaned up test event, order, and staff users.\n";
 echo "RESULT: $pass passed, $fail failed\n";
 exit( $fail > 0 ? 1 : 0 );

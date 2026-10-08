@@ -20,9 +20,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! defined( 'DONOTCACHEPAGE' ) ) {
 	define( 'DONOTCACHEPAGE', true );
 }
-nocache_headers();
-header( 'X-Robots-Tag: noindex, nofollow, noarchive' );
-header( 'Referrer-Policy: no-referrer' );
+if ( ! headers_sent() ) {
+	nocache_headers();
+	header( 'X-Robots-Tag: noindex, nofollow, noarchive' );
+	header( 'Referrer-Policy: no-referrer' );
+}
 
 // -----------------------------------------------------------------------------
 // 1. Process Staff Door Check-In Action (POST only, gated by capability & nonce)
@@ -30,6 +32,56 @@ header( 'Referrer-Policy: no-referrer' );
 $checkin_message = '';
 $checkin_status  = '';
 $staff_landing_url = function_exists( 'cr8v_tix_staff_landing_url' ) ? cr8v_tix_staff_landing_url() : home_url( '/booking-confirmation/' );
+
+if ( ! function_exists( 'cr8v_tix_generate_checkin_token' ) ) {
+	/**
+	 * Generate a short-lived cryptographic HMAC token for door check-in PRG flag.
+	 *
+	 * @param string $ticket_code Normalized ticket code.
+	 * @param int    $staff_id    Staff user ID who performed the check-in.
+	 * @param int    $time        Timestamp of the check-in action.
+	 * @return string 32-character hex token.
+	 */
+	function cr8v_tix_generate_checkin_token( $ticket_code, $staff_id, $time ) {
+		return substr( hash_hmac( 'sha256', "checkin_{$ticket_code}_{$staff_id}_{$time}", wp_salt( 'nonce' ) ), 0, 32 );
+	}
+}
+
+if ( ! function_exists( 'cr8v_tix_verify_checkin_token' ) ) {
+	/**
+	 * Verify door check-in PRG token.
+	 * Must match staff ID, ticket code, valid signature, and not expired (<= 60 seconds).
+	 *
+	 * @param string $ticket_code Normalized ticket code.
+	 * @param int    $staff_id    Staff user ID from request.
+	 * @param int    $time        Timestamp from request.
+	 * @param string $token       Token signature from request.
+	 * @return bool True if valid, not expired, and requested by same logged-in staff user.
+	 */
+	function cr8v_tix_verify_checkin_token( $ticket_code, $staff_id, $time, $token ) {
+		if ( ! current_user_can( 'edit_event_orders' ) && ! current_user_can( 'manage_options' ) ) {
+			return false;
+		}
+
+		$current_uid = get_current_user_id();
+		if ( ! $current_uid || (int) $staff_id !== $current_uid ) {
+			return false;
+		}
+
+		$now  = time();
+		$time = (int) $time;
+		if ( $time <= 0 || ( $now - $time ) > 60 || $time > ( $now + 5 ) ) {
+			return false;
+		}
+
+		if ( empty( $ticket_code ) || empty( $token ) ) {
+			return false;
+		}
+
+		$expected = cr8v_tix_generate_checkin_token( $ticket_code, $current_uid, $time );
+		return hash_equals( $expected, $token );
+	}
+}
 
 if ( 'POST' === ( $_SERVER['REQUEST_METHOD'] ?? '' ) && isset( $_POST['cr8v_do_checkin'] ) ) {
 	$p_code  = cr8v_tix_normalize_ticket_code( sanitize_text_field( wp_unslash( $_POST['ticket_code'] ?? '' ) ) );
@@ -83,6 +135,31 @@ if ( 'POST' === ( $_SERVER['REQUEST_METHOD'] ?? '' ) && isset( $_POST['cr8v_do_c
 					$checkin_message = __( 'Attendee successfully CHECKED IN!', 'cr8v-event-ticketing' );
 					$checkin_status  = 'success';
 					$found = true;
+
+					// Post-Redirect-Get (PRG) for Door Staff Check-In
+					$redirect_staff_id = get_current_user_id();
+					$redirect_time     = time();
+					$redirect_token    = cr8v_tix_generate_checkin_token( $p_code, $redirect_staff_id, $redirect_time );
+					$redirect_args     = array(
+						'cr8v_ticket' => $p_code,
+						'checked'     => '1',
+						'chk_staff'   => $redirect_staff_id,
+						'chk_time'    => $redirect_time,
+						'chk_token'   => $redirect_token,
+					);
+					if ( ! empty( $p_sec ) ) {
+						$redirect_args['tix_secret'] = $p_sec;
+					}
+					$redirect_url = add_query_arg( $redirect_args, $staff_landing_url );
+					$redirect_url = apply_filters( 'cr8v_checkin_redirect_url', $redirect_url, $p_code, $redirect_staff_id );
+
+					// Perform 303 See Other redirect unless headers already sent or disabled for tests.
+					if ( apply_filters( 'cr8v_do_checkin_redirect', ! headers_sent(), $redirect_url ) ) {
+						wp_safe_redirect( $redirect_url, 303 );
+						if ( ! defined( 'CR8V_TESTING_NO_EXIT' ) ) {
+							exit;
+						}
+					}
 					break;
 				}
 			}
@@ -105,6 +182,22 @@ $req_ticket_code = cr8v_tix_normalize_ticket_code( $ticket_raw );
 $req_tix_secret  = sanitize_text_field( wp_unslash( $_GET['tix_secret'] ?? '' ) );
 // Door staff may look a code up by typing it. Visitors need the secret that is inside the QR link.
 $staff_lookup    = '' !== $ticket_raw && current_user_can( 'edit_event_orders' );
+
+// PRG Check-In Flag Verification
+$req_checked   = sanitize_text_field( wp_unslash( $_GET['checked'] ?? '' ) );
+$req_chk_staff = (int) ( $_GET['chk_staff'] ?? 0 );
+$req_chk_time  = (int) ( $_GET['chk_time'] ?? 0 );
+$req_chk_token = sanitize_text_field( wp_unslash( $_GET['chk_token'] ?? '' ) );
+
+if ( '1' === $req_checked && '' !== $req_ticket_code ) {
+	if ( cr8v_tix_verify_checkin_token( $req_ticket_code, $req_chk_staff, $req_chk_time, $req_chk_token ) ) {
+		$found_chk = cr8v_tix_find_ticket( $req_ticket_code );
+		if ( $found_chk && ! empty( $found_chk['ticket']['checked_in'] ) ) {
+			$checkin_status  = 'success';
+			$checkin_message = __( 'Attendee successfully CHECKED IN!', 'cr8v-event-ticketing' );
+		}
+	}
+}
 
 // View mode state
 $view_mode   = 'default';
