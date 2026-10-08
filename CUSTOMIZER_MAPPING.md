@@ -8,6 +8,31 @@
 
 ---
 
+## 0. PREREQUISITE (ADDED BY CLAUDE REVIEW): THE THEME HAS NO SHARED HEADER, FOOTER OR PRE-FOOTER
+
+This document assumes "global" settings (Section 3) that change the header, footer, contact details and pre-footer on every page. **The theme cannot do that today.** Measured in `cruxnxtion-theme`:
+
+| Fact | Measured value |
+|---|---|
+| `header.php`, `footer.php` or any template part | none exist |
+| Templates that are a complete standalone HTML document (own `<!DOCTYPE html>`, `wp_head()` and `wp_footer()`) | 24 of 24 |
+| Header markup inside each template | about 13 KB (logo, mega menu, mobile drawer, switcher) |
+| Footer markup inside each template | about 4 KB, plus the pre-footer band |
+| Inline `<style>` block inside each template | about 26 KB, in 9 slightly different variants |
+| Main phone number hardcoded | `+44 7448 614051` in 23 files; two more numbers elsewhere (see 6.3, confirmed) |
+
+Consequence: a Customizer setting such as `crux_company_phone_primary` or the pre-footer headline would have to be edited in **24 copies**, and any edit would risk making pages drift apart. Building the Customizer on top of this first would multiply the work and the bugs.
+
+**Phase C0 (must come first, no new features):** extract the shared pieces into theme parts and include them from every template, with the pages looking pixel-identical before and after:
+1. `header.php` (document head, `wp_head()`, call-out bar, header, mega menu, mobile drawer, sticky switcher) and `footer.php` (pre-footer band, footer, `wp_footer()`); the 24 templates then start with `get_header()` and end with `get_footer()`.
+2. Move the shared CSS to one enqueued stylesheet; keep only genuinely page-specific CSS in the page.
+3. Verify with a before/after screenshot comparison at 1280px and 375px for every template, the hygiene test (no BOM or double-encoded text), and `scrollWidth` against `innerWidth` on each page.
+4. Only then add the Customizer settings in Section 3, reading their values inside the new parts.
+
+Risk: the 9 variants of the inline stylesheet differ for a reason (light pages versus dark pages, legal pages, the 404). They must be diffed and merged deliberately, not assumed identical.
+
+---
+
 ## 1. ARCHITECTURAL OVERVIEW & TAXONOMY
 
 The Crux Nxtion web platform operates on a **dual-wing design system**:
@@ -136,7 +161,7 @@ Global settings govern the unified components that render across all templates.
 
 #### Proposed Section ID: `crux_frontpage_section`
 - **Active Callback:** `is_front_page`
-- **Estimated Settings:** 28 settings
+- **Estimated Settings:** 41 settings
 
 | Setting ID | Type | Proposed Default | Purpose & Rationale |
 |---|---|---|---|
@@ -177,7 +202,7 @@ Global settings govern the unified components that render across all templates.
 
 #### Proposed Section ID: `crux_about_section`
 - **Active Callback:** `cr8v_is_about_page_active`
-- **Estimated Settings:** 24 settings
+- **Estimated Settings:** 36 settings
 
 | Setting ID | Type | Proposed Default | Purpose & Rationale |
 |---|---|---|---|
@@ -213,7 +238,7 @@ Global settings govern the unified components that render across all templates.
 
 #### Proposed Section ID: `crux_services_events_section`
 - **Active Callback:** `cr8v_is_services_page_active`
-- **Estimated Settings:** 22 settings
+- **Estimated Settings:** 43 settings
 
 | Setting ID | Type | Proposed Default | Purpose & Rationale |
 |---|---|---|---|
@@ -238,7 +263,7 @@ Global settings govern the unified components that render across all templates.
 
 #### Proposed Section ID: `crux_services_consultancy_section`
 - **Active Callback:** `crux_is_consultancy_wing_active`
-- **Estimated Settings:** 20 settings
+- **Estimated Settings:** 27 settings
 
 | Setting ID | Type | Proposed Default | Purpose & Rationale |
 |---|---|---|---|
@@ -261,7 +286,7 @@ Global settings govern the unified components that render across all templates.
 
 #### Proposed Section ID: `crux_consultancy_home_section`
 - **Active Callback:** `crux_is_consultancy_wing_active`
-- **Estimated Settings:** 32 settings
+- **Estimated Settings:** 46 settings
 
 | Setting ID | Type | Proposed Default | Purpose & Rationale |
 |---|---|---|---|
@@ -317,11 +342,11 @@ Global settings govern the unified components that render across all templates.
 ---
 
 ### Template 7: `page-faq.php` (Frequently Asked Questions)
-*Scope: Dual-wing FAQ repository with fast jump buttons (Events FAQ vs Consultancy FAQ), 18 Events questions, 16 Consultancy questions, and "Still Stuck?" contact prompt card.*
+*Scope: Dual-wing FAQ repository with fast jump buttons (Events FAQ vs Consultancy FAQ), 35 questions on this page in total (verified in the template; the split between wings must be re-counted before building), and "Still Stuck?" contact prompt card.*
 
 #### Proposed Section ID: `crux_faq_section`
 - **Active Callback:** `is_page( 'faq' )`
-- **Estimated Settings:** 20 settings
+- **Estimated Settings:** 33 settings
 
 | Setting ID | Type | Proposed Default | Purpose & Rationale |
 |---|---|---|---|
@@ -400,7 +425,7 @@ Global settings govern the unified components that render across all templates.
 
 #### Proposed Section ID: `crux_sponsors_section`
 - **Active Callback:** `is_page( 'sponsors' )`
-- **Estimated Settings:** 10 settings
+- **Estimated Settings:** 11 settings
 
 | Setting ID | Type | Proposed Default | Purpose & Rationale |
 |---|---|---|---|
@@ -568,24 +593,30 @@ The table below compiles the estimated setting counts per section and panel acro
 | **Global Brand Panel** | Contact Details & Socials | `crux_global_contact_section` | 9 | tel, email, text, url |
 | **Global Brand Panel** | Prefooter Call-To-Action | `crux_global_prefooter_section` | 8 | text, textarea, image, url |
 | **Global Brand Panel** | Colossal Footer & Colophon | `crux_global_footer_section` | 3 | text |
-| **Events Wing Panel** | Homepage (Front Page) | `crux_frontpage_section` | 28 | text, textarea, image, url |
+| **Events Wing Panel** | Homepage (Front Page) | `crux_frontpage_section` | 41 | text, textarea, image, url |
 | **Events Wing Panel** | Events Hub & Archive | `crux_events_hub_section` | 8 | text, textarea, url |
 | **Events Wing Panel** | Single Event Page | `crux_single_event_section` | 8 | text, url |
-| **Events Wing Panel** | Event Services Rider | `crux_services_events_section` | 22 | text, textarea, image |
+| **Events Wing Panel** | Event Services Rider | `crux_services_events_section` | 43 | text, textarea, image |
 | **Events Wing Panel** | Photo Ticket Wall (Gallery)| `crux_gallery_section` | 12 | text, textarea, url |
-| **Events Wing Panel** | Sponsors & Partners | `crux_sponsors_section` | 10 | text, textarea, url |
+| **Events Wing Panel** | Sponsors & Partners | `crux_sponsors_section` | 11 | text, textarea, url |
 | **Events Wing Panel** | Journal & Blog Archive | `crux_blog_archive_section` | 10 | text, textarea, url |
 | **Events Wing Panel** | Single Journal Post | `crux_single_post_section` | 6 | text, textarea |
-| **Consultancy Wing Panel**| Consultancy Home Hub | `crux_consultancy_home_section` | 32 | text, textarea, url |
-| **Consultancy Wing Panel**| Consultancy Services Rider| `crux_services_consultancy_section`| 20 | text, textarea, url |
+| **Consultancy Wing Panel**| Consultancy Home Hub | `crux_consultancy_home_section` | 46 | text, textarea, url |
+| **Consultancy Wing Panel**| Consultancy Services Rider| `crux_services_consultancy_section`| 27 | text, textarea, url |
 | **Consultancy Wing Panel**| Meet The Founder (Bambad) | `crux_founder_section` | 18 | text, textarea, image |
-| **Universal Pages** | About Us Page | `crux_about_section` | 24 | text, textarea, image, url |
+| **Universal Pages** | About Us Page | `crux_about_section` | 36 | text, textarea, image, url |
 | **Universal Pages** | Contact & Intake Hub | `crux_contact_section` | 16 | text, textarea, tel, email |
-| **Universal Pages** | Frequently Asked Questions | `crux_faq_section` | 20 | text, textarea, url |
+| **Universal Pages** | Frequently Asked Questions | `crux_faq_section` | 33 | text, textarea, url |
 | **Universal Pages** | Legal & Compliance Pages | `crux_legal_pages_section` | 12 | text, textarea, email |
 | **Universal Pages** | 404 Page Not Found | `crux_404_section` | 10 | text, textarea, url |
 | **Universal Pages** | Default Page Fallback | `crux_default_page_section` | 2 | text |
-| **TOTAL ESTIMATE** | **21 Sections Across 3 Panels** | — | **293 Settings** | — |
+| **TOTAL ESTIMATE** | **21 Sections Across 3 Panels** | — | **374 Settings** (corrected; see 5.1) | — |
+
+---
+
+### 5.1 Correction to the totals (Claude review)
+
+The original table said 293 settings. Expanding the document's own repeating rows (for example `crux_svc_ev_item_{1..5}_title` is five settings, not one) gives **374**. Six section estimates were too low: front page 28 -> 41, about 36 (was 24), event services 43 (was 22), consultancy services 27 (was 20), consultancy home 46 (was 32), FAQ 33 (was 20). Use 374 for planning, and treat it as a floor, because Section 6.7 shows several lists that are not fully covered.
 
 ---
 
@@ -676,10 +707,26 @@ The table below compiles the estimated setting counts per section and panel acro
 
 ---
 
-## 7. NEXT STEPS (POST-REVIEW)
+### 6.7 Lists the Customizer cannot hold properly (added by Claude review)
 
-Upon review and sign-off of this mapping specification by Claude:
-1. **Phase 1 Implementation:** Scaffold `cruxnxtion-theme/inc/customizer.php` registering panels, sections, controls, and sanitization callbacks matching the schema above.
-2. **Phase 2 Template Integration:** Replace hardcoded strings in templates with `get_theme_mod( 'crux_*', $default )` calls using the exact defaults documented here.
-3. **Phase 3 Selective Refresh (`postMessage`):** Add transport `postMessage` handlers and JavaScript preview bindings for instant real-time live preview updates without page reload.
-4. **Phase 4 Verification:** Run all repository hygiene and test suites (`test_repo_hygiene.php`, `test_phase1_checkout_webhook.php`, `test_phase23_audit.php`, `test_phase2_phase3.php`, `test_staff_and_csv.php`, `test_mobile_staff_checkin.php`, and race tests) to ensure zero regressions.
+The Customizer has no repeater control. The mapping works around that by exposing the first few items of each list as numbered settings. That is wrong for content the client will keep adding to:
+
+- **FAQ:** `page-faq.php` contains 35 questions, but Section 4 exposes only "the top 6" per wing (12 in total). The other 23 would stay hardcoded and the client could never edit or add them. `page-consultancy.php` and `front-page.php` each carry 7 more questions, and the document says 9 for the consultancy page (the template has 7).
+- **Sponsors, gallery items, journal posts, event services, team or stats lists:** the same problem.
+
+Recommendation: keep the Customizer for single headings, paragraphs, links and images, and move repeating content to the WordPress admin like events already are, with small custom post types (for example `faq` with a "wing" taxonomy, `sponsor`, `gallery_item` which `crux-nxtion-core` already registers). The templates then loop over posts, the client adds or reorders items in a normal list screen, and the Customizer only holds the section headings. This also removes about 100 numbered settings from the plan.
+
+---
+
+## 7. NEXT STEPS (REVISED BY CLAUDE REVIEW)
+
+Order matters. Each phase ends with the full test battery plus a before/after screenshot comparison at 1280px and 375px.
+
+1. **Phase C0 - Extract the shared header, footer, pre-footer and CSS** (Section 0). No new features and no visible change. This is the largest risk in the whole Customizer job and it must be proven pixel-identical first.
+2. **Phase C1 - Repeating content moves to the admin** (Section 6.7): `faq` (with a wing taxonomy, importing all 35 existing questions), `sponsor`, and reuse of `gallery_item`. Templates loop over posts.
+3. **Phase C2 - Scaffold `cruxnxtion-theme/inc/customizer.php`** with the Global panel only (header, contact, pre-footer, footer; 35 settings), following `cr8v-stacks-events/inc/customizer.php`. Prove with a real browser that changing a setting changes all 24 pages.
+4. **Phase C3 - Page panels, one page group at a time** (Events wing, Consultancy wing, Universal pages), replacing hardcoded strings with `get_theme_mod( 'crux_*', $default )` using the defaults documented here, so a site with no saved settings renders exactly as today.
+5. **Phase C4 - Selective refresh (`postMessage`) live preview**, only after C3 is stable.
+6. **Verification at every phase:** `test_repo_hygiene.php`, the five suites and the race tests; add a Customizer test that every `get_theme_mod` default equals the text in the template today (so the default site is unchanged).
+
+Estimated scope for planning: about 374 settings before Section 6.7 reduces the repeating lists.

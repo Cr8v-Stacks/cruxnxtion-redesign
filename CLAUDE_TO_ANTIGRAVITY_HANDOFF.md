@@ -2372,3 +2372,24 @@ hygiene 0 problems (55 files); `test_phase1_checkout_webhook.php` 40; `test_phas
 1. Stripe test keys (the owner adds `CRUX_STRIPE_SECRET_KEY` and `CRUX_STRIPE_WEBHOOK_SECRET` to wp-config.php): the real payment round trip is untested.
 2. Real SMTP (Brevo, Postmark or SendGrid) with SPF, DKIM and DMARC on the client's domain before launch.
 3. Customizer: not started. The owner still has to say go. A read-only mapping of what is hardcoded in the Crux templates can be written first (see the owner's next instruction).
+## 23. Claude review of CUSTOMIZER_MAPPING.md (commit 767e203) (8 Oct 2026)
+
+You wrote the mapping as documentation only, and the repo scan, lint and all suites still pass (your results reproduce). The document is thorough and most of its facts check out, but Claude measured it against the real templates and found three problems. Claude corrected the document itself (`CUSTOMIZER_MAPPING.md`, sections 0, 5.1, 6.7 and 7). Pull and read it before starting any Customizer work.
+
+### What held up (verified)
+- The document is docs only: no PHP, JS or CSS changed. No garbled text, no BOM.
+- The three phone numbers are real: `+44 7448 614051` is hardcoded in 23 templates, `+44 7341 366400` in the contact and FAQ pages, `+44 7762 278076` on the contact page.
+- The 24 templates and the `cr8v-stacks-events/inc/customizer.php` pattern exist as described. No setting ID is used twice.
+
+### What you got wrong, and what Claude did
+1. **You missed the biggest prerequisite.** The "global" header, footer, contact and pre-footer settings cannot work today, because the theme has no `header.php`, `footer.php` or template part. All 24 templates are complete standalone HTML documents, each carrying its own header (about 13 KB), footer, `wp_head()` / `wp_footer()` calls and an inline stylesheet of about 26 KB (in 9 slightly different variants). One global setting would have to be edited in 24 places. Claude added Section 0 (the evidence and a Phase C0 that extracts the shared parts first, pixel-identical) and made it step one in Section 7.
+2. **Your totals were wrong.** The summary said 293 settings. The document's own repeating rows (`{1..5}`) expand to 374. Six section estimates were too low: front page 28 -> 41, about 24 -> 36, event services 22 -> 43, consultancy services 20 -> 27, consultancy home 32 -> 46, FAQ 20 -> 33 (sponsors 10 -> 11). Claude corrected every number and added Section 5.1.
+3. **Your FAQ and list mapping would leave most content uneditable.** `page-faq.php` has 35 questions (you wrote 18 + 16 = 34) but you expose only the "top 6" per wing, so 23 or more would stay hardcoded forever. You also wrote 9 FAQs for the consultancy page; the template has 7 (the front page has 7 as well). The Customizer has no repeater, so numbered settings are the wrong tool for lists the client will keep adding to. Claude added Section 6.7: repeating content (FAQ, sponsors, gallery items) moves to admin custom post types like events, and the Customizer holds only headings, paragraphs, links and images. This also removes about 100 numbered settings.
+
+### Rules (unchanged)
+Never edit PHP/JS/CSS with a PowerShell Get-Content/Set-Content round trip. Before you report anything, run every suite and the race tests and paste the result lines (a suite with no result line is a failure). Expected: hygiene 0 problems; 40, 55, 30, 62, 66; race RESERVED x1 and x5. Measure, do not assume: count things in the code before you write a number in a document.
+
+### Still open
+1. Stripe test keys (the owner adds `CRUX_STRIPE_SECRET_KEY` and `CRUX_STRIPE_WEBHOOK_SECRET` to wp-config.php).
+2. Real SMTP (Brevo, Postmark or SendGrid) with SPF, DKIM and DMARC on the client's domain before launch.
+3. Customizer implementation: waiting for the owner to approve the revised plan in `CUSTOMIZER_MAPPING.md` section 7. Do not start it. Phase C0 (the header and footer extraction) is the first step when the owner says go.
