@@ -2346,3 +2346,29 @@ cleaned event 13974
 
 ### Instructions for Owner
 Hand this complete report to Claude for re-audit. All suites pass 100%, check-in token functions are now correctly located in the core ticketing plugin with filterable TTL, and security/no-cache headers are unconditionally served and verified over real HTTP.
+## 22. Claude audit of the token move and header hardening (commit 360a9ec) (8 Oct 2026)
+
+You moved the check-in token functions into the plugin, made the no-cache headers unconditional, and added a TTL constant, filter and header tests. Claude pulled it, diffed it line by line, and re-ran everything strictly. The refactor is correct. One of your tests was weaker than it looked; Claude tightened it. Pull, read, do not revert.
+
+### What held up (verified)
+- `inc/tickets.php` (protected file): the diff is purely additive, 59 lines appended and nothing existing touched. The moved functions are faithful: same HMAC input, same staff-identity and capability checks, same constant-time comparison, same 5 second clock-skew allowance. Your two small hardenings are good: a filter that returns 0 or a negative number falls back to 60 seconds, and the token is cast to a string before `hash_equals`.
+- The two functions now exist exactly once, in `inc/tickets.php`; the template no longer defines them. No other protected file changed (`ticket-tiers`, `stripe-webhook`, `stripe-checkout`, `qr-encoder`, `order-cpt` diffs are empty).
+- Live headers, checked by Claude with `curl -D` on four URLs (bare page, `order_token`, QR link with a bad secret, bare `session_id`): all answer 200 and all send `Cache-Control` with `no-store`, `X-Robots-Tag` with `noindex`, and `Referrer-Policy: no-referrer`.
+- Your before and after numbers reproduce.
+
+### What was weak, and what Claude did
+1. **Your header test could pass on a page that is broken.** It asserted only that the strings "Cache-Control:" and "no-store" each appeared somewhere in the response (`stripos` on the whole dump), not on the same header line, and it never checked the status. A 500 error page, or a response where "no-store" appeared in some other header, would have passed. Claude replaced it with line-anchored checks (`^Cache-Control:[^\r\n]*\bno-store\b`, `^X-Robots-Tag:...noindex`, `^Referrer-Policy:\s*no-referrer\s*$`), added a check that the response is HTTP 200, and added the same checks on a token URL (the page that actually carries tickets).
+2. **Your TTL tests missed the edge cases.** Claude added: a filter returning 0 falls back to the 60 second default (a 30 second old token is accepted, a 90 second old one rejected); a token with a timestamp 10 minutes in the future is rejected; and a reflection check that the two functions are defined in the plugin and not in a theme file.
+3. `test_mobile_staff_checkin.php` is now 66 passed (was 61); the README is updated.
+
+### Notes (not changed)
+- The TTL filter has no upper limit. A site that filters it to a very large number would make the "green CHECKED IN" flag replayable for that long (still only by the same logged-in staff user, still only for that one ticket). Consider clamping it (for example to at most 300 seconds) if you ever expose it to site owners.
+- The header tests need the site running and `curl` available (they shell out to it). If curl or the site is missing the tests fail loudly, which is the intended behaviour.
+
+### Test numbers now (strict, run by Claude)
+hygiene 0 problems (55 files); `test_phase1_checkout_webhook.php` 40; `test_phase23_audit.php` 55; `test_phase2_phase3.php` 30; `test_staff_and_csv.php` 62; `test_mobile_staff_checkin.php` 66; race tests RESERVED x1 and x5; lint 0 errors.
+
+### Still open
+1. Stripe test keys (the owner adds `CRUX_STRIPE_SECRET_KEY` and `CRUX_STRIPE_WEBHOOK_SECRET` to wp-config.php): the real payment round trip is untested.
+2. Real SMTP (Brevo, Postmark or SendGrid) with SPF, DKIM and DMARC on the client's domain before launch.
+3. Customizer: not started. The owner still has to say go. A read-only mapping of what is hardcoded in the Crux templates can be written first (see the owner's next instruction).

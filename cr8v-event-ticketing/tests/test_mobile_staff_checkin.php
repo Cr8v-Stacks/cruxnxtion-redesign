@@ -342,6 +342,17 @@ $invalid_unfiltered = cr8v_tix_verify_checkin_token( $code_2, $staff_user_id, ti
 
 t( 'cr8v_tix_checkin_flag_ttl filter allows extending token TTL', true === $valid_filtered );
 t( 'Default 60s TTL rejects token older than 60s without filter', false === $invalid_unfiltered );
+$zero_cb = function () { return 0; };
+add_filter( 'cr8v_tix_checkin_flag_ttl', $zero_cb );
+$tok_30 = cr8v_tix_generate_checkin_token( $code_2, $staff_user_id, time() - 30 );
+$tok_90b = cr8v_tix_generate_checkin_token( $code_2, $staff_user_id, time() - 90 );
+$ok_30  = cr8v_tix_verify_checkin_token( $code_2, $staff_user_id, time() - 30, $tok_30 );
+$bad_90 = cr8v_tix_verify_checkin_token( $code_2, $staff_user_id, time() - 90, $tok_90b );
+remove_filter( 'cr8v_tix_checkin_flag_ttl', $zero_cb );
+t( 'a filter returning 0 falls back to the 60 second default (30s token ok, 90s token rejected)', true === $ok_30 && false === $bad_90 );
+$future_tok = cr8v_tix_generate_checkin_token( $code_2, $staff_user_id, time() + 600 );
+t( 'a token timestamped in the future is rejected', false === cr8v_tix_verify_checkin_token( $code_2, $staff_user_id, time() + 600, $future_tok ) );
+t( 'the check-in token functions live in the plugin, not the theme template', false !== strpos( (string) ( new ReflectionFunction( 'cr8v_tix_verify_checkin_token' ) )->getFileName(), 'cr8v-event-ticketing' ) );
 
 // 8. Real HTTP response headers on /booking-confirmation/
 echo "\n=== 8. REAL HTTP SECURITY & NO-CACHE HEADERS ===\n";
@@ -355,9 +366,16 @@ if ( file_exists( $hdr_file ) ) {
 	@unlink( $hdr_file );
 }
 
-t( 'Real HTTP /booking-confirmation/ serves Cache-Control with no-store', false !== stripos( $dumped_headers, 'Cache-Control:' ) && false !== stripos( $dumped_headers, 'no-store' ), "got headers:\n$dumped_headers" );
-t( 'Real HTTP /booking-confirmation/ serves X-Robots-Tag with noindex', false !== stripos( $dumped_headers, 'X-Robots-Tag:' ) && false !== stripos( $dumped_headers, 'noindex' ), "got headers:\n$dumped_headers" );
-t( 'Real HTTP /booking-confirmation/ serves Referrer-Policy with no-referrer', false !== stripos( $dumped_headers, 'Referrer-Policy:' ) && false !== stripos( $dumped_headers, 'no-referrer' ), "got headers:\n$dumped_headers" );
+t( 'Real HTTP /booking-confirmation/ answers 200 (not an error page that happens to carry the headers)', (bool) preg_match( '#^HTTP/\S+\s+200\b#m', $dumped_headers ), "got headers:\n$dumped_headers" );
+t( 'Real HTTP /booking-confirmation/ serves a Cache-Control header containing no-store', (bool) preg_match( '/^Cache-Control:[^\r\n]*\bno-store\b/mi', $dumped_headers ), "got headers:\n$dumped_headers" );
+t( 'Real HTTP /booking-confirmation/ serves an X-Robots-Tag header containing noindex', (bool) preg_match( '/^X-Robots-Tag:[^\r\n]*\bnoindex\b/mi', $dumped_headers ), "got headers:\n$dumped_headers" );
+t( 'Real HTTP /booking-confirmation/ serves a Referrer-Policy header of no-referrer', (bool) preg_match( '/^Referrer-Policy:\s*no-referrer\s*$/mi', $dumped_headers ), "got headers:\n$dumped_headers" );
+// The same must hold on a token URL (the page that actually shows tickets), not just the bare page.
+$hdr_file2 = wp_tempnam();
+shell_exec( $curl_bin . ' -s -D ' . escapeshellarg( $hdr_file2 ) . ' -o ' . $dev_null . ' ' . escapeshellarg( home_url( '/booking-confirmation/?order_token=res_doesnotexist' ) ) );
+$dumped_headers2 = file_exists( $hdr_file2 ) ? (string) file_get_contents( $hdr_file2 ) : '';
+if ( file_exists( $hdr_file2 ) ) { @unlink( $hdr_file2 ); }
+t( 'Real HTTP token URL also sends no-store, noindex and no-referrer', (bool) preg_match( '/^Cache-Control:[^\r\n]*\bno-store\b/mi', $dumped_headers2 ) && (bool) preg_match( '/^X-Robots-Tag:[^\r\n]*\bnoindex\b/mi', $dumped_headers2 ) && (bool) preg_match( '/^Referrer-Policy:\s*no-referrer\s*$/mi', $dumped_headers2 ), "got headers:\n$dumped_headers2" );
 
 // Cleanup
 wp_delete_post( $order_id, true );
