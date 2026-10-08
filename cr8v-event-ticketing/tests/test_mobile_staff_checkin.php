@@ -326,6 +326,39 @@ t( 'Not-found ticket displays unmistakable Reason banner', false !== strpos( $no
 t( 'Not-found ticket displays prominent "Scan next" button', false !== strpos( $notfound_html, 'Scan next' ) );
 t( 'Not-found ticket does NOT display check-in button or verified pass', false === strpos( $notfound_html, 'CONFIRM DOOR CHECK-IN' ) && false === strpos( $notfound_html, 'OFFICIAL VERIFIED PASS' ) );
 
+// 7. Check-in flag TTL constant and filter
+echo "\n=== 7. CHECK-IN FLAG TTL CONSTANT & FILTER ===\n";
+t( 'CR8V_TIX_CHECKIN_FLAG_TTL is defined and defaults to 60', defined( 'CR8V_TIX_CHECKIN_FLAG_TTL' ) && 60 === CR8V_TIX_CHECKIN_FLAG_TTL );
+
+wp_set_current_user( $staff_user_id );
+$custom_ttl_cb = function( $ttl, $t_code, $s_id ) {
+	return 120;
+};
+add_filter( 'cr8v_tix_checkin_flag_ttl', $custom_ttl_cb, 10, 3 );
+$token_90 = cr8v_tix_generate_checkin_token( $code_2, $staff_user_id, time() - 90 );
+$valid_filtered = cr8v_tix_verify_checkin_token( $code_2, $staff_user_id, time() - 90, $token_90 );
+remove_filter( 'cr8v_tix_checkin_flag_ttl', $custom_ttl_cb, 10 );
+$invalid_unfiltered = cr8v_tix_verify_checkin_token( $code_2, $staff_user_id, time() - 90, $token_90 );
+
+t( 'cr8v_tix_checkin_flag_ttl filter allows extending token TTL', true === $valid_filtered );
+t( 'Default 60s TTL rejects token older than 60s without filter', false === $invalid_unfiltered );
+
+// 8. Real HTTP response headers on /booking-confirmation/
+echo "\n=== 8. REAL HTTP SECURITY & NO-CACHE HEADERS ===\n";
+$hdr_file   = wp_tempnam();
+$dev_null   = ( DIRECTORY_SEPARATOR === '\\' ) ? 'NUL' : '/dev/null';
+$curl_bin   = ( DIRECTORY_SEPARATOR === '\\' ) ? 'curl.exe' : 'curl';
+$target_url = home_url( '/booking-confirmation/' );
+shell_exec( $curl_bin . ' -s -D ' . escapeshellarg( $hdr_file ) . ' -o ' . $dev_null . ' ' . escapeshellarg( $target_url ) );
+$dumped_headers = ( file_exists( $hdr_file ) ) ? (string) file_get_contents( $hdr_file ) : '';
+if ( file_exists( $hdr_file ) ) {
+	@unlink( $hdr_file );
+}
+
+t( 'Real HTTP /booking-confirmation/ serves Cache-Control with no-store', false !== stripos( $dumped_headers, 'Cache-Control:' ) && false !== stripos( $dumped_headers, 'no-store' ), "got headers:\n$dumped_headers" );
+t( 'Real HTTP /booking-confirmation/ serves X-Robots-Tag with noindex', false !== stripos( $dumped_headers, 'X-Robots-Tag:' ) && false !== stripos( $dumped_headers, 'noindex' ), "got headers:\n$dumped_headers" );
+t( 'Real HTTP /booking-confirmation/ serves Referrer-Policy with no-referrer', false !== stripos( $dumped_headers, 'Referrer-Policy:' ) && false !== stripos( $dumped_headers, 'no-referrer' ), "got headers:\n$dumped_headers" );
+
 // Cleanup
 wp_delete_post( $order_id, true );
 wp_delete_post( $test_event_id, true );

@@ -125,3 +125,62 @@ function cr8v_tix_find_ticket( $raw_code ) {
 	}
 	return null;
 }
+
+/**
+ * Short-lived signed door check-in flag window in seconds (PRG).
+ */
+if ( ! defined( 'CR8V_TIX_CHECKIN_FLAG_TTL' ) ) {
+	define( 'CR8V_TIX_CHECKIN_FLAG_TTL', 60 );
+}
+
+/**
+ * Generate a short-lived cryptographic HMAC token for door check-in PRG flag.
+ *
+ * @param string $ticket_code Normalized ticket code.
+ * @param int    $staff_id    Staff user ID who performed the check-in.
+ * @param int    $time        Timestamp of the check-in action.
+ * @return string 32-character hex token.
+ */
+function cr8v_tix_generate_checkin_token( $ticket_code, $staff_id, $time ) {
+	return substr( hash_hmac( 'sha256', "checkin_{$ticket_code}_{$staff_id}_{$time}", wp_salt( 'nonce' ) ), 0, 32 );
+}
+
+/**
+ * Verify door check-in PRG token.
+ * Must match staff ID, ticket code, valid signature, and not expired (<= TTL).
+ *
+ * @param string $ticket_code Normalized ticket code.
+ * @param int    $staff_id    Staff user ID from request.
+ * @param int    $time        Timestamp from request.
+ * @param string $token       Token signature from request.
+ * @return bool True if valid, not expired, and requested by same logged-in staff user.
+ */
+function cr8v_tix_verify_checkin_token( $ticket_code, $staff_id, $time, $token ) {
+	if ( ! current_user_can( 'edit_event_orders' ) && ! current_user_can( 'manage_options' ) ) {
+		return false;
+	}
+
+	$current_uid = get_current_user_id();
+	if ( ! $current_uid || (int) $staff_id !== $current_uid ) {
+		return false;
+	}
+
+	$ttl = (int) apply_filters( 'cr8v_tix_checkin_flag_ttl', CR8V_TIX_CHECKIN_FLAG_TTL, $ticket_code, $staff_id );
+	if ( $ttl <= 0 ) {
+		$ttl = 60;
+	}
+
+	$now  = time();
+	$time = (int) $time;
+	if ( $time <= 0 || ( $now - $time ) > $ttl || $time > ( $now + 5 ) ) {
+		return false;
+	}
+
+	if ( empty( $ticket_code ) || empty( $token ) ) {
+		return false;
+	}
+
+	$expected = cr8v_tix_generate_checkin_token( $ticket_code, $current_uid, $time );
+	return hash_equals( $expected, (string) $token );
+}
+

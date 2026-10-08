@@ -15,7 +15,7 @@ $f = @('-d',"extension_dir=$ext",'-d','extension=mysqli','-d','extension=mbstrin
 & $php @f cr8v-event-ticketing\tests\test_phase23_audit.php             # expect: RESULT: 55 passed, 0 failed
 & $php @f cr8v-event-ticketing\tests\test_phase2_phase3.php             # expect: SUMMARY: 30 PASSED, 0 FAILED
 & $php @f cr8v-event-ticketing\tests\test_staff_and_csv.php              # expect: RESULT: 62 passed, 0 failed
-& $php @f cr8v-event-ticketing\tests\test_mobile_staff_checkin.php           # expect: RESULT: 55 passed, 0 failed
+& $php @f cr8v-event-ticketing\tests\test_mobile_staff_checkin.php           # expect: RESULT: 61 passed, 0 failed
 & $php cr8v-event-ticketing\tests\test_repo_hygiene.php                  # expect: RESULT: scanned N files, 0 problem(s)   (no WordPress needed)
 ```
 

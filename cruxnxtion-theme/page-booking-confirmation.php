@@ -20,11 +20,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! defined( 'DONOTCACHEPAGE' ) ) {
 	define( 'DONOTCACHEPAGE', true );
 }
-if ( ! headers_sent() ) {
-	nocache_headers();
-	header( 'X-Robots-Tag: noindex, nofollow, noarchive' );
-	header( 'Referrer-Policy: no-referrer' );
-}
+nocache_headers();
+header( 'X-Robots-Tag: noindex, nofollow, noarchive' );
+header( 'Referrer-Policy: no-referrer' );
 
 // -----------------------------------------------------------------------------
 // 1. Process Staff Door Check-In Action (POST only, gated by capability & nonce)
@@ -32,56 +30,6 @@ if ( ! headers_sent() ) {
 $checkin_message = '';
 $checkin_status  = '';
 $staff_landing_url = function_exists( 'cr8v_tix_staff_landing_url' ) ? cr8v_tix_staff_landing_url() : home_url( '/booking-confirmation/' );
-
-if ( ! function_exists( 'cr8v_tix_generate_checkin_token' ) ) {
-	/**
-	 * Generate a short-lived cryptographic HMAC token for door check-in PRG flag.
-	 *
-	 * @param string $ticket_code Normalized ticket code.
-	 * @param int    $staff_id    Staff user ID who performed the check-in.
-	 * @param int    $time        Timestamp of the check-in action.
-	 * @return string 32-character hex token.
-	 */
-	function cr8v_tix_generate_checkin_token( $ticket_code, $staff_id, $time ) {
-		return substr( hash_hmac( 'sha256', "checkin_{$ticket_code}_{$staff_id}_{$time}", wp_salt( 'nonce' ) ), 0, 32 );
-	}
-}
-
-if ( ! function_exists( 'cr8v_tix_verify_checkin_token' ) ) {
-	/**
-	 * Verify door check-in PRG token.
-	 * Must match staff ID, ticket code, valid signature, and not expired (<= 60 seconds).
-	 *
-	 * @param string $ticket_code Normalized ticket code.
-	 * @param int    $staff_id    Staff user ID from request.
-	 * @param int    $time        Timestamp from request.
-	 * @param string $token       Token signature from request.
-	 * @return bool True if valid, not expired, and requested by same logged-in staff user.
-	 */
-	function cr8v_tix_verify_checkin_token( $ticket_code, $staff_id, $time, $token ) {
-		if ( ! current_user_can( 'edit_event_orders' ) && ! current_user_can( 'manage_options' ) ) {
-			return false;
-		}
-
-		$current_uid = get_current_user_id();
-		if ( ! $current_uid || (int) $staff_id !== $current_uid ) {
-			return false;
-		}
-
-		$now  = time();
-		$time = (int) $time;
-		if ( $time <= 0 || ( $now - $time ) > 60 || $time > ( $now + 5 ) ) {
-			return false;
-		}
-
-		if ( empty( $ticket_code ) || empty( $token ) ) {
-			return false;
-		}
-
-		$expected = cr8v_tix_generate_checkin_token( $ticket_code, $current_uid, $time );
-		return hash_equals( $expected, $token );
-	}
-}
 
 if ( 'POST' === ( $_SERVER['REQUEST_METHOD'] ?? '' ) && isset( $_POST['cr8v_do_checkin'] ) ) {
 	$p_code  = cr8v_tix_normalize_ticket_code( sanitize_text_field( wp_unslash( $_POST['ticket_code'] ?? '' ) ) );
