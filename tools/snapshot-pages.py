@@ -79,6 +79,9 @@ def compare(a, b):
         if LOOSE and f == 'sample_page.html':  # generic page: its own announcement text was unified
             cut = lambda v: re.sub(r'<!-- SHOUT-OUT BAR -->.*?<header', '<header', v, flags=re.S)
             x, y = cut(x), cut(y)
+        if LOOSE and f.startswith('contact'):  # contact footer now wraps on mobile like every other page's footer
+            fix = lambda v: v.replace(' data-m="wrap">', '>').replace('margin:0px 0px 0px 0px;">&copy;', 'margin:0;">&copy;')
+            x, y = fix(x), fix(y)
         if x == y:
             same += 1
         else:
