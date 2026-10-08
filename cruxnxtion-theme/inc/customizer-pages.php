@@ -140,3 +140,10 @@ function crux_customizer_scripts() {
 	);
 }
 add_action( 'customize_controls_enqueue_scripts', 'crux_customizer_scripts' );
+
+/**
+ * This theme has no widget areas, so the Customizer does not need its block-based widget editor. Turning it off stops
+ * WordPress and WooCommerce from loading well over a hundred block-editor scripts and styles into the Customizer
+ * (about half of everything it downloaded), which makes it open much faster and avoids plugin clashes with those scripts.
+ */
+add_filter( 'use_widgets_block_editor', '__return_false' );
