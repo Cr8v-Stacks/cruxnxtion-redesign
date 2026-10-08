@@ -6,7 +6,7 @@
 Used to prove that a refactor (for example moving the header and footer into shared theme parts) leaves every page
 byte-for-byte the same once values that change on every request (security tokens, timestamps) are blanked.
 """
-import json, os, re, sys, urllib.request, urllib.error
+import html as htmllib, json, os, re, sys, urllib.request, urllib.error
 
 BASE = 'http://dev-playground.local'
 PATHS = ['/', '/about/', '/services/', '/services-consultancy/', '/consultancy/', '/contact/', '/contact/?type=events',
@@ -39,6 +39,7 @@ def loose(html):
     """Comparison for refactors that move markup into shared parts: ignores whitespace between tags and the documented
     Customizer phase C0 unifications (announcement bar class and padding, generic page announcement text)."""
     html = html.replace(' class="top-shoutout-bar"', '').replace('padding:10px 64px;', 'padding:10px 20px 10px 20px;')
+    html = htmllib.unescape(html)   # &rarr; and the character it stands for are the same text
     html = re.sub(r'\s+', ' ', html)
     return re.sub(r'>\s+<', '><', html).strip()
 
@@ -80,7 +81,7 @@ def compare(a, b):
             cut = lambda v: re.sub(r'<!-- SHOUT-OUT BAR -->.*?<header', '<header', v, flags=re.S)
             x, y = cut(x), cut(y)
         if LOOSE and f.startswith('contact'):  # contact footer now wraps on mobile like every other page's footer
-            fix = lambda v: v.replace(' data-m="wrap">', '>').replace('margin:0px 0px 0px 0px;">&copy;', 'margin:0;">&copy;')
+            fix = lambda v: v.replace(' data-m="wrap">', '>').replace('margin:0px 0px 0px 0px;">©', 'margin:0;">©')
             x, y = fix(x), fix(y)
         if x == y:
             same += 1

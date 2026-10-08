@@ -677,9 +677,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
   <!-- ARCHIVE -->
   <section style=" padding:44px 20px 30px 20px;">
-    <span class="eyebrow">Past Events</span>
-    <h1 class="bebas" style="font-size:44px; margin:14px 0px 14px 0px; color:#F4F5FA;">THE ARCHIVE</h1>
-    <p style="font-size:15px; color:#A3A9C8; max-width:540px; margin:0px 0px 0px 0px;">Every night we have planned, booked and run, year by year.</p>
+    <span class="eyebrow"><?php echo crux_h( 'events_archive', 'archive_small_heading_1' ); ?></span>
+    <h1 class="bebas" style="font-size:44px; margin:14px 0px 14px 0px; color:#F4F5FA;"><?php echo crux_h( 'events_archive', 'archive_heading_1' ); ?></h1>
+    <p style="font-size:15px; color:#A3A9C8; max-width:540px; margin:0px 0px 0px 0px;"><?php echo crux_h( 'events_archive', 'archive_paragraph_1' ); ?></p>
   </section>
   <section style=" padding:20px 20px 44px 20px;">
     <div style="display:grid; grid-template-columns:140px 1fr; gap:40px; padding:34px 0px 34px 0px; border-top:1.5px solid #1E2B5E;" data-m="g1">
@@ -687,15 +687,15 @@ if ( ! defined( 'ABSPATH' ) ) {
       <div style="display:flex; flex-direction:column; gap:16px;">
         <a href="<?php echo esc_url( home_url( "/event/becoming-mr-mrs-crux-pt-3/" ) ); ?>" style="display:flex; align-items:center; gap:22px; background:#111838; border:1.5px solid #1E2B5E; border-radius:12px; padding:14px 14px 14px 14px; overflow:hidden;" data-m="imgtop">
           <img src="<?php echo crux_get_blob_url( "2f9f2834d9f0829e887b03bccc208656" ); ?>" alt="Becoming Mr &amp; Mrs Crux Pt.3" style="width:120px; height:120px; object-fit:cover; border-radius:8px; flex:0 0 120px;">
-          <div style="flex:0 0 78px; text-align:center; background:#002671; color:#FFFFFF; border-radius:8px; padding:12px 6px 12px 6px;"><div class="bebas" style="font-size:34px; line-height:1;">23</div><div style="font-size:10px; font-weight:800; letter-spacing:1.4px;">APR</div></div>
-          <div style="flex:1;"><span class="eyebrow" style="color:#5B8DEF;">Part 3</span><h3 class="bebas" style="font-size:30px; margin:6px 0px 6px 0px; color:#F4F5FA;">Becoming Mr &amp; Mrs Crux Pt.3</h3><p style="font-size:13.5px; line-height:1.55; color:#A3A9C8; margin:0px 0px 0px 0px; max-width:560px;">The third edition of our Becoming Mr &amp; Mrs Crux celebration.</p></div>
-          <span style="font-weight:700; font-size:13px; color:#5B8DEF; white-space:nowrap; padding-right:10px;">Details →</span>
+          <div style="flex:0 0 78px; text-align:center; background:#002671; color:#FFFFFF; border-radius:8px; padding:12px 6px 12px 6px;"><div class="bebas" style="font-size:34px; line-height:1;">23</div><div style="font-size:10px; font-weight:800; letter-spacing:1.4px;"><?php echo crux_h( 'events_archive', 'archive_text_1' ); ?></div></div>
+          <div style="flex:1;"><span class="eyebrow" style="color:#5B8DEF;"><?php echo crux_h( 'events_archive', 'archive_small_heading_2' ); ?></span><h3 class="bebas" style="font-size:30px; margin:6px 0px 6px 0px; color:#F4F5FA;"><?php echo crux_h( 'events_archive', 'archive_heading_2' ); ?></h3><p style="font-size:13.5px; line-height:1.55; color:#A3A9C8; margin:0px 0px 0px 0px; max-width:560px;"><?php echo crux_h( 'events_archive', 'archive_paragraph_2' ); ?></p></div>
+          <span style="font-weight:700; font-size:13px; color:#5B8DEF; white-space:nowrap; padding-right:10px;"><?php echo crux_h( 'events_archive', 'archive_text_2' ); ?></span>
         </a>
         <a href="<?php echo esc_url( home_url( "/event/lasgidi-mainland-party/" ) ); ?>" style="display:flex; align-items:center; gap:22px; background:#111838; border:1.5px solid #1E2B5E; border-radius:12px; padding:14px 14px 14px 14px; overflow:hidden;" data-m="imgtop">
           <img src="<?php echo crux_get_blob_url( "a15ea8703f82f1d0f8577325e8d85a3b" ); ?>" alt="LASGIDI Mainland Party" style="width:120px; height:120px; object-fit:cover; border-radius:8px; flex:0 0 120px;">
-          <div style="flex:0 0 78px; text-align:center; background:#BA0000; color:#FFFFFF; border-radius:8px; padding:12px 6px 12px 6px;"><div class="bebas" style="font-size:34px; line-height:1;">25</div><div style="font-size:10px; font-weight:800; letter-spacing:1.4px;">JAN</div></div>
-          <div style="flex:1;"><span class="eyebrow" style="color:#5B8DEF;">IJGB Edition</span><h3 class="bebas" style="font-size:30px; margin:6px 0px 6px 0px; color:#F4F5FA;">LASGIDI Mainland Party</h3><p style="font-size:13.5px; line-height:1.55; color:#A3A9C8; margin:0px 0px 0px 0px; max-width:560px;">The LASGIDI Mainland Party, IJGB edition.</p></div>
-          <span style="font-weight:700; font-size:13px; color:#5B8DEF; white-space:nowrap; padding-right:10px;">Details →</span>
+          <div style="flex:0 0 78px; text-align:center; background:#BA0000; color:#FFFFFF; border-radius:8px; padding:12px 6px 12px 6px;"><div class="bebas" style="font-size:34px; line-height:1;">25</div><div style="font-size:10px; font-weight:800; letter-spacing:1.4px;"><?php echo crux_h( 'events_archive', 'archive_text_3' ); ?></div></div>
+          <div style="flex:1;"><span class="eyebrow" style="color:#5B8DEF;"><?php echo crux_h( 'events_archive', 'archive_small_heading_3' ); ?></span><h3 class="bebas" style="font-size:30px; margin:6px 0px 6px 0px; color:#F4F5FA;"><?php echo crux_h( 'events_archive', 'archive_heading_3' ); ?></h3><p style="font-size:13.5px; line-height:1.55; color:#A3A9C8; margin:0px 0px 0px 0px; max-width:560px;"><?php echo crux_h( 'events_archive', 'archive_paragraph_3' ); ?></p></div>
+          <span style="font-weight:700; font-size:13px; color:#5B8DEF; white-space:nowrap; padding-right:10px;"><?php echo crux_h( 'events_archive', 'archive_text_2' ); ?></span>
         </a>
       </div>
     </div>
@@ -704,9 +704,9 @@ if ( ! defined( 'ABSPATH' ) ) {
       <div style="display:flex; flex-direction:column; gap:16px;">
         <a href="<?php echo esc_url( home_url( "/event/ankara-festival/" ) ); ?>" style="display:flex; align-items:center; gap:22px; background:#111838; border:1.5px solid #1E2B5E; border-radius:12px; padding:14px 14px 14px 14px; overflow:hidden;" data-m="imgtop">
           <img src="<?php echo crux_get_blob_url( "11316a3d9c4317e3d5b7f755df227497" ); ?>" alt="Ankara Festival" style="width:120px; height:120px; object-fit:cover; border-radius:8px; flex:0 0 120px;">
-          <div style="flex:0 0 78px; text-align:center; background:#8C7AE6; color:#10142E; border-radius:8px; padding:12px 6px 12px 6px;"><div class="bebas" style="font-size:34px; line-height:1;">30</div><div style="font-size:10px; font-weight:800; letter-spacing:1.4px;">NOV</div></div>
-          <div style="flex:1;"><span class="eyebrow" style="color:#5B8DEF;">Culture</span><h3 class="bebas" style="font-size:30px; margin:6px 0px 6px 0px; color:#F4F5FA;">Ankara Festival</h3><p style="font-size:13.5px; line-height:1.55; color:#A3A9C8; margin:0px 0px 0px 0px; max-width:560px;">The Ankara Festival celebrates the vibrancy and diversity of African culture in the heart of the United Kingdom.</p></div>
-          <span style="font-weight:700; font-size:13px; color:#5B8DEF; white-space:nowrap; padding-right:10px;">Details →</span>
+          <div style="flex:0 0 78px; text-align:center; background:#8C7AE6; color:#10142E; border-radius:8px; padding:12px 6px 12px 6px;"><div class="bebas" style="font-size:34px; line-height:1;">30</div><div style="font-size:10px; font-weight:800; letter-spacing:1.4px;"><?php echo crux_h( 'events_archive', 'archive_text_4' ); ?></div></div>
+          <div style="flex:1;"><span class="eyebrow" style="color:#5B8DEF;"><?php echo crux_h( 'events_archive', 'archive_small_heading_4' ); ?></span><h3 class="bebas" style="font-size:30px; margin:6px 0px 6px 0px; color:#F4F5FA;"><?php echo crux_h( 'events_archive', 'archive_heading_4' ); ?></h3><p style="font-size:13.5px; line-height:1.55; color:#A3A9C8; margin:0px 0px 0px 0px; max-width:560px;"><?php echo crux_h( 'events_archive', 'archive_paragraph_4' ); ?></p></div>
+          <span style="font-weight:700; font-size:13px; color:#5B8DEF; white-space:nowrap; padding-right:10px;"><?php echo crux_h( 'events_archive', 'archive_text_2' ); ?></span>
         </a>
       </div>
     </div>
@@ -715,21 +715,21 @@ if ( ! defined( 'ABSPATH' ) ) {
       <div style="display:flex; flex-direction:column; gap:16px;">
         <a href="<?php echo esc_url( home_url( "/event/dance-out-2023/" ) ); ?>" style="display:flex; align-items:center; gap:22px; background:#111838; border:1.5px solid #1E2B5E; border-radius:12px; padding:14px 14px 14px 14px; overflow:hidden;" data-m="imgtop">
           <img src="<?php echo crux_get_blob_url( "1d5292715423e2e83b56b3330a94b3b8" ); ?>" alt="Dance OUT 2023" style="width:120px; height:120px; object-fit:cover; border-radius:8px; flex:0 0 120px;">
-          <div style="flex:0 0 78px; text-align:center; background:#002671; color:#FFFFFF; border-radius:8px; padding:12px 6px 12px 6px;"><div class="bebas" style="font-size:34px; line-height:1;">16</div><div style="font-size:10px; font-weight:800; letter-spacing:1.4px;">DEC</div></div>
-          <div style="flex:1;"><span class="eyebrow" style="color:#5B8DEF;">Dance night</span><h3 class="bebas" style="font-size:30px; margin:6px 0px 6px 0px; color:#F4F5FA;">Dance OUT 2023</h3><p style="font-size:13.5px; line-height:1.55; color:#A3A9C8; margin:0px 0px 0px 0px; max-width:560px;">Get ready to groove and move like never before. An electrifying night set to ignite the dance floor.</p></div>
-          <span style="font-weight:700; font-size:13px; color:#5B8DEF; white-space:nowrap; padding-right:10px;">Details →</span>
+          <div style="flex:0 0 78px; text-align:center; background:#002671; color:#FFFFFF; border-radius:8px; padding:12px 6px 12px 6px;"><div class="bebas" style="font-size:34px; line-height:1;">16</div><div style="font-size:10px; font-weight:800; letter-spacing:1.4px;"><?php echo crux_h( 'events_archive', 'archive_text_5' ); ?></div></div>
+          <div style="flex:1;"><span class="eyebrow" style="color:#5B8DEF;"><?php echo crux_h( 'events_archive', 'archive_small_heading_5' ); ?></span><h3 class="bebas" style="font-size:30px; margin:6px 0px 6px 0px; color:#F4F5FA;"><?php echo crux_h( 'events_archive', 'archive_heading_5' ); ?></h3><p style="font-size:13.5px; line-height:1.55; color:#A3A9C8; margin:0px 0px 0px 0px; max-width:560px;"><?php echo crux_h( 'events_archive', 'archive_paragraph_5' ); ?></p></div>
+          <span style="font-weight:700; font-size:13px; color:#5B8DEF; white-space:nowrap; padding-right:10px;"><?php echo crux_h( 'events_archive', 'archive_text_2' ); ?></span>
         </a>
         <a href="<?php echo esc_url( home_url( "/event/yagi-awards/" ) ); ?>" style="display:flex; align-items:center; gap:22px; background:#111838; border:1.5px solid #1E2B5E; border-radius:12px; padding:14px 14px 14px 14px; overflow:hidden;" data-m="imgtop">
           <img src="<?php echo crux_get_blob_url( "fa3286e8f930ebdb28b28c54198542fa" ); ?>" alt="YAGI Awards" style="width:120px; height:120px; object-fit:cover; border-radius:8px; flex:0 0 120px;">
-          <div style="flex:0 0 78px; text-align:center; background:#BA0000; color:#FFFFFF; border-radius:8px; padding:12px 6px 12px 6px;"><div class="bebas" style="font-size:34px; line-height:1;">28</div><div style="font-size:10px; font-weight:800; letter-spacing:1.4px;">APR</div></div>
-          <div style="flex:1;"><span class="eyebrow" style="color:#5B8DEF;">Awards</span><h3 class="bebas" style="font-size:30px; margin:6px 0px 6px 0px; color:#F4F5FA;">YAGI Awards</h3><p style="font-size:13.5px; line-height:1.55; color:#A3A9C8; margin:0px 0px 0px 0px; max-width:560px;">Set to recognise individuals who have done wonderfully well in their services and contributions to the community.</p></div>
-          <span style="font-weight:700; font-size:13px; color:#5B8DEF; white-space:nowrap; padding-right:10px;">Details →</span>
+          <div style="flex:0 0 78px; text-align:center; background:#BA0000; color:#FFFFFF; border-radius:8px; padding:12px 6px 12px 6px;"><div class="bebas" style="font-size:34px; line-height:1;">28</div><div style="font-size:10px; font-weight:800; letter-spacing:1.4px;"><?php echo crux_h( 'events_archive', 'archive_text_1' ); ?></div></div>
+          <div style="flex:1;"><span class="eyebrow" style="color:#5B8DEF;"><?php echo crux_h( 'events_archive', 'archive_small_heading_6' ); ?></span><h3 class="bebas" style="font-size:30px; margin:6px 0px 6px 0px; color:#F4F5FA;"><?php echo crux_h( 'events_archive', 'archive_heading_6' ); ?></h3><p style="font-size:13.5px; line-height:1.55; color:#A3A9C8; margin:0px 0px 0px 0px; max-width:560px;"><?php echo crux_h( 'events_archive', 'archive_paragraph_6' ); ?></p></div>
+          <span style="font-weight:700; font-size:13px; color:#5B8DEF; white-space:nowrap; padding-right:10px;"><?php echo crux_h( 'events_archive', 'archive_text_2' ); ?></span>
         </a>
         <a href="<?php echo esc_url( home_url( "/event/millennials-vs-gen-z/" ) ); ?>" style="display:flex; align-items:center; gap:22px; background:#111838; border:1.5px solid #1E2B5E; border-radius:12px; padding:14px 14px 14px 14px; overflow:hidden;" data-m="imgtop">
           <img src="<?php echo crux_get_blob_url( "317371ca97a92f79584d7ff4bae33069" ); ?>" alt="Millennials vs Gen Z" style="width:120px; height:120px; object-fit:cover; border-radius:8px; flex:0 0 120px;">
-          <div style="flex:0 0 78px; text-align:center; background:#8C7AE6; color:#10142E; border-radius:8px; padding:12px 6px 12px 6px;"><div class="bebas" style="font-size:34px; line-height:1;">29</div><div style="font-size:10px; font-weight:800; letter-spacing:1.4px;">JAN</div></div>
-          <div style="flex:1;"><span class="eyebrow" style="color:#5B8DEF;">Games night</span><h3 class="bebas" style="font-size:30px; margin:6px 0px 6px 0px; color:#F4F5FA;">Millennials vs Gen Z</h3><p style="font-size:13.5px; line-height:1.55; color:#A3A9C8; margin:0px 0px 0px 0px; max-width:560px;">Games night with Millennial crowds taking on Gen Z to win ultimate bragging rights.</p></div>
-          <span style="font-weight:700; font-size:13px; color:#5B8DEF; white-space:nowrap; padding-right:10px;">Details →</span>
+          <div style="flex:0 0 78px; text-align:center; background:#8C7AE6; color:#10142E; border-radius:8px; padding:12px 6px 12px 6px;"><div class="bebas" style="font-size:34px; line-height:1;">29</div><div style="font-size:10px; font-weight:800; letter-spacing:1.4px;"><?php echo crux_h( 'events_archive', 'archive_text_3' ); ?></div></div>
+          <div style="flex:1;"><span class="eyebrow" style="color:#5B8DEF;"><?php echo crux_h( 'events_archive', 'archive_small_heading_7' ); ?></span><h3 class="bebas" style="font-size:30px; margin:6px 0px 6px 0px; color:#F4F5FA;"><?php echo crux_h( 'events_archive', 'archive_heading_7' ); ?></h3><p style="font-size:13.5px; line-height:1.55; color:#A3A9C8; margin:0px 0px 0px 0px; max-width:560px;"><?php echo crux_h( 'events_archive', 'archive_paragraph_7' ); ?></p></div>
+          <span style="font-weight:700; font-size:13px; color:#5B8DEF; white-space:nowrap; padding-right:10px;"><?php echo crux_h( 'events_archive', 'archive_text_2' ); ?></span>
         </a>
       </div>
     </div>
@@ -738,9 +738,9 @@ if ( ! defined( 'ABSPATH' ) ) {
       <div style="display:flex; flex-direction:column; gap:16px;">
         <a href="<?php echo esc_url( home_url( "/event/the-wedding-party/" ) ); ?>" style="display:flex; align-items:center; gap:22px; background:#111838; border:1.5px solid #1E2B5E; border-radius:12px; padding:14px 14px 14px 14px; overflow:hidden;" data-m="imgtop">
           <img src="<?php echo crux_get_blob_url( "53df70ef86c4b1d32979af070d98a399" ); ?>" alt="The Wedding Party" style="width:120px; height:120px; object-fit:cover; border-radius:8px; flex:0 0 120px;">
-          <div style="flex:0 0 78px; text-align:center; background:#002671; color:#FFFFFF; border-radius:8px; padding:12px 6px 12px 6px;"><div class="bebas" style="font-size:34px; line-height:1;">27</div><div style="font-size:10px; font-weight:800; letter-spacing:1.4px;">AUG</div></div>
-          <div style="flex:1;"><span class="eyebrow" style="color:#5B8DEF;">Wedding</span><h3 class="bebas" style="font-size:30px; margin:6px 0px 6px 0px; color:#F4F5FA;">The Wedding Party</h3><p style="font-size:13.5px; line-height:1.55; color:#A3A9C8; margin:0px 0px 0px 0px; max-width:560px;">Set up to celebrate the glamorous Nigerian wedding party in the United Kingdom.</p></div>
-          <span style="font-weight:700; font-size:13px; color:#5B8DEF; white-space:nowrap; padding-right:10px;">Details →</span>
+          <div style="flex:0 0 78px; text-align:center; background:#002671; color:#FFFFFF; border-radius:8px; padding:12px 6px 12px 6px;"><div class="bebas" style="font-size:34px; line-height:1;">27</div><div style="font-size:10px; font-weight:800; letter-spacing:1.4px;"><?php echo crux_h( 'events_archive', 'archive_text_6' ); ?></div></div>
+          <div style="flex:1;"><span class="eyebrow" style="color:#5B8DEF;"><?php echo crux_h( 'events_archive', 'archive_small_heading_8' ); ?></span><h3 class="bebas" style="font-size:30px; margin:6px 0px 6px 0px; color:#F4F5FA;"><?php echo crux_h( 'events_archive', 'archive_heading_8' ); ?></h3><p style="font-size:13.5px; line-height:1.55; color:#A3A9C8; margin:0px 0px 0px 0px; max-width:560px;"><?php echo crux_h( 'events_archive', 'archive_paragraph_8' ); ?></p></div>
+          <span style="font-weight:700; font-size:13px; color:#5B8DEF; white-space:nowrap; padding-right:10px;"><?php echo crux_h( 'events_archive', 'archive_text_2' ); ?></span>
         </a>
       </div>
     </div>
@@ -749,13 +749,13 @@ if ( ! defined( 'ABSPATH' ) ) {
       <div style="display:flex; flex-direction:column; gap:16px;">
         <a href="<?php echo esc_url( home_url( "/event/crux-nxtion-hangout/" ) ); ?>" style="display:flex; align-items:center; gap:22px; background:#111838; border:1.5px solid #1E2B5E; border-radius:12px; padding:14px 14px 14px 14px; overflow:hidden;" data-m="imgtop">
           <img src="<?php echo crux_get_blob_url( "352a5c10108a75b7cb713fd1433b8b36" ); ?>" alt="Crux Nxtion Hangout Out" style="width:120px; height:120px; object-fit:cover; border-radius:8px; flex:0 0 120px;">
-          <div style="flex:0 0 78px; text-align:center; background:#BA0000; color:#FFFFFF; border-radius:8px; padding:12px 6px 12px 6px;"><div class="bebas" style="font-size:34px; line-height:1;">25</div><div style="font-size:10px; font-weight:800; letter-spacing:1.4px;">SEP</div></div>
-          <div style="flex:1;"><span class="eyebrow" style="color:#5B8DEF;">Social</span><h3 class="bebas" style="font-size:30px; margin:6px 0px 6px 0px; color:#F4F5FA;">Crux Nxtion Hangout Out</h3><p style="font-size:13.5px; line-height:1.55; color:#A3A9C8; margin:0px 0px 0px 0px; max-width:560px;">An indoor games hangout: come socialise, make friends, network and vibe.</p></div>
-          <span style="font-weight:700; font-size:13px; color:#5B8DEF; white-space:nowrap; padding-right:10px;">Details →</span>
+          <div style="flex:0 0 78px; text-align:center; background:#BA0000; color:#FFFFFF; border-radius:8px; padding:12px 6px 12px 6px;"><div class="bebas" style="font-size:34px; line-height:1;">25</div><div style="font-size:10px; font-weight:800; letter-spacing:1.4px;"><?php echo crux_h( 'events_archive', 'archive_text_7' ); ?></div></div>
+          <div style="flex:1;"><span class="eyebrow" style="color:#5B8DEF;"><?php echo crux_h( 'events_archive', 'archive_small_heading_9' ); ?></span><h3 class="bebas" style="font-size:30px; margin:6px 0px 6px 0px; color:#F4F5FA;"><?php echo crux_h( 'events_archive', 'archive_heading_9' ); ?></h3><p style="font-size:13.5px; line-height:1.55; color:#A3A9C8; margin:0px 0px 0px 0px; max-width:560px;"><?php echo crux_h( 'events_archive', 'archive_paragraph_9' ); ?></p></div>
+          <span style="font-weight:700; font-size:13px; color:#5B8DEF; white-space:nowrap; padding-right:10px;"><?php echo crux_h( 'events_archive', 'archive_text_2' ); ?></span>
         </a>
       </div>
     </div>
-    <div style="border-top:1.5px solid #1E2B5E; padding-top:40px; text-align:center;"><a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:15px; padding:16px 30px 16px 30px; --sl:10px;" class="bx">Book Your Own Night</a></div>
+    <div style="border-top:1.5px solid #1E2B5E; padding-top:40px; text-align:center;"><a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:15px; padding:16px 30px 16px 30px; --sl:10px;" class="bx"><?php echo crux_h( 'events_archive', 'archive_button_1' ); ?></a></div>
   </section>
 
   <?php get_template_part( 'parts/site-footer', null, array( 'skin' => 'dark', 'prefooter' => 'events', 'wing' => 'events' ) ); ?>
@@ -764,10 +764,10 @@ if ( ! defined( 'ABSPATH' ) ) {
   <div class="crux-sw-pod crux-sw-pod--dark" style="pointer-events:auto; display:inline-flex; align-items:center; padding:1.5px; background:linear-gradient(135deg, #2A3F7A 0%, #15224A 100%); clip-path:polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%); box-shadow:0 14px 36px rgba(0,0,0,0.65); filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4));">
     <div class="crux-sw-inner" style="display:inline-flex; align-items:center; background:#020512; padding:4px; gap:4px; clip-path:polygon(7px 0, 100% 0, calc(100% - 7px) 100%, 0 100%);">
       <a href="<?php echo esc_url( home_url( "/" ) ); ?>" class="crux-sw-tab crux-sw-tab--active-events" style="display:inline-flex; align-items:center; justify-content:center; padding:11px 22px; min-width:140px; font-size:13px; font-weight:700; letter-spacing:0.3px; text-transform:uppercase; text-decoration:none; line-height:1.2; background:#1E48B0; color:#FFFFFF; clip-path:polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%); box-shadow:0 2px 8px rgba(30,72,176,0.5);">
-        <span>Events</span>
+        <span><?php echo crux_h( 'events_archive', 'archive_text_8' ); ?></span>
       </a>
       <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" class="crux-sw-tab crux-sw-tab--inactive-dark" style="display:inline-flex; align-items:center; justify-content:center; padding:11px 22px; min-width:140px; font-size:13px; font-weight:600; letter-spacing:0.3px; text-transform:uppercase; text-decoration:none; line-height:1.2; background:transparent; color:#8E96BB; clip-path:polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%); transition:all .2s ease;">
-        <span>Consultancy</span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:6px; display:inline-block; vertical-align:middle;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        <span><?php echo crux_h( 'events_archive', 'archive_text_9' ); ?></span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:6px; display:inline-block; vertical-align:middle;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
       </a>
     </div>
   </div>

@@ -561,11 +561,11 @@ if ( ! defined( 'ABSPATH' ) ) {
   <!-- 1 CONTACT -->
   <section style="min-height:860px; display:grid; grid-template-columns:1fr 1fr;">
     <div style="padding:80px 64px;" class="reveal">
-      <span class="eyebrow">Get In Touch</span>
-      <h1 class="bebas" style="font-size:72px; margin:14px 0 26px; color:#10142E;">LET'S TALK.</h1>
+      <span class="eyebrow"><?php echo crux_h( 'contact', 'contact_small_heading_1' ); ?></span>
+      <h1 class="bebas" style="font-size:72px; margin:14px 0 26px; color:#10142E;"><?php echo crux_h( 'contact', 'contact_heading_1' ); ?></h1>
       <!-- INTAKE TABS (Slanted .bx - Click multiple to brief all together) -->
       <div class="contact-mode-tabs" id="contact-mode-tabs" role="tablist">
-        <button type="button" class="contact-tab-btn bx active" data-tab="events" role="tab" aria-selected="true">Plan An Event</button>
+        <button type="button" class="contact-tab-btn bx active" data-tab="events" role="tab" aria-selected="true"><?php echo crux_h( 'contact', 'contact_button_1' ); ?></button>
         <button type="button" class="contact-tab-btn bx" data-tab="consultancy" role="tab" aria-selected="false">Business Strategy</button>
         <button type="button" class="contact-tab-btn bx" data-tab="partner" role="tab" aria-selected="false">Sponsorship &amp; Partnership</button>
       </div>
@@ -678,16 +678,16 @@ if ( ! defined( 'ABSPATH' ) ) {
             </svg>
           </div>
 
-          <h2 class="bebas" style="font-size:42px; color:#10142E; margin:0 0 10px; letter-spacing:0.5px; line-height:0.95;">BRIEF RECEIVED!</h2>
+          <h2 class="bebas" style="font-size:42px; color:#10142E; margin:0 0 10px; letter-spacing:0.5px; line-height:0.95;"><?php echo crux_h( 'contact', 'contact_heading_2' ); ?></h2>
           
-          <div id="confirm-summary-badge" class="bx" style="display:inline-block; background:#E8EFFD; --sl:6px; --bc:#C4D3F8; padding:8px 20px; font-size:12.5px; font-weight:700; color:#002671; margin-bottom:18px;">Events Inquiry</div>
+          <div id="confirm-summary-badge" class="bx" style="display:inline-block; background:#E8EFFD; --sl:6px; --bc:#C4D3F8; padding:8px 20px; font-size:12.5px; font-weight:700; color:#002671; margin-bottom:18px;"><?php echo crux_h( 'contact', 'contact_text_1' ); ?></div>
 
-          <p id="confirm-msg-body" style="font-size:15px; line-height:1.65; color:#3A3F66; margin:0 0 28px;">Thank you! Your brief has been transmitted directly to our team. A real person will review your requirements and reply within 24 business hours.</p>
+          <p id="confirm-msg-body" style="font-size:15px; line-height:1.65; color:#3A3F66; margin:0 0 28px;"><?php echo crux_h( 'contact', 'contact_paragraph_1' ); ?></p>
           
           <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
-            <a href="<?php echo esc_url( crux_opt( 'calendly_url' ) ); ?>" id="btn-modal-calendly" target="_blank" rel="noopener" style="display:none; background:#8C7AE6; color:#10142E !important; font-weight:700; font-size:13.5px; padding:13px 22px; --sl:8px; text-decoration:none;" class="bx">Book Discovery Call on Calendly &rarr;</a>
-            <button type="button" id="btn-modal-done" style="background:#002671; color:#FFFFFF; font-weight:700; font-size:13.5px; padding:13px 26px; --sl:8px; cursor:pointer;" class="bx">Close &amp; Continue</button>
-            <button type="button" id="btn-modal-reset" style="background:#8C7AE6; color:#10142E; font-weight:700; font-size:13.5px; padding:13px 24px; --sl:8px; cursor:pointer;" class="bx">Send Another Brief</button>
+            <a href="<?php echo esc_url( crux_opt( 'calendly_url' ) ); ?>" id="btn-modal-calendly" target="_blank" rel="noopener" style="display:none; background:#8C7AE6; color:#10142E !important; font-weight:700; font-size:13.5px; padding:13px 22px; --sl:8px; text-decoration:none;" class="bx"><?php echo crux_h( 'contact', 'contact_button_2' ); ?></a>
+            <button type="button" id="btn-modal-done" style="background:#002671; color:#FFFFFF; font-weight:700; font-size:13.5px; padding:13px 26px; --sl:8px; cursor:pointer;" class="bx"><?php echo crux_h( 'contact', 'contact_button_3' ); ?></button>
+            <button type="button" id="btn-modal-reset" style="background:#8C7AE6; color:#10142E; font-weight:700; font-size:13.5px; padding:13px 24px; --sl:8px; cursor:pointer;" class="bx"><?php echo crux_h( 'contact', 'contact_button_4' ); ?></button>
           </div>
 
         </div>
@@ -698,15 +698,15 @@ if ( ! defined( 'ABSPATH' ) ) {
       <div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(16,20,46,0.92) 0%, rgba(16,20,46,0.25) 70%);"></div>
       <div style="position:relative; height:100%; display:flex; flex-direction:column; justify-content:flex-end; padding:56px; gap:12px;">
         <div style="display:flex; align-items:center; gap:12px; background:rgba(16,20,46,0.96) !important; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); padding:11px 22px 11px 12px; width:fit-content; --sl:6px; --bc:#3A3F72;" class="bx"><span style="width:32px; height:32px; border-radius:50%; background:#8C7AE6; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:#10142E;">✆</span><span style="font-size:13px; font-weight:600; color:#F2F1F8;"><?php echo esc_html( crux_opt( 'phone_events' ) ); ?></span></div><div style="display:flex; align-items:center; gap:12px; background:rgba(16,20,46,0.96) !important; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); padding:11px 22px 11px 12px; width:fit-content; --sl:6px; --bc:#3A3F72;" class="bx"><span style="width:32px; height:32px; border-radius:50%; background:#8C7AE6; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:#10142E;">✆</span><span style="font-size:13px; font-weight:600; color:#F2F1F8;"><?php echo esc_html( crux_opt( 'phone_consult' ) ); ?></span></div><div style="display:flex; align-items:center; gap:12px; background:rgba(16,20,46,0.96) !important; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); padding:11px 22px 11px 12px; width:fit-content; --sl:6px; --bc:#3A3F72;" class="bx"><span style="width:32px; height:32px; border-radius:50%; background:#8C7AE6; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:#10142E;">@</span><?php $c_mail = crux_opt( 'email' ); ?><a href="<?php echo esc_url( 'mailto:' . antispambot( $c_mail ) ); ?>" style="font-size:13px; font-weight:600; color:#F2F1F8; text-decoration:none;"><?php echo esc_html( antispambot( $c_mail ) ); ?></a></div><div style="display:flex; align-items:center; gap:12px; background:rgba(16,20,46,0.96) !important; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); padding:11px 22px 11px 12px; width:fit-content; --sl:6px; --bc:#3A3F72;" class="bx"><span style="width:32px; height:32px; border-radius:50%; background:#8C7AE6; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:#10142E;">●</span><span style="font-size:13px; font-weight:600; color:#F2F1F8;"><?php echo esc_html( crux_address( false ) ); ?></span></div>
-        <a href="#" style="color:#F2F1F8; font-weight:700; font-size:13px; border-bottom:1.5px solid #8C7AE6; padding-bottom:2px; width:fit-content; margin-top:6px;">Get directions →</a>
+        <a href="#" style="color:#F2F1F8; font-weight:700; font-size:13px; border-bottom:1.5px solid #8C7AE6; padding-bottom:2px; width:fit-content; margin-top:6px;"><?php echo crux_h( 'contact', 'contact_link_1' ); ?></a>
       </div>
     </div>
   </section>
 
   <!-- 2 NEXT -->
   <section style="min-height:640px; padding:100px 64px; background:#F3F1FC;">
-    <div style="text-align:center; margin-bottom:50px;" class="reveal"><span class="eyebrow">What Happens Next</span><h2 class="bebas" style="font-size:56px; margin:12px 0 0; color:#10142E;">NO FORMS DISAPPEARING INTO THE VOID.</h2></div>
-    <div style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:20px;" class="reveal"><div class="bento-tile reveal" style="background:#FFFFFF; border:1.5px solid #E1DEF3; border-radius:22px; padding:34px 30px; min-height:240px; display:flex; flex-direction:column; justify-content:space-between;"><span class="bebas" style="font-size:64px; color:#6C58DB; line-height:0.9;">01</span><div><h3 class="bebas" style="font-size:30px; margin:0 0 8px; color:#10142E;">YOU SEND A BRIEF</h3><p style="font-size:14px; line-height:1.65; color:#3A3F66; margin:0;">A few lines is plenty — what you're planning, or where you're stuck.</p></div></div><div class="bento-tile reveal" style="background:#FFFFFF; border:1.5px solid #E1DEF3; border-radius:22px; padding:34px 30px; min-height:240px; display:flex; flex-direction:column; justify-content:space-between;"><span class="bebas" style="font-size:64px; color:#6C58DB; line-height:0.9;">02</span><div><h3 class="bebas" style="font-size:30px; margin:0 0 8px; color:#10142E;">WE REPLY AND TALK IT THROUGH</h3><p style="font-size:14px; line-height:1.65; color:#3A3F66; margin:0;">A real person comes back to you, usually with a question or two.</p></div></div><div class="bento-tile reveal" style="background:#FFFFFF; border:1.5px solid #E1DEF3; border-radius:22px; padding:34px 30px; min-height:240px; display:flex; flex-direction:column; justify-content:space-between;"><span class="bebas" style="font-size:64px; color:#6C58DB; line-height:0.9;">03</span><div><h3 class="bebas" style="font-size:30px; margin:0 0 8px; color:#10142E;">YOU GET A PLAN</h3><p style="font-size:14px; line-height:1.65; color:#3A3F66; margin:0;">A clear next step, quote or proposal — whichever fits.</p></div></div></div>
+    <div style="text-align:center; margin-bottom:50px;" class="reveal"><span class="eyebrow"><?php echo crux_h( 'contact', 'next_small_heading_1' ); ?></span><h2 class="bebas" style="font-size:56px; margin:12px 0 0; color:#10142E;"><?php echo crux_h( 'contact', 'next_heading_1' ); ?></h2></div>
+    <div style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:20px;" class="reveal"><div class="bento-tile reveal" style="background:#FFFFFF; border:1.5px solid #E1DEF3; border-radius:22px; padding:34px 30px; min-height:240px; display:flex; flex-direction:column; justify-content:space-between;"><span class="bebas" style="font-size:64px; color:#6C58DB; line-height:0.9;">01</span><div><h3 class="bebas" style="font-size:30px; margin:0 0 8px; color:#10142E;"><?php echo crux_h( 'contact', 'next_heading_2' ); ?></h3><p style="font-size:14px; line-height:1.65; color:#3A3F66; margin:0;"><?php echo crux_h( 'contact', 'next_paragraph_1' ); ?></p></div></div><div class="bento-tile reveal" style="background:#FFFFFF; border:1.5px solid #E1DEF3; border-radius:22px; padding:34px 30px; min-height:240px; display:flex; flex-direction:column; justify-content:space-between;"><span class="bebas" style="font-size:64px; color:#6C58DB; line-height:0.9;">02</span><div><h3 class="bebas" style="font-size:30px; margin:0 0 8px; color:#10142E;"><?php echo crux_h( 'contact', 'next_heading_3' ); ?></h3><p style="font-size:14px; line-height:1.65; color:#3A3F66; margin:0;"><?php echo crux_h( 'contact', 'next_paragraph_2' ); ?></p></div></div><div class="bento-tile reveal" style="background:#FFFFFF; border:1.5px solid #E1DEF3; border-radius:22px; padding:34px 30px; min-height:240px; display:flex; flex-direction:column; justify-content:space-between;"><span class="bebas" style="font-size:64px; color:#6C58DB; line-height:0.9;">03</span><div><h3 class="bebas" style="font-size:30px; margin:0 0 8px; color:#10142E;"><?php echo crux_h( 'contact', 'next_heading_4' ); ?></h3><p style="font-size:14px; line-height:1.65; color:#3A3F66; margin:0;"><?php echo crux_h( 'contact', 'next_paragraph_3' ); ?></p></div></div></div>
   </section>
 
 
@@ -1163,7 +1163,7 @@ if ( ! defined( 'ABSPATH' ) ) {
           <line x1="8" y1="2" x2="8" y2="6"></line>
           <line x1="3" y1="10" x2="21" y2="10"></line>
         </svg>
-        <span style="font-weight:800; letter-spacing:0.4px;">Direct Consultancy Booking</span>
+        <span style="font-weight:800; letter-spacing:0.4px;"><?php echo crux_h( 'contact', 'bottom_sticky_consultancy_bo_text_1' ); ?></span>
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10142E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle; flex-shrink:0;">
           <line x1="5" y1="12" x2="19" y2="12"></line>
           <polyline points="12 5 19 12 12 19"></polyline>

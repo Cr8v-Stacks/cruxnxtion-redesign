@@ -681,13 +681,13 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div class="hero-dark-overlay" style="position:absolute; inset:0; background:linear-gradient(90deg, rgba(10,15,38,0.96) 0%, rgba(10,15,38,0.78) 42%, rgba(10,15,38,0.2) 78%);"></div>
     
     <div style="position:relative; height:100%; display:flex; flex-direction:column; justify-content:center; padding:0px 20px 0px 20px; max-width:760px;" class="reveal">
-      <span class="eyebrow" style="font-size:11.5px !important; letter-spacing:0.8px !important; text-transform:none !important; font-weight:700 !important; color:#5B8DEF; margin-bottom:14px; display:inline-block;">Cultural Live Event Production &amp; Business Consultancy</span>
+      <span class="eyebrow" style="font-size:11.5px !important; letter-spacing:0.8px !important; text-transform:none !important; font-weight:700 !important; color:#5B8DEF; margin-bottom:14px; display:inline-block;"><?php echo crux_h( 'home', 'hero_small_heading_1' ); ?></span>
 
-      <h1 class="bebas" style="font-size:52px; margin:0px 0px 18px 0px; color:#F4F5FA; line-height:0.95;">WE PLAN IT.<br>WE BOOK IT.<br><span style="color:#E5383B;">WE RUN IT.</span></h1>
-      <p class="hero-desc" style="font-size:16px !important; line-height:1.65; color:#C5CADF; max-width:580px; margin:0px 0px 28px 0px;">Crux Nxtion Events &amp; Consultancy plans, books, and executes the live gatherings people talk about for weeks, while delivering the strategic business solutions that scale the enterprises behind them — your singular crew from the first brief to the final execution.</p>
+      <h1 class="bebas" style="font-size:52px; margin:0px 0px 18px 0px; color:#F4F5FA; line-height:0.95;"><?php echo crux_rich( 'home', 'hero_heading_1' ); ?></h1>
+      <p class="hero-desc" style="font-size:16px !important; line-height:1.65; color:#C5CADF; max-width:580px; margin:0px 0px 28px 0px;"><?php echo crux_h( 'home', 'hero_paragraph_1' ); ?></p>
       <div style="display:flex; gap:16px; flex-wrap:wrap;">
-        <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:15px; padding:16px 30px; --sl:10px;" class="bx">Plan An Event →</a>
-        <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="background:#8C7AE6; color:#10142E; font-weight:700; font-size:15px; padding:16px 28px; --sl:10px;" class="bx">Explore Consultancy →</a>
+        <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:15px; padding:16px 30px; --sl:10px;" class="bx"><?php echo crux_h( 'home', 'hero_button_1' ); ?></a>
+        <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="background:#8C7AE6; color:#10142E; font-weight:700; font-size:15px; padding:16px 28px; --sl:10px;" class="bx"><?php echo crux_h( 'home', 'hero_button_2' ); ?></a>
       </div>
     </div>
   </section>
@@ -695,20 +695,20 @@ if ( ! defined( 'ABSPATH' ) ) {
     <!-- MARQUEE — SLANTED TO MATCH HERO CUT -->
   <div class="hero-slanted-marquee" style="background:#002671; padding:18px 0; overflow:hidden; white-space:nowrap; margin-top:-53px; transform:skewY(-2.1deg); transform-origin:left top; z-index:2; position:relative; box-shadow:0 12px 30px rgba(0,0,0,0.4); border-top:1.5px solid rgba(91,141,239,0.4); border-bottom:1.5px solid rgba(91,141,239,0.2);">
     <div style="display:inline-flex; transform:skewY(2.1deg); animation:rc-marquee 22s linear infinite;">
-      <span class="bebas" style="font-size:26px; color:#FFFFFF; letter-spacing:1.2px; padding-right:1ch;">EVENT MANAGEMENT &nbsp;•&nbsp; ENTERTAINMENT BOOKING &nbsp;•&nbsp; EVENT DESIGN &nbsp;•&nbsp; ON-SITE COORDINATION &nbsp;•&nbsp; WEDDINGS &nbsp;•&nbsp; CULTURAL NIGHTS &nbsp;•&nbsp; FESTIVALS &nbsp;•&nbsp; CORPORATE GALAS &nbsp;•&nbsp;</span>
-      <span class="bebas" style="font-size:26px; color:#FFFFFF; letter-spacing:1.2px; padding-right:1ch;" aria-hidden="true">EVENT MANAGEMENT &nbsp;•&nbsp; ENTERTAINMENT BOOKING &nbsp;•&nbsp; EVENT DESIGN &nbsp;•&nbsp; ON-SITE COORDINATION &nbsp;•&nbsp; WEDDINGS &nbsp;•&nbsp; CULTURAL NIGHTS &nbsp;•&nbsp; FESTIVALS &nbsp;•&nbsp; CORPORATE GALAS &nbsp;•&nbsp;</span>
+      <span class="bebas" style="font-size:26px; color:#FFFFFF; letter-spacing:1.2px; padding-right:1ch;"><?php echo crux_h( 'home', 'marquee_text_1' ); ?></span>
+      <span class="bebas" style="font-size:26px; color:#FFFFFF; letter-spacing:1.2px; padding-right:1ch;" aria-hidden="true"><?php echo crux_h( 'home', 'marquee_text_1' ); ?></span>
     </div>
   </div>
 
   <!-- SERVICES — rider / setlist rows -->
   <section id="services" style="min-height:560px; display:flex; flex-direction:column; justify-content:center; padding:44px 20px 44px 20px;" data-m="nomin">
     <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:8px;" class="reveal" data-m="stack">
-      <h2 class="bebas" style="font-size:34px; margin:0px 0px 0px 0px; color:#F4F5FA;">WHAT WE DO</h2>
-      <span style="font-size:12px; color:#7A82A8; letter-spacing:2px; text-transform:uppercase;">Event Services</span>
+      <h2 class="bebas" style="font-size:34px; margin:0px 0px 0px 0px; color:#F4F5FA;"><?php echo crux_h( 'home', 'services_heading_1' ); ?></h2>
+      <span style="font-size:12px; color:#7A82A8; letter-spacing:2px; text-transform:uppercase;"><?php echo crux_h( 'home', 'services_text_1' ); ?></span>
     </div>
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;" class="reveal" data-m="stack">
-      <p style="max-width:500px; font-size:13px; color:#8E96BB; margin:0px 0px 0px 0px;">Five services, one crew — from the first brief to the last guest.</p>
-      <a href="<?php echo esc_url( home_url( "/services/" ) ); ?>" style="font-weight:700; font-size:13px; color:#5B8DEF; border-bottom:1.5px solid #5B8DEF; padding-bottom:2px;">View All Services →</a>
+      <p style="max-width:500px; font-size:13px; color:#8E96BB; margin:0px 0px 0px 0px;"><?php echo crux_h( 'home', 'services_paragraph_1' ); ?></p>
+      <a href="<?php echo esc_url( home_url( "/services/" ) ); ?>" style="font-weight:700; font-size:13px; color:#5B8DEF; border-bottom:1.5px solid #5B8DEF; padding-bottom:2px;"><?php echo crux_h( 'home', 'services_link_1' ); ?></a>
     </div>
     <div style="border-top:1.5px solid #1E2B5E;" class="reveal">
 
@@ -716,8 +716,8 @@ if ( ! defined( 'ABSPATH' ) ) {
         <span class="bebas" style="font-size:36px; color:#5B8DEF; flex:0 0 54px;">01</span>
         <img src="<?php echo crux_get_blob_url( "e6e06da1a649b213d8dd573ea6511302" ); ?>" alt="" style="width:64px; height:64px; object-fit:cover; border-radius:10px; flex:0 0 64px;">
         <div style="flex:1;">
-          <h3 style="font-size:17px; margin:0px 0px 4px 0px; font-weight:700;">Event Management &amp; Planning</h3>
-          <p style="font-size:13px; color:#A3A9C8; margin:0px 0px 0px 0px;">Meticulous coordination and planning for private and corporate events.</p>
+          <h3 style="font-size:17px; margin:0px 0px 4px 0px; font-weight:700;"><?php echo crux_h( 'home', 'services_heading_2' ); ?></h3>
+          <p style="font-size:13px; color:#A3A9C8; margin:0px 0px 0px 0px;"><?php echo crux_h( 'home', 'services_paragraph_2' ); ?></p>
         </div>
         <span class="bebas" style="font-size:26px; color:#5B8DEF; flex:0 0 auto;">→</span>
       </div>
@@ -726,8 +726,8 @@ if ( ! defined( 'ABSPATH' ) ) {
         <span class="bebas" style="font-size:36px; color:#E5383B; flex:0 0 54px;">02</span>
         <img src="<?php echo crux_get_blob_url( "6e1036b74f617a3d1887a7cf36398cff" ); ?>" alt="" style="width:64px; height:64px; object-fit:cover; border-radius:10px; flex:0 0 64px;">
         <div style="flex:1;">
-          <h3 style="font-size:17px; margin:0px 0px 4px 0px; font-weight:700;">Entertainment Booking &amp; Talent</h3>
-          <p style="font-size:13px; color:#A3A9C8; margin:0px 0px 0px 0px;">Star power secured and run-of-show handled for every act on the bill.</p>
+          <h3 style="font-size:17px; margin:0px 0px 4px 0px; font-weight:700;"><?php echo crux_h( 'home', 'services_heading_3' ); ?></h3>
+          <p style="font-size:13px; color:#A3A9C8; margin:0px 0px 0px 0px;"><?php echo crux_h( 'home', 'services_paragraph_3' ); ?></p>
         </div>
         <span class="bebas" style="font-size:26px; color:#5B8DEF; flex:0 0 auto;">→</span>
       </div>
@@ -736,8 +736,8 @@ if ( ! defined( 'ABSPATH' ) ) {
         <span class="bebas" style="font-size:36px; color:#5B8DEF; flex:0 0 54px;">03</span>
         <img src="<?php echo crux_get_blob_url( "c5afda4fc4e4d4b0682377d6eb272c90" ); ?>" alt="" style="width:64px; height:64px; object-fit:cover; border-radius:10px; flex:0 0 64px;">
         <div style="flex:1;">
-          <h3 style="font-size:17px; margin:0px 0px 4px 0px; font-weight:700;">Event Designs &amp; Production</h3>
-          <p style="font-size:13px; color:#A3A9C8; margin:0px 0px 0px 0px;">Themed, creative production for weddings, galas and private launches.</p>
+          <h3 style="font-size:17px; margin:0px 0px 4px 0px; font-weight:700;"><?php echo crux_h( 'home', 'services_heading_4' ); ?></h3>
+          <p style="font-size:13px; color:#A3A9C8; margin:0px 0px 0px 0px;"><?php echo crux_h( 'home', 'services_paragraph_4' ); ?></p>
         </div>
         <span class="bebas" style="font-size:26px; color:#5B8DEF; flex:0 0 auto;">→</span>
       </div>
@@ -746,8 +746,8 @@ if ( ! defined( 'ABSPATH' ) ) {
         <span class="bebas" style="font-size:36px; color:#E5383B; flex:0 0 54px;">04</span>
         <img src="<?php echo crux_get_blob_url( "feb81852032e2798160126ebf0d3c7f6" ); ?>" alt="" style="width:64px; height:64px; object-fit:cover; border-radius:10px; flex:0 0 64px;">
         <div style="flex:1;">
-          <h3 style="font-size:17px; margin:0px 0px 4px 0px; font-weight:700;">On-Site Coordination</h3>
-          <p style="font-size:13px; color:#A3A9C8; margin:0px 0px 0px 0px;">Vendor management and real-time floor coordination, start to close.</p>
+          <h3 style="font-size:17px; margin:0px 0px 4px 0px; font-weight:700;"><?php echo crux_h( 'home', 'services_heading_5' ); ?></h3>
+          <p style="font-size:13px; color:#A3A9C8; margin:0px 0px 0px 0px;"><?php echo crux_h( 'home', 'services_paragraph_5' ); ?></p>
         </div>
         <span class="bebas" style="font-size:26px; color:#5B8DEF; flex:0 0 auto;">→</span>
       </div>
@@ -756,8 +756,8 @@ if ( ! defined( 'ABSPATH' ) ) {
         <span class="bebas" style="font-size:36px; color:#5B8DEF; flex:0 0 54px;">05</span>
         <img src="<?php echo crux_get_blob_url( "2b696c907bf5b4d0dc14a80e8cd60e15" ); ?>" alt="" style="width:64px; height:64px; object-fit:cover; border-radius:10px; flex:0 0 64px;">
         <div style="flex:1;">
-          <h3 style="font-size:17px; margin:0px 0px 4px 0px; font-weight:700;">Event Marketing &amp; Promotion</h3>
-          <p style="font-size:13px; color:#A3A9C8; margin:0px 0px 0px 0px;">Strategic marketing and promotion that builds buzz and gets the right crowd through the door.</p>
+          <h3 style="font-size:17px; margin:0px 0px 4px 0px; font-weight:700;"><?php echo crux_h( 'home', 'services_heading_6' ); ?></h3>
+          <p style="font-size:13px; color:#A3A9C8; margin:0px 0px 0px 0px;"><?php echo crux_h( 'home', 'services_paragraph_6' ); ?></p>
         </div>
         <span class="bebas" style="font-size:26px; color:#5B8DEF; flex:0 0 auto;">→</span>
       </div>
@@ -767,10 +767,10 @@ if ( ! defined( 'ABSPATH' ) ) {
   <!-- EVENTS — ticket stub -->
   <section id="events" style="min-height:560px; display:flex; flex-direction:column; justify-content:center; padding:20px 20px 44px 20px;" data-m="nomin">
     <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:30px;" class="reveal" data-m="stack">
-      <h2 class="bebas" style="font-size:34px; margin:0px 0px 0px 0px; color:#F4F5FA;">EVENTS</h2>
+      <h2 class="bebas" style="font-size:34px; margin:0px 0px 0px 0px; color:#F4F5FA;"><?php echo crux_h( 'home', 'events_heading_1' ); ?></h2>
       <div style="text-align:right;">
-        <p style="max-width:360px; font-size:13.5px; color:#A3A9C8; margin:0px 0px 8px 0px;">Every ticket we've printed, punched by the same crew.</p>
-        <a href="<?php echo esc_url( home_url( "/events/" ) ); ?>" style="font-weight:700; font-size:13px; color:#5B8DEF; border-bottom:1.5px solid #5B8DEF; padding-bottom:2px;">View All Events →</a>
+        <p style="max-width:360px; font-size:13.5px; color:#A3A9C8; margin:0px 0px 8px 0px;"><?php echo crux_h( 'home', 'events_paragraph_1' ); ?></p>
+        <a href="<?php echo esc_url( home_url( "/events/" ) ); ?>" style="font-weight:700; font-size:13px; color:#5B8DEF; border-bottom:1.5px solid #5B8DEF; padding-bottom:2px;"><?php echo crux_h( 'home', 'events_link_1' ); ?></a>
       </div>
     </div>
 
@@ -799,7 +799,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             <span class="eyebrow" style="color:#5B8DEF;"><?php echo esc_html( $fe_item['category'] ); ?></span>
             <h3 style="font-size:19px; margin:8px 0px 4px 0px; font-weight:700; color:#FFFFFF;"><?php echo esc_html( $fe_item['short_title'] ); ?></h3>
             <p style="font-size:12.5px; color:#C5CFF5; margin:0px 0px 10px 0px;"><?php echo esc_html( $sub_meta ); ?></p>
-            <span style="font-weight:700; font-size:12.5px; color:#5B8DEF; border-bottom:1.5px solid #5B8DEF; padding-bottom:2px;">View Details →</span>
+            <span style="font-weight:700; font-size:12.5px; color:#5B8DEF; border-bottom:1.5px solid #5B8DEF; padding-bottom:2px;"><?php echo crux_h( 'home', 'events_text_1' ); ?></span>
           </div>
         </div>
       </a>
@@ -811,16 +811,16 @@ if ( ! defined( 'ABSPATH' ) ) {
   <section style="min-height:560px; display:flex; flex-direction:column; justify-content:center; padding:40px 20px 44px 20px;" data-m="nomin">
     <div style="display:grid; grid-template-columns:1fr 1fr; min-height:660px; border-radius:26px; overflow:hidden; border:1.5px solid #1E2B5E; background:#111838;" class="reveal" data-m="g1">
       <div style=" padding:44px 50px 44px 60px; display:flex; flex-direction:column; justify-content:center;" class="reveal also-from-crux-content">
-        <span class="eyebrow" style="color:#B7A6FF !important;">Also From Crux Nxtion</span>
-        <h2 class="bebas" style="font-size:40px; margin:14px 0px 18px 0px; color:#F4F5FA;">GOT A BUSINESS BEHIND THE EVENT?</h2>
-        <p style="font-size:16px; line-height:1.75; color:#C5CADF; max-width:480px; margin:0px 0px 26px 0px;">Crux Nxtion Consultancy turns business ideas into businesses that work. Whether you are starting from scratch, trying to grow, or need a clearer direction, we help you make smarter business moves.</p>
+        <span class="eyebrow" style="color:#B7A6FF !important;"><?php echo crux_h( 'home', 'also_from_crux_small_heading_1' ); ?></span>
+        <h2 class="bebas" style="font-size:40px; margin:14px 0px 18px 0px; color:#F4F5FA;"><?php echo crux_h( 'home', 'also_from_crux_heading_1' ); ?></h2>
+        <p style="font-size:16px; line-height:1.75; color:#C5CADF; max-width:480px; margin:0px 0px 26px 0px;"><?php echo crux_h( 'home', 'also_from_crux_paragraph_1' ); ?></p>
         <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:34px;">
-          <div style="display:flex; align-items:center; gap:14px;"><span class="bebas" style="font-size:22px; color:#B7A6FF; width:32px;">01</span><span style="font-size:14.5px; font-weight:600; color:#F4F5FA;">From Blueprint to Reality</span></div>
-          <div style="display:flex; align-items:center; gap:14px;"><span class="bebas" style="font-size:22px; color:#B7A6FF; width:32px;">02</span><span style="font-size:14.5px; font-weight:600; color:#F4F5FA;">Infrastructure &amp; Setup (Shop &amp; Office)</span></div>
-          <div style="display:flex; align-items:center; gap:14px;"><span class="bebas" style="font-size:22px; color:#B7A6FF; width:32px;">03</span><span style="font-size:14.5px; font-weight:600; color:#F4F5FA;">Scaling, Advisory &amp; Visas</span></div>
-          <div style="display:flex; align-items:center; gap:14px;"><span class="bebas" style="font-size:22px; color:#B7A6FF; width:32px;">04</span><span style="font-size:14.5px; font-weight:600; color:#F4F5FA;">Go-to-Market Mastery</span></div>
+          <div style="display:flex; align-items:center; gap:14px;"><span class="bebas" style="font-size:22px; color:#B7A6FF; width:32px;">01</span><span style="font-size:14.5px; font-weight:600; color:#F4F5FA;"><?php echo crux_h( 'home', 'also_from_crux_text_1' ); ?></span></div>
+          <div style="display:flex; align-items:center; gap:14px;"><span class="bebas" style="font-size:22px; color:#B7A6FF; width:32px;">02</span><span style="font-size:14.5px; font-weight:600; color:#F4F5FA;"><?php echo crux_h( 'home', 'also_from_crux_text_2' ); ?></span></div>
+          <div style="display:flex; align-items:center; gap:14px;"><span class="bebas" style="font-size:22px; color:#B7A6FF; width:32px;">03</span><span style="font-size:14.5px; font-weight:600; color:#F4F5FA;"><?php echo crux_h( 'home', 'also_from_crux_text_3' ); ?></span></div>
+          <div style="display:flex; align-items:center; gap:14px;"><span class="bebas" style="font-size:22px; color:#B7A6FF; width:32px;">04</span><span style="font-size:14.5px; font-weight:600; color:#F4F5FA;"><?php echo crux_h( 'home', 'also_from_crux_text_4' ); ?></span></div>
         </div>
-        <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="background:#8C7AE6; color:#0A0F26; font-weight:700; font-size:15px; padding:16px 30px 16px 30px; display:inline-block; width:fit-content; --sl:10px;" class="bx">Explore Consultancy →</a>
+        <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="background:#8C7AE6; color:#0A0F26; font-weight:700; font-size:15px; padding:16px 30px 16px 30px; display:inline-block; width:fit-content; --sl:10px;" class="bx"><?php echo crux_h( 'home', 'also_from_crux_button_1' ); ?></a>
       </div>
       <div style="position:relative; overflow:hidden;" class="reveal" data-m="tile">
         <img src="<?php echo crux_get_blob_url( "5b1a6ab37f0230a96cac807ce57c7983" ); ?>" alt="A Crux Nxtion Consultancy session" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
@@ -829,8 +829,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
         <div style="position:absolute; left:30px; bottom:30px; right:30px; display:flex; flex-direction:column; gap:10px; z-index:2;">
-          <div class="float" style="--r:0deg; align-self:flex-end; max-width:85%; background:#1E2B5E; color:#F4F5FA; font-size:13px; line-height:1.5; padding:11px 15px; border-radius:16px 16px 4px 16px;">I've got an idea. I just don't know where to start.</div>
-          <div style="align-self:flex-start; max-width:85%; background:#8C7AE6; color:#0A0F26; font-size:13px; font-weight:600; line-height:1.5; padding:11px 15px; border-radius:16px 16px 16px 4px;">Good — that's the right place to start. Tell us about it.</div>
+          <div class="float" style="--r:0deg; align-self:flex-end; max-width:85%; background:#1E2B5E; color:#F4F5FA; font-size:13px; line-height:1.5; padding:11px 15px; border-radius:16px 16px 4px 16px;"><?php echo crux_h( 'home', 'also_from_crux_text_5' ); ?></div>
+          <div style="align-self:flex-start; max-width:85%; background:#8C7AE6; color:#0A0F26; font-size:13px; font-weight:600; line-height:1.5; padding:11px 15px; border-radius:16px 16px 16px 4px;"><?php echo crux_h( 'home', 'also_from_crux_text_6' ); ?></div>
         </div>
       </div>
     </div>
@@ -839,40 +839,40 @@ if ( ! defined( 'ABSPATH' ) ) {
   <!-- GALLERY — ticket wall (matches the Gallery page) -->
   <section id="gallery" style=" padding:30px 20px 44px 20px;">
     <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:30px;" class="reveal" data-m="stack">
-      <div><span class="eyebrow">The Ticket Wall</span><h2 class="bebas" style="font-size:40px; margin:12px 0px 0px 0px; color:#F4F5FA;">GALLERY</h2><p style="font-size:15px; color:#A3A9C8; max-width:520px; margin:12px 0px 0px 0px;">Every frame, filed like a ticket — punched by the same crew.</p></div>
-      <a href="<?php echo esc_url( home_url( "/gallery/" ) ); ?>" style="font-weight:700; font-size:13px; color:#5B8DEF; border-bottom:1.5px solid #5B8DEF; padding-bottom:2px; white-space:nowrap;">View Full Gallery →</a>
+      <div><span class="eyebrow"><?php echo crux_h( 'home', 'gallery_small_heading_1' ); ?></span><h2 class="bebas" style="font-size:40px; margin:12px 0px 0px 0px; color:#F4F5FA;"><?php echo crux_h( 'home', 'gallery_heading_1' ); ?></h2><p style="font-size:15px; color:#A3A9C8; max-width:520px; margin:12px 0px 0px 0px;"><?php echo crux_h( 'home', 'gallery_paragraph_1' ); ?></p></div>
+      <a href="<?php echo esc_url( home_url( "/gallery/" ) ); ?>" style="font-weight:700; font-size:13px; color:#5B8DEF; border-bottom:1.5px solid #5B8DEF; padding-bottom:2px; white-space:nowrap;"><?php echo crux_h( 'home', 'gallery_link_1' ); ?></a>
     </div>
     <div style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:34px 26px; align-items:start;" class="reveal" data-m="g2">
       <a href="#" style="display:flex; flex-direction:column; background:#111838; border:1.5px solid #1E2B5E; border-radius:12px; overflow:hidden; transform:rotate(-1deg);" class="reveal">
         <div style="position:relative; height:240px;"><img src="<?php echo crux_get_blob_url( "8779e5d9192fb628e623a9aec1f82362" ); ?>" alt="Crux Nxtion Events frame 1" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
-        <div class="strip-stub" style="background:#002671; padding:12px 18px 12px 18px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; font-weight:800; color:#FFFFFF;">WEDDING</span><span class="bebas" style="font-size:14px; color:#FFFFFF;">FRAME 01</span></div>
+        <div class="strip-stub" style="background:#002671; padding:12px 18px 12px 18px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; font-weight:800; color:#FFFFFF;"><?php echo crux_h( 'home', 'gallery_text_1' ); ?></span><span class="bebas" style="font-size:14px; color:#FFFFFF;"><?php echo crux_h( 'home', 'gallery_text_2' ); ?></span></div>
       </a>
       <a href="#" style="display:flex; flex-direction:column; background:#111838; border:1.5px solid #1E2B5E; border-radius:12px; overflow:hidden; transform:rotate(0.8deg);" class="reveal">
         <div style="position:relative; height:280px;"><img src="<?php echo crux_get_blob_url( "4170d6b6009c07e37d83bae48a68917b" ); ?>" alt="Crux Nxtion Events frame 2" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
-        <div class="strip-stub" style="background:#BA0000; padding:12px 18px 12px 18px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; font-weight:800; color:#FFFFFF;">NIGHT OUT</span><span class="bebas" style="font-size:14px; color:#FFFFFF;">FRAME 02</span></div>
+        <div class="strip-stub" style="background:#BA0000; padding:12px 18px 12px 18px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; font-weight:800; color:#FFFFFF;"><?php echo crux_h( 'home', 'gallery_text_3' ); ?></span><span class="bebas" style="font-size:14px; color:#FFFFFF;"><?php echo crux_h( 'home', 'gallery_text_4' ); ?></span></div>
       </a>
       <a href="#" style="display:flex; flex-direction:column; background:#111838; border:1.5px solid #1E2B5E; border-radius:12px; overflow:hidden; transform:rotate(-0.8deg);" class="reveal">
         <div style="position:relative; height:220px;"><img src="<?php echo crux_get_blob_url( "c5afda4fc4e4d4b0682377d6eb272c90" ); ?>" alt="Crux Nxtion Events frame 3" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
-        <div class="strip-stub" style="background:#8C7AE6; padding:12px 18px 12px 18px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; font-weight:800; color:#0A0F26;">LIVE</span><span class="bebas" style="font-size:14px; color:#0A0F26;">FRAME 03</span></div>
+        <div class="strip-stub" style="background:#8C7AE6; padding:12px 18px 12px 18px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; font-weight:800; color:#0A0F26;"><?php echo crux_h( 'home', 'gallery_text_5' ); ?></span><span class="bebas" style="font-size:14px; color:#0A0F26;"><?php echo crux_h( 'home', 'gallery_text_6' ); ?></span></div>
       </a>
     </div>
   </section>
 
   <!-- WHY CRUX -->
   <section style="min-height:560px; display:flex; flex-direction:column; justify-content:center; padding:20px 20px 44px 20px;" data-m="nomin">
-    <div style="text-align:center; margin-bottom:44px;" class="reveal"><span class="eyebrow">Why Crux Nxtion</span><h2 class="bebas" style="font-size:34px; margin:14px 0px 0px 0px; color:#F4F5FA;">A CREW YOU CAN TRUST WITH THE NIGHT.</h2></div>
+    <div style="text-align:center; margin-bottom:44px;" class="reveal"><span class="eyebrow"><?php echo crux_h( 'home', 'why_crux_small_heading_1' ); ?></span><h2 class="bebas" style="font-size:34px; margin:14px 0px 0px 0px; color:#F4F5FA;"><?php echo crux_h( 'home', 'why_crux_heading_1' ); ?></h2></div>
     <div style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:22px;" class="reveal" data-m="g1">
       <div style="background:#111838; border:1.5px solid #1E2B5E; border-radius:18px; overflow:hidden;" class="reveal">
         <div style="height:220px; overflow:hidden;"><img src="<?php echo crux_get_blob_url( "2fe0208788cf2d50763c85dd2a44de66" ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
-        <div style=" padding:26px 28px 30px 28px;"><h3 class="bebas" style="font-size:30px; margin:0px 0px 10px 0px; color:#F4F5FA;">ONE CREW, START TO FINISH</h3><p style="font-size:14px; line-height:1.65; color:#A3A9C8; margin:0px 0px 0px 0px;">The people you brief are the people on the floor — no chain of subcontractors between you and your event.</p></div>
+        <div style=" padding:26px 28px 30px 28px;"><h3 class="bebas" style="font-size:30px; margin:0px 0px 10px 0px; color:#F4F5FA;"><?php echo crux_h( 'home', 'why_crux_heading_2' ); ?></h3><p style="font-size:14px; line-height:1.65; color:#A3A9C8; margin:0px 0px 0px 0px;"><?php echo crux_h( 'home', 'why_crux_paragraph_1' ); ?></p></div>
       </div>
       <div style="background:#111838; border:1.5px solid #1E2B5E; border-radius:18px; overflow:hidden;" class="reveal">
         <div style="height:220px; overflow:hidden;"><img src="<?php echo crux_get_blob_url( "6aa60ee4af0bdb49015bf4224786bd46" ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
-        <div style=" padding:26px 28px 30px 28px;"><h3 class="bebas" style="font-size:30px; margin:0px 0px 10px 0px; color:#F4F5FA;">CULTURE-FIRST NIGHTS</h3><p style="font-size:14px; line-height:1.65; color:#A3A9C8; margin:0px 0px 0px 0px;">From Afrobeats parties to wedding showcases, we know what moves a room and keeps it moving.</p></div>
+        <div style=" padding:26px 28px 30px 28px;"><h3 class="bebas" style="font-size:30px; margin:0px 0px 10px 0px; color:#F4F5FA;"><?php echo crux_h( 'home', 'why_crux_heading_3' ); ?></h3><p style="font-size:14px; line-height:1.65; color:#A3A9C8; margin:0px 0px 0px 0px;"><?php echo crux_h( 'home', 'why_crux_paragraph_2' ); ?></p></div>
       </div>
       <div style="background:#111838; border:1.5px solid #1E2B5E; border-radius:18px; overflow:hidden;" class="reveal">
         <div style="height:220px; overflow:hidden;"><img src="<?php echo crux_get_blob_url( "a7f19688f4ec09c5590ca71c99b9f400" ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
-        <div style=" padding:26px 28px 30px 28px;"><h3 class="bebas" style="font-size:30px; margin:0px 0px 10px 0px; color:#F4F5FA;">SHEFFIELD-ROOTED, UK-WIDE</h3><p style="font-size:14px; line-height:1.65; color:#A3A9C8; margin:0px 0px 0px 0px;">We know the city, the venues and the vendors — and we book and produce across the UK.</p></div>
+        <div style=" padding:26px 28px 30px 28px;"><h3 class="bebas" style="font-size:30px; margin:0px 0px 10px 0px; color:#F4F5FA;"><?php echo crux_h( 'home', 'why_crux_heading_4' ); ?></h3><p style="font-size:14px; line-height:1.65; color:#A3A9C8; margin:0px 0px 0px 0px;"><?php echo crux_h( 'home', 'why_crux_paragraph_3' ); ?></p></div>
       </div>
     </div>
   </section>
@@ -880,38 +880,38 @@ if ( ! defined( 'ABSPATH' ) ) {
   <!-- PROCESS — how we run your event -->
   <section style="min-height:560px; display:flex; flex-direction:column; justify-content:center; padding:44px 20px 44px 20px;" data-m="nomin">
     <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:46px;" class="reveal" data-m="stack">
-      <div><span class="eyebrow">How We Run Your Event</span><h2 class="bebas" style="font-size:34px; margin:12px 0px 0px 0px; color:#F4F5FA;">FOUR STEPS. ONE CREW. NO STRESS.</h2></div>
-      <p style="max-width:340px; font-size:14px; line-height:1.7; color:#A3A9C8; margin:0px 0px 0px 0px;">From the first message to the last guest leaving, the same people are with you.</p>
+      <div><span class="eyebrow"><?php echo crux_h( 'home', 'process_small_heading_1' ); ?></span><h2 class="bebas" style="font-size:34px; margin:12px 0px 0px 0px; color:#F4F5FA;"><?php echo crux_h( 'home', 'process_heading_1' ); ?></h2></div>
+      <p style="max-width:340px; font-size:14px; line-height:1.7; color:#A3A9C8; margin:0px 0px 0px 0px;"><?php echo crux_h( 'home', 'process_paragraph_1' ); ?></p>
     </div>
     <div style="position:relative; display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:26px;" class="reveal" data-m="g1">
       <div class="tilt-ticket reveal" style="display:flex; flex-direction:column; background:#111838; border:1.5px solid #1E2B5E; border-radius:14px; overflow:hidden; --r:-1deg; transform:rotate(var(--r));">
         <div style="height:190px; overflow:hidden;"><img src="<?php echo crux_get_blob_url( "7ad16fa711374cf636fa630f0cf398c0" ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
-        <div class="strip-stub" style="background:#002671; padding:12px 18px 12px 18px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; font-weight:800; color:#FFFFFF;">STEP 01</span><span class="bebas" style="font-size:18px; color:#FFFFFF;">BRIEF</span></div>
-        <div style=" padding:24px 22px 26px 22px;"><p style="font-size:14px; line-height:1.7; color:#A3A9C8; margin:0px 0px 0px 0px;">You tell us the date, the room and what you are celebrating. We ask the right questions.</p></div>
+        <div class="strip-stub" style="background:#002671; padding:12px 18px 12px 18px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; font-weight:800; color:#FFFFFF;"><?php echo crux_h( 'home', 'process_text_1' ); ?></span><span class="bebas" style="font-size:18px; color:#FFFFFF;"><?php echo crux_h( 'home', 'process_text_2' ); ?></span></div>
+        <div style=" padding:24px 22px 26px 22px;"><p style="font-size:14px; line-height:1.7; color:#A3A9C8; margin:0px 0px 0px 0px;"><?php echo crux_h( 'home', 'process_paragraph_2' ); ?></p></div>
       </div>
       <div class="tilt-ticket reveal" style="display:flex; flex-direction:column; background:#111838; border:1.5px solid #1E2B5E; border-radius:14px; overflow:hidden; --r:0.8deg; transform:rotate(var(--r));">
         <div style="height:190px; overflow:hidden;"><img src="<?php echo crux_get_blob_url( "4795dc48859e2b9d81b42757c6317d14" ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
-        <div class="strip-stub" style="background:#BA0000; padding:12px 18px 12px 18px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; font-weight:800; color:#FFFFFF;">STEP 02</span><span class="bebas" style="font-size:18px; color:#FFFFFF;">DESIGN</span></div>
-        <div style=" padding:24px 22px 26px 22px;"><p style="font-size:14px; line-height:1.7; color:#A3A9C8; margin:0px 0px 0px 0px;">We shape the concept, the entertainment and every vendor involved.</p></div>
+        <div class="strip-stub" style="background:#BA0000; padding:12px 18px 12px 18px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; font-weight:800; color:#FFFFFF;"><?php echo crux_h( 'home', 'process_text_3' ); ?></span><span class="bebas" style="font-size:18px; color:#FFFFFF;"><?php echo crux_h( 'home', 'process_text_4' ); ?></span></div>
+        <div style=" padding:24px 22px 26px 22px;"><p style="font-size:14px; line-height:1.7; color:#A3A9C8; margin:0px 0px 0px 0px;"><?php echo crux_h( 'home', 'process_paragraph_3' ); ?></p></div>
       </div>
       <div class="tilt-ticket reveal" style="display:flex; flex-direction:column; background:#111838; border:1.5px solid #1E2B5E; border-radius:14px; overflow:hidden; --r:-0.8deg; transform:rotate(var(--r));">
         <div style="height:190px; overflow:hidden;"><img src="<?php echo crux_get_blob_url( "8127c7ab2af037f167d7a8b67413ab45" ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
-        <div class="strip-stub" style="background:#8C7AE6; padding:12px 18px 12px 18px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; font-weight:800; color:#0A0F26;">STEP 03</span><span class="bebas" style="font-size:18px; color:#0A0F26;">PRODUCE</span></div>
-        <div style=" padding:24px 22px 26px 22px;"><p style="font-size:14px; line-height:1.7; color:#A3A9C8; margin:0px 0px 0px 0px;">Staging, sound, décor and promotion — handled by one crew.</p></div>
+        <div class="strip-stub" style="background:#8C7AE6; padding:12px 18px 12px 18px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; font-weight:800; color:#0A0F26;"><?php echo crux_h( 'home', 'process_text_5' ); ?></span><span class="bebas" style="font-size:18px; color:#0A0F26;"><?php echo crux_h( 'home', 'process_text_6' ); ?></span></div>
+        <div style=" padding:24px 22px 26px 22px;"><p style="font-size:14px; line-height:1.7; color:#A3A9C8; margin:0px 0px 0px 0px;"><?php echo crux_h( 'home', 'process_paragraph_4' ); ?></p></div>
       </div>
       <div class="tilt-ticket reveal" style="display:flex; flex-direction:column; background:#111838; border:1.5px solid #1E2B5E; border-radius:14px; overflow:hidden; --r:1deg; transform:rotate(var(--r));">
         <div style="height:190px; overflow:hidden;"><img src="<?php echo crux_get_blob_url( "f1ffd7a776c034eaead72759fb4440c6" ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
-        <div class="strip-stub" style="background:#002671; padding:12px 18px 12px 18px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; font-weight:800; color:#FFFFFF;">STEP 04</span><span class="bebas" style="font-size:18px; color:#FFFFFF;">DELIVER</span></div>
-        <div style=" padding:24px 22px 26px 22px;"><p style="font-size:14px; line-height:1.7; color:#A3A9C8; margin:0px 0px 0px 0px;">We are on site through the last guest, so you can enjoy your own event.</p></div>
+        <div class="strip-stub" style="background:#002671; padding:12px 18px 12px 18px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; font-weight:800; color:#FFFFFF;"><?php echo crux_h( 'home', 'process_text_7' ); ?></span><span class="bebas" style="font-size:18px; color:#FFFFFF;"><?php echo crux_h( 'home', 'process_text_8' ); ?></span></div>
+        <div style=" padding:24px 22px 26px 22px;"><p style="font-size:14px; line-height:1.7; color:#A3A9C8; margin:0px 0px 0px 0px;"><?php echo crux_h( 'home', 'process_paragraph_5' ); ?></p></div>
       </div>
     </div>
   </section>
 
   <!-- MINI ABOUT — centered manifesto + photo strip -->
   <section id="about" style="min-height:560px; display:flex; flex-direction:column; justify-content:center; background:#111838; padding:44px 20px 44px 20px; text-align:center;" data-m="nomin">
-    <span class="eyebrow">Who We Are</span>
-    <p class="bebas reveal" style="font-size:34px; line-height:1.08; margin:18px auto 20px; max-width:840px; color:#F4F5FA;">A CREW THAT RUNS THE ROOM ITSELF — PLANNING, STAGING, SOUND, AND EVERY VENDOR, IN-HOUSE.</p>
-    <p style="font-size:14.5px; line-height:1.7; color:#A3A9C8; max-width:480px; margin:0 auto 46px;" class="reveal">Crux Nxtion Events is a UK-based events and production house, producing across the UK.</p>
+    <span class="eyebrow"><?php echo crux_h( 'home', 'mini_about_small_heading_1' ); ?></span>
+    <p class="bebas reveal" style="font-size:34px; line-height:1.08; margin:18px auto 20px; max-width:840px; color:#F4F5FA;"><?php echo crux_h( 'home', 'mini_about_paragraph_1' ); ?></p>
+    <p style="font-size:14.5px; line-height:1.7; color:#A3A9C8; max-width:480px; margin:0 auto 46px;" class="reveal"><?php echo crux_h( 'home', 'mini_about_paragraph_2' ); ?></p>
 
     <div class="mini-about-strip reveal" style="display:flex; justify-content:center; align-items:center; gap:18px; margin-bottom:44px;">
       <img class="tilt-straighten" src="<?php echo crux_get_blob_url( "fbd294c148cb8e1a55a31856bc061a40" ); ?>" alt="" style="width:150px; height:190px; object-fit:cover; border-radius:10px; --r:-4deg; transform:rotate(var(--r)); border:2px solid #1E2B5E;">
@@ -920,9 +920,9 @@ if ( ! defined( 'ABSPATH' ) ) {
     </div>
 
     <div style="display:flex; gap:12px; justify-content:center;" class="reveal" data-m="wrap">
-      <span style="border:1.5px solid #2C3C78; color:#D5D9EA; font-weight:600; font-size:12px; padding:10px 18px 10px 18px;">In-House Crew</span>
-      <span style="border:1.5px solid #2C3C78; color:#D5D9EA; font-weight:600; font-size:12px; padding:10px 18px 10px 18px;">Full-Service</span>
-      <span style="border:1.5px solid #2C3C78; color:#D5D9EA; font-weight:600; font-size:12px; padding:10px 18px 10px 18px;">Culturally Rooted</span>
+      <span style="border:1.5px solid #2C3C78; color:#D5D9EA; font-weight:600; font-size:12px; padding:10px 18px 10px 18px;"><?php echo crux_h( 'home', 'mini_about_text_1' ); ?></span>
+      <span style="border:1.5px solid #2C3C78; color:#D5D9EA; font-weight:600; font-size:12px; padding:10px 18px 10px 18px;"><?php echo crux_h( 'home', 'mini_about_text_2' ); ?></span>
+      <span style="border:1.5px solid #2C3C78; color:#D5D9EA; font-weight:600; font-size:12px; padding:10px 18px 10px 18px;"><?php echo crux_h( 'home', 'mini_about_text_3' ); ?></span>
     </div>
   </section>
 
@@ -932,69 +932,69 @@ if ( ! defined( 'ABSPATH' ) ) {
       <img src="<?php echo crux_get_blob_url( "a67d85c16f6df90ab7a657160bee9088" ); ?>" alt="Olabamidele 'Bambad' Badmos, founder of Crux Nxtion" style="width:100%; height:100%; object-fit:cover; object-position:58% 12%;">
     </div>
     <div class="reveal">
-      <span class="eyebrow" style="color:#5B8DEF;">Meet The Team</span>
-      <h2 class="bebas" style="font-size:54px; margin:14px 0 20px; color:#F4F5FA; line-height:0.95;">ABOUT CRUX NXTION EVENTS &amp; CONSULTANCY</h2>
-      <p style="font-size:16px; line-height:1.75; color:#C5CADF; max-width:620px; margin:0 0 14px;">Our dynamic operations are led by <strong>Olabamidele Badmos (Bambad)</strong>, a recognized community leader and business strategic development officer with extensive expertise in enterprise growth, marketing, and digital public relations. Backed by a dedicated team of 10 active core members and specialized staff, we combine cultural authenticity with corporate execution.</p>
-      <p style="font-size:16px; line-height:1.75; color:#C5CADF; max-width:620px; margin:0 0 26px;">With an extraordinary track record spanning over <strong>70 cultural milestones activated across the United Kingdom</strong> — including <em>YAGI Awards</em>, <em>Black Award Events</em>, <em>Gangs of Lagos: Wedding Story (Parts 1 &amp; 2)</em>, <em>YAGI Trade Fair</em>, <em>Naija Food Carnival</em> (400+ attendees), and <em>Marketplace Festivals (Volumes 1 through 6)</em> — we turn visionary concepts into legendary live gatherings.</p>
+      <span class="eyebrow" style="color:#5B8DEF;"><?php echo crux_h( 'home', 'founder_small_heading_1' ); ?></span>
+      <h2 class="bebas" style="font-size:54px; margin:14px 0 20px; color:#F4F5FA; line-height:0.95;"><?php echo crux_h( 'home', 'founder_heading_1' ); ?></h2>
+      <p style="font-size:16px; line-height:1.75; color:#C5CADF; max-width:620px; margin:0 0 14px;"><?php echo crux_rich( 'home', 'founder_paragraph_1' ); ?></p>
+      <p style="font-size:16px; line-height:1.75; color:#C5CADF; max-width:620px; margin:0 0 26px;"><?php echo crux_rich( 'home', 'founder_paragraph_2' ); ?></p>
       <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:28px;" data-m="wrap">
-        <span style="border:1.5px solid #2C3C78; color:#D5D9EA; font-weight:600; font-size:12.5px; padding:9px 18px;">70+ Cultural Milestones</span>
-        <span style="border:1.5px solid #2C3C78; color:#D5D9EA; font-weight:600; font-size:12.5px; padding:9px 18px;">10 Core Production Members</span>
-        <span style="border:1.5px solid #2C3C78; color:#D5D9EA; font-weight:600; font-size:12.5px; padding:9px 18px;">143+ UK Enterprises Scaled</span>
-        <span style="border:1.5px solid #2C3C78; color:#D5D9EA; font-weight:600; font-size:12.5px; padding:9px 18px;">Sheffield HQ • UK Operations</span>
+        <span style="border:1.5px solid #2C3C78; color:#D5D9EA; font-weight:600; font-size:12.5px; padding:9px 18px;"><?php echo crux_h( 'home', 'founder_text_1' ); ?></span>
+        <span style="border:1.5px solid #2C3C78; color:#D5D9EA; font-weight:600; font-size:12.5px; padding:9px 18px;"><?php echo crux_h( 'home', 'founder_text_2' ); ?></span>
+        <span style="border:1.5px solid #2C3C78; color:#D5D9EA; font-weight:600; font-size:12.5px; padding:9px 18px;"><?php echo crux_h( 'home', 'founder_text_3' ); ?></span>
+        <span style="border:1.5px solid #2C3C78; color:#D5D9EA; font-weight:600; font-size:12.5px; padding:9px 18px;"><?php echo crux_h( 'home', 'founder_text_4' ); ?></span>
       </div>
-      <a href="<?php echo esc_url( home_url( "/founder/" ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:14px; padding:15px 28px; --sl:10px;" class="bx">Read The Full Story &rarr;</a>
+      <a href="<?php echo esc_url( home_url( "/founder/" ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:14px; padding:15px 28px; --sl:10px;" class="bx"><?php echo crux_h( 'home', 'founder_button_1' ); ?></a>
     </div>
   </section>
 
     <!-- FAQ — interactive accordion (matching FAQS page design) -->
   <section id="faq" style="min-height:560px; display:flex; flex-direction:column; justify-content:center; padding:65px 64px;" data-m="nomin">
     <div style="text-align:center; margin-bottom:46px;" class="reveal">
-      <span class="eyebrow">Good To Know</span>
-      <h2 class="bebas" style="font-size:56px; margin:14px 0 10px; color:#F4F5FA;">FREQUENTLY ASKED</h2>
-      <p style="font-size:14px; color:#A3A9C8; margin:0;">Still curious? <a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="color:#5B8DEF; font-weight:700;">Ask us directly →</a></p>
+      <span class="eyebrow"><?php echo crux_h( 'home', 'faq_small_heading_1' ); ?></span>
+      <h2 class="bebas" style="font-size:56px; margin:14px 0 10px; color:#F4F5FA;"><?php echo crux_h( 'home', 'faq_heading_1' ); ?></h2>
+      <p style="font-size:14px; color:#A3A9C8; margin:0;"><?php echo crux_h( 'home', 'faq_paragraph_1' ); ?> <a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="color:#5B8DEF; font-weight:700;"><?php echo crux_h( 'home', 'faq_link_1' ); ?></a></p>
     </div>
     <div style="max-width:960px; width:100%; margin:0 auto; display:flex; flex-direction:column; gap:14px;" class="reveal">
       <details style="background:#111838; border:1.5px solid #1E2B5E; border-radius:14px; padding:0 26px; transition:border-color .25s ease;">
         <summary style="list-style:none; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:20px; padding:22px 0;">
-          <h3 style="font-size:17px; margin:0; font-weight:700; color:#F4F5FA;">What kinds of events do you plan and manage?</h3>
+          <h3 style="font-size:17px; margin:0; font-weight:700; color:#F4F5FA;"><?php echo crux_h( 'home', 'faq_heading_2' ); ?></h3>
           <span class="fq-plus" style="flex:0 0 32px; height:32px; border-radius:50%; background:#002671; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:20px; line-height:1; transition:transform .25s ease;">+</span>
         </summary>
-        <p style="font-size:15px; line-height:1.75; color:#A3A9C8; margin:0 0 24px; max-width:820px;">Private and corporate events, conferences, weddings, birthday parties, brand activations, concerts, festivals, charity galas, tournaments, inaugurations, workshops, trade shows, and online or hybrid events.</p>
+        <p style="font-size:15px; line-height:1.75; color:#A3A9C8; margin:0 0 24px; max-width:820px;"><?php echo crux_h( 'home', 'faq_paragraph_2' ); ?></p>
       </details>
       <details style="background:#111838; border:1.5px solid #1E2B5E; border-radius:14px; padding:0 26px; transition:border-color .25s ease;">
         <summary style="list-style:none; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:20px; padding:22px 0;">
-          <h3 style="font-size:17px; margin:0; font-weight:700; color:#F4F5FA;">How far ahead should I get in touch?</h3>
+          <h3 style="font-size:17px; margin:0; font-weight:700; color:#F4F5FA;"><?php echo crux_h( 'home', 'faq_heading_3' ); ?></h3>
           <span class="fq-plus" style="flex:0 0 32px; height:32px; border-radius:50%; background:#002671; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:20px; line-height:1; transition:transform .25s ease;">+</span>
         </summary>
-        <p style="font-size:15px; line-height:1.75; color:#A3A9C8; margin:0 0 24px; max-width:820px;">As early as you can. We are booking 2026 and 2027 now, and the earlier we know the date, the more options we have for venues, talent and vendors.</p>
+        <p style="font-size:15px; line-height:1.75; color:#A3A9C8; margin:0 0 24px; max-width:820px;"><?php echo crux_h( 'home', 'faq_paragraph_3' ); ?></p>
       </details>
       <details style="background:#111838; border:1.5px solid #1E2B5E; border-radius:14px; padding:0 26px; transition:border-color .25s ease;">
         <summary style="list-style:none; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:20px; padding:22px 0;">
-          <h3 style="font-size:17px; margin:0; font-weight:700; color:#F4F5FA;">Do you handle entertainment booking and talent management?</h3>
+          <h3 style="font-size:17px; margin:0; font-weight:700; color:#F4F5FA;"><?php echo crux_h( 'home', 'faq_heading_4' ); ?></h3>
           <span class="fq-plus" style="flex:0 0 32px; height:32px; border-radius:50%; background:#002671; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:20px; line-height:1; transition:transform .25s ease;">+</span>
         </summary>
-        <p style="font-size:15px; line-height:1.75; color:#A3A9C8; margin:0 0 24px; max-width:820px;">Yes. Entertainment Booking &amp; Talent Management connects you with top-tier performers, DJs, and artists, and we work directly with talent agencies.</p>
+        <p style="font-size:15px; line-height:1.75; color:#A3A9C8; margin:0 0 24px; max-width:820px;"><?php echo crux_h( 'home', 'faq_paragraph_4' ); ?></p>
       </details>
       <details style="background:#111838; border:1.5px solid #1E2B5E; border-radius:14px; padding:0 26px; transition:border-color .25s ease;">
         <summary style="list-style:none; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:20px; padding:22px 0;">
-          <h3 style="font-size:17px; margin:0; font-weight:700; color:#F4F5FA;">Can you work with a venue we have already chosen?</h3>
+          <h3 style="font-size:17px; margin:0; font-weight:700; color:#F4F5FA;"><?php echo crux_h( 'home', 'faq_heading_5' ); ?></h3>
           <span class="fq-plus" style="flex:0 0 32px; height:32px; border-radius:50%; background:#002671; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:20px; line-height:1; transition:transform .25s ease;">+</span>
         </summary>
-        <p style="font-size:15px; line-height:1.75; color:#A3A9C8; margin:0 0 24px; max-width:820px;">Absolutely. Tell us the room or location and we will build all staging, acoustics, layouts, and production around it.</p>
+        <p style="font-size:15px; line-height:1.75; color:#A3A9C8; margin:0 0 24px; max-width:820px;"><?php echo crux_h( 'home', 'faq_paragraph_5' ); ?></p>
       </details>
       <details style="background:#111838; border:1.5px solid #1E2B5E; border-radius:14px; padding:0 26px; transition:border-color .25s ease;">
         <summary style="list-style:none; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:20px; padding:22px 0;">
-          <h3 style="font-size:17px; margin:0; font-weight:700; color:#F4F5FA;">Do you work outside Sheffield?</h3>
+          <h3 style="font-size:17px; margin:0; font-weight:700; color:#F4F5FA;"><?php echo crux_h( 'home', 'faq_heading_6' ); ?></h3>
           <span class="fq-plus" style="flex:0 0 32px; height:32px; border-radius:50%; background:#002671; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:20px; line-height:1; transition:transform .25s ease;">+</span>
         </summary>
         <p style="font-size:15px; line-height:1.75; color:#A3A9C8; margin:0 0 24px; max-width:820px;">Our office is at <?php echo esc_html( crux_address( false ) ); ?>. We plan and run events across the entire UK, and our on-site coordination covers destination weddings and corporate retreats as well.</p>
       </details>
       <details style="background:#111838; border:1.5px solid #1E2B5E; border-radius:14px; padding:0 26px; transition:border-color .25s ease;">
         <summary style="list-style:none; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:20px; padding:22px 0;">
-          <h3 style="font-size:17px; margin:0; font-weight:700; color:#F4F5FA;">Can you help promote the event and sell tickets?</h3>
+          <h3 style="font-size:17px; margin:0; font-weight:700; color:#F4F5FA;"><?php echo crux_h( 'home', 'faq_heading_7' ); ?></h3>
           <span class="fq-plus" style="flex:0 0 32px; height:32px; border-radius:50%; background:#002671; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:20px; line-height:1; transition:transform .25s ease;">+</span>
         </summary>
-        <p style="font-size:15px; line-height:1.75; color:#A3A9C8; margin:0 0 24px; max-width:820px;">Yes. Event Marketing &amp; Promotion covers social media campaigns, influencer partnerships, content marketing, SEO, listings, ticket sales via Eventbrite, and community engagement.</p>
+        <p style="font-size:15px; line-height:1.75; color:#A3A9C8; margin:0 0 24px; max-width:820px;"><?php echo crux_h( 'home', 'faq_paragraph_6' ); ?></p>
       </details>
     </div>
   </section>
@@ -1005,10 +1005,10 @@ if ( ! defined( 'ABSPATH' ) ) {
   <div class="crux-sw-pod crux-sw-pod--dark" style="pointer-events:auto; display:inline-flex; align-items:center; padding:1.5px; background:linear-gradient(135deg, #2A3F7A 0%, #15224A 100%); clip-path:polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%); box-shadow:0 14px 36px rgba(0,0,0,0.65); filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4));">
     <div class="crux-sw-inner" style="display:inline-flex; align-items:center; background:#020512; padding:4px; gap:4px; clip-path:polygon(7px 0, 100% 0, calc(100% - 7px) 100%, 0 100%);">
       <a href="<?php echo esc_url( home_url( "/" ) ); ?>" class="crux-sw-tab crux-sw-tab--active-events" style="display:inline-flex; align-items:center; justify-content:center; padding:11px 22px; min-width:140px; font-size:13px; font-weight:700; letter-spacing:0.3px; text-transform:uppercase; text-decoration:none; line-height:1.2; background:#1E48B0; color:#FFFFFF; clip-path:polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%); box-shadow:0 2px 8px rgba(30,72,176,0.5);">
-        <span>Events</span>
+        <span><?php echo crux_h( 'home', 'faq_text_1' ); ?></span>
       </a>
       <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" class="crux-sw-tab crux-sw-tab--inactive-dark" style="display:inline-flex; align-items:center; justify-content:center; padding:11px 22px; min-width:140px; font-size:13px; font-weight:600; letter-spacing:0.3px; text-transform:uppercase; text-decoration:none; line-height:1.2; background:transparent; color:#8E96BB; clip-path:polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%); transition:all .2s ease;">
-        <span>Consultancy</span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:6px; display:inline-block; vertical-align:middle;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        <span><?php echo crux_h( 'home', 'faq_text_2' ); ?></span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:6px; display:inline-block; vertical-align:middle;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
       </a>
     </div>
   </div>

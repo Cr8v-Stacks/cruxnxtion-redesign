@@ -225,3 +225,143 @@ function crux_card_photo_url() {
 	}
 	return crux_get_blob_url( 'f269f7683bdb441b9b45df1336cd1485' );
 }
+
+/* ---- Page content: the wording of each page, one panel per page ------------------------------------------------------ */
+
+/**
+ * Pages whose wording is editable: page key => panel title, template file, preview condition (slug or 'front').
+ */
+function crux_content_pages() {
+	return array(
+		'home'                 => array( 'Home page', 'front' ),
+		'about'                => array( 'About page', 'about' ),
+		'services'             => array( 'Event services page', 'services' ),
+		'services_consultancy' => array( 'Consultancy services page', 'services-consultancy' ),
+		'consultancy'          => array( 'Consultancy home page', 'consultancy' ),
+		'founder'              => array( 'Founder page', 'founder' ),
+		'faq'                  => array( 'FAQ page', 'faq' ),
+		'gallery'              => array( 'Gallery page', 'gallery' ),
+		'sponsors'             => array( 'Sponsors page', 'sponsors' ),
+		'events'               => array( 'Events page', 'events' ),
+		'events_archive'       => array( 'Past events page', 'past-events' ),
+		'blog'                 => array( 'Blog page', 'blog' ),
+		'contact'              => array( 'Contact page', 'contact' ),
+	);
+}
+
+/** Fields of one page: key => array( region, label, type, original wording ). */
+function crux_content_fields( $page ) {
+	static $cache = array();
+	if ( ! isset( $cache[ $page ] ) ) {
+		$file = get_template_directory() . '/inc/content/' . $page . '.php';
+		$cache[ $page ] = ( preg_match( '/^[a-z_]+$/', $page ) && file_exists( $file ) ) ? (array) include $file : array();
+	}
+	return $cache[ $page ];
+}
+
+/** Tags a client may use inside a rich field. */
+function crux_rich_allowed() {
+	$style = array( 'style' => true, 'class' => true );
+	return array(
+		'strong' => $style, 'em' => $style, 'b' => $style, 'i' => $style, 'u' => $style, 'small' => $style, 'mark' => $style,
+		'br'     => array(),
+		'span'   => $style,
+		'a'      => array( 'href' => true, 'target' => true, 'rel' => true, 'style' => true, 'class' => true ),
+	);
+}
+
+/** Saved value of a page field, or the original wording when nothing was saved. An emptied field stays empty. */
+function crux_value( $page, $key ) {
+	$fields = crux_content_fields( $page );
+	if ( ! isset( $fields[ $key ] ) ) {
+		return '';
+	}
+	$saved = get_theme_mod( 'crux_c_' . $page . '_' . $key, null );
+	return null === $saved ? (string) $fields[ $key ][3] : (string) $saved;
+}
+
+/** Print plain wording, escaped. */
+function crux_h( $page, $key ) {
+	return esc_html( crux_value( $page, $key ) );
+}
+
+/**
+ * Print wording that may carry bold, italic, line breaks and links. The original wording is trusted; anything a client
+ * saved is filtered down to the allowed tags.
+ */
+function crux_rich( $page, $key ) {
+	$fields = crux_content_fields( $page );
+	$saved  = get_theme_mod( 'crux_c_' . $page . '_' . $key, null );
+	if ( null === $saved ) {
+		return isset( $fields[ $key ] ) ? $fields[ $key ][3] : '';
+	}
+	return wp_kses( (string) $saved, crux_rich_allowed() );
+}
+
+function crux_sanitize_content( $value, $setting = null ) {
+	if ( $setting && preg_match( '/^crux_c_([a-z_]+?)_([a-z0-9_]+)$/', $setting->id, $m ) ) {
+		foreach ( array_keys( crux_content_pages() ) as $page ) {
+			if ( 0 === strpos( $m[1] . '_' . $m[2], $page . '_' ) ) {
+				$key    = substr( $m[1] . '_' . $m[2], strlen( $page ) + 1 );
+				$fields = crux_content_fields( $page );
+				if ( isset( $fields[ $key ] ) ) {
+					if ( 'rich' === $fields[ $key ][2] ) {
+						return wp_kses( (string) $value, crux_rich_allowed() );
+					}
+					return 'textarea' === $fields[ $key ][2] ? sanitize_textarea_field( $value ) : sanitize_text_field( $value );
+				}
+			}
+		}
+	}
+	return sanitize_text_field( $value );
+}
+
+function crux_customize_register_content( $wp_customize ) {
+	$priority = 40;
+	foreach ( crux_content_pages() as $page => $info ) {
+		$fields = crux_content_fields( $page );
+		if ( ! $fields ) {
+			continue;
+		}
+		$cond = $info[1];
+		$wp_customize->add_panel(
+			'crux_page_' . $page,
+			array(
+				'title'           => $info[0] . ' wording',
+				'description'     => __( 'The words on this page. Change a field and the preview updates. Photos, layout and events are managed elsewhere.', 'cruxnxtion' ),
+				'priority'        => $priority++,
+				'active_callback' => function () use ( $cond ) {
+					return 'front' === $cond ? is_front_page() : is_page( $cond );
+				},
+			)
+		);
+		$sections = array();
+		foreach ( $fields as $key => $f ) {
+			$sid = 'crux_pg_' . $page . '_' . sanitize_key( $f[0] );
+			if ( ! isset( $sections[ $sid ] ) ) {
+				$sections[ $sid ] = true;
+				$wp_customize->add_section( $sid, array( 'title' => $f[0], 'panel' => 'crux_page_' . $page, 'priority' => count( $sections ) ) );
+			}
+			$wp_customize->add_setting(
+				'crux_c_' . $page . '_' . $key,
+				array(
+					'default'           => $f[3],
+					'type'              => 'theme_mod',
+					'capability'        => 'edit_theme_options',
+					'sanitize_callback' => 'crux_sanitize_content',
+					'transport'         => 'refresh',
+				)
+			);
+			$wp_customize->add_control(
+				'crux_c_' . $page . '_' . $key,
+				array(
+					'label'       => $f[1],
+					'section'     => $sid,
+					'type'        => ( 'text' === $f[2] ) ? 'text' : 'textarea',
+					'description' => ( 'rich' === $f[2] ) ? __( 'May contain <strong>, <em>, <br> and links.', 'cruxnxtion' ) : '',
+				)
+			);
+		}
+	}
+}
+add_action( 'customize_register', 'crux_customize_register_content', 20 );
