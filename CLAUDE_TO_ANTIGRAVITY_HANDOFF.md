@@ -2433,3 +2433,13 @@ Do not edit any of this without asking. Read `EVENTS_CONVERGENCE_PLAN.md` sectio
 - Crux events are edited in the Studio box (`Event Staging, Schedule & Technical Studio`). The theme engine (`inc/event-engine.php`, `crux_event_studio_value`) reads Studio fields first, then the original fields.
 - `crux-nxtion-core` stays, as the enquiry module only.
 - New tests: `test_events_core.php` (40), `test_events_convergence.php` (29), `test_events_coexist.php` (16). Full list with counts in `cr8v-event-ticketing/tests/README.md`.
+
+## 27. Customizer (Claude, 8 Oct 2026)
+
+Do not edit these without asking; the templates are generated and protected by tests.
+
+- Header, pre-footer and footer are shared parts (`parts/site-header.php`, `parts/site-footer.php`). Never paste header or footer markup back into a template.
+- Page wording and photos come from `inc/content/*.php` and `inc/content/images/*.php`. In a template, wording is `crux_h()` / `crux_rich()` and photos are `crux_img_url()`; do not replace those with literal text.
+- Site-wide values (phones, e-mail, address, booking link, socials, announcement bar, brand, copyright) are read with `crux_opt()`. Never type them into a template again.
+- `tools/snapshot-pages.py capture <folder>` then `compare <baseline> <folder> --loose` proves a change did not alter any page.
+- See `CUSTOMIZER_MAPPING.md` section 8 for what exists and the known limits.
