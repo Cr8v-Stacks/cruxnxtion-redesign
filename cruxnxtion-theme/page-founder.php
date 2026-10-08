@@ -716,7 +716,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
       <div style="display:flex; gap:14px; flex-wrap:wrap;">
         <a href="<?php echo esc_url( home_url( '/contact/?type=events' ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:14.5px; padding:15px 28px; --sl:10px;" class="bx">Plan An Event With Us →</a>
-        <a href="https://calendly.com/cruxnxtiongroupofcompany-info" target="_blank" rel="noopener" style="background:#8C7AE6; color:#10142E; font-weight:700; font-size:14.5px; padding:15px 28px; --sl:10px;" class="bx">Book Strategic Consultancy →</a>
+        <a href="<?php echo esc_url( crux_opt( 'calendly_url' ) ); ?>" target="_blank" rel="noopener" style="background:#8C7AE6; color:#10142E; font-weight:700; font-size:14.5px; padding:15px 28px; --sl:10px;" class="bx">Book Strategic Consultancy →</a>
       </div>
     </div>
   </section>

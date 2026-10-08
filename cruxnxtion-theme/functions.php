@@ -16,6 +16,7 @@ require_once get_template_directory() . '/inc/prevent-errors.php';
 require_once get_template_directory() . '/inc/event-engine.php';
 require_once get_template_directory() . '/inc/event-seeder.php';
 require_once get_template_directory() . '/inc/layout.php';
+require_once get_template_directory() . '/inc/customizer.php';
 // Events are edited in the shared plugin's Studio box (one place per field), so the default editor and Excerpt box are hidden.
 add_filter( 'cr8v_events_hide_default_editor', '__return_true' );
 // Crux keeps its own web addresses (/event/<name>/, and /events/ is an ordinary page), and keeps its own enquiry form and admin.
@@ -238,7 +239,7 @@ if ( ! function_exists( 'crux_ajax_submit_inquiry' ) ) {
 			}
 		}
 
-		$admin_recipient = 'infoandsales@cruxnxtion.co.uk';
+		$admin_recipient = crux_opt( 'email' );
 		$subject = '[' . strtoupper( $lead_type ) . '] New Crux Nxtion Brief from ' . $name;
 		$headers = array( 'Content-Type: text/html; charset=UTF-8', 'Reply-To: ' . $name . ' <' . $email . '>' );
 
@@ -264,7 +265,7 @@ if ( ! function_exists( 'crux_ajax_submit_inquiry' ) ) {
 		$client_body .= '<h1 style="color:#002671;">CRUX NXTION</h1>';
 		$client_body .= '<p>Hello ' . esc_html( $name ) . ',</p>';
 		$client_body .= '<p>Thank you for reaching out. We have received your brief and our team will review the details and come back to you within 24 business hours.</p>';
-		$client_body .= '<p style="color:#5A5F86; font-size:13px;">Crux Nxtion • 29 Dun Work, Sheffield S3 8FB • infoandsales@cruxnxtion.co.uk</p>';
+		$client_body .= '<p style="color:#5A5F86; font-size:13px;">Crux Nxtion • ' . esc_html( crux_address( false ) ) . ' • ' . esc_html( crux_opt( 'email' ) ) . '</p>';
 		$client_body .= '</div>';
 
 		@wp_mail( $email, $client_subject, $client_body, array( 'Content-Type: text/html; charset=UTF-8' ) );
@@ -284,5 +285,5 @@ add_filter( 'cr8v_tix_email_brand', function () {
 	return 'Crux Nxtion Events';
 } );
 add_filter( 'cr8v_tix_email_from', function () {
-	return 'infoandsales@cruxnxtion.co.uk';
+	return crux_opt( 'email' );
 } );

@@ -849,7 +849,7 @@ if ( ! defined( 'ABSPATH' ) ) {
       </h1>
       <p style="font-size:17px; line-height:1.7; color:#3A3F66; max-width:580px; margin:0px 0px 32px 0px;">Whether you're starting from scratch, trying to grow, or just need a clearer direction — sit down with us. We'll talk it through, then turn it into a plan you can actually follow.</p>
       <div style="display:flex; gap:16px; flex-wrap:wrap;">
-        <a href="https://calendly.com/cruxnxtiongroupofcompany-info" target="_blank" rel="noopener" style="background:#8C7AE6; color:#10142E; font-weight:700; font-size:15px; padding:16px 30px; --sl:10px;" class="bx">Book A Discovery Call</a>
+        <a href="<?php echo esc_url( crux_opt( 'calendly_url' ) ); ?>" target="_blank" rel="noopener" style="background:#8C7AE6; color:#10142E; font-weight:700; font-size:15px; padding:16px 30px; --sl:10px;" class="bx">Book A Discovery Call</a>
         <a href="#how" style="color:#10142E; font-weight:700; font-size:15px; padding:14.5px 28px; --sl:10px; --bc:#10142E;" class="bx">See How We Work</a>
       </div>
     </div>

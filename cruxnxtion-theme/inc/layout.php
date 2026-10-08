@@ -82,12 +82,12 @@ function crux_prefooter_button( $btn ) {
  * Content of the pre-footer band. Each key is one of the combinations the templates used before the band was shared.
  */
 function crux_prefooter_data( $key ) {
-	$calendly = 'https://calendly.com/cruxnxtiongroupofcompany-info';
+	$calendly = crux_opt( 'calendly_url' );
 	$events   = array(
-		'title'      => 'GOT A DATE, OR JUST A DIRECTION?',
-		'desc'       => 'Planning an event or building a business — tell us what you have in mind and a real person will come back to you.',
-		'btn1'       => array( 'text' => 'Plan An Event →', 'link' => array( 'in' => '/contact/?type=events' ), 'tone' => 'red' ),
-		'btn2'       => array( 'text' => 'Talk Business Strategy →', 'link' => array( 'in' => '/contact/?type=consultancy' ), 'tone' => 'purple' ),
+		'title'      => crux_opt( 'pf_events_title' ),
+		'desc'       => crux_opt( 'pf_events_desc' ),
+		'btn1'       => array( 'text' => crux_opt( 'pf_events_btn1' ), 'link' => array( 'in' => '/contact/?type=events' ), 'tone' => 'red' ),
+		'btn2'       => array( 'text' => crux_opt( 'pf_events_btn2' ), 'link' => array( 'in' => '/contact/?type=consultancy' ), 'tone' => 'purple' ),
 		'badge_img'  => 'events',
 		'badge_link' => array( 'in' => '/contact/?type=events' ),
 		'aria'       => 'Plan An Event',
@@ -109,10 +109,10 @@ function crux_prefooter_data( $key ) {
 			return $events;
 		case 'idea':
 			return array(
-				'title'      => "GOT AN IDEA? LET'S TALK IT THROUGH.",
-				'desc'       => "Tell us where you are stuck — we'll take it from there.",
-				'btn1'       => array( 'text' => 'Book A Discovery Call →', 'link' => array( 'out' => $calendly ), 'tone' => 'purple' ),
-				'btn2'       => array( 'text' => 'Explore Events →', 'link' => array( 'in' => '/' ), 'tone' => 'red' ),
+				'title'      => crux_opt( 'pf_consult_title' ),
+				'desc'       => crux_opt( 'pf_consult_desc' ),
+				'btn1'       => array( 'text' => crux_opt( 'pf_consult_btn1' ), 'link' => array( 'out' => $calendly ), 'tone' => 'purple' ),
+				'btn2'       => array( 'text' => crux_opt( 'pf_consult_btn2' ), 'link' => array( 'in' => '/' ), 'tone' => 'red' ),
 				'badge_img'  => 'consultancy',
 				'badge_link' => array( 'out' => $calendly ),
 				'aria'       => 'Book A Discovery Call',

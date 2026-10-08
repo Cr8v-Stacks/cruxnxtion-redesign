@@ -987,7 +987,7 @@ if ( ! defined( 'ABSPATH' ) ) {
           <h3 style="font-size:17px; margin:0; font-weight:700; color:#F4F5FA;">Do you work outside Sheffield?</h3>
           <span class="fq-plus" style="flex:0 0 32px; height:32px; border-radius:50%; background:#002671; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:20px; line-height:1; transition:transform .25s ease;">+</span>
         </summary>
-        <p style="font-size:15px; line-height:1.75; color:#A3A9C8; margin:0 0 24px; max-width:820px;">Our office is at 29 Dun Work, Sheffield S3 8FB. We plan and run events across the entire UK, and our on-site coordination covers destination weddings and corporate retreats as well.</p>
+        <p style="font-size:15px; line-height:1.75; color:#A3A9C8; margin:0 0 24px; max-width:820px;">Our office is at <?php echo esc_html( crux_address( false ) ); ?>. We plan and run events across the entire UK, and our on-site coordination covers destination weddings and corporate retreats as well.</p>
       </details>
       <details style="background:#111838; border:1.5px solid #1E2B5E; border-radius:14px; padding:0 26px; transition:border-color .25s ease;">
         <summary style="list-style:none; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:20px; padding:22px 0;">
