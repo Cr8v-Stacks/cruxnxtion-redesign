@@ -38,6 +38,22 @@ function crux_event_meta( $post_id, $key ) {
 }
 
 /**
+ * The shared Cr8v events editor (Studio box in the `cr8v-events-core` plugin) stores a few fields under different
+ * names than the original Crux editor. Once the Studio box has saved a field, that value is the one shown, even if
+ * the client emptied it (a cleared field must stay cleared). Until then the original field is used, so events that
+ * have not been opened in the Studio box look exactly as before.
+ *
+ * Studio key => original Crux source: excerpt = post excerpt, scope = post content, kicker = category,
+ * cta_url = booking link.
+ */
+function crux_event_studio_value( $post, $studio_key, $original ) {
+	if ( metadata_exists( 'post', $post->ID, '_cr8v_event_' . $studio_key ) ) {
+		return (string) get_post_meta( $post->ID, '_cr8v_event_' . $studio_key, true );
+	}
+	return (string) $original;
+}
+
+/**
  * Resolve the badge colours for an event from a preset name or, for legacy
  * seeded posts, from the stored background hex (matched against the presets).
  */
@@ -134,7 +150,7 @@ function crux_event_build_data( $post ) {
 		$rotation = $rotations[ $id % 4 ];
 	}
 
-	$booking = esc_url_raw( crux_event_meta( $id, 'eventbrite' ), array( 'http', 'https' ) );
+	$booking = esc_url_raw( crux_event_studio_value( $post, 'cta_url', crux_event_meta( $id, 'eventbrite' ) ), array( 'http', 'https' ) );
 	$venue   = crux_event_meta( $id, 'venue' );
 
 	return array(
@@ -143,7 +159,7 @@ function crux_event_build_data( $post ) {
 		'permalink'        => get_permalink( $id ),
 		'title'            => mb_strtoupper( $post->post_title, 'UTF-8' ),
 		'short_title'      => crux_event_meta( $id, 'short_title' ) ?: $post->post_title,
-		'category'         => crux_event_meta( $id, 'category' ),
+		'category'         => crux_event_studio_value( $post, 'kicker', crux_event_meta( $id, 'category' ) ),
 		'date_raw'         => $date ? $date->format( 'Y-m-d' ) : '',
 		'year'             => $date ? $date->format( 'Y' ) : '',
 		'date_badge_day'   => $date ? $date->format( 'd' ) : '',
@@ -152,8 +168,8 @@ function crux_event_build_data( $post ) {
 		'time_str'         => crux_event_meta( $id, 'time' ),
 		'location'         => $venue,
 		'country'          => crux_event_meta( $id, 'location' ),
-		'desc_1'           => $post->post_excerpt,
-		'desc_2'           => wp_strip_all_tags( $post->post_content ),
+		'desc_1'           => crux_event_studio_value( $post, 'excerpt', $post->post_excerpt ),
+		'desc_2'           => wp_strip_all_tags( crux_event_studio_value( $post, 'scope', $post->post_content ) ),
 		'hero_url'         => crux_event_hero_url( $id ),
 		'gallery_urls'     => crux_event_gallery_urls( $id ),
 		'eventbrite'       => $booking,

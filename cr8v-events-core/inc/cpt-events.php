@@ -157,3 +157,18 @@ if ( ! function_exists( 'cr8v_event_badge_styles' ) ) {
 		);
 	}
 }
+
+/**
+ * A site whose events are edited only in the Studio box can hide the default content editor and Excerpt box, so
+ * there is one place to edit each thing: add_filter( 'cr8v_events_hide_default_editor', '__return_true' ).
+ * Off by default; sites that still use the default editor are unchanged.
+ */
+if ( ! function_exists( 'cr8v_events_maybe_hide_default_editor' ) ) {
+	function cr8v_events_maybe_hide_default_editor() {
+		if ( post_type_exists( 'event' ) && apply_filters( 'cr8v_events_hide_default_editor', false ) ) {
+			remove_post_type_support( 'event', 'editor' );
+			remove_post_type_support( 'event', 'excerpt' );
+		}
+	}
+	add_action( 'init', 'cr8v_events_maybe_hide_default_editor', 20 );
+}

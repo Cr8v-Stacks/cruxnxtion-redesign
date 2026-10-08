@@ -80,6 +80,15 @@ if ( ! function_exists( 'cr8v_render_event_studio_meta_box' ) ) {
 			$image_url = get_post_meta( $post->ID, '_cr8v_event_image_url', true );
 		}
 
+		// Events created with the original Crux editor keep the heading tag as `category` and the booking link as
+		// `eventbrite`. Show those values here so the first save in this box carries them over instead of losing them.
+		if ( '' === (string) $event_kicker ) {
+			$event_kicker = (string) get_post_meta( $post->ID, '_cr8v_event_category', true );
+		}
+		if ( '' === (string) $event_cta_url ) {
+			$event_cta_url = (string) get_post_meta( $post->ID, '_cr8v_event_eventbrite', true );
+		}
+
 		// Backward-compatibility fallbacks for existing posts
 		if ( empty( $event_excerpt ) && ! empty( $post->post_excerpt ) ) {
 			$event_excerpt = $post->post_excerpt;
