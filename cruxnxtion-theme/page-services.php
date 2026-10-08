@@ -685,7 +685,7 @@ if ( ! defined( 'ABSPATH' ) ) {
   <section style="min-height:560px; display:flex; flex-direction:column; justify-content:center; padding:20px 20px 44px 20px;" data-m="nomin"><div style="display:flex; flex-direction:column; gap:28px;" class="reveal">
       <div style="display:grid; grid-template-columns:0.9fr 1fr; background:#111838; border:1.5px solid #1E2B5E; border-radius:22px; overflow:hidden;" data-m="g1">
         <div style="order:1; position:relative; min-height:400px;" class="reveal" data-m="tile">
-          <img src="<?php echo crux_get_blob_url( "c5afda4fc4e4d4b0682377d6eb272c90" ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.85);">
+          <img src="<?php echo crux_img_url( 'services', 'service_rows_photo_1' ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.85);">
           <div style="position:absolute; inset:0; background:linear-gradient(160deg, rgba(0,38,113,0.35) 0%, rgba(10,15,38,0.55) 100%);"></div>
           <div class="ticket-stub" style="position:absolute; left:0; top:36px; background:#002671; padding:14px 22px 14px 26px; border-radius:0 10px 10px 0;"><span class="bebas" style="font-size:30px; color:#FFFFFF;">01</span></div>
         </div>
@@ -700,7 +700,7 @@ if ( ! defined( 'ABSPATH' ) ) {
       </div>
       <div style="display:grid; grid-template-columns:1fr 0.9fr; background:#111838; border:1.5px solid #1E2B5E; border-radius:22px; overflow:hidden;" data-m="g1">
         <div style="order:2; position:relative; min-height:400px;" data-m="tile">
-          <img src="<?php echo crux_get_blob_url( "2fe0208788cf2d50763c85dd2a44de66" ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.85);">
+          <img src="<?php echo crux_img_url( 'services', 'service_rows_photo_2' ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.85);">
           <div style="position:absolute; inset:0; background:linear-gradient(160deg, rgba(0,38,113,0.35) 0%, rgba(10,15,38,0.55) 100%);"></div>
           <div class="ticket-stub" style="position:absolute; left:0; top:36px; background:#BA0000; padding:14px 22px 14px 26px; border-radius:0 10px 10px 0;"><span class="bebas" style="font-size:30px; color:#FFFFFF;">02</span></div>
         </div>
@@ -715,7 +715,7 @@ if ( ! defined( 'ABSPATH' ) ) {
       </div>
       <div style="display:grid; grid-template-columns:0.9fr 1fr; background:#111838; border:1.5px solid #1E2B5E; border-radius:22px; overflow:hidden;" data-m="g1">
         <div style="order:1; position:relative; min-height:400px;" data-m="tile">
-          <img src="<?php echo crux_get_blob_url( "8f947f32de7fe00cf711036348e00351" ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.85);">
+          <img src="<?php echo crux_img_url( 'services', 'service_rows_photo_3' ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.85);">
           <div style="position:absolute; inset:0; background:linear-gradient(160deg, rgba(0,38,113,0.35) 0%, rgba(10,15,38,0.55) 100%);"></div>
           <div class="ticket-stub" style="position:absolute; left:0; top:36px; background:#8C7AE6; padding:14px 22px 14px 26px; border-radius:0 10px 10px 0;"><span class="bebas" style="font-size:30px; color:#0A0F26;">03</span></div>
         </div>
@@ -730,7 +730,7 @@ if ( ! defined( 'ABSPATH' ) ) {
       </div>
       <div style="display:grid; grid-template-columns:1fr 0.9fr; background:#111838; border:1.5px solid #1E2B5E; border-radius:22px; overflow:hidden;" data-m="g1">
         <div style="order:2; position:relative; min-height:400px;" data-m="tile">
-          <img src="<?php echo crux_get_blob_url( "2b696c907bf5b4d0dc14a80e8cd60e15" ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.85);">
+          <img src="<?php echo crux_img_url( 'services', 'service_rows_photo_4' ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.85);">
           <div style="position:absolute; inset:0; background:linear-gradient(160deg, rgba(0,38,113,0.35) 0%, rgba(10,15,38,0.55) 100%);"></div>
           <div class="ticket-stub" style="position:absolute; left:0; top:36px; background:#002671; padding:14px 22px 14px 26px; border-radius:0 10px 10px 0;"><span class="bebas" style="font-size:30px; color:#FFFFFF;">04</span></div>
         </div>
@@ -745,7 +745,7 @@ if ( ! defined( 'ABSPATH' ) ) {
       </div>
       <div style="display:grid; grid-template-columns:0.9fr 1fr; background:#111838; border:1.5px solid #1E2B5E; border-radius:22px; overflow:hidden;" data-m="g1">
         <div style="order:1; position:relative; min-height:400px;" data-m="tile">
-          <img src="<?php echo crux_get_blob_url( "e6e06da1a649b213d8dd573ea6511302" ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.85);">
+          <img src="<?php echo crux_img_url( 'services', 'service_rows_photo_5' ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.85);">
           <div style="position:absolute; inset:0; background:linear-gradient(160deg, rgba(0,38,113,0.35) 0%, rgba(10,15,38,0.55) 100%);"></div>
           <div class="ticket-stub" style="position:absolute; left:0; top:36px; background:#BA0000; padding:14px 22px 14px 26px; border-radius:0 10px 10px 0;"><span class="bebas" style="font-size:30px; color:#FFFFFF;">05</span></div>
         </div>
@@ -767,22 +767,22 @@ if ( ! defined( 'ABSPATH' ) ) {
     </div>
     <div style="position:relative; display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:26px;" class="reveal" data-m="g1">
       <div class="tilt-ticket reveal" style="display:flex; flex-direction:column; background:#111838; border:1.5px solid #1E2B5E; border-radius:14px; overflow:hidden; --r:-1deg; transform:rotate(var(--r));">
-        <div style="height:190px; overflow:hidden;"><img src="<?php echo crux_get_blob_url( "fbd294c148cb8e1a55a31856bc061a40" ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
+        <div style="height:190px; overflow:hidden;"><img src="<?php echo crux_img_url( 'services', 'process_photo_1' ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
         <div class="strip-stub" style="background:#8C7AE6; padding:12px 18px 12px 18px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; font-weight:800; color:#0A0F26;"><?php echo crux_h( 'services', 'process_text_1' ); ?></span><span class="bebas" style="font-size:18px; color:#0A0F26;"><?php echo crux_h( 'services', 'process_text_2' ); ?></span></div>
         <div style=" padding:24px 22px 26px 22px;"><p style="font-size:14px; line-height:1.7; color:#A3A9C8; margin:0px 0px 0px 0px;"><?php echo crux_h( 'services', 'process_paragraph_2' ); ?></p></div>
       </div>
       <div class="tilt-ticket reveal" style="display:flex; flex-direction:column; background:#111838; border:1.5px solid #1E2B5E; border-radius:14px; overflow:hidden; --r:0.8deg; transform:rotate(var(--r));">
-        <div style="height:190px; overflow:hidden;"><img src="<?php echo crux_get_blob_url( "4170d6b6009c07e37d83bae48a68917b" ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
+        <div style="height:190px; overflow:hidden;"><img src="<?php echo crux_img_url( 'services', 'process_photo_2' ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
         <div class="strip-stub" style="background:#002671; padding:12px 18px 12px 18px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; font-weight:800; color:#FFFFFF;"><?php echo crux_h( 'services', 'process_text_3' ); ?></span><span class="bebas" style="font-size:18px; color:#FFFFFF;"><?php echo crux_h( 'services', 'process_text_4' ); ?></span></div>
         <div style=" padding:24px 22px 26px 22px;"><p style="font-size:14px; line-height:1.7; color:#A3A9C8; margin:0px 0px 0px 0px;"><?php echo crux_h( 'services', 'process_paragraph_3' ); ?></p></div>
       </div>
       <div class="tilt-ticket reveal" style="display:flex; flex-direction:column; background:#111838; border:1.5px solid #1E2B5E; border-radius:14px; overflow:hidden; --r:-0.8deg; transform:rotate(var(--r));">
-        <div style="height:190px; overflow:hidden;"><img src="<?php echo crux_get_blob_url( "1d5292715423e2e83b56b3330a94b3b8" ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
+        <div style="height:190px; overflow:hidden;"><img src="<?php echo crux_img_url( 'services', 'process_photo_3' ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
         <div class="strip-stub" style="background:#BA0000; padding:12px 18px 12px 18px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; font-weight:800; color:#FFFFFF;"><?php echo crux_h( 'services', 'process_text_5' ); ?></span><span class="bebas" style="font-size:18px; color:#FFFFFF;"><?php echo crux_h( 'services', 'process_text_6' ); ?></span></div>
         <div style=" padding:24px 22px 26px 22px;"><p style="font-size:14px; line-height:1.7; color:#A3A9C8; margin:0px 0px 0px 0px;"><?php echo crux_h( 'services', 'process_paragraph_4' ); ?></p></div>
       </div>
       <div class="tilt-ticket reveal" style="display:flex; flex-direction:column; background:#111838; border:1.5px solid #1E2B5E; border-radius:14px; overflow:hidden; --r:1deg; transform:rotate(var(--r));">
-        <div style="height:190px; overflow:hidden;"><img src="<?php echo crux_get_blob_url( "c5afda4fc4e4d4b0682377d6eb272c90" ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
+        <div style="height:190px; overflow:hidden;"><img src="<?php echo crux_img_url( 'services', 'process_photo_4' ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
         <div class="strip-stub" style="background:#8C7AE6; padding:12px 18px 12px 18px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; font-weight:800; color:#0A0F26;"><?php echo crux_h( 'services', 'process_text_7' ); ?></span><span class="bebas" style="font-size:18px; color:#0A0F26;"><?php echo crux_h( 'services', 'process_text_8' ); ?></span></div>
         <div style=" padding:24px 22px 26px 22px;"><p style="font-size:14px; line-height:1.7; color:#A3A9C8; margin:0px 0px 0px 0px;"><?php echo crux_h( 'services', 'process_paragraph_5' ); ?></p></div>
       </div>

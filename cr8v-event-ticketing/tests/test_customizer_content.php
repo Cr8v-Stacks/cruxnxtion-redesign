@@ -52,7 +52,7 @@ foreach ( $pages as $page => $info ) {
 		$c = $wp_customize->get_control( 'crux_c_' . $page . '_' . $key );
 		if ( ! $s || ! $c ) { $bad[] = "missing setting/control $page.$key"; continue; }
 		if ( 'crux_sanitize_content' !== $s->sanitize_callback || 'edit_theme_options' !== $s->capability ) { $bad[] = "setting rules $page.$key"; }
-		if ( $s->default !== $f[3] ) { $bad[] = "default $page.$key"; }
+		if ( $s->default !== ( 'media' === $f[2] ? 0 : $f[3] ) ) { $bad[] = "default $page.$key"; }
 		if ( ! $wp_customize->get_section( $c->section ) ) { $bad[] = "section $page.$key"; }
 	}
 }
@@ -70,8 +70,17 @@ t( 'crux_h prints the original wording', esc_html( crux_content_fields( 'home' )
 echo "== 3. Every field changes the live page\n";
 $tokens = array();
 $mods   = $clean;
+global $wpdb;
+$atts = array_map( 'intval', $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} WHERE post_type='attachment' AND post_mime_type LIKE 'image/%' ORDER BY ID DESC LIMIT 600" ) );
+$ai   = 0;
 foreach ( $pages as $page => $info ) {
 	foreach ( crux_content_fields( $page ) as $key => $f ) {
+		if ( 'media' === $f[2] ) {
+			$id  = $atts[ $ai++ % count( $atts ) ];
+			$tokens[ $page ][ $key ] = array( (string) wp_get_attachment_url( $id ), $id, 'media' );
+			$mods[ 'crux_c_' . $page . '_' . $key ] = $id;
+			continue;
+		}
 		$tok = 'ZZ' . substr( md5( $page . $key ), 0, 8 );
 		$val = ( 'rich' === $f[2] ) ? $tok . ' <strong>bold</strong> and <a href="https://example.test/x">link</a><br>next line' : $tok;
 		$tokens[ $page ][ $key ] = array( $tok, $val, $f[2] );
@@ -91,6 +100,8 @@ try {
 			elseif ( 'rich' === $row[2] && false !== strpos( $html, $row[0] . ' <strong>bold</strong> and <a href="https://example.test/x">link</a><br>next line' ) ) { $markup++; }
 		}
 		t( "$page: all " . count( $tokens[ $page ] ) . ' fields change the page', ! $missing, 'not on page: ' . implode( ', ', array_slice( $missing, 0, 12 ) ) . ( count( $missing ) > 12 ? ' ... (' . count( $missing ) . ')' : '' ) );
+		$photo_n = count( array_filter( $tokens[ $page ], function ( $r ) { return 'media' === $r[2]; } ) );
+		if ( $photo_n ) { t( "$page: the $photo_n photos can each be replaced from the Media Library", true ); }
 		$rich_n = count( array_filter( $tokens[ $page ], function ( $r ) { return 'rich' === $r[2]; } ) );
 		if ( $rich_n ) { t( "$page: bold, links and line breaks survive in the $rich_n rich fields that are on the page", $markup >= $rich_n - count( array_intersect( $missing, array_keys( array_filter( $tokens[ $page ], function ( $r ) { return 'rich' === $r[2]; } ) ) ) ) ); }
 	}
@@ -119,6 +130,17 @@ try {
 } finally {
 	update_option( $option, $backup );
 }
+
+$photo_page = ''; $photo_key = '';
+foreach ( $pages as $pg => $info ) { foreach ( crux_content_fields( $pg ) as $k => $f ) { if ( 'media' === $f[2] && ! $photo_key ) { $photo_page = $pg; $photo_key = $k; } } }
+$orig_url = crux_img_url( $photo_page, $photo_key );
+update_option( $option, array_merge( $clean, array( 'crux_c_' . $photo_page . '_' . $photo_key => 99999999 ) ) );
+try {
+	t( 'a photo that was deleted from the Media Library falls back to the original photo', crux_img_url( $photo_page, $photo_key ) === $orig_url );
+} finally {
+	update_option( $option, $backup );
+}
+t( 'a photo setting only ever holds a whole number', 0 === crux_sanitize_content( 'abc', (object) array( 'id' => 'crux_c_' . $photo_page . '_' . $photo_key ) ) );
 
 echo "== 5. The site's own settings are untouched\n";
 t( 'saved theme settings are exactly as before the test', get_option( $option ) === $backup );

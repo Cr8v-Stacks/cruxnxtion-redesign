@@ -22,7 +22,7 @@ $f = @('-d',"extension_dir=$ext",'-d','extension=mysqli','-d','extension=mbstrin
 & $php @f cr8v-event-ticketing\tests\test_events_convergence.php     # expect: RESULT: 29 passed, 0 failed  (Crux events edited in the shared Studio box: nothing lost, every field changes the page)
 & $php @f cr8v-event-ticketing\tests\test_events_coexist.php         # expect: RESULT: 16 passed, 0 failed  (shared events plugin and Crux plugin active together; Crux enquiry form still stores and emails)
 & $php @f -d allow_url_fopen=1 cr8v-event-ticketing\tests\test_customizer.php   # expect: RESULT: 65 passed, 0 failed  (site-wide Customizer settings; makes real page requests to the local site)
-& $php @f -d allow_url_fopen=1 -d memory_limit=512M cr8v-event-ticketing\tests\test_customizer_content.php   # expect: RESULT: 43 passed, 0 failed  (wording of 13 pages; every field changes the live page)
+& $php @f -d allow_url_fopen=1 -d memory_limit=512M cr8v-event-ticketing\tests\test_customizer_content.php   # expect: RESULT: 56 passed, 0 failed  (wording and photos of 13 pages; every field changes the live page)
 & $php cr8v-event-ticketing\tests\test_repo_hygiene.php                  # expect: RESULT: scanned N files, 0 problem(s)   (no WordPress needed)
 ```
 

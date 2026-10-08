@@ -698,7 +698,7 @@ if ( ! defined( 'ABSPATH' ) ) {
   <!-- ABOUT / MEET THE TEAM HERO -->
   <section style="padding:54px 20px 54px 20px; display:grid; grid-template-columns:0.82fr 1.18fr; gap:64px; align-items:center;" data-m="g1">
     <div class="tilt-straighten reveal" style="--r:-2deg; transform:rotate(var(--r)); border-radius:24px; overflow:hidden; border:2px solid #8C7AE6; height:620px;">
-      <img src="<?php echo crux_get_blob_url( 'a67d85c16f6df90ab7a657160bee9088' ); ?>" alt="Olabamidele 'Bambad' Badmos" style="width:100%; height:100%; object-fit:cover; object-position:58% 12%;">
+      <img src="<?php echo crux_img_url( 'founder', 'about_meet_the_team_hero_photo_1' ); ?>" alt="Olabamidele 'Bambad' Badmos" style="width:100%; height:100%; object-fit:cover; object-position:58% 12%;">
     </div>
     <div class="reveal">
       <span class="eyebrow" style="color:#6C58DB;"><?php echo crux_h( 'founder', 'about_meet_the_team_hero_small_heading_1' ); ?></span>

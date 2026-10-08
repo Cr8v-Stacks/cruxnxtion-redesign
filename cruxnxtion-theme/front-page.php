@@ -677,7 +677,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
   <!-- HERO -->
   <section style="position:relative; height:700px; overflow:hidden; clip-path:polygon(0 0,100% 0,100% 92%,0 100%);">
-    <img src="<?php echo crux_get_blob_url( "5e2df00e7ead10292f7266fc033953c3" ); ?>" alt="Crowd dancing at a Crux Nxtion Events event" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:saturate(1.05) contrast(1.05);" class="drift">
+    <img src="<?php echo crux_img_url( 'home', 'hero_photo_1' ); ?>" alt="Crowd dancing at a Crux Nxtion Events event" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:saturate(1.05) contrast(1.05);" class="drift">
     <div class="hero-dark-overlay" style="position:absolute; inset:0; background:linear-gradient(90deg, rgba(10,15,38,0.96) 0%, rgba(10,15,38,0.78) 42%, rgba(10,15,38,0.2) 78%);"></div>
     
     <div style="position:relative; height:100%; display:flex; flex-direction:column; justify-content:center; padding:0px 20px 0px 20px; max-width:760px;" class="reveal">
@@ -714,7 +714,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
       <div style="display:flex; align-items:center; gap:22px; padding:22px 28px 22px 28px; border-bottom:1.5px solid #1E2B5E;" data-m="svcrow">
         <span class="bebas" style="font-size:36px; color:#5B8DEF; flex:0 0 54px;">01</span>
-        <img src="<?php echo crux_get_blob_url( "e6e06da1a649b213d8dd573ea6511302" ); ?>" alt="" style="width:64px; height:64px; object-fit:cover; border-radius:10px; flex:0 0 64px;">
+        <img src="<?php echo crux_img_url( 'home', 'services_photo_1' ); ?>" alt="" style="width:64px; height:64px; object-fit:cover; border-radius:10px; flex:0 0 64px;">
         <div style="flex:1;">
           <h3 style="font-size:17px; margin:0px 0px 4px 0px; font-weight:700;"><?php echo crux_h( 'home', 'services_heading_2' ); ?></h3>
           <p style="font-size:13px; color:#A3A9C8; margin:0px 0px 0px 0px;"><?php echo crux_h( 'home', 'services_paragraph_2' ); ?></p>
@@ -724,7 +724,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
       <div style="display:flex; align-items:center; gap:22px; padding:22px 28px 22px 28px; border-bottom:1.5px solid #1E2B5E; background:rgba(244,245,250,0.02);" data-m="svcrow">
         <span class="bebas" style="font-size:36px; color:#E5383B; flex:0 0 54px;">02</span>
-        <img src="<?php echo crux_get_blob_url( "6e1036b74f617a3d1887a7cf36398cff" ); ?>" alt="" style="width:64px; height:64px; object-fit:cover; border-radius:10px; flex:0 0 64px;">
+        <img src="<?php echo crux_img_url( 'home', 'services_photo_2' ); ?>" alt="" style="width:64px; height:64px; object-fit:cover; border-radius:10px; flex:0 0 64px;">
         <div style="flex:1;">
           <h3 style="font-size:17px; margin:0px 0px 4px 0px; font-weight:700;"><?php echo crux_h( 'home', 'services_heading_3' ); ?></h3>
           <p style="font-size:13px; color:#A3A9C8; margin:0px 0px 0px 0px;"><?php echo crux_h( 'home', 'services_paragraph_3' ); ?></p>
@@ -734,7 +734,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
       <div style="display:flex; align-items:center; gap:22px; padding:22px 28px 22px 28px; border-bottom:1.5px solid #1E2B5E;" data-m="svcrow">
         <span class="bebas" style="font-size:36px; color:#5B8DEF; flex:0 0 54px;">03</span>
-        <img src="<?php echo crux_get_blob_url( "c5afda4fc4e4d4b0682377d6eb272c90" ); ?>" alt="" style="width:64px; height:64px; object-fit:cover; border-radius:10px; flex:0 0 64px;">
+        <img src="<?php echo crux_img_url( 'home', 'services_photo_3' ); ?>" alt="" style="width:64px; height:64px; object-fit:cover; border-radius:10px; flex:0 0 64px;">
         <div style="flex:1;">
           <h3 style="font-size:17px; margin:0px 0px 4px 0px; font-weight:700;"><?php echo crux_h( 'home', 'services_heading_4' ); ?></h3>
           <p style="font-size:13px; color:#A3A9C8; margin:0px 0px 0px 0px;"><?php echo crux_h( 'home', 'services_paragraph_4' ); ?></p>
@@ -744,7 +744,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
       <div style="display:flex; align-items:center; gap:22px; padding:22px 28px 22px 28px; border-bottom:1.5px solid #1E2B5E; background:rgba(244,245,250,0.02);" data-m="svcrow">
         <span class="bebas" style="font-size:36px; color:#E5383B; flex:0 0 54px;">04</span>
-        <img src="<?php echo crux_get_blob_url( "feb81852032e2798160126ebf0d3c7f6" ); ?>" alt="" style="width:64px; height:64px; object-fit:cover; border-radius:10px; flex:0 0 64px;">
+        <img src="<?php echo crux_img_url( 'home', 'services_photo_4' ); ?>" alt="" style="width:64px; height:64px; object-fit:cover; border-radius:10px; flex:0 0 64px;">
         <div style="flex:1;">
           <h3 style="font-size:17px; margin:0px 0px 4px 0px; font-weight:700;"><?php echo crux_h( 'home', 'services_heading_5' ); ?></h3>
           <p style="font-size:13px; color:#A3A9C8; margin:0px 0px 0px 0px;"><?php echo crux_h( 'home', 'services_paragraph_5' ); ?></p>
@@ -754,7 +754,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
       <div style="display:flex; align-items:center; gap:22px; padding:22px 28px 22px 28px; border-bottom:1.5px solid #1E2B5E;" data-m="svcrow">
         <span class="bebas" style="font-size:36px; color:#5B8DEF; flex:0 0 54px;">05</span>
-        <img src="<?php echo crux_get_blob_url( "2b696c907bf5b4d0dc14a80e8cd60e15" ); ?>" alt="" style="width:64px; height:64px; object-fit:cover; border-radius:10px; flex:0 0 64px;">
+        <img src="<?php echo crux_img_url( 'home', 'services_photo_5' ); ?>" alt="" style="width:64px; height:64px; object-fit:cover; border-radius:10px; flex:0 0 64px;">
         <div style="flex:1;">
           <h3 style="font-size:17px; margin:0px 0px 4px 0px; font-weight:700;"><?php echo crux_h( 'home', 'services_heading_6' ); ?></h3>
           <p style="font-size:13px; color:#A3A9C8; margin:0px 0px 0px 0px;"><?php echo crux_h( 'home', 'services_paragraph_6' ); ?></p>
@@ -823,7 +823,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="background:#8C7AE6; color:#0A0F26; font-weight:700; font-size:15px; padding:16px 30px 16px 30px; display:inline-block; width:fit-content; --sl:10px;" class="bx"><?php echo crux_h( 'home', 'also_from_crux_button_1' ); ?></a>
       </div>
       <div style="position:relative; overflow:hidden;" class="reveal" data-m="tile">
-        <img src="<?php echo crux_get_blob_url( "5b1a6ab37f0230a96cac807ce57c7983" ); ?>" alt="A Crux Nxtion Consultancy session" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+        <img src="<?php echo crux_img_url( 'home', 'also_from_crux_photo_1' ); ?>" alt="A Crux Nxtion Consultancy session" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
         <div style="position:absolute; inset:0; background:linear-gradient(90deg, rgba(27,32,72,0.85) 0%, rgba(91,141,239,0.12) 60%);"></div>
 
 
@@ -844,15 +844,15 @@ if ( ! defined( 'ABSPATH' ) ) {
     </div>
     <div style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:34px 26px; align-items:start;" class="reveal" data-m="g2">
       <a href="#" style="display:flex; flex-direction:column; background:#111838; border:1.5px solid #1E2B5E; border-radius:12px; overflow:hidden; transform:rotate(-1deg);" class="reveal">
-        <div style="position:relative; height:240px;"><img src="<?php echo crux_get_blob_url( "8779e5d9192fb628e623a9aec1f82362" ); ?>" alt="Crux Nxtion Events frame 1" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
+        <div style="position:relative; height:240px;"><img src="<?php echo crux_img_url( 'home', 'gallery_photo_1' ); ?>" alt="Crux Nxtion Events frame 1" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
         <div class="strip-stub" style="background:#002671; padding:12px 18px 12px 18px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; font-weight:800; color:#FFFFFF;"><?php echo crux_h( 'home', 'gallery_text_1' ); ?></span><span class="bebas" style="font-size:14px; color:#FFFFFF;"><?php echo crux_h( 'home', 'gallery_text_2' ); ?></span></div>
       </a>
       <a href="#" style="display:flex; flex-direction:column; background:#111838; border:1.5px solid #1E2B5E; border-radius:12px; overflow:hidden; transform:rotate(0.8deg);" class="reveal">
-        <div style="position:relative; height:280px;"><img src="<?php echo crux_get_blob_url( "4170d6b6009c07e37d83bae48a68917b" ); ?>" alt="Crux Nxtion Events frame 2" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
+        <div style="position:relative; height:280px;"><img src="<?php echo crux_img_url( 'home', 'gallery_photo_2' ); ?>" alt="Crux Nxtion Events frame 2" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
         <div class="strip-stub" style="background:#BA0000; padding:12px 18px 12px 18px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; font-weight:800; color:#FFFFFF;"><?php echo crux_h( 'home', 'gallery_text_3' ); ?></span><span class="bebas" style="font-size:14px; color:#FFFFFF;"><?php echo crux_h( 'home', 'gallery_text_4' ); ?></span></div>
       </a>
       <a href="#" style="display:flex; flex-direction:column; background:#111838; border:1.5px solid #1E2B5E; border-radius:12px; overflow:hidden; transform:rotate(-0.8deg);" class="reveal">
-        <div style="position:relative; height:220px;"><img src="<?php echo crux_get_blob_url( "c5afda4fc4e4d4b0682377d6eb272c90" ); ?>" alt="Crux Nxtion Events frame 3" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
+        <div style="position:relative; height:220px;"><img src="<?php echo crux_img_url( 'home', 'gallery_photo_3' ); ?>" alt="Crux Nxtion Events frame 3" style="width:100%; height:100%; object-fit:cover; display:block;"></div>
         <div class="strip-stub" style="background:#8C7AE6; padding:12px 18px 12px 18px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; font-weight:800; color:#0A0F26;"><?php echo crux_h( 'home', 'gallery_text_5' ); ?></span><span class="bebas" style="font-size:14px; color:#0A0F26;"><?php echo crux_h( 'home', 'gallery_text_6' ); ?></span></div>
       </a>
     </div>
@@ -863,15 +863,15 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div style="text-align:center; margin-bottom:44px;" class="reveal"><span class="eyebrow"><?php echo crux_h( 'home', 'why_crux_small_heading_1' ); ?></span><h2 class="bebas" style="font-size:34px; margin:14px 0px 0px 0px; color:#F4F5FA;"><?php echo crux_h( 'home', 'why_crux_heading_1' ); ?></h2></div>
     <div style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:22px;" class="reveal" data-m="g1">
       <div style="background:#111838; border:1.5px solid #1E2B5E; border-radius:18px; overflow:hidden;" class="reveal">
-        <div style="height:220px; overflow:hidden;"><img src="<?php echo crux_get_blob_url( "2fe0208788cf2d50763c85dd2a44de66" ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
+        <div style="height:220px; overflow:hidden;"><img src="<?php echo crux_img_url( 'home', 'why_crux_photo_1' ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
         <div style=" padding:26px 28px 30px 28px;"><h3 class="bebas" style="font-size:30px; margin:0px 0px 10px 0px; color:#F4F5FA;"><?php echo crux_h( 'home', 'why_crux_heading_2' ); ?></h3><p style="font-size:14px; line-height:1.65; color:#A3A9C8; margin:0px 0px 0px 0px;"><?php echo crux_h( 'home', 'why_crux_paragraph_1' ); ?></p></div>
       </div>
       <div style="background:#111838; border:1.5px solid #1E2B5E; border-radius:18px; overflow:hidden;" class="reveal">
-        <div style="height:220px; overflow:hidden;"><img src="<?php echo crux_get_blob_url( "6aa60ee4af0bdb49015bf4224786bd46" ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
+        <div style="height:220px; overflow:hidden;"><img src="<?php echo crux_img_url( 'home', 'why_crux_photo_2' ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
         <div style=" padding:26px 28px 30px 28px;"><h3 class="bebas" style="font-size:30px; margin:0px 0px 10px 0px; color:#F4F5FA;"><?php echo crux_h( 'home', 'why_crux_heading_3' ); ?></h3><p style="font-size:14px; line-height:1.65; color:#A3A9C8; margin:0px 0px 0px 0px;"><?php echo crux_h( 'home', 'why_crux_paragraph_2' ); ?></p></div>
       </div>
       <div style="background:#111838; border:1.5px solid #1E2B5E; border-radius:18px; overflow:hidden;" class="reveal">
-        <div style="height:220px; overflow:hidden;"><img src="<?php echo crux_get_blob_url( "a7f19688f4ec09c5590ca71c99b9f400" ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
+        <div style="height:220px; overflow:hidden;"><img src="<?php echo crux_img_url( 'home', 'why_crux_photo_3' ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
         <div style=" padding:26px 28px 30px 28px;"><h3 class="bebas" style="font-size:30px; margin:0px 0px 10px 0px; color:#F4F5FA;"><?php echo crux_h( 'home', 'why_crux_heading_4' ); ?></h3><p style="font-size:14px; line-height:1.65; color:#A3A9C8; margin:0px 0px 0px 0px;"><?php echo crux_h( 'home', 'why_crux_paragraph_3' ); ?></p></div>
       </div>
     </div>
@@ -885,22 +885,22 @@ if ( ! defined( 'ABSPATH' ) ) {
     </div>
     <div style="position:relative; display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:26px;" class="reveal" data-m="g1">
       <div class="tilt-ticket reveal" style="display:flex; flex-direction:column; background:#111838; border:1.5px solid #1E2B5E; border-radius:14px; overflow:hidden; --r:-1deg; transform:rotate(var(--r));">
-        <div style="height:190px; overflow:hidden;"><img src="<?php echo crux_get_blob_url( "7ad16fa711374cf636fa630f0cf398c0" ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
+        <div style="height:190px; overflow:hidden;"><img src="<?php echo crux_img_url( 'home', 'process_photo_1' ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
         <div class="strip-stub" style="background:#002671; padding:12px 18px 12px 18px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; font-weight:800; color:#FFFFFF;"><?php echo crux_h( 'home', 'process_text_1' ); ?></span><span class="bebas" style="font-size:18px; color:#FFFFFF;"><?php echo crux_h( 'home', 'process_text_2' ); ?></span></div>
         <div style=" padding:24px 22px 26px 22px;"><p style="font-size:14px; line-height:1.7; color:#A3A9C8; margin:0px 0px 0px 0px;"><?php echo crux_h( 'home', 'process_paragraph_2' ); ?></p></div>
       </div>
       <div class="tilt-ticket reveal" style="display:flex; flex-direction:column; background:#111838; border:1.5px solid #1E2B5E; border-radius:14px; overflow:hidden; --r:0.8deg; transform:rotate(var(--r));">
-        <div style="height:190px; overflow:hidden;"><img src="<?php echo crux_get_blob_url( "4795dc48859e2b9d81b42757c6317d14" ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
+        <div style="height:190px; overflow:hidden;"><img src="<?php echo crux_img_url( 'home', 'process_photo_2' ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
         <div class="strip-stub" style="background:#BA0000; padding:12px 18px 12px 18px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; font-weight:800; color:#FFFFFF;"><?php echo crux_h( 'home', 'process_text_3' ); ?></span><span class="bebas" style="font-size:18px; color:#FFFFFF;"><?php echo crux_h( 'home', 'process_text_4' ); ?></span></div>
         <div style=" padding:24px 22px 26px 22px;"><p style="font-size:14px; line-height:1.7; color:#A3A9C8; margin:0px 0px 0px 0px;"><?php echo crux_h( 'home', 'process_paragraph_3' ); ?></p></div>
       </div>
       <div class="tilt-ticket reveal" style="display:flex; flex-direction:column; background:#111838; border:1.5px solid #1E2B5E; border-radius:14px; overflow:hidden; --r:-0.8deg; transform:rotate(var(--r));">
-        <div style="height:190px; overflow:hidden;"><img src="<?php echo crux_get_blob_url( "8127c7ab2af037f167d7a8b67413ab45" ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
+        <div style="height:190px; overflow:hidden;"><img src="<?php echo crux_img_url( 'home', 'process_photo_3' ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
         <div class="strip-stub" style="background:#8C7AE6; padding:12px 18px 12px 18px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; font-weight:800; color:#0A0F26;"><?php echo crux_h( 'home', 'process_text_5' ); ?></span><span class="bebas" style="font-size:18px; color:#0A0F26;"><?php echo crux_h( 'home', 'process_text_6' ); ?></span></div>
         <div style=" padding:24px 22px 26px 22px;"><p style="font-size:14px; line-height:1.7; color:#A3A9C8; margin:0px 0px 0px 0px;"><?php echo crux_h( 'home', 'process_paragraph_4' ); ?></p></div>
       </div>
       <div class="tilt-ticket reveal" style="display:flex; flex-direction:column; background:#111838; border:1.5px solid #1E2B5E; border-radius:14px; overflow:hidden; --r:1deg; transform:rotate(var(--r));">
-        <div style="height:190px; overflow:hidden;"><img src="<?php echo crux_get_blob_url( "f1ffd7a776c034eaead72759fb4440c6" ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
+        <div style="height:190px; overflow:hidden;"><img src="<?php echo crux_img_url( 'home', 'process_photo_4' ); ?>" alt="" style="width:100%; height:100%; object-fit:cover;"></div>
         <div class="strip-stub" style="background:#002671; padding:12px 18px 12px 18px; display:flex; justify-content:space-between; align-items:center;"><span style="font-size:12px; font-weight:800; color:#FFFFFF;"><?php echo crux_h( 'home', 'process_text_7' ); ?></span><span class="bebas" style="font-size:18px; color:#FFFFFF;"><?php echo crux_h( 'home', 'process_text_8' ); ?></span></div>
         <div style=" padding:24px 22px 26px 22px;"><p style="font-size:14px; line-height:1.7; color:#A3A9C8; margin:0px 0px 0px 0px;"><?php echo crux_h( 'home', 'process_paragraph_5' ); ?></p></div>
       </div>
@@ -914,9 +914,9 @@ if ( ! defined( 'ABSPATH' ) ) {
     <p style="font-size:14.5px; line-height:1.7; color:#A3A9C8; max-width:480px; margin:0 auto 46px;" class="reveal"><?php echo crux_h( 'home', 'mini_about_paragraph_2' ); ?></p>
 
     <div class="mini-about-strip reveal" style="display:flex; justify-content:center; align-items:center; gap:18px; margin-bottom:44px;">
-      <img class="tilt-straighten" src="<?php echo crux_get_blob_url( "fbd294c148cb8e1a55a31856bc061a40" ); ?>" alt="" style="width:150px; height:190px; object-fit:cover; border-radius:10px; --r:-4deg; transform:rotate(var(--r)); border:2px solid #1E2B5E;">
-      <img src="<?php echo crux_get_blob_url( "c5afda4fc4e4d4b0682377d6eb272c90" ); ?>" alt="" style="width:170px; height:220px; object-fit:cover; border-radius:10px; z-index:1; border:2px solid #5B8DEF;">
-      <img class="tilt-straighten" src="<?php echo crux_get_blob_url( "3f7a3d27a340e99222e15e9e60a98a7d" ); ?>" alt="" style="width:150px; height:190px; object-fit:cover; border-radius:10px; --r:4deg; transform:rotate(var(--r)); border:2px solid #1E2B5E;">
+      <img class="tilt-straighten" src="<?php echo crux_img_url( 'home', 'mini_about_photo_1' ); ?>" alt="" style="width:150px; height:190px; object-fit:cover; border-radius:10px; --r:-4deg; transform:rotate(var(--r)); border:2px solid #1E2B5E;">
+      <img src="<?php echo crux_img_url( 'home', 'mini_about_photo_2' ); ?>" alt="" style="width:170px; height:220px; object-fit:cover; border-radius:10px; z-index:1; border:2px solid #5B8DEF;">
+      <img class="tilt-straighten" src="<?php echo crux_img_url( 'home', 'mini_about_photo_3' ); ?>" alt="" style="width:150px; height:190px; object-fit:cover; border-radius:10px; --r:4deg; transform:rotate(var(--r)); border:2px solid #1E2B5E;">
     </div>
 
     <div style="display:flex; gap:12px; justify-content:center;" class="reveal" data-m="wrap">
@@ -929,7 +929,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <!-- FOUNDER — Curated Best Bits for Events -->
   <section id="founder" style="padding:64px 20px; background:#111838; display:grid; grid-template-columns:0.8fr 1.2fr; gap:60px; align-items:center;" data-m="g1">
     <div class="tilt-straighten reveal" style="--r:-2deg; transform:rotate(var(--r)); border-radius:22px; overflow:hidden; border:2px solid #5B8DEF; height:470px;">
-      <img src="<?php echo crux_get_blob_url( "a67d85c16f6df90ab7a657160bee9088" ); ?>" alt="Olabamidele 'Bambad' Badmos, founder of Crux Nxtion" style="width:100%; height:100%; object-fit:cover; object-position:58% 12%;">
+      <img src="<?php echo crux_img_url( 'home', 'founder_photo_1' ); ?>" alt="Olabamidele 'Bambad' Badmos, founder of Crux Nxtion" style="width:100%; height:100%; object-fit:cover; object-position:58% 12%;">
     </div>
     <div class="reveal">
       <span class="eyebrow" style="color:#5B8DEF;"><?php echo crux_h( 'home', 'founder_small_heading_1' ); ?></span>

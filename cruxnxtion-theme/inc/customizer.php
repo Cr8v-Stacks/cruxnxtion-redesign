@@ -255,6 +255,10 @@ function crux_content_fields( $page ) {
 	if ( ! isset( $cache[ $page ] ) ) {
 		$file = get_template_directory() . '/inc/content/' . $page . '.php';
 		$cache[ $page ] = ( preg_match( '/^[a-z_]+$/', $page ) && file_exists( $file ) ) ? (array) include $file : array();
+		$photos = get_template_directory() . '/inc/content/images/' . $page . '.php';
+		if ( preg_match( '/^[a-z_]+$/', $page ) && file_exists( $photos ) ) {
+			$cache[ $page ] = array_merge( $cache[ $page ], (array) include $photos );
+		}
 	}
 	return $cache[ $page ];
 }
@@ -278,6 +282,19 @@ function crux_value( $page, $key ) {
 	}
 	$saved = get_theme_mod( 'crux_c_' . $page . '_' . $key, null );
 	return null === $saved ? (string) $fields[ $key ][3] : (string) $saved;
+}
+
+/** Address of a replaceable photo: the Media Library picture the client chose, else the original design photo. */
+function crux_img_url( $page, $key ) {
+	$fields = crux_content_fields( $page );
+	$saved  = absint( get_theme_mod( 'crux_c_' . $page . '_' . $key, 0 ) );
+	if ( $saved ) {
+		$url = wp_get_attachment_url( $saved );
+		if ( $url ) {
+			return $url;
+		}
+	}
+	return isset( $fields[ $key ] ) ? crux_get_blob_url( $fields[ $key ][3] ) : '';
 }
 
 /** Print plain wording, escaped. */
@@ -305,6 +322,9 @@ function crux_sanitize_content( $value, $setting = null ) {
 				$key    = substr( $m[1] . '_' . $m[2], strlen( $page ) + 1 );
 				$fields = crux_content_fields( $page );
 				if ( isset( $fields[ $key ] ) ) {
+					if ( 'media' === $fields[ $key ][2] ) {
+						return absint( $value );
+					}
 					if ( 'rich' === $fields[ $key ][2] ) {
 						return wp_kses( (string) $value, crux_rich_allowed() );
 					}
@@ -342,16 +362,31 @@ function crux_customize_register_content( $wp_customize ) {
 				$sections[ $sid ] = true;
 				$wp_customize->add_section( $sid, array( 'title' => $f[0], 'panel' => 'crux_page_' . $page, 'priority' => count( $sections ) ) );
 			}
+			$is_media = ( 'media' === $f[2] );
 			$wp_customize->add_setting(
 				'crux_c_' . $page . '_' . $key,
 				array(
-					'default'           => $f[3],
+					'default'           => $is_media ? 0 : $f[3],
 					'type'              => 'theme_mod',
 					'capability'        => 'edit_theme_options',
 					'sanitize_callback' => 'crux_sanitize_content',
 					'transport'         => 'refresh',
 				)
 			);
+			if ( $is_media ) {
+				$wp_customize->add_control(
+					new WP_Customize_Media_Control(
+						$wp_customize,
+						'crux_c_' . $page . '_' . $key,
+						array(
+							'label'     => $f[1],
+							'section'   => $sid,
+							'mime_type' => 'image',
+						)
+					)
+				);
+				continue;
+			}
 			$wp_customize->add_control(
 				'crux_c_' . $page . '_' . $key,
 				array(

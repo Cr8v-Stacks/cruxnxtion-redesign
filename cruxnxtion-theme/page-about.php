@@ -704,9 +704,9 @@ if ( ! defined( 'ABSPATH' ) ) {
       <div style="display:flex; gap:16px;"><a href="<?php echo esc_url( home_url( "/founder/" ) ); ?>" style="background:#8C7AE6; color:#10142E; font-weight:700; font-size:15px; padding:16px 30px 16px 30px; --sl:10px;" class="bx"><?php echo crux_h( 'about', 'hero_button_1' ); ?></a><a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="color:#10142E; font-weight:700; font-size:15px; padding:14.5px 28px 14.5px 28px; --sl:10px; --bc:#10142E;" class="bx"><?php echo crux_h( 'about', 'hero_button_2' ); ?></a></div>
     </div>
     <div style="position:relative; height:640px;" class="reveal why-us-collage" data-m="tile collage">
-      <img src="<?php echo crux_get_blob_url( "5d2ff88df9e44a1a073b23c7eb8ac29d" ); ?>" alt="" style="position:absolute; right:0; top:0; width:400px; height:500px; object-fit:cover; border-radius:26px;">
-      <img class="tilt-straighten" src="<?php echo crux_get_blob_url( "5b1a6ab37f0230a96cac807ce57c7983" ); ?>" alt="" style="--r:-5deg; transform:rotate(var(--r)); position:absolute; left:0; bottom:0; width:340px; height:260px; object-fit:cover; border-radius:20px; border:4px solid #FFFFFF;">
-      <img class="tilt-straighten" src="<?php echo crux_get_blob_url( "c5afda4fc4e4d4b0682377d6eb272c90" ); ?>" alt="" style="--r:6deg; transform:rotate(var(--r)); position:absolute; left:120px; top:30px; width:200px; height:250px; object-fit:cover; border-radius:16px; border:4px solid #FFFFFF;">
+      <img src="<?php echo crux_img_url( 'about', 'hero_photo_1' ); ?>" alt="" style="position:absolute; right:0; top:0; width:400px; height:500px; object-fit:cover; border-radius:26px;">
+      <img class="tilt-straighten" src="<?php echo crux_img_url( 'about', 'hero_photo_2' ); ?>" alt="" style="--r:-5deg; transform:rotate(var(--r)); position:absolute; left:0; bottom:0; width:340px; height:260px; object-fit:cover; border-radius:20px; border:4px solid #FFFFFF;">
+      <img class="tilt-straighten" src="<?php echo crux_img_url( 'about', 'hero_photo_3' ); ?>" alt="" style="--r:6deg; transform:rotate(var(--r)); position:absolute; left:120px; top:30px; width:200px; height:250px; object-fit:cover; border-radius:16px; border:4px solid #FFFFFF;">
       <div class="float" style="--r:6deg; position:absolute; right:-6px; bottom:60px; background:#FF2E3D; color:#FFFFFF; padding:12px 18px 12px 18px; border-radius:10px;"><span class="bebas" style="font-size:20px;"><?php echo crux_h( 'about', 'hero_text_1' ); ?></span></div>
     </div>
   </section>
@@ -729,53 +729,53 @@ if ( ! defined( 'ABSPATH' ) ) {
     </div>
     <sc-if value="{{isEvents}}" hint-placeholder-val="{{true}}"><div style="display:grid; grid-template-columns:repeat(6, minmax(0, 1fr)); grid-template-rows:repeat(2, 320px); gap:16px;" data-m="g1">
       <a href="#" class="bento-tile reveal" style="grid-column:span 3; position:relative; overflow:hidden; border-radius:22px; display:block;" data-m="span tile">
-        <img src="<?php echo crux_get_blob_url( "bf598dabf623c991f65ec61b98d88a5a" ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+        <img src="<?php echo crux_img_url( 'about', 'what_we_do_photo_1' ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
         <div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(16,20,46,0.95) 0%, rgba(16,20,46,0.35) 65%, rgba(16,20,46,0.15) 100%);"></div>
         <div style="position:absolute; left:0; right:0; bottom:0; padding:26px 26px 26px 26px;"><h3 class="bebas" style="font-size:30px; margin:0px 0px 6px 0px; color:#F2F1F8;"><?php echo crux_h( 'about', 'what_we_do_heading_2' ); ?></h3><p style="font-size:13px; line-height:1.6; color:#C7C7DA; margin:0px 0px 0px 0px;"><?php echo crux_h( 'about', 'what_we_do_paragraph_1' ); ?></p></div>
       </a>
       <a href="#" class="bento-tile reveal" style="grid-column:span 3; position:relative; overflow:hidden; border-radius:22px; display:block;" data-m="span tile">
-        <img src="<?php echo crux_get_blob_url( "6e1036b74f617a3d1887a7cf36398cff" ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+        <img src="<?php echo crux_img_url( 'about', 'what_we_do_photo_2' ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
         <div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(16,20,46,0.95) 0%, rgba(16,20,46,0.35) 65%, rgba(16,20,46,0.15) 100%);"></div>
         <div style="position:absolute; left:0; right:0; bottom:0; padding:26px 26px 26px 26px;"><h3 class="bebas" style="font-size:30px; margin:0px 0px 6px 0px; color:#F2F1F8;"><?php echo crux_h( 'about', 'what_we_do_heading_3' ); ?></h3><p style="font-size:13px; line-height:1.6; color:#C7C7DA; margin:0px 0px 0px 0px;"><?php echo crux_h( 'about', 'what_we_do_paragraph_2' ); ?></p></div>
       </a>
       <a href="#" class="bento-tile reveal" style="grid-column:span 2; position:relative; overflow:hidden; border-radius:22px; display:block;" data-m="span tile">
-        <img src="<?php echo crux_get_blob_url( "b1e68ef21b53acd6fc513694c97d58cd" ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+        <img src="<?php echo crux_img_url( 'about', 'what_we_do_photo_3' ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
         <div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(16,20,46,0.95) 0%, rgba(16,20,46,0.35) 65%, rgba(16,20,46,0.15) 100%);"></div>
         <div style="position:absolute; left:0; right:0; bottom:0; padding:26px 26px 26px 26px;"><h3 class="bebas" style="font-size:30px; margin:0px 0px 6px 0px; color:#F2F1F8;"><?php echo crux_h( 'about', 'what_we_do_heading_4' ); ?></h3><p style="font-size:13px; line-height:1.6; color:#C7C7DA; margin:0px 0px 0px 0px;"><?php echo crux_h( 'about', 'what_we_do_paragraph_3' ); ?></p></div>
       </a>
       <a href="#" class="bento-tile reveal" style="grid-column:span 2; position:relative; overflow:hidden; border-radius:22px; display:block;" data-m="span tile">
-        <img src="<?php echo crux_get_blob_url( "cf1ceb83917462889e44cacbaceaa722" ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+        <img src="<?php echo crux_img_url( 'about', 'what_we_do_photo_4' ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
         <div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(16,20,46,0.95) 0%, rgba(16,20,46,0.35) 65%, rgba(16,20,46,0.15) 100%);"></div>
         <div style="position:absolute; left:0; right:0; bottom:0; padding:26px 26px 26px 26px;"><h3 class="bebas" style="font-size:30px; margin:0px 0px 6px 0px; color:#F2F1F8;"><?php echo crux_h( 'about', 'what_we_do_heading_5' ); ?></h3><p style="font-size:13px; line-height:1.6; color:#C7C7DA; margin:0px 0px 0px 0px;"><?php echo crux_h( 'about', 'what_we_do_paragraph_4' ); ?></p></div>
       </a>
       <a href="#" class="bento-tile reveal" style="grid-column:span 2; position:relative; overflow:hidden; border-radius:22px; display:block;" data-m="span tile">
-        <img src="<?php echo crux_get_blob_url( "848d8e1043a6ef12d1cc8d2c2844ece2" ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+        <img src="<?php echo crux_img_url( 'about', 'what_we_do_photo_5' ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
         <div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(16,20,46,0.95) 0%, rgba(16,20,46,0.35) 65%, rgba(16,20,46,0.15) 100%);"></div>
         <div style="position:absolute; left:0; right:0; bottom:0; padding:26px 26px 26px 26px;"><h3 class="bebas" style="font-size:30px; margin:0px 0px 6px 0px; color:#F2F1F8;"><?php echo crux_h( 'about', 'what_we_do_heading_6' ); ?></h3><p style="font-size:13px; line-height:1.6; color:#C7C7DA; margin:0px 0px 0px 0px;"><?php echo crux_h( 'about', 'what_we_do_paragraph_5' ); ?></p></div>
       </a></div></sc-if>
     <sc-if value="{{isConsult}}" hint-placeholder-val="{{false}}"><div style="display:grid; grid-template-columns:repeat(6, minmax(0, 1fr)); grid-template-rows:repeat(2, 320px); gap:16px;" data-m="g1">
       <a href="#" class="bento-tile" style="grid-column:span 3; position:relative; overflow:hidden; border-radius:22px; display:block;" data-m="span tile">
-        <img src="<?php echo crux_get_blob_url( "53d4feb181f3c6e0619a155bc4be2bf5" ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+        <img src="<?php echo crux_img_url( 'about', 'what_we_do_photo_6' ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
         <div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(16,20,46,0.95) 0%, rgba(16,20,46,0.35) 65%, rgba(16,20,46,0.15) 100%);"></div>
         <div style="position:absolute; left:0; right:0; bottom:0; padding:26px 26px 26px 26px;"><h3 class="bebas" style="font-size:30px; margin:0px 0px 6px 0px; color:#F2F1F8;"><?php echo crux_h( 'about', 'what_we_do_heading_7' ); ?></h3><p style="font-size:13px; line-height:1.6; color:#C7C7DA; margin:0px 0px 0px 0px;"><?php echo crux_h( 'about', 'what_we_do_paragraph_6' ); ?></p></div>
       </a>
       <a href="#" class="bento-tile" style="grid-column:span 3; position:relative; overflow:hidden; border-radius:22px; display:block;" data-m="span tile">
-        <img src="<?php echo crux_get_blob_url( "ca942693739cdc74700f9c8d65278358" ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+        <img src="<?php echo crux_img_url( 'about', 'what_we_do_photo_7' ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
         <div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(16,20,46,0.95) 0%, rgba(16,20,46,0.35) 65%, rgba(16,20,46,0.15) 100%);"></div>
         <div style="position:absolute; left:0; right:0; bottom:0; padding:26px 26px 26px 26px;"><h3 class="bebas" style="font-size:30px; margin:0px 0px 6px 0px; color:#F2F1F8;"><?php echo crux_h( 'about', 'what_we_do_heading_8' ); ?></h3><p style="font-size:13px; line-height:1.6; color:#C7C7DA; margin:0px 0px 0px 0px;"><?php echo crux_h( 'about', 'what_we_do_paragraph_7' ); ?></p></div>
       </a>
       <a href="#" class="bento-tile" style="grid-column:span 2; position:relative; overflow:hidden; border-radius:22px; display:block;" data-m="span tile">
-        <img src="<?php echo crux_get_blob_url( "62f016a3e0b0dc275a615ae5af6b3b69" ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+        <img src="<?php echo crux_img_url( 'about', 'what_we_do_photo_8' ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
         <div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(16,20,46,0.95) 0%, rgba(16,20,46,0.35) 65%, rgba(16,20,46,0.15) 100%);"></div>
         <div style="position:absolute; left:0; right:0; bottom:0; padding:26px 26px 26px 26px;"><h3 class="bebas" style="font-size:30px; margin:0px 0px 6px 0px; color:#F2F1F8;"><?php echo crux_h( 'about', 'what_we_do_heading_9' ); ?></h3><p style="font-size:13px; line-height:1.6; color:#C7C7DA; margin:0px 0px 0px 0px;"><?php echo crux_h( 'about', 'what_we_do_paragraph_8' ); ?></p></div>
       </a>
       <a href="#" class="bento-tile" style="grid-column:span 2; position:relative; overflow:hidden; border-radius:22px; display:block;" data-m="span tile">
-        <img src="<?php echo crux_get_blob_url( "8f4495361437a1d1961471650d55c60a" ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+        <img src="<?php echo crux_img_url( 'about', 'what_we_do_photo_9' ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
         <div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(16,20,46,0.95) 0%, rgba(16,20,46,0.35) 65%, rgba(16,20,46,0.15) 100%);"></div>
         <div style="position:absolute; left:0; right:0; bottom:0; padding:26px 26px 26px 26px;"><h3 class="bebas" style="font-size:30px; margin:0px 0px 6px 0px; color:#F2F1F8;"><?php echo crux_h( 'about', 'what_we_do_heading_10' ); ?></h3><p style="font-size:13px; line-height:1.6; color:#C7C7DA; margin:0px 0px 0px 0px;"><?php echo crux_h( 'about', 'what_we_do_paragraph_9' ); ?></p></div>
       </a>
       <a href="#" class="bento-tile" style="grid-column:span 2; position:relative; overflow:hidden; border-radius:22px; display:block;" data-m="span tile">
-        <img src="<?php echo crux_get_blob_url( "44b7a98d85fefb8a03f8b8e625e3bcdc" ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+        <img src="<?php echo crux_img_url( 'about', 'what_we_do_photo_10' ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
         <div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(16,20,46,0.95) 0%, rgba(16,20,46,0.35) 65%, rgba(16,20,46,0.15) 100%);"></div>
         <div style="position:absolute; left:0; right:0; bottom:0; padding:26px 26px 26px 26px;"><h3 class="bebas" style="font-size:30px; margin:0px 0px 6px 0px; color:#F2F1F8;"><?php echo crux_h( 'about', 'what_we_do_heading_11' ); ?></h3><p style="font-size:13px; line-height:1.6; color:#C7C7DA; margin:0px 0px 0px 0px;"><?php echo crux_h( 'about', 'what_we_do_paragraph_10' ); ?></p></div>
       </a></div></sc-if>
@@ -795,7 +795,7 @@ if ( ! defined( 'ABSPATH' ) ) {
   <!-- 5 FOUNDER — original design -->
   <section id="founder" style="padding:64px 20px; background:#111838; display:grid; grid-template-columns:0.8fr 1.2fr; gap:60px; align-items:center;" data-m="g1">
     <div class="tilt-straighten reveal" style="--r:-2deg; transform:rotate(var(--r)); border-radius:22px; overflow:hidden; border:2px solid #5B8DEF; height:470px;">
-      <img src="<?php echo crux_get_blob_url( 'a67d85c16f6df90ab7a657160bee9088' ); ?>" alt="Olabamidele 'Bambad' Badmos, founder of Crux Nxtion" style="width:100%; height:100%; object-fit:cover; object-position:58% 12%;">
+      <img src="<?php echo crux_img_url( 'about', 'founder_photo_1' ); ?>" alt="Olabamidele 'Bambad' Badmos, founder of Crux Nxtion" style="width:100%; height:100%; object-fit:cover; object-position:58% 12%;">
     </div>
     <div class="reveal">
       <span class="eyebrow" style="color:#5B8DEF;"><?php echo crux_h( 'about', 'founder_small_heading_1' ); ?></span>

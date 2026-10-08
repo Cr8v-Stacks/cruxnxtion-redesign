@@ -697,7 +697,7 @@ if ( ! defined( 'ABSPATH' ) ) {
   <section style=" padding:20px 20px 44px 20px;"><div style="display:flex; flex-direction:column; gap:28px;" class="reveal">
       <div style="display:grid; grid-template-columns:0.9fr 1fr; background:#F3F1FC; border:1.5px solid #E1DEF3; border-radius:22px; overflow:hidden;" data-m="g1">
         <div style="order:1; position:relative; min-height:400px;" class="reveal" data-m="tile">
-          <img src="<?php echo crux_get_blob_url( "53d4feb181f3c6e0619a155bc4be2bf5" ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.85);">
+          <img src="<?php echo crux_img_url( 'services_consultancy', 'page_heading_photo_1' ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.85);">
           <div style="position:absolute; inset:0; background:linear-gradient(160deg, rgba(140,122,230,0.3) 0%, rgba(16,20,46,0.55) 100%);"></div>
           <div class="ticket-stub" style="position:absolute; left:0; top:36px; background:#8C7AE6; padding:14px 22px 14px 26px; border-radius:0 10px 10px 0;"><span class="bebas" style="font-size:30px; color:#10142E;"><?php echo crux_h( 'services_consultancy', 'page_heading_text_1' ); ?></span></div>
         </div>
@@ -713,7 +713,7 @@ if ( ! defined( 'ABSPATH' ) ) {
       </div>
       <div style="display:grid; grid-template-columns:1fr 0.9fr; background:#F3F1FC; border:1.5px solid #E1DEF3; border-radius:22px; overflow:hidden;" data-m="g1">
         <div style="order:2; position:relative; min-height:400px;" data-m="tile">
-          <img src="<?php echo crux_get_blob_url( "ca942693739cdc74700f9c8d65278358" ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.85);">
+          <img src="<?php echo crux_img_url( 'services_consultancy', 'page_heading_photo_2' ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.85);">
           <div style="position:absolute; inset:0; background:linear-gradient(160deg, rgba(140,122,230,0.3) 0%, rgba(16,20,46,0.55) 100%);"></div>
           <div class="ticket-stub" style="position:absolute; left:0; top:36px; background:#8C7AE6; padding:14px 22px 14px 26px; border-radius:0 10px 10px 0;"><span class="bebas" style="font-size:30px; color:#10142E;"><?php echo crux_h( 'services_consultancy', 'page_heading_text_7' ); ?></span></div>
         </div>
@@ -729,7 +729,7 @@ if ( ! defined( 'ABSPATH' ) ) {
       </div>
       <div style="display:grid; grid-template-columns:0.9fr 1fr; background:#F3F1FC; border:1.5px solid #E1DEF3; border-radius:22px; overflow:hidden;" data-m="g1">
         <div style="order:1; position:relative; min-height:400px;" data-m="tile">
-          <img src="<?php echo crux_get_blob_url( "62f016a3e0b0dc275a615ae5af6b3b69" ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.85);">
+          <img src="<?php echo crux_img_url( 'services_consultancy', 'page_heading_photo_3' ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.85);">
           <div style="position:absolute; inset:0; background:linear-gradient(160deg, rgba(140,122,230,0.3) 0%, rgba(16,20,46,0.55) 100%);"></div>
           <div class="ticket-stub" style="position:absolute; left:0; top:36px; background:#8C7AE6; padding:14px 22px 14px 26px; border-radius:0 10px 10px 0;"><span class="bebas" style="font-size:30px; color:#10142E;"><?php echo crux_h( 'services_consultancy', 'page_heading_text_11' ); ?></span></div>
         </div>
@@ -745,7 +745,7 @@ if ( ! defined( 'ABSPATH' ) ) {
       </div>
       <div style="display:grid; grid-template-columns:1fr 0.9fr; background:#F3F1FC; border:1.5px solid #E1DEF3; border-radius:22px; overflow:hidden;" data-m="g1">
         <div style="order:2; position:relative; min-height:400px;" data-m="tile">
-          <img src="<?php echo crux_get_blob_url( "8f4495361437a1d1961471650d55c60a" ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.85);">
+          <img src="<?php echo crux_img_url( 'services_consultancy', 'page_heading_photo_4' ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.85);">
           <div style="position:absolute; inset:0; background:linear-gradient(160deg, rgba(140,122,230,0.3) 0%, rgba(16,20,46,0.55) 100%);"></div>
           <div class="ticket-stub" style="position:absolute; left:0; top:36px; background:#8C7AE6; padding:14px 22px 14px 26px; border-radius:0 10px 10px 0;"><span class="bebas" style="font-size:30px; color:#10142E;"><?php echo crux_h( 'services_consultancy', 'page_heading_text_15' ); ?></span></div>
         </div>
@@ -761,7 +761,7 @@ if ( ! defined( 'ABSPATH' ) ) {
       </div>
       <div style="display:grid; grid-template-columns:0.9fr 1fr; background:#F3F1FC; border:1.5px solid #E1DEF3; border-radius:22px; overflow:hidden;" data-m="g1">
         <div style="order:1; position:relative; min-height:400px;" data-m="tile">
-          <img src="<?php echo crux_get_blob_url( "44b7a98d85fefb8a03f8b8e625e3bcdc" ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.85);">
+          <img src="<?php echo crux_img_url( 'services_consultancy', 'page_heading_photo_5' ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.85);">
           <div style="position:absolute; inset:0; background:linear-gradient(160deg, rgba(140,122,230,0.3) 0%, rgba(16,20,46,0.55) 100%);"></div>
           <div class="ticket-stub" style="position:absolute; left:0; top:36px; background:#8C7AE6; padding:14px 22px 14px 26px; border-radius:0 10px 10px 0;"><span class="bebas" style="font-size:30px; color:#10142E;"><?php echo crux_h( 'services_consultancy', 'page_heading_text_19' ); ?></span></div>
         </div>
