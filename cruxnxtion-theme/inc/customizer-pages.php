@@ -70,7 +70,7 @@ function crux_register_page_controls( $wp_customize, $page ) {
 				'label'       => $f[1],
 				'section'     => $sid,
 				'type'        => ( 'text' === $f[2] ) ? 'text' : 'textarea',
-				'description' => ( 'rich' === $f[2] ) ? __( 'May contain <strong>, <em>, <br> and links.', 'cruxnxtion' ) : '',
+				'description' => ( 'rich' === $f[2] ) ? __( 'Formatted text: bold, italic, line breaks and links are kept.', 'cruxnxtion' ) : '',
 			)
 		);
 	}
