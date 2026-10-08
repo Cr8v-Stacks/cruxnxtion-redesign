@@ -43,6 +43,11 @@ function cr8v_tix_badge_styles() {
 }
 
 function cr8v_tix_add_meta_box() {
+	// On a site running the shared Cr8v events plugin, its Studio box already holds these fields. Showing both would
+	// post the same field names twice, so this box steps aside and only the ticket tiers box is added.
+	if ( function_exists( 'cr8v_render_event_studio_meta_box' ) ) {
+		return;
+	}
 	add_meta_box(
 		'cr8v_event_details',
 		__( 'Event Details', 'cr8v-event-ticketing' ),

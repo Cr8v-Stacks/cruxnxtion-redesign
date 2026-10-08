@@ -128,3 +128,32 @@ if ( ! function_exists( 'cr8v_disable_gutenberg_for_events' ) ) {
 	}
 	add_filter( 'use_block_editor_for_post', 'cr8v_disable_gutenberg_for_event_posts', 999, 2 );
 }
+
+/**
+ * Helpers shared by every Cr8v event site.
+ */
+if ( ! function_exists( 'cr8v_event_iso_date' ) ) {
+	/**
+	 * Returns a real calendar date as Y-m-d, or null for anything looser (a bare year, free text, an impossible date).
+	 */
+	function cr8v_event_iso_date( $value ) {
+		$value = trim( (string) $value );
+		if ( preg_match( '/^(\d{4})-(\d{2})-(\d{2})$/', $value, $m ) && checkdate( (int) $m[2], (int) $m[3], (int) $m[1] ) ) {
+			return $value;
+		}
+		return null;
+	}
+}
+
+if ( ! function_exists( 'cr8v_event_badge_styles' ) ) {
+	/**
+	 * Ticket colours an event can choose. Sites that do not colour code their cards ignore the value.
+	 */
+	function cr8v_event_badge_styles() {
+		return array(
+			'blue'   => __( 'Blue', 'cr8v-events-core' ),
+			'red'    => __( 'Red', 'cr8v-events-core' ),
+			'purple' => __( 'Purple', 'cr8v-events-core' ),
+		);
+	}
+}

@@ -175,8 +175,9 @@ if ( ! function_exists( 'cr8v_render_event_studio_meta_box' ) ) {
 			<div class="bwc-meta-grid">
 				<div>
 					<label class="bwc-field-label" for="cr8v_event_date"><?php _e( 'Event Staging Date or Year *', 'cr8v-events-core' ); ?></label>
-					<input type="text" id="cr8v_event_date" name="cr8v_event_date" value="<?php echo esc_attr( $event_date ); ?>" placeholder="e.g. 2026 or 2024-02-24" class="bwc-field-input" required>
-					<p style="font-size:11px; color:#666; margin:4px 0 0;">Enter exact date (e.g. <strong>2024-02-24</strong>) or Year-Only (e.g. <strong>2026</strong>) if month/day is unconfirmed.</p>
+					<?php $date_is_exact = ( '' === (string) $event_date ) || null !== cr8v_event_iso_date( $event_date ); /* A loose value already saved (for example a bare year) keeps the text box, so saving an existing event never changes its date. */ ?>
+						<input type="<?php echo $date_is_exact ? 'date' : 'text'; ?>" id="cr8v_event_date" name="cr8v_event_date" value="<?php echo esc_attr( $event_date ); ?>" placeholder="e.g. 2026 or 2024-02-24" class="bwc-field-input" required>
+					<p style="font-size:11px; color:#666; margin:4px 0 0;"><?php echo $date_is_exact ? 'Pick the exact date. Ticket sales, calendar files and the Past/Upcoming status all use it.' : 'This event has a loose date. Keep it as it is, or type an exact date such as <strong>2024-02-24</strong> to enable ticket sales and calendar files.'; ?></p>
 				</div>
 				<div>
 					<label class="bwc-field-label" for="cr8v_event_time"><?php _e( 'Event Operating Hours', 'cr8v-events-core' ); ?></label>
@@ -322,6 +323,38 @@ if ( ! function_exists( 'cr8v_render_event_studio_meta_box' ) ) {
 			<button type="button" id="cr8v_clear_event_gallery_btn" class="button" style="border-radius:50px; color:#c82333; margin-left:6px; <?php echo empty( $event_gallery_ids ) ? 'display:none;' : ''; ?>">
 				Clear Gallery
 			</button>
+		</div>
+
+		<!-- 8. Card Details (Optional) -->
+		<?php
+		$event_short_title = get_post_meta( $post->ID, '_cr8v_event_short_title', true );
+		$event_location    = get_post_meta( $post->ID, '_cr8v_event_location', true );
+		$event_badge_style = get_post_meta( $post->ID, '_cr8v_event_badge_style', true );
+		?>
+		<div class="bwc-studio-section">
+			<div class="bwc-studio-heading">
+				<span class="dashicons dashicons-tag"></span> 8. Card Details (Optional)
+			</div>
+			<div class="bwc-meta-grid">
+				<div>
+					<label class="bwc-field-label" for="cr8v_event_short_title"><?php _e( 'Short Title (Cards)', 'cr8v-events-core' ); ?></label>
+					<input type="text" id="cr8v_event_short_title" name="cr8v_event_short_title" value="<?php echo esc_attr( $event_short_title ); ?>" maxlength="80" placeholder="e.g. Dance OUT 2023" class="bwc-field-input">
+				</div>
+				<div>
+					<label class="bwc-field-label" for="cr8v_event_location"><?php _e( 'Country / Region', 'cr8v-events-core' ); ?></label>
+					<input type="text" id="cr8v_event_location" name="cr8v_event_location" value="<?php echo esc_attr( $event_location ); ?>" maxlength="80" placeholder="e.g. United Kingdom" class="bwc-field-input">
+				</div>
+				<div>
+					<label class="bwc-field-label" for="cr8v_event_badge_style"><?php _e( 'Ticket Colour', 'cr8v-events-core' ); ?></label>
+					<select id="cr8v_event_badge_style" name="cr8v_event_badge_style" class="bwc-field-input">
+						<option value=""><?php esc_html_e( 'Default', 'cr8v-events-core' ); ?></option>
+						<?php foreach ( cr8v_event_badge_styles() as $value => $label ) : ?>
+							<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $event_badge_style, $value ); ?>><?php echo esc_html( $label ); ?></option>
+						<?php endforeach; ?>
+					</select>
+					<p style="font-size:11px; color:#666; margin:4px 0 0;">Used by sites whose event cards are colour coded. Sites that do not use it ignore it.</p>
+				</div>
+			</div>
 		</div>
 
 		<script>
@@ -666,6 +699,26 @@ if ( ! function_exists( 'cr8v_save_custom_meta' ) ) {
 				if ( isset( $_POST[ $ef ] ) ) {
 					$val = ( $ef === 'cr8v_event_scope' || $ef === 'cr8v_event_excerpt' ) ? sanitize_textarea_field( $_POST[ $ef ] ) : sanitize_text_field( $_POST[ $ef ] );
 					update_post_meta( $post_id, '_' . $ef, $val );
+				}
+			}
+
+			// Optional card details: an emptied field removes the value, so nothing old lingers.
+			foreach ( array( 'short_title', 'location' ) as $optional ) {
+				if ( isset( $_POST[ 'cr8v_event_' . $optional ] ) ) {
+					$opt_val = mb_substr( sanitize_text_field( wp_unslash( $_POST[ 'cr8v_event_' . $optional ] ) ), 0, 80 );
+					if ( '' === $opt_val ) {
+						delete_post_meta( $post_id, '_cr8v_event_' . $optional );
+					} else {
+						update_post_meta( $post_id, '_cr8v_event_' . $optional, $opt_val );
+					}
+				}
+			}
+			if ( isset( $_POST['cr8v_event_badge_style'] ) ) {
+				$badge = sanitize_key( wp_unslash( $_POST['cr8v_event_badge_style'] ) );
+				if ( isset( cr8v_event_badge_styles()[ $badge ] ) ) {
+					update_post_meta( $post_id, '_cr8v_event_badge_style', $badge );
+				} else {
+					delete_post_meta( $post_id, '_cr8v_event_badge_style' );
 				}
 			}
 
