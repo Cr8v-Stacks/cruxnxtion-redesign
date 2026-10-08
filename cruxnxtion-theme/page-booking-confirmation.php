@@ -151,15 +151,9 @@ if ( 'POST' === ( $_SERVER['REQUEST_METHOD'] ?? '' ) && isset( $_POST['cr8v_do_c
 						$redirect_args['tix_secret'] = $p_sec;
 					}
 					$redirect_url = add_query_arg( $redirect_args, $staff_landing_url );
-					$redirect_url = apply_filters( 'cr8v_checkin_redirect_url', $redirect_url, $p_code, $redirect_staff_id );
-
-					// Perform 303 See Other redirect unless headers already sent or disabled for tests.
-					if ( apply_filters( 'cr8v_do_checkin_redirect', ! headers_sent(), $redirect_url ) ) {
-						wp_safe_redirect( $redirect_url, 303 );
-						if ( ! defined( 'CR8V_TESTING_NO_EXIT' ) ) {
-							exit;
-						}
-					}
+					// 303 See Other: the browser then loads the result with a GET, so refreshing never re-submits the form.
+					wp_safe_redirect( $redirect_url, 303 );
+					exit;
 					break;
 				}
 			}

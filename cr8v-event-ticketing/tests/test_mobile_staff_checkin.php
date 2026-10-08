@@ -111,6 +111,30 @@ $_POST = array(
 	'_cr8v_checkin_nonce' => wp_create_nonce( 'cr8v_checkin_' . $code_1 ),
 );
 $_GET = array( 'cr8v_ticket' => $code_1 );
+
+// The page now answers a successful check-in with a 303 redirect (post-redirect-get). Capture it the way a
+// browser would receive it, then load the Location with a GET to get the page the steward actually sees.
+$first_redirect = array( 'url' => '', 'status' => 0 );
+$capture_first  = function ( $location, $status ) use ( &$first_redirect ) {
+	$first_redirect = array( 'url' => $location, 'status' => $status );
+	throw new RuntimeException( 'redirect captured' );
+};
+add_filter( 'wp_redirect', $capture_first, 1, 2 );
+ob_start();
+try {
+	include $page_file;
+} catch ( RuntimeException $e ) {
+	// Expected: the page redirected.
+}
+ob_end_clean();
+remove_filter( 'wp_redirect', $capture_first, 1 );
+
+t( 'Check-in POST answers with a 303 redirect (so a refresh cannot re-submit the form)', 303 === $first_redirect['status'] && false !== strpos( $first_redirect['url'], $code_1 ) );
+
+parse_str( (string) parse_url( $first_redirect['url'], PHP_URL_QUERY ), $first_params );
+$_SERVER['REQUEST_METHOD'] = 'GET';
+$_POST = array();
+$_GET  = $first_params;
 ob_start();
 include $page_file;
 $success_html = ob_get_clean();
@@ -141,9 +165,6 @@ $order_tickets[] = array(
 update_post_meta( $order_id, '_cr8v_order_tickets', $order_tickets );
 
 // 4A. Check-in POST issues 303 redirect with signed flag
-if ( ! defined( 'CR8V_TESTING_NO_EXIT' ) ) {
-	define( 'CR8V_TESTING_NO_EXIT', true );
-}
 wp_set_current_user( $staff_user_id );
 $_SERVER['REQUEST_METHOD'] = 'POST';
 $_POST = array(
@@ -155,30 +176,24 @@ $_POST = array(
 );
 $_GET = array( 'cr8v_ticket' => $code_2 );
 
+// Capture the redirect with a filter that throws, so the page's own exit is never reached. The page
+// carries no test-only switches.
 $captured_redirect = array( 'url' => '', 'status' => 0 );
-$filter_do_redirect = function( $do, $url ) use ( &$captured_redirect ) {
-	$captured_redirect['url'] = $url;
-	return true;
+$capture_redirect  = function ( $location, $status ) use ( &$captured_redirect ) {
+	$captured_redirect = array( 'url' => $location, 'status' => $status );
+	throw new RuntimeException( 'redirect captured' );
 };
-$filter_redirect_status = function( $status ) use ( &$captured_redirect ) {
-	$captured_redirect['status'] = $status;
-	return $status;
-};
-$filter_wp_redirect = function( $location ) {
-	return false; // prevent actual header send in CLI
-};
-
-add_filter( 'cr8v_do_checkin_redirect', $filter_do_redirect, 10, 2 );
-add_filter( 'wp_redirect_status', $filter_redirect_status, 10, 1 );
-add_filter( 'wp_redirect', $filter_wp_redirect, 10, 1 );
+add_filter( 'wp_redirect', $capture_redirect, 1, 2 );
 
 ob_start();
-include $page_file;
+try {
+	include $page_file;
+} catch ( RuntimeException $e ) {
+	// Expected: the page redirected.
+}
 ob_end_clean();
 
-remove_filter( 'cr8v_do_checkin_redirect', $filter_do_redirect, 10 );
-remove_filter( 'wp_redirect_status', $filter_redirect_status, 10 );
-remove_filter( 'wp_redirect', $filter_wp_redirect, 10 );
+remove_filter( 'wp_redirect', $capture_redirect, 1 );
 
 t( 'Check-in POST issues HTTP 303 See Other redirect', 303 === $captured_redirect['status'] );
 t( 'Check-in POST redirect URL points to ticket with ?checked=1', false !== strpos( $captured_redirect['url'], 'checked=1' ) && false !== strpos( $captured_redirect['url'], $code_2 ) );

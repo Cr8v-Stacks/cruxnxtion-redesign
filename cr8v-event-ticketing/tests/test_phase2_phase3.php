@@ -258,6 +258,29 @@ $_GET = array(
 	'tix_secret'  => $derived_secret,
 );
 
+// A successful check-in answers with a 303 redirect (post-redirect-get). Capture it as a browser would, then
+// load the Location with a GET to get the page the steward sees.
+$redirect_seen = array( 'url' => '', 'status' => 0 );
+$grab_redirect = function ( $location, $status ) use ( &$redirect_seen ) {
+	$redirect_seen = array( 'url' => $location, 'status' => $status );
+	throw new RuntimeException( 'redirect captured' );
+};
+add_filter( 'wp_redirect', $grab_redirect, 1, 2 );
+ob_start();
+try {
+	include $confirmation_template;
+} catch ( RuntimeException $e ) {
+	// Expected: the page redirected.
+}
+ob_end_clean();
+remove_filter( 'wp_redirect', $grab_redirect, 1 );
+
+assert_test( 303 === $redirect_seen['status'], 'Check-in POST answers with a 303 redirect' );
+
+parse_str( (string) parse_url( $redirect_seen['url'], PHP_URL_QUERY ), $prg_params );
+$_SERVER['REQUEST_METHOD'] = 'GET';
+$_POST = array();
+$_GET  = $prg_params;
 ob_start();
 include $confirmation_template;
 $html_checkedin = ob_get_clean();

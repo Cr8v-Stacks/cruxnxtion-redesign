@@ -13,9 +13,9 @@ $ext = (Get-ChildItem (Split-Path $php) -Recurse -Directory -Filter ext | Select
 $f = @('-d',"extension_dir=$ext",'-d','extension=mysqli','-d','extension=mbstring','-d','extension=openssl','-d','extension=curl','-d','mysqli.default_port=10006','-d','SMTP=127.0.0.1','-d','smtp_port=10001')
 & $php @f cr8v-event-ticketing\tests\test_phase1_checkout_webhook.php   # expect: RESULT: 40 passed, 0 failed
 & $php @f cr8v-event-ticketing\tests\test_phase23_audit.php             # expect: RESULT: 55 passed, 0 failed
-& $php @f cr8v-event-ticketing\tests\test_phase2_phase3.php             # expect: SUMMARY: 29 PASSED, 0 FAILED
+& $php @f cr8v-event-ticketing\tests\test_phase2_phase3.php             # expect: SUMMARY: 30 PASSED, 0 FAILED
 & $php @f cr8v-event-ticketing\tests\test_staff_and_csv.php              # expect: RESULT: 62 passed, 0 failed
-& $php @f cr8v-event-ticketing\tests\test_mobile_staff_checkin.php           # expect: RESULT: 27 passed, 0 failed
+& $php @f cr8v-event-ticketing\tests\test_mobile_staff_checkin.php           # expect: RESULT: 55 passed, 0 failed
 & $php cr8v-event-ticketing\tests\test_repo_hygiene.php                  # expect: RESULT: scanned N files, 0 problem(s)   (no WordPress needed)
 ```
 
