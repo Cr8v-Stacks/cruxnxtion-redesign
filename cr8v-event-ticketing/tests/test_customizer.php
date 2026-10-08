@@ -26,6 +26,8 @@ function http_get( $path ) {
 	return false === $body ? '' : $body;
 }
 
+global $wpdb;
+$wpdb->get_var( "SELECT GET_LOCK('cr8v_theme_mods_test', 900)" ); // wait for any other run that changes saved settings
 $fields   = crux_customizer_fields();
 $sections = crux_customizer_sections();
 $admins   = get_users( array( 'role' => 'administrator', 'number' => 1 ) );

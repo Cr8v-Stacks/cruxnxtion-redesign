@@ -34,12 +34,32 @@ $urls = array(
 	'events_archive' => '/past-events/', 'blog' => '/blog/', 'contact' => '/contact/',
 );
 $pages  = crux_content_pages();
+// Two runs at the same time would overwrite each other's saved settings: wait for the other run to finish.
+global $wpdb;
+$wpdb->get_var( "SELECT GET_LOCK('cr8v_theme_mods_test', 900)" );
 $admins = get_users( array( 'role' => 'administrator', 'number' => 1 ) );
 wp_set_current_user( $admins[0]->ID );
 
 echo "== 1. Registration\n";
 $wp_customize = new WP_Customize_Manager();
 do_action( 'customize_register', $wp_customize );
+$lazy_ok = true;
+foreach ( $pages as $page => $info ) {
+	$first_key = array_key_first( crux_content_fields( $page ) );
+	if ( $wp_customize->get_panel( 'crux_page_' . $page ) || $wp_customize->get_control( 'crux_c_' . $page . '_' . $first_key ) || ! $wp_customize->get_setting( 'crux_c_' . $page . '_' . $first_key ) ) { $lazy_ok = false; }
+}
+t( 'opening the Customizer builds no page panels or controls (they load on demand) but every setting exists', $lazy_ok );
+$total = 0;
+foreach ( $pages as $page => $info ) { crux_register_page_controls( $wp_customize, $page ); }
+$payload_ok = true;
+foreach ( $pages as $page => $info ) {
+	$pl = crux_page_controls_payload( $page );
+	$n  = count( crux_content_fields( $page ) );
+	if ( 1 !== count( $pl['panels'] ) || count( $pl['controls'] ) !== $n || ! $pl['sections'] ) { $payload_ok = false; echo "      payload $page: " . count( $pl['controls'] ) . " of $n
+"; }
+	foreach ( $pl['controls'] as $c ) { if ( empty( $c['content'] ) || empty( $c['section'] ) || ! isset( $pl['sections'][ $c['section'] ] ) ) { $payload_ok = false; } }
+}
+t( 'the on-demand payload of every page has its panel, sections and every control', $payload_ok );
 $total = 0;
 $bad   = array();
 foreach ( $pages as $page => $info ) {
