@@ -65,6 +65,8 @@ if ( ! function_exists( 'cr8v_register_events_cpt' ) ) {
 			'rewrite'               => array( 'slug' => 'events', 'with_front' => false ),
 		);
 
+		// A site can adjust the post type (for example its address slug) without editing this plugin.
+		$args = apply_filters( 'cr8v_events_event_cpt_args', $args );
 		register_post_type( 'event', $args );
 
 		// 2. Taxonomy: Event Category

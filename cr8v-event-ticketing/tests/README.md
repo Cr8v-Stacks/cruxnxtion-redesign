@@ -20,6 +20,7 @@ $f = @('-d',"extension_dir=$ext",'-d','extension=mysqli','-d','extension=mbstrin
 & $php @f cr8v-event-ticketing\tests\test_security.php               # expect: RESULT: 48 passed, 0 failed  (staff cannot escalate; sign-in lockout; usernames not listed)
 & $php @f cr8v-event-ticketing\tests\test_events_core.php            # expect: RESULT: 40 passed, 0 failed  (shared cr8v-events-core editor box: date picker, new optional fields, existing fields unchanged)
 & $php @f cr8v-event-ticketing\tests\test_events_convergence.php     # expect: RESULT: 29 passed, 0 failed  (Crux events edited in the shared Studio box: nothing lost, every field changes the page)
+& $php @f cr8v-event-ticketing\tests\test_events_coexist.php         # expect: RESULT: 16 passed, 0 failed  (shared events plugin and Crux plugin active together; Crux enquiry form still stores and emails)
 & $php cr8v-event-ticketing\tests\test_repo_hygiene.php                  # expect: RESULT: scanned N files, 0 problem(s)   (no WordPress needed)
 ```
 

@@ -16,8 +16,11 @@
  */
 require __DIR__ . '/bootstrap.php';
 require_once ABSPATH . 'wp-admin/includes/admin.php';
-require_once dirname( __DIR__, 2 ) . '/cr8v-events-core/inc/cpt-events.php';
-require_once dirname( __DIR__, 2 ) . '/cr8v-events-core/inc/meta-boxes.php';
+// When the plugin is already active on this site its files are loaded; otherwise load them here.
+if ( ! function_exists( 'cr8v_save_custom_meta' ) ) {
+	require_once dirname( __DIR__, 2 ) . '/cr8v-events-core/inc/cpt-events.php';
+	require_once dirname( __DIR__, 2 ) . '/cr8v-events-core/inc/meta-boxes.php';
+}
 
 $pass = 0;
 $fail = 0;

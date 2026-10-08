@@ -64,6 +64,7 @@ if ( ! function_exists( 'cr8v_register_gallery_cpt' ) ) {
 			'rewrite'               => array( 'slug' => 'gallery-item', 'with_front' => false ),
 		);
 
+		$args = apply_filters( 'cr8v_events_gallery_cpt_args', $args );
 		register_post_type( 'gallery_item', $args );
 
 		// 2. Taxonomy: Gallery Category

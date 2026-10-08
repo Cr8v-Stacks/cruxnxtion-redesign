@@ -47,6 +47,10 @@ add_action( 'init', 'cr8v_register_inquiries_cpt', 0 );
  * 2. Register Dedicated Admin Menu & Submenus
  */
 function cr8v_register_inquiries_admin_menu() {
+	// A site with its own enquiry form and admin (for example Crux Nxtion) switches this menu off.
+	if ( ! apply_filters( 'cr8v_events_enable_inquiries_menu', true ) ) {
+		return;
+	}
 	$new_count = cr8v_get_inquiries_count( 'New' );
 	$badge     = $new_count > 0 ? sprintf( ' <span class="update-plugins count-%1$d" style="background:#C85C38; color:#fff; border-radius:10px; font-weight:700; padding:1px 6px; font-size:10px;"><span class="plugin-count">%1$d</span></span>', $new_count ) : '';
 

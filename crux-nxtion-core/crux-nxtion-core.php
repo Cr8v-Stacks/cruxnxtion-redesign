@@ -48,8 +48,8 @@ function crux_core_register_cpts() {
 		'supports'           => array( 'title' ),
 	) );
 
-	// B. Events CPT
-	register_post_type( 'event', array(
+	// B. Events CPT. Skipped when the shared Cr8v events plugin (cr8v-events-core) has already registered it.
+	if ( ! post_type_exists( 'event' ) ) register_post_type( 'event', array(
 		'labels'             => array(
 			'name'          => __( 'Events', 'crux-nxtion-core' ),
 			'singular_name' => __( 'Event', 'crux-nxtion-core' ),
@@ -65,8 +65,8 @@ function crux_core_register_cpts() {
 		'show_in_rest'       => true,
 	) );
 
-	// C. Gallery CPT
-	register_post_type( 'gallery_item', array(
+	// C. Gallery CPT. Same rule as events.
+	if ( ! post_type_exists( 'gallery_item' ) ) register_post_type( 'gallery_item', array(
 		'labels'             => array(
 			'name'          => __( 'Gallery Items', 'crux-nxtion-core' ),
 			'singular_name' => __( 'Gallery Item', 'crux-nxtion-core' ),
