@@ -2424,3 +2424,12 @@ The owner pointed out that Crux events use the standard WordPress editor while R
 **Antigravity: do not touch events, galleries, inquiries or the Customizer until Claude says the convergence is finished.** Claude is doing this himself, step by step, with snapshot comparisons of the Red Cap and BWC pages so nothing there changes.
 
 Also fixed today (Claude): leftover automated test accounts (four `mobstaff_*` users with a known password) were found and removed from the dev site; the test suites now use random passwords and sweep stale test accounts at start. The owner's real admin account was verified unchanged (same login, email and password hash as the backups taken before this work).
+## 26. Convergence and account security (Claude, 8 Oct 2026)
+
+Do not edit any of this without asking. Read `EVENTS_CONVERGENCE_PLAN.md` section 6 first.
+
+- `cr8v-event-ticketing/inc/security.php`: 15-minute lockout after 5 wrong passwords (per username and address, priority 99), user list hidden from visitors, XML-RPC off, one generic sign-in error. `Checked In By` on tickets, the order screen and the CSV. Tested by `test_security.php` (48).
+- `cr8v-events-core/` (this repo) is now the single source of truth for the shared events plugin. Its Local plugin folder is a junction. Do not copy files from the old Downloads or OneDrive copies.
+- Crux events are edited in the Studio box (`Event Staging, Schedule & Technical Studio`). The theme engine (`inc/event-engine.php`, `crux_event_studio_value`) reads Studio fields first, then the original fields.
+- `crux-nxtion-core` stays, as the enquiry module only.
+- New tests: `test_events_core.php` (40), `test_events_convergence.php` (29), `test_events_coexist.php` (16). Full list with counts in `cr8v-event-ticketing/tests/README.md`.

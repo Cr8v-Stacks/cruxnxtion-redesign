@@ -61,3 +61,21 @@ It is not a thin layer pasted on top: most of it is independent of the editor. T
 5. **Then the Customizer**, starting with extracting the shared header and footer (see `CUSTOMIZER_MAPPING.md`, section 0).
 
 No step changes Red Cap or BWC behaviour unless a snapshot comparison shows their pages unchanged.
+
+## 6. Status, 8 Oct 2026: E1 to E4 done on the dev site
+
+| Step | Result | Proof |
+|---|---|---|
+| Source of truth | `cr8v-events-core/` in this repo is the one owner. The Local plugin folder is a junction to it. The old Local copy is kept at `C:\Users\user\Dev\_backup_cr8v-events-core_local_2026-10-08`. | commit `31d210f` |
+| E1 shared plugin | Studio box gains short title, country, ticket colour (optional) and a real date picker. A loose date such as a bare year keeps its text box, so saving an existing Red Cap or BWC event never changes its date. Only the admin editor changed; no front-end code. | `test_events_core.php`, 40 checks |
+| E2 Crux reads the Studio box | The Crux event engine uses the Studio values once the box has saved them, the original fields until then, and a cleared field stays cleared. The box pre-fills category and booking link, so the first Update loses nothing. | `test_events_convergence.php`, 29 checks: the whole page data is identical after Open + Update; every field edited through `edit_post` changes the public page |
+| E3 inquiries and gallery | **Decision: enquiries stay in the Crux plugin.** The Crux brief has three wings of fields (events, consultancy, partnership); the shared inquiry model is a flat project brief, so merging would lose structure. The Crux plugin now only registers the enquiry module and skips events and gallery when the shared plugin has them. Gallery items needed no migration (same post type, same fields). | `test_events_coexist.php`, 16 checks including a real enquiry submission |
+| E4 switch | `cr8v-events-core` activated on the dev site next to `crux-nxtion-core`. Crux keeps `/event/<name>/` addresses, and `/events/` is still an ordinary page. The ticketing plugin's Event Details box no longer shows; the edit screen holds exactly the Studio box and the Ticket Tiers box. | full battery of 11 suites passes with the plugin active |
+
+What a developer must know:
+- Active plugins on a Crux site: `cr8v-events-core` (events, gallery), `cr8v-event-ticketing` (tiers, payments, check-in), `crux-nxtion-core` (enquiries only).
+- Theme switches (all in `functions.php`): hide the default editor, keep `/event/` addresses, hide the shared inquiries menu.
+- Previous active plugins list: `C:\Users\user\Dev\_active_plugins_before_E4.json`.
+- Upload zips are built by `python tools/build-distribution-zips.py` into `dist/` (git-ignored).
+
+Not verified: a signed-in browser view of the edit screen (the registered boxes were checked in code, the pages by HTTP), the live client site (not touched), Stripe with real test keys.

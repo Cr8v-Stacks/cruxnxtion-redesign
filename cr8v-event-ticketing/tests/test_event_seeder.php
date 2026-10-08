@@ -193,7 +193,15 @@ foreach ( array( 'cr8v_event_date', 'cr8v_event_time', 'cr8v_event_venue', 'cr8v
 t( 'Event Details box is filled with the stored value (venue)', false !== strpos( $box, 'value="Box Venue"' ) );
 t( 'Event Details box shows the gallery thumbnails', substr_count( $box, '<img' ) >= 3 );
 $cpt = get_post_type_object( 'event' );
-t( 'the event editor offers Title, Description, Summary (Excerpt) and Featured Image', post_type_supports( 'event', 'title' ) && post_type_supports( 'event', 'editor' ) && post_type_supports( 'event', 'excerpt' ) && post_type_supports( 'event', 'thumbnail' ) );
+if ( function_exists( 'cr8v_render_event_studio_meta_box' ) ) {
+	// Shared events plugin active: summary and description are fields of the Studio box, the editor is hidden.
+	ob_start();
+	cr8v_render_event_studio_meta_box( $post );
+	$studio = ob_get_clean();
+	t( 'the event editor offers Title and Featured Image, and the Studio box offers Summary and Description', post_type_supports( 'event', 'title' ) && post_type_supports( 'event', 'thumbnail' ) && false !== strpos( $studio, 'name="cr8v_event_excerpt"' ) && false !== strpos( $studio, 'name="cr8v_event_scope"' ) );
+} else {
+	t( 'the event editor offers Title, Description, Summary (Excerpt) and Featured Image', post_type_supports( 'event', 'title' ) && post_type_supports( 'event', 'editor' ) && post_type_supports( 'event', 'excerpt' ) && post_type_supports( 'event', 'thumbnail' ) );
+}
 
 echo "== 4. The real events on this site\n";
 $baseline = array( 13029 => array( 178, 399 ), 13030 => array( 172, 395 ), 13031 => array( 156, 359 ), 13032 => array( 164, 298 ), 13033 => array( 180, 382 ), 13034 => array( 153, 350 ), 13035 => array( 160, 359 ), 13036 => array( 132, 297 ) );
