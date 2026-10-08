@@ -79,6 +79,7 @@ if ( 'POST' === ( $_SERVER['REQUEST_METHOD'] ?? '' ) && isset( $_POST['cr8v_do_c
 					}
 					$order_tickets[ $idx ]['checked_in']    = true;
 					$order_tickets[ $idx ]['checked_in_at'] = current_time( 'mysql' );
+					$order_tickets[ $idx ]['checked_in_by'] = get_current_user_id(); // Accountability: which staff member admitted this ticket.
 					update_post_meta( $p_order, '_cr8v_order_tickets', $order_tickets );
 					$checkin_message = __( 'Attendee successfully CHECKED IN!', 'cr8v-event-ticketing' );
 					$checkin_status  = 'success';

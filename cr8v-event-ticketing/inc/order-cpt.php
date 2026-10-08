@@ -360,7 +360,7 @@ function cr8v_tix_render_order_details_meta_box( $post ) {
 						<td><?php echo esc_html( $tix['attendee_name'] ?? $name ); ?></td>
 						<td>
 							<?php if ( ! empty( $tix['checked_in'] ) ) : ?>
-								<span style="color:#28a745; font-weight:700;"><?php echo sprintf( esc_html__( 'Checked in at %s', 'cr8v-event-ticketing' ), esc_html( $tix['checked_in_at'] ?? 'Door' ) ); ?></span>
+								<span style="color:#28a745; font-weight:700;"><?php echo sprintf( esc_html__( 'Checked in at %s', 'cr8v-event-ticketing' ), esc_html( $tix['checked_in_at'] ?? 'Door' ) ); ?><?php $by_user = ! empty( $tix['checked_in_by'] ) ? get_userdata( (int) $tix['checked_in_by'] ) : false; echo $by_user ? ' ' . esc_html( sprintf( __( 'by %s', 'cr8v-event-ticketing' ), $by_user->display_name ) ) : ''; ?></span>
 							<?php else : ?>
 								<span style="color:#6c757d;"><?php esc_html_e( 'Not checked in', 'cr8v-event-ticketing' ); ?></span>
 							<?php endif; ?>
@@ -421,6 +421,7 @@ function cr8v_tix_build_attendee_csv( $event_id = 0 ) {
 		'Purchaser Email',
 		'Purchaser Phone',
 		'Total Paid (£)',
+		'Checked In By',
 	);
 
 	$output = fopen( 'php://temp', 'r+' );
@@ -462,6 +463,9 @@ function cr8v_tix_build_attendee_csv( $event_id = 0 ) {
 
 		if ( is_array( $tickets ) && ! empty( $tickets ) ) {
 			foreach ( $tickets as $tix ) {
+				$by_id           = (int) ( $tix['checked_in_by'] ?? 0 );
+				$by_user         = $by_id ? get_userdata( $by_id ) : false;
+				$checked_by_name = $by_user ? $by_user->display_name : ( $by_id ? 'User #' . $by_id : '' );
 				$checkin_status = 'Not Checked In';
 				if ( ! empty( $tix['void'] ) ) {
 					$checkin_status = 'VOID';
@@ -484,6 +488,7 @@ function cr8v_tix_build_attendee_csv( $event_id = 0 ) {
 					$c_email,
 					$c_phone,
 					$total_fmt,
+					$checked_by_name,
 				);
 				fputcsv( $output, array_map( 'cr8v_tix_csv_escape', $row ) );
 			}
@@ -503,6 +508,7 @@ function cr8v_tix_build_attendee_csv( $event_id = 0 ) {
 				$c_email,
 				$c_phone,
 				$total_fmt,
+				'',
 			);
 			fputcsv( $output, array_map( 'cr8v_tix_csv_escape', $row ) );
 		}

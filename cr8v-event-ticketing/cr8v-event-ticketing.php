@@ -20,6 +20,7 @@ define( 'CR8V_TICKETING_URL', plugin_dir_url( __FILE__ ) );
 require_once CR8V_TICKETING_DIR . 'inc/db-schema.php';
 require_once CR8V_TICKETING_DIR . 'inc/event-fields.php';
 require_once CR8V_TICKETING_DIR . 'inc/ticket-tiers.php';
+require_once CR8V_TICKETING_DIR . 'inc/security.php';
 require_once CR8V_TICKETING_DIR . 'inc/tickets.php';
 require_once CR8V_TICKETING_DIR . 'inc/order-cpt.php';
 require_once CR8V_TICKETING_DIR . 'inc/stripe-checkout.php';
