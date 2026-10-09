@@ -97,9 +97,55 @@ function crux_seed_all_content( $force = false ) {
 		update_option( 'page_for_posts', $page_ids['blog'] );
 	}
 
-	// B. The eight existing events, complete with description, photos and every editable field.
+	// B. Menus (header, consultancy header, footer) from the original links.
+	crux_seed_menus();
+
+	// C. The eight existing events, complete with description, photos and every editable field.
 	// See inc/event-seeder.php: it only creates what is missing and never overwrites the client's edits.
 	if ( function_exists( 'crux_seed_events' ) ) {
 		crux_seed_events();
 	}
+}
+
+/**
+ * Create the Main menu, Consultancy menu and Footer menu from the original links and assign them to their locations.
+ * A location that already has a menu is never touched, so the client's own menus always win.
+ */
+function crux_seed_menus() {
+	if ( ! function_exists( 'crux_nav_fallback' ) ) {
+		return;
+	}
+	$locations = get_nav_menu_locations();
+	$plan      = array(
+		'primary'     => array( 'Main menu', crux_nav_fallback( 'desktop', 'events', 'events' ) ),
+		'consultancy' => array( 'Consultancy menu', crux_nav_fallback( 'desktop', 'consultancy', 'consultancy' ) ),
+		'footer'      => array( 'Footer menu', crux_nav_fallback( 'footer', 'events', 'events' ) ),
+	);
+	foreach ( $plan as $location => $def ) {
+		if ( ! empty( $locations[ $location ] ) ) {
+			continue;
+		}
+		$existing = wp_get_nav_menu_object( $def[0] );
+		$menu_id  = $existing ? (int) $existing->term_id : (int) wp_create_nav_menu( $def[0] );
+		if ( ! $menu_id || is_wp_error( $menu_id ) ) {
+			continue;
+		}
+		if ( ! $existing ) {
+			foreach ( $def[1] as $i => $it ) {
+				wp_update_nav_menu_item(
+					$menu_id,
+					0,
+					array(
+						'menu-item-title'    => $it['label'],
+						'menu-item-url'      => home_url( $it['path'] ),
+						'menu-item-type'     => 'custom',
+						'menu-item-status'   => 'publish',
+						'menu-item-position' => $i + 1,
+					)
+				);
+			}
+		}
+		$locations[ $location ] = $menu_id;
+	}
+	set_theme_mod( 'nav_menu_locations', $locations );
 }

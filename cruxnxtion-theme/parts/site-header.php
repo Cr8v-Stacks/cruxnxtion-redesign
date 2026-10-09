@@ -30,10 +30,11 @@ if ( 'dark' === $crux_skin ) :
   <header style="position:sticky; top:0; z-index:1000; display:flex; align-items:center; justify-content:space-between; min-height:80px; padding:14px 20px; border-bottom:1px solid rgba(30,43,94,0.85); background:rgba(10,15,38,0.94); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);">
     <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="display:flex; align-items:center;"><img<?php echo crux_edit_attr_opt( 'logo' ); ?> src="<?php echo esc_url( crux_logo_url() ); ?>" alt="Crux Nxtion Events" style="height:42px; width:auto; display:block; background:#FFFFFF; padding:4px 12px 4px 12px; border-radius:8px;"></a>
     <nav style="display:flex; align-items:center; gap:28px;">
-      <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="<?php echo crux_nav_style( $crux_skin, "home", $crux_active ); ?>">Home</a>
+<?php crux_render_nav( 'desktop', 'before', $crux_skin, $crux_nav, $crux_wing, $crux_active ); ?>
+<?php if ( crux_nav_has_mega( 'desktop', $crux_nav, $crux_wing ) ) : ?>
       <div class="mega" style="position:relative;">
         <a href="<?php echo esc_url( home_url( "/services/" ) ); ?>" style="color:#F4F5FA; font-size:14px; font-weight:600; letter-spacing:0.2px; display:inline-flex; align-items:center; gap:6px;">
-          <span>Services</span>
+          <span><?php echo esc_html( crux_nav_services_label( 'desktop', $crux_nav, $crux_wing ) ); ?></span>
           <svg class="mega-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg" style="transition:transform 0.2s ease;">
             <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -130,11 +131,8 @@ if ( 'dark' === $crux_skin ) :
           </div>
         </div>
       </div>
-      <a href="<?php echo esc_url( home_url( "/events/" ) ); ?>" style="<?php echo crux_nav_style( $crux_skin, "events", $crux_active ); ?>">Events</a>
-      <a href="<?php echo esc_url( home_url( "/gallery/" ) ); ?>" style="<?php echo crux_nav_style( $crux_skin, "gallery", $crux_active ); ?>">Gallery</a>
-      <a href="<?php echo esc_url( home_url( "/about/" ) ); ?>" style="<?php echo crux_nav_style( $crux_skin, "about", $crux_active ); ?>">About</a>
-      <a href="<?php echo esc_url( home_url( "/blog/" ) ); ?>" style="<?php echo crux_nav_style( $crux_skin, "blog", $crux_active ); ?>">Blog</a>
-      <a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="<?php echo crux_nav_style( $crux_skin, "contact", $crux_active ); ?>">Contact</a>
+<?php endif; ?>
+<?php crux_render_nav( 'desktop', 'after', $crux_skin, $crux_nav, $crux_wing, $crux_active ); ?>
     </nav>
         <div class="header-desktop-actions" style="display:flex; align-items:center; gap:16px;">
       <div class="site-wing-toggle crux-sw-pod crux-sw-pod--dark" style="display:inline-flex; align-items:center; padding:1.5px; background:linear-gradient(135deg, #2A3F7A 0%, #15224A 100%); clip-path:polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%); box-shadow:0 4px 16px rgba(0,0,0,0.35); filter:drop-shadow(0 2px 6px rgba(0,0,0,0.25));">
@@ -170,12 +168,13 @@ if ( 'dark' === $crux_skin ) :
 
       <!-- Navigation Links -->
       <div class="mdrawer-nav-links">
-        <a class="mlink" href="<?php echo esc_url( home_url( "/" ) ); ?>" style="color:#F4F5FA; border-bottom:1px solid #1E2B5E;">Home</a>
+<?php crux_render_nav( 'drawer', 'before', $crux_skin, $crux_nav, $crux_wing, $crux_active ); ?>
         
+<?php if ( crux_nav_has_mega( 'drawer', $crux_nav, $crux_wing ) ) : ?>
         <!-- Accordion Services -->
         <details class="mdrawer-acc" style="border-bottom:1px solid #1E2B5E;">
           <summary style="display:flex; align-items:center; justify-content:space-between; cursor:pointer; padding:14px 0;">
-            <span class="mlink" style="color:#F4F5FA !important; opacity:1 !important;">Services</span>
+            <span class="mlink" style="color:#F4F5FA !important; opacity:1 !important;"><?php echo esc_html( crux_nav_services_label( 'drawer', $crux_nav, $crux_wing ) ); ?></span>
             <span class="acc-icon" style="color:#FF2E3D; font-size:22px; font-weight:700; transition:transform .2s ease;">▾</span>
           </summary>
           <div style="padding:4px 0 16px;">
@@ -204,12 +203,9 @@ if ( 'dark' === $crux_skin ) :
             </div>
           </div>
         </details>
+<?php endif; ?>
 
-        <a class="mlink" href="<?php echo esc_url( home_url( "/events/" ) ); ?>" style="color:#F4F5FA; border-bottom:1px solid #1E2B5E;">Events</a>
-        <a class="mlink" href="<?php echo esc_url( home_url( "/gallery/" ) ); ?>" style="color:#F4F5FA; border-bottom:1px solid #1E2B5E;">Gallery</a>
-        <a class="mlink" href="<?php echo esc_url( home_url( "/about/" ) ); ?>" style="color:#F4F5FA; border-bottom:1px solid #1E2B5E;">About</a>
-        <a class="mlink" href="<?php echo esc_url( home_url( "/blog/" ) ); ?>" style="color:#F4F5FA; border-bottom:1px solid #1E2B5E;">Blog</a>
-        <a class="mlink" href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="color:#F4F5FA; border-bottom:1px solid #1E2B5E;">Contact</a>
+<?php crux_render_nav( 'drawer', 'after', $crux_skin, $crux_nav, $crux_wing, $crux_active ); ?>
       </div>
 
       <!-- Dual Action CTAs -->
@@ -244,12 +240,11 @@ if ( 'dark' === $crux_skin ) :
 <?php else : ?>    <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="display:flex; align-items:center;"><img<?php echo crux_edit_attr_opt( 'logo' ); ?> src="<?php echo esc_url( crux_logo_url() ); ?>" alt="Crux Nxtion Events" style="height:42px; width:auto; display:block; background:#FFFFFF; padding:4px 12px 4px 12px; border-radius:8px;"></a>
 <?php endif; ?>
     <nav style="display:flex; align-items:center; gap:28px;">
-<?php if ( "consultancy" === $crux_wing ) : ?>      <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="<?php echo crux_nav_style( $crux_skin, "home", $crux_active ); ?>">Home</a>
-<?php else : ?>      <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="<?php echo crux_nav_style( $crux_skin, "home", $crux_active ); ?>">Home</a>
-<?php endif; ?>
+<?php crux_render_nav( 'desktop', 'before', $crux_skin, $crux_nav, $crux_wing, $crux_active ); ?>
+<?php if ( crux_nav_has_mega( 'desktop', $crux_nav, $crux_wing ) ) : ?>
       <div class="mega" style="position:relative;">
         <a href="<?php echo esc_url( home_url( "/services/" ) ); ?>" style="color:#10142E; font-size:14px; font-weight:600; letter-spacing:0.2px; display:inline-flex; align-items:center; gap:6px;">
-          <span>Services</span>
+          <span><?php echo esc_html( crux_nav_services_label( 'desktop', $crux_nav, $crux_wing ) ); ?></span>
           <svg class="mega-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg" style="transition:transform 0.2s ease;">
             <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -346,13 +341,8 @@ if ( 'dark' === $crux_skin ) :
           </div>
         </div>
       </div>
-<?php if ( "consultancy" === $crux_nav ) : ?>      <a href="<?php echo esc_url( home_url( "/founder/" ) ); ?>" style="<?php echo crux_nav_style( $crux_skin, "founder", $crux_active ); ?>">Founder</a>
-<?php else : ?>      <a href="<?php echo esc_url( home_url( "/events/" ) ); ?>" style="<?php echo crux_nav_style( $crux_skin, "events", $crux_active ); ?>">Events</a>
-      <a href="<?php echo esc_url( home_url( "/gallery/" ) ); ?>" style="<?php echo crux_nav_style( $crux_skin, "gallery", $crux_active ); ?>">Gallery</a>
 <?php endif; ?>
-      <a href="<?php echo esc_url( home_url( "/about/" ) ); ?>" style="<?php echo crux_nav_style( $crux_skin, "about", $crux_active ); ?>">About</a>
-      <a href="<?php echo esc_url( home_url( "/blog/" ) ); ?>" style="<?php echo crux_nav_style( $crux_skin, "blog", $crux_active ); ?>">Blog</a>
-      <a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="<?php echo crux_nav_style( $crux_skin, "contact", $crux_active ); ?>">Contact</a>
+<?php crux_render_nav( 'desktop', 'after', $crux_skin, $crux_nav, $crux_wing, $crux_active ); ?>
     </nav>
         <div class="header-desktop-actions" style="display:flex; align-items:center; gap:16px;">
       <div class="site-wing-toggle crux-sw-pod crux-sw-pod--light" style="display:inline-flex; align-items:center; padding:1.5px; background:linear-gradient(135deg, #C4BAEE 0%, #A99CE0 100%); clip-path:polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%); box-shadow:0 2px 12px rgba(16,20,46,0.08);">
@@ -395,14 +385,13 @@ if ( 'dark' === $crux_skin ) :
 
       <!-- Navigation Links -->
       <div class="mdrawer-nav-links">
-<?php if ( "consultancy" === $crux_wing ) : ?>        <a class="mlink" href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="color:#10142E; border-bottom:1px solid #E1DEF3;">Home</a>
-<?php else : ?>        <a class="mlink" href="<?php echo esc_url( home_url( "/" ) ); ?>" style="color:#10142E; border-bottom:1px solid #E1DEF3;">Home</a>
-<?php endif; ?>
+<?php crux_render_nav( 'drawer', 'before', $crux_skin, $crux_nav, $crux_wing, $crux_active ); ?>
         
+<?php if ( crux_nav_has_mega( 'drawer', $crux_nav, $crux_wing ) ) : ?>
         <!-- Accordion Services -->
         <details class="mdrawer-acc" style="border-bottom:1px solid #E1DEF3;">
           <summary style="display:flex; align-items:center; justify-content:space-between; cursor:pointer; padding:14px 0;">
-            <span class="mlink" style="color:#10142E !important; opacity:1 !important;">Services</span>
+            <span class="mlink" style="color:#10142E !important; opacity:1 !important;"><?php echo esc_html( crux_nav_services_label( 'drawer', $crux_nav, $crux_wing ) ); ?></span>
 <?php if ( "consultancy" === $crux_wing ) : ?>            <span class="acc-icon" style="color:#6C58DB; font-size:22px; font-weight:700; transition:transform .2s ease;">▾</span>
 <?php else : ?>            <span class="acc-icon" style="color:#FF2E3D; font-size:22px; font-weight:700; transition:transform .2s ease;">▾</span>
 <?php endif; ?>
@@ -433,12 +422,9 @@ if ( 'dark' === $crux_skin ) :
             </div>
           </div>
         </details>
+<?php endif; ?>
 
-        <a class="mlink" href="<?php echo esc_url( home_url( "/events/" ) ); ?>" style="color:#10142E; border-bottom:1px solid #E1DEF3;">Events</a>
-        <a class="mlink" href="<?php echo esc_url( home_url( "/gallery/" ) ); ?>" style="color:#10142E; border-bottom:1px solid #E1DEF3;">Gallery</a>
-        <a class="mlink" href="<?php echo esc_url( home_url( "/about/" ) ); ?>" style="color:#10142E; border-bottom:1px solid #E1DEF3;">About</a>
-        <a class="mlink" href="<?php echo esc_url( home_url( "/blog/" ) ); ?>" style="color:#10142E; border-bottom:1px solid #E1DEF3;">Blog</a>
-        <a class="mlink" href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="color:#10142E; border-bottom:1px solid #E1DEF3;">Contact</a>
+<?php crux_render_nav( 'drawer', 'after', $crux_skin, $crux_nav, $crux_wing, $crux_active ); ?>
       </div>
 
       <!-- Dual Action CTAs -->

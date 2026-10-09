@@ -49,14 +49,7 @@ $crux_pad  = (string) $crux_args['pad'];
       <span class="bebas" style="font-size:clamp(30px,6.4vw,82px); line-height:1; display:block; background:linear-gradient(180deg, <?php echo $crux_p["hi"]; ?> 0%, <?php echo $crux_p["mid"]; ?> 25%, <?php echo $crux_p["lo"]; ?> 65%, transparent 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; position:relative; letter-spacing:0.5em; margin-top:10px; padding-left:0.5em;"<?php echo crux_edit_attr_opt( 'brand_2' ); ?>><?php echo esc_html( crux_opt( "brand_2" ) ); ?></span>
     </div>
     <div style="display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:32px; margin-bottom:32px;" data-m="wrap">
-      <a href="<?php echo esc_url( home_url( $crux_fw["home"] ) ); ?>" style="font-size:14px; color:<?php echo $crux_p["nav"]; ?>;">Home</a>
-      <a href="<?php echo esc_url( home_url( $crux_fw["services"] ) ); ?>" style="font-size:14px; color:<?php echo $crux_p["nav"]; ?>;">Services</a>
-      <a href="<?php echo esc_url( home_url( "/events/" ) ); ?>" style="font-size:14px; color:<?php echo $crux_p["nav"]; ?>;">Events</a>
-      <a href="<?php echo esc_url( home_url( "/gallery/" ) ); ?>" style="font-size:14px; color:<?php echo $crux_p["nav"]; ?>;">Gallery</a>
-      <a href="<?php echo esc_url( home_url( "/about/" ) ); ?>" style="font-size:14px; color:<?php echo $crux_p["nav"]; ?>;">About</a>
-      <a href="<?php echo esc_url( home_url( "/faq/" ) ); ?>" style="font-size:14px; color:<?php echo $crux_p["nav"]; ?>;">FAQ</a>
-      <a href="<?php echo esc_url( home_url( "/blog/" ) ); ?>" style="font-size:14px; color:<?php echo $crux_p["nav"]; ?>;">Blog</a>
-      <a href="<?php echo esc_url( home_url( "/sponsors/" ) ); ?>" style="font-size:14px; color:<?php echo $crux_p["nav"]; ?>;">Sponsors</a>
+      <?php crux_render_footer_nav( $crux_p["nav"], $crux_args["wing"] ); ?>
     </div>
     <div style="display:flex; justify-content:center; gap:14px; margin-bottom:44px;" data-m="wrap">
       <a href="<?php echo esc_url( crux_social_url( "instagram" ) ); ?>"<?php echo crux_social_attrs( "instagram" ); ?><?php echo crux_edit_attr_opt( 'social_instagram' ); ?> aria-label="Instagram" style="display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; background:<?php echo $crux_p["soc_bg"]; ?>; color:<?php echo $crux_p["hi"]; ?>; --sl:7px; --bc:<?php echo $crux_p["soc_bc"]; ?>;" class="bx"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.5"></rect><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"></circle><circle cx="17.4" cy="6.6" r="1" fill="currentColor"></circle></svg></a>
