@@ -8,12 +8,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 return array(
 	'hero_small_heading_1' => array( 'Top banner', 'Label above heading 1: About Crux Nxtion', 'text', 'About Crux Nxtion' ),
-	'hero_heading_1' => array( 'Top banner', 'Heading 1: ONE CREW. TWO WAYS TO BUILD SOMETH...', 'rich', 'ONE CREW.<br>TWO WAYS TO BUILD<br><span style="color:#6C58DB;">SOMETHING THAT LASTS.</span>' ),
+	'hero_heading_1' => array( 'Top banner', 'Heading 1: ONE CREW. TWO WAYS TO BUILD SOMETH...', 'styled', 'ONE CREW.<br>TWO WAYS TO BUILD<br><span style="color:#6C58DB;">SOMETHING THAT LASTS.</span>' ),
 	'hero_paragraph_1' => array( 'Top banner', 'Text 1: We plan, book and run events peopl...', 'textarea', 'We plan, book and run events people talk about for weeks — and we help the businesses behind them get clearer, bolder and better organised. Two services, one Sheffield crew.' ),
 	'hero_button_1' => array( 'Top banner', 'Button 1: Meet The Founder', 'text', 'Meet The Founder' ),
 	'hero_button_2' => array( 'Top banner', 'Button 2: Get In Touch', 'text', 'Get In Touch' ),
 	'hero_text_1' => array( 'Top banner', 'Text 1: SHEFFIELD, UK', 'text', 'SHEFFIELD, UK' ),
-	'story_heading_1' => array( 'Our story', 'Heading 1: WE STARTED WITH PARTIES. WE STAYED...', 'rich', 'WE STARTED WITH PARTIES. WE STAYED FOR THE <span style="color:#6C58DB;">PLAN BEHIND THEM.</span>' ),
+	'story_heading_1' => array( 'Our story', 'Heading 1: WE STARTED WITH PARTIES. WE STAYED...', 'styled', 'WE STARTED WITH PARTIES. WE STAYED FOR THE <span style="color:#6C58DB;">PLAN BEHIND THEM.</span>' ),
 	'story_paragraph_1' => array( 'Our story', 'Text 1: Crux Nxtion Events is your gateway...', 'textarea', 'Crux Nxtion Events is your gateway to extraordinary event experiences in the UK. We merge creativity with precision, turning ordinary moments into unforgettable memories — whether it\'s a corporate function, a wedding celebration or a music festival.' ),
 	'story_paragraph_2' => array( 'Our story', 'Text 2: As our clients grew, they kept ask...', 'textarea', 'As our clients grew, they kept asking for the thinking behind the event: the brand, the growth plan, the next move. That\'s how Crux Nxtion Consultancy began — the same care and attention to detail, pointed at your business.' ),
 	'story_text_1' => array( 'Our story', 'Text 1: Sheffield, UK', 'text', 'Sheffield, UK' ),
@@ -57,7 +57,7 @@ return array(
 	'founder_small_heading_1' => array( 'Founder', 'Label above heading 1: Meet The Founder', 'text', 'Meet The Founder' ),
 	'founder_heading_1' => array( 'Founder', 'Heading 1: OLABAMIDELE "BAMBAD" BADMOS.', 'text', 'OLABAMIDELE "BAMBAD" BADMOS.' ),
 	'founder_paragraph_1' => array( 'Founder', 'Text 1: Bambad is a business strategist an...', 'textarea', 'Bambad is a business strategist and serial entrepreneur, and the Sheffield producer behind every Crux Nxtion night, known as the “Oba of Events”. He built the crew, set the standard and still leads it from the first brief to the last guest.' ),
-	'founder_paragraph_2' => array( 'Founder', 'Text 2: Weddings, cultural nights and priv...', 'rich', 'Weddings, cultural nights and private celebrations all get the same care, and through Crux Nxtion Consultancy the same thinking now goes to the businesses behind them. He also owns <a href="https://nxtionfoodmarket.com/" target="_blank" rel="noopener" style="color:#8C7AE6; text-decoration:underline;">Nxtion Food Market</a> in Sheffield and is expanding into franchising.' ),
+	'founder_paragraph_2' => array( 'Founder', 'Text 2: Weddings, cultural nights and priv...', 'styled', 'Weddings, cultural nights and private celebrations all get the same care, and through Crux Nxtion Consultancy the same thinking now goes to the businesses behind them. He also owns <a href="https://nxtionfoodmarket.com/" target="_blank" rel="noopener" style="color:#8C7AE6; text-decoration:underline;">Nxtion Food Market</a> in Sheffield and is expanding into franchising.' ),
 	'founder_text_1' => array( 'Founder', 'Text 1: 76+ events sold out', 'text', '76+ events sold out' ),
 	'founder_text_2' => array( 'Founder', 'Text 2: Naija Food Carnival: 400+ guests', 'text', 'Naija Food Carnival: 400+ guests' ),
 	'founder_text_3' => array( 'Founder', 'Text 3: Owner, Nxtion Food Market', 'text', 'Owner, Nxtion Food Market' ),

@@ -328,6 +328,38 @@ function crux_content_fields( $page ) {
 	return $cache[ $page ];
 }
 
+/**
+ * Friendly formatting for headings and paragraphs: a new line is Enter, {{words}} take the accent colour of the original
+ * design, **bold** and _italic_. Only fields whose original markup converts back exactly use it (type "styled").
+ */
+function crux_rich_accent( $html ) {
+	return preg_match( '/<span style="color:\s*(#[0-9a-fA-F]{3,8});?">/', (string) $html, $m ) ? $m[1] : '';
+}
+
+function crux_rich_to_plain( $html ) {
+	$t = preg_replace( '#<br\s*/?>#i', "\n", (string) $html );
+	$t = preg_replace( '#<span style="color:\s*\#[0-9a-fA-F]{3,8};?">(.*?)</span>#s', '{{$1}}', $t );
+	$t = preg_replace( '#<(strong|b)>(.*?)</\1>#s', '**$2**', $t );
+	$t = preg_replace( '#<(em|i)>(.*?)</\1>#s', '_$2_', $t );
+	return html_entity_decode( $t, ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+}
+
+function crux_plain_to_rich( $text, $accent ) {
+	$h = esc_html( (string) $text );
+	$h = preg_replace( '/\{\{(.+?)\}\}/s', $accent ? '<span style="color:' . $accent . ';">$1</span>' : '$1', $h );
+	$h = preg_replace( '/\*\*(.+?)\*\*/s', '<strong>$1</strong>', $h );
+	$h = preg_replace( '/(?<![\w])_(.+?)_(?![\w])/s', '<em>$1</em>', $h );
+	return str_replace( array( "\r\n", "\n", "\r" ), '<br>', $h );
+}
+
+/** True when the original markup survives a trip through the friendly formatting unchanged. */
+function crux_rich_round_trips( $html ) {
+	$norm = function ( $v ) {
+		return trim( preg_replace( '/\s+/', ' ', html_entity_decode( preg_replace( '#<br\s*/?>#i', '<br>', (string) $v ), ENT_QUOTES | ENT_HTML5, 'UTF-8' ) ) );
+	};
+	return $norm( crux_plain_to_rich( crux_rich_to_plain( $html ), crux_rich_accent( $html ) ) ) === $norm( $html );
+}
+
 /** Tags a client may use inside a rich field. */
 function crux_rich_allowed() {
 	$style = array( 'style' => true, 'class' => true );
@@ -391,6 +423,9 @@ function crux_rich( $page, $key ) {
 	if ( null === $saved ) {
 		return isset( $fields[ $key ] ) ? $fields[ $key ][3] : '';
 	}
+	if ( isset( $fields[ $key ] ) && 'styled' === $fields[ $key ][2] ) {
+		return crux_plain_to_rich( (string) $saved, crux_rich_accent( $fields[ $key ][3] ) );
+	}
 	return wp_kses( (string) $saved, crux_rich_allowed() );
 }
 
@@ -403,6 +438,9 @@ function crux_sanitize_content( $value, $setting = null ) {
 				if ( isset( $fields[ $key ] ) ) {
 					if ( 'media' === $fields[ $key ][2] ) {
 						return absint( $value );
+					}
+					if ( 'styled' === $fields[ $key ][2] ) {
+						return sanitize_textarea_field( $value );
 					}
 					if ( 'rich' === $fields[ $key ][2] ) {
 						return wp_kses( (string) $value, crux_rich_allowed() );

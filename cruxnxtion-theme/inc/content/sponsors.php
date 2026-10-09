@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 return array(
 	'sponsors_heading_small_heading_1' => array( 'Page heading', 'Label above heading 1: Sponsors & Partners', 'text', 'Sponsors & Partners' ),
-	'sponsors_heading_heading_1' => array( 'Page heading', 'Heading 1: OUR SPONSORS AND PARTNERSHIP.', 'rich', 'OUR SPONSORS<br><span style="color:#E5383B;">AND PARTNERSHIP.</span>' ),
+	'sponsors_heading_heading_1' => array( 'Page heading', 'Heading 1: OUR SPONSORS AND PARTNERSHIP.', 'styled', 'OUR SPONSORS<br><span style="color:#E5383B;">AND PARTNERSHIP.</span>' ),
 	'sponsors_heading_heading_2' => array( 'Page heading', 'Heading 2: Join the celebration: your gateway...', 'text', 'Join the celebration: your gateway to extraordinary partnerships with Crux Nxtion Events.' ),
 	'sponsors_heading_paragraph_1' => array( 'Page heading', 'Text 1: Welcome to the heart of collaborat...', 'textarea', 'Welcome to the heart of collaboration. We are passionate about creating extraordinary experiences, and we believe in doing it together. Our partnership and vendors section is where connections spark, creativity thrives, and magic happens.' ),
 	'sponsors_heading_button_1' => array( 'Page heading', 'Button 1: Become A Partner', 'text', 'Become A Partner' ),

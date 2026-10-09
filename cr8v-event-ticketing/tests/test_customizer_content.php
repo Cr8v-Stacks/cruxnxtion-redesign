@@ -72,7 +72,7 @@ foreach ( $pages as $page => $info ) {
 		$c = $wp_customize->get_control( 'crux_c_' . $page . '_' . $key );
 		if ( ! $s || ! $c ) { $bad[] = "missing setting/control $page.$key"; continue; }
 		if ( 'crux_sanitize_content' !== $s->sanitize_callback || 'edit_theme_options' !== $s->capability ) { $bad[] = "setting rules $page.$key"; }
-		if ( $s->default !== ( 'media' === $f[2] ? 0 : $f[3] ) ) { $bad[] = "default $page.$key"; }
+		if ( $s->default !== ( 'media' === $f[2] ? 0 : ( 'styled' === $f[2] ? crux_rich_to_plain( $f[3] ) : $f[3] ) ) ) { $bad[] = "default $page.$key"; }
 		if ( ! $wp_customize->get_section( $c->section ) ) { $bad[] = "section $page.$key"; }
 	}
 }
@@ -109,6 +109,7 @@ foreach ( $pages as $page => $info ) {
 		}
 		$tok = 'ZZ' . substr( md5( $page . $key ), 0, 8 );
 		$val = ( 'rich' === $f[2] ) ? $tok . ' <strong>bold</strong> and <a href="https://example.test/x">link</a><br>next line' : $tok;
+		if ( 'styled' === $f[2] ) { $val = $tok . ' **bold** and {{accent}}' . chr( 10 ) . 'next line'; }
 		$tokens[ $page ][ $key ] = array( $tok, $val, $f[2] );
 		$mods[ 'crux_c_' . $page . '_' . $key ] = $val;
 	}
@@ -124,12 +125,13 @@ try {
 		foreach ( $tokens[ $page ] as $key => $row ) {
 			if ( false === strpos( $dec, $row[0] ) ) { $missing[] = $key; }
 			elseif ( 'rich' === $row[2] && false !== strpos( $html, $row[0] . ' <strong>bold</strong> and <a href="https://example.test/x">link</a><br>next line' ) ) { $markup++; }
+			elseif ( 'styled' === $row[2] && false !== strpos( $html, $row[0] . ' <strong>bold</strong> and ' ) && false !== strpos( $html, '<br>next line' ) ) { $markup++; }
 		}
 		t( "$page: all " . count( $tokens[ $page ] ) . ' fields change the page', ! $missing, 'not on page: ' . implode( ', ', array_slice( $missing, 0, 12 ) ) . ( count( $missing ) > 12 ? ' ... (' . count( $missing ) . ')' : '' ) );
 		$photo_n = count( array_filter( $tokens[ $page ], function ( $r ) { return 'media' === $r[2]; } ) );
 		if ( $photo_n ) { t( "$page: the $photo_n photos can each be replaced from the Media Library", true ); }
-		$rich_n = count( array_filter( $tokens[ $page ], function ( $r ) { return 'rich' === $r[2]; } ) );
-		if ( $rich_n ) { t( "$page: bold, links and line breaks survive in the $rich_n rich fields that are on the page", $markup >= $rich_n - count( array_intersect( $missing, array_keys( array_filter( $tokens[ $page ], function ( $r ) { return 'rich' === $r[2]; } ) ) ) ) ); }
+		$rich_n = count( array_filter( $tokens[ $page ], function ( $r ) { return in_array( $r[2], array( 'rich', 'styled' ), true ); } ) );
+		if ( $rich_n ) { t( "$page: bold, links and line breaks survive in the $rich_n rich fields that are on the page", $markup >= $rich_n - count( array_intersect( $missing, array_keys( array_filter( $tokens[ $page ], function ( $r ) { return in_array( $r[2], array( 'rich', 'styled' ), true ); } ) ) ) ) ); }
 	}
 } finally {
 	update_option( $option, $backup );
@@ -137,16 +139,18 @@ try {
 
 echo "== 4. Unsafe input\n";
 $s = function ( $page, $key, $v ) { return crux_sanitize_content( $v, (object) array( 'id' => 'crux_c_' . $page . '_' . $key ) ); };
-$text_key = ''; $rich_key = '';
-foreach ( crux_content_fields( 'home' ) as $k => $f ) { if ( 'text' === $f[2] && ! $text_key ) { $text_key = $k; } if ( 'rich' === $f[2] && ! $rich_key ) { $rich_key = $k; } }
+$text_key = ''; $rich_key = ''; $rich_page = ''; $styled_key = '';
+foreach ( crux_content_fields( 'home' ) as $k => $f ) { if ( 'text' === $f[2] && ! $text_key ) { $text_key = $k; } if ( 'styled' === $f[2] && ! $styled_key ) { $styled_key = $k; } }
+foreach ( $pages as $pg => $inf ) { foreach ( crux_content_fields( $pg ) as $k => $f ) { if ( 'rich' === $f[2] && ! $rich_key ) { $rich_key = $k; $rich_page = $pg; } } }
 t( 'script tags never survive in a plain field', false === strpos( $s( 'home', $text_key, '<script>alert(1)</script>Hi' ), '<' ) );
-$r = $s( 'home', $rich_key, 'A <strong>b</strong><script>alert(1)</script><img src=x onerror=alert(1)> <a href="javascript:alert(1)" onclick="x()">c</a>' );
+$r = $s( $rich_page, $rich_key, 'A <strong>b</strong><script>alert(1)</script><img src=x onerror=alert(1)> <a href="javascript:alert(1)" onclick="x()">c</a>' );
 t( 'a rich field drops scripts, images and event handlers', false === strpos( $r, '<script' ) && false === strpos( $r, '<img' ) && false === stripos( $r, 'onclick' ) && false === stripos( $r, 'javascript:' ) && false !== strpos( $r, '<strong>b</strong>' ), $r );
-update_option( $option, array_merge( $clean, array( 'crux_c_home_' . $text_key => '<img src=x onerror=alert(1)>', 'crux_c_home_' . $rich_key => '<script>alert(1)</script>ok' ) ) );
+update_option( $option, array_merge( $clean, array( 'crux_c_home_' . $text_key => '<img src=x onerror=alert(1)>', 'crux_c_' . $rich_page . '_' . $rich_key => '<script>alert(1)</script>ok' ) ) );
 try {
 	$home = http_get( '/' );
 	t( 'a value that skipped the sanitiser is escaped on output (plain field)', false === strpos( $home, '<img src=x onerror' ) && false !== strpos( $home, '&lt;img src=x onerror' ) );
-	t( 'and filtered on output (rich field)', false === strpos( $home, '<script>alert(1)</script>ok' ) );
+	$rich_html = http_get( $urls[ $rich_page ] );
+	t( 'and filtered on output (rich field, checked on its own page)', strlen( $rich_html ) > 15000 && false === strpos( $rich_html, '<script>alert(1)</script>ok' ) );
 } finally {
 	update_option( $option, $backup );
 }
@@ -172,6 +176,20 @@ $url_key = ''; $url_page = '';
 foreach ( $pages as $pg => $inf ) { foreach ( crux_content_fields( $pg ) as $k => $f ) { if ( 'url' === $f[2] && ! $url_key ) { $url_page = $pg; $url_key = $k; } } }
 t( 'a button address refuses javascript: and data: links', '' === crux_sanitize_content( 'javascript:alert(1)', (object) array( 'id' => 'crux_c_' . $url_page . '_' . $url_key ) ) && '' === crux_sanitize_content( 'data:text/html;base64,AAAA', (object) array( 'id' => 'crux_c_' . $url_page . '_' . $url_key ) ) );
 t( 'a button address accepts a page on this site and a full https address', '/contact/' === crux_sanitize_content( '/contact/', (object) array( 'id' => 'crux_c_' . $url_page . '_' . $url_key ) ) && 'https://example.test/x' === crux_sanitize_content( 'https://example.test/x', (object) array( 'id' => 'crux_c_' . $url_page . '_' . $url_key ) ) );
+$nl = chr(10);
+t( 'friendly formatting: Enter, {{accent}}, **bold** and _italic_ become a line break, colour, bold and italic', crux_plain_to_rich( 'One' . $nl . 'Two {{red}} **b** _i_', '#E5383B' ) === 'One<br>Two <span style="color:#E5383B;">red</span> <strong>b</strong> <em>i</em>' );
+t( 'friendly formatting escapes any markup the client types', false === strpos( crux_plain_to_rich( '<script>x</script> {{y}}<img src=x>', '#fff' ), '<script' ) && false === strpos( crux_plain_to_rich( '<img src=x onerror=1>', '' ), '<img' ) );
+$styled_bad = array(); $styled_n = 0;
+foreach ( $pages as $pg => $inf ) { foreach ( crux_content_fields( $pg ) as $k => $f ) { if ( 'styled' === $f[2] ) { $styled_n++; if ( ! crux_rich_round_trips( $f[3] ) ) { $styled_bad[] = "$pg.$k"; } } } }
+t( "all $styled_n friendly fields turn back into their original markup exactly (nothing changes until the client edits)", $styled_n >= 20 && ! $styled_bad, implode( ',', $styled_bad ) );
+$st_page = 'home';
+update_option( $option, array_merge( $clean, array( 'crux_c_home_' . $styled_key => 'Typed' . $nl . '{{accent}} and **bold**' ) ) );
+try {
+	$h = http_get( '/' );
+	t( 'a friendly field saved with the new syntax prints a line break, the accent colour and bold on the page', false !== strpos( $h, 'Typed<br><span style="color:' ) && false !== strpos( $h, '<strong>bold</strong>' ) );
+} finally {
+	update_option( $option, $backup );
+}
 echo "== 4b. Pencils and instant preview
 ";
 $tpl_files = array(

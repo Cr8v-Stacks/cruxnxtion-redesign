@@ -20,7 +20,7 @@ function crux_customize_register_content( $wp_customize ) {
 			$wp_customize->add_setting(
 				'crux_c_' . $page . '_' . $key,
 				array(
-					'default'           => ( 'media' === $f[2] ) ? 0 : $f[3],
+					'default'           => ( 'media' === $f[2] ) ? 0 : ( 'styled' === $f[2] ? crux_rich_to_plain( $f[3] ) : $f[3] ),
 					'type'              => 'theme_mod',
 					'capability'        => 'edit_theme_options',
 					'sanitize_callback' => 'crux_sanitize_content',
@@ -75,7 +75,8 @@ function crux_register_page_controls( $wp_customize, $page ) {
 				'label'       => $f[1],
 				'section'     => $sid,
 				'type'        => ( 'text' === $f[2] ) ? 'text' : ( 'url' === $f[2] ? 'url' : 'textarea' ),
-				'description' => ( 'rich' === $f[2] ) ? __( 'Formatted text: bold, italic, line breaks and links are kept.', 'cruxnxtion' ) : ( 'url' === $f[2] ? __( 'Where the button goes: start with / for a page on this site (for example /contact/) or paste a full https:// address.', 'cruxnxtion' ) : '' ),
+				'input_attrs' => ( 'styled' === $f[2] ) ? array( 'rows' => 4 ) : array(),
+				'description' => ( 'styled' === $f[2] ) ? __( 'Press Enter for a new line. Put {{double braces}} around words to give them the accent colour, **two stars** around bold words and _underscores_ around italic words.', 'cruxnxtion' ) : ( ( 'rich' === $f[2] ) ? __( 'Formatted text (HTML): bold, italic, line breaks and links are kept.', 'cruxnxtion' ) : ( 'url' === $f[2] ? __( 'Where the button goes: start with / for a page on this site (for example /contact/) or paste a full https:// address.', 'cruxnxtion' ) : '' ) ),
 			)
 		);
 	}
