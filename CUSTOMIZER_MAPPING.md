@@ -4,6 +4,7 @@
 **Target Repository:** `C:\Users\user\Dev\cruxnxtion-redesign`  
 **Reference Pattern:** `cr8v-stacks-events/inc/customizer.php`  
 **Scope:** Read-only architectural mapping for `cruxnxtion-theme`. **NO CODE CHANGES MADE.**  
+**Framework:** the reusable method, corrections and gap list for future projects are in `C:/Users/user/Documents/Dev-Playground/Cr8v-Stacks-Events-Website-main/Cr8v-Stacks-Events-Website-main/events-sites-framework.md`, section 9.  
 **Security Notice:** No Stripe keys, SMTP credentials, or runtime constants are touched by this document.
 
 ---
