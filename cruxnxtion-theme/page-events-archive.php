@@ -755,7 +755,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         </a>
       </div>
     </div>
-    <div style="border-top:1.5px solid #1E2B5E; padding-top:40px; text-align:center;"><a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:15px; padding:16px 30px 16px 30px; --sl:10px;" class="bx"<?php echo crux_edit_attr( 'events_archive', 'archive_button_1' ); ?>><?php echo crux_h( 'events_archive', 'archive_button_1' ); ?></a></div>
+    <div style="border-top:1.5px solid #1E2B5E; padding-top:40px; text-align:center;"><a href="<?php echo crux_url( 'events_archive', 'archive_button_1_url' ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:15px; padding:16px 30px 16px 30px; --sl:10px;" class="bx"<?php echo crux_edit_attr( 'events_archive', 'archive_button_1' ); ?>><?php echo crux_h( 'events_archive', 'archive_button_1' ); ?></a></div>
   </section>
 
   <?php get_template_part( 'parts/site-footer', null, array( 'skin' => 'dark', 'prefooter' => 'events', 'wing' => 'events' ) ); ?>

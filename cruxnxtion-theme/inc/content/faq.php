@@ -90,4 +90,5 @@ return array(
 	'faq_button_3' => array( 'Questions and answers', 'Button 3: Get In Touch', 'text', 'Get In Touch' ),
 	'faq_text_1' => array( 'Questions and answers', 'Text 1: Events', 'text', 'Events' ),
 	'faq_text_2' => array( 'Questions and answers', 'Text 2: Consultancy', 'text', 'Consultancy' ),
+	'faq_button_3_url' => array( 'Questions and answers', 'Button 3 address', 'url', '/contact/' ),
 );

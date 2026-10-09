@@ -714,7 +714,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <span class="eyebrow"<?php echo crux_edit_attr( 'events', 'ticket_grid_small_heading_1' ); ?>><?php echo crux_h( 'events', 'ticket_grid_small_heading_1' ); ?></span>
         <h3 class="bebas" style="font-size:30px; margin:10px 0px 8px 0px; color:#F4F5FA;"<?php echo crux_edit_attr( 'events', 'ticket_grid_heading_1' ); ?>><?php echo crux_h( 'events', 'ticket_grid_heading_1' ); ?></h3>
         <p style="font-size:13px; line-height:1.6; color:#A3A9C8; margin:0px 0px 18px 0px;"<?php echo crux_edit_attr( 'events', 'ticket_grid_paragraph_1' ); ?>><?php echo crux_h( 'events', 'ticket_grid_paragraph_1' ); ?></p>
-        <a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:13.5px; padding:14px 26px 14px 26px; width:fit-content; --sl:10px;" class="bx"<?php echo crux_edit_attr( 'events', 'ticket_grid_button_1' ); ?>><?php echo crux_h( 'events', 'ticket_grid_button_1' ); ?></a>
+        <a href="<?php echo crux_url( 'events', 'ticket_grid_button_1_url' ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:13.5px; padding:14px 26px 14px 26px; width:fit-content; --sl:10px;" class="bx"<?php echo crux_edit_attr( 'events', 'ticket_grid_button_1' ); ?>><?php echo crux_h( 'events', 'ticket_grid_button_1' ); ?></a>
       </div>
     </div>
   </section>

@@ -28,7 +28,7 @@ if ( 'dark' === $crux_skin ) :
 
   <!-- HEADER -->
   <header style="position:sticky; top:0; z-index:1000; display:flex; align-items:center; justify-content:space-between; min-height:80px; padding:14px 20px; border-bottom:1px solid rgba(30,43,94,0.85); background:rgba(10,15,38,0.94); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);">
-    <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="display:flex; align-items:center;"><img src="<?php echo crux_get_blob_url( "e4d72651b77d4c3cc1c086d9f6031149" ); ?>" alt="Crux Nxtion Events" style="height:42px; width:auto; display:block; background:#FFFFFF; padding:4px 12px 4px 12px; border-radius:8px;"></a>
+    <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="display:flex; align-items:center;"><img<?php echo crux_edit_attr_opt( 'logo' ); ?> src="<?php echo esc_url( crux_logo_url() ); ?>" alt="Crux Nxtion Events" style="height:42px; width:auto; display:block; background:#FFFFFF; padding:4px 12px 4px 12px; border-radius:8px;"></a>
     <nav style="display:flex; align-items:center; gap:28px;">
       <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="<?php echo crux_nav_style( $crux_skin, "home", $crux_active ); ?>">Home</a>
       <div class="mega" style="position:relative;">
@@ -156,7 +156,7 @@ if ( 'dark' === $crux_skin ) :
   <div class="mdrawer" id="crux-mobile-drawer" style="background:#0A0F26;" role="dialog" aria-modal="true" aria-label="Crux Nxtion Navigation">
     <div class="mdrawer-topbar" style="border-bottom:1px solid #1E2B5E;">
       <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="display:flex; align-items:center;">
-        <img src="<?php echo crux_get_blob_url( "e4d72651b77d4c3cc1c086d9f6031149" ); ?>" alt="Crux Nxtion" style="height:36px; width:auto; background:#FFFFFF; padding:4px 12px; border-radius:6px; display:block;">
+        <img<?php echo crux_edit_attr_opt( 'logo' ); ?> src="<?php echo esc_url( crux_logo_url() ); ?>" alt="Crux Nxtion" style="height:36px; width:auto; background:#FFFFFF; padding:4px 12px; border-radius:6px; display:block;">
       </a>
       <button type="button" class="mdrawer-close-btn" id="crux-mdrawer-close" aria-label="Close menu" style="background:rgba(255,255,255,0.08); border:none; color:#F4F5FA; cursor:pointer; display:flex; align-items:center; justify-content:center;">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -240,8 +240,8 @@ if ( 'dark' === $crux_skin ) :
   </div>
   <!-- HEADER -->
   <header style="position:sticky; top:0; z-index:1000; display:flex; align-items:center; justify-content:space-between; min-height:80px; padding:14px 20px; border-bottom:1px solid rgba(225,222,243,0.85); background:rgba(255,255,255,0.95); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);">
-<?php if ( "consultancy" === $crux_wing ) : ?>    <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="display:flex; align-items:center;"><img src="<?php echo crux_get_blob_url( "e4d72651b77d4c3cc1c086d9f6031149" ); ?>" alt="Crux Nxtion Events" style="height:42px; width:auto; display:block; background:#FFFFFF; padding:4px 12px 4px 12px; border-radius:8px;"></a>
-<?php else : ?>    <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="display:flex; align-items:center;"><img src="<?php echo crux_get_blob_url( "e4d72651b77d4c3cc1c086d9f6031149" ); ?>" alt="Crux Nxtion Events" style="height:42px; width:auto; display:block; background:#FFFFFF; padding:4px 12px 4px 12px; border-radius:8px;"></a>
+<?php if ( "consultancy" === $crux_wing ) : ?>    <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="display:flex; align-items:center;"><img<?php echo crux_edit_attr_opt( 'logo' ); ?> src="<?php echo esc_url( crux_logo_url() ); ?>" alt="Crux Nxtion Events" style="height:42px; width:auto; display:block; background:#FFFFFF; padding:4px 12px 4px 12px; border-radius:8px;"></a>
+<?php else : ?>    <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="display:flex; align-items:center;"><img<?php echo crux_edit_attr_opt( 'logo' ); ?> src="<?php echo esc_url( crux_logo_url() ); ?>" alt="Crux Nxtion Events" style="height:42px; width:auto; display:block; background:#FFFFFF; padding:4px 12px 4px 12px; border-radius:8px;"></a>
 <?php endif; ?>
     <nav style="display:flex; align-items:center; gap:28px;">
 <?php if ( "consultancy" === $crux_wing ) : ?>      <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="<?php echo crux_nav_style( $crux_skin, "home", $crux_active ); ?>">Home</a>
@@ -381,7 +381,7 @@ if ( 'dark' === $crux_skin ) :
 <?php if ( "consultancy" === $crux_wing ) : ?>      <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="display:flex; align-items:center;">
 <?php else : ?>      <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="display:flex; align-items:center;">
 <?php endif; ?>
-        <img src="<?php echo crux_get_blob_url( "e4d72651b77d4c3cc1c086d9f6031149" ); ?>" alt="Crux Nxtion" style="height:36px; width:auto; background:#FFFFFF; padding:4px 12px; border-radius:6px; border:1px solid #E1DEF3; display:block;">
+        <img<?php echo crux_edit_attr_opt( 'logo' ); ?> src="<?php echo esc_url( crux_logo_url() ); ?>" alt="Crux Nxtion" style="height:36px; width:auto; background:#FFFFFF; padding:4px 12px; border-radius:6px; border:1px solid #E1DEF3; display:block;">
       </a>
       <button type="button" class="mdrawer-close-btn" id="crux-mdrawer-close" aria-label="Close menu" style="background:rgba(16,20,46,0.08); border:none; color:#10142E; cursor:pointer; display:flex; align-items:center; justify-content:center;">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">

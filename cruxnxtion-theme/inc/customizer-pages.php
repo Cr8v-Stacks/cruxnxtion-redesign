@@ -74,8 +74,8 @@ function crux_register_page_controls( $wp_customize, $page ) {
 			array(
 				'label'       => $f[1],
 				'section'     => $sid,
-				'type'        => ( 'text' === $f[2] ) ? 'text' : 'textarea',
-				'description' => ( 'rich' === $f[2] ) ? __( 'Formatted text: bold, italic, line breaks and links are kept.', 'cruxnxtion' ) : '',
+				'type'        => ( 'text' === $f[2] ) ? 'text' : ( 'url' === $f[2] ? 'url' : 'textarea' ),
+				'description' => ( 'rich' === $f[2] ) ? __( 'Formatted text: bold, italic, line breaks and links are kept.', 'cruxnxtion' ) : ( 'url' === $f[2] ? __( 'Where the button goes: start with / for a page on this site (for example /contact/) or paste a full https:// address.', 'cruxnxtion' ) : '' ),
 			)
 		);
 	}

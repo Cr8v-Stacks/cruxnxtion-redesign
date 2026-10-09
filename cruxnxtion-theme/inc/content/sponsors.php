@@ -29,4 +29,6 @@ return array(
 	'partner_wall_text_11' => array( 'Partner wall', 'Text 11: Rosella\'s Wonder', 'text', 'Rosella\'s Wonder' ),
 	'partner_wall_text_12' => array( 'Partner wall', 'Text 12: Events', 'text', 'Events' ),
 	'partner_wall_text_13' => array( 'Partner wall', 'Text 13: Consultancy', 'text', 'Consultancy' ),
+	'sponsors_heading_button_1_url' => array( 'Page heading', 'Button 1 address', 'url', '/contact/?type=partner' ),
+	'sponsors_heading_button_2_url' => array( 'Page heading', 'Button 2 address', 'url', '/events/' ),
 );

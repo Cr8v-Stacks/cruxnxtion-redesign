@@ -66,6 +66,8 @@ function crux_customizer_fields() {
 		'card_title'        => $f( 'header', 'Menu card: heading', 'text', 'NOT SURE WHICH?' ),
 		'card_button'       => $f( 'header', 'Menu card: button wording', 'text', 'Book A Call' ),
 		'card_photo'        => $f( 'header', 'Menu card: photo', 'media', 0, true ),
+		'logo'              => $f( 'header', 'Logo (shown on a white badge in the header and menu)', 'media', 0, true ),
+		'prefooter_bg'      => $f( 'prefooter', 'Background photo of the band (all pages)', 'media', 0, true ),
 
 		'pf_eyebrow'        => $f( 'prefooter', 'Small heading above the title', 'text', 'Ready When You Are' ),
 		'pf_events_title'   => $f( 'prefooter', 'Title', 'text', 'GOT A DATE, OR JUST A DIRECTION?' ),
@@ -162,9 +164,10 @@ function crux_customize_register( $wp_customize ) {
 					$wp_customize,
 					'crux_' . $id,
 					array(
-						'label'     => $field['label'],
-						'section'   => 'crux_' . $field['section'],
-						'mime_type' => 'image',
+						'label'       => $field['label'],
+						'section'     => 'crux_' . $field['section'],
+						'mime_type'   => 'image',
+						'description' => '<span style="display:block;margin-top:6px;"><em>' . esc_html__( 'Photo on the site now (the original until you choose another):', 'cruxnxtion' ) . '</em><img src="' . esc_url( crux_get_blob_url( crux_site_photo_blob( $id ) ) ) . '" alt="" style="display:block;max-width:100%;height:auto;margin-top:6px;border:1px solid #c3c4c7;border-radius:3px;background:#fff;"></span>',
 					)
 				)
 			);
@@ -244,6 +247,36 @@ function crux_social_url( $network ) {
 /** Attributes that make a real social link open in a new tab (none for the "#" placeholder). */
 function crux_social_attrs( $network ) {
 	return '' === crux_opt( 'social_' . $network ) ? '' : ' target="_blank" rel="noopener"';
+}
+
+/** Design photo behind each site-wide photo setting: the original shown until the client picks another. */
+function crux_site_photo_blob( $id ) {
+	$blobs = array(
+		'card_photo'   => 'f269f7683bdb441b9b45df1336cd1485',
+		'logo'         => 'e4d72651b77d4c3cc1c086d9f6031149',
+		'prefooter_bg' => 'aa52e28c3ca12b7f14d33300c774fb48',
+	);
+	return isset( $blobs[ $id ] ) ? $blobs[ $id ] : '';
+}
+
+/** Address of a site-wide photo: the chosen Media Library picture, else the original design photo. */
+function crux_site_photo_url( $id, $size = 'large' ) {
+	$att = crux_opt( $id );
+	if ( $att ) {
+		$url = 'full' === $size ? wp_get_attachment_url( $att ) : wp_get_attachment_image_url( $att, $size );
+		if ( $url ) {
+			return $url;
+		}
+	}
+	return crux_get_blob_url( crux_site_photo_blob( $id ) );
+}
+
+function crux_logo_url() {
+	return crux_site_photo_url( 'logo', 'full' );
+}
+
+function crux_prefooter_bg_url() {
+	return crux_site_photo_url( 'prefooter_bg', 'full' );
 }
 
 /** Photo of the Services menu card: the chosen picture, else the original one. */
@@ -329,6 +362,20 @@ function crux_img_url( $page, $key ) {
 	return isset( $fields[ $key ] ) ? crux_get_blob_url( $fields[ $key ][3] ) : '';
 }
 
+/**
+ * Address of an editable button or link: what the client saved, else the original. An address starting with / is inside
+ * the site. Printed already escaped.
+ */
+function crux_url( $page, $key ) {
+	$fields = crux_content_fields( $page );
+	if ( ! isset( $fields[ $key ] ) ) {
+		return '';
+	}
+	$saved = get_theme_mod( 'crux_c_' . $page . '_' . $key, null );
+	$value = ( null === $saved || '' === trim( (string) $saved ) ) ? (string) $fields[ $key ][3] : (string) $saved;
+	return esc_url( 0 === strpos( $value, '/' ) ? home_url( $value ) : $value );
+}
+
 /** Print plain wording, escaped. */
 function crux_h( $page, $key ) {
 	return esc_html( crux_value( $page, $key ) );
@@ -359,6 +406,9 @@ function crux_sanitize_content( $value, $setting = null ) {
 					}
 					if ( 'rich' === $fields[ $key ][2] ) {
 						return wp_kses( (string) $value, crux_rich_allowed() );
+					}
+					if ( 'url' === $fields[ $key ][2] ) {
+						return esc_url_raw( trim( (string) $value ), array( 'http', 'https', 'mailto', 'tel' ) );
 					}
 					return 'textarea' === $fields[ $key ][2] ? sanitize_textarea_field( $value ) : sanitize_text_field( $value );
 				}

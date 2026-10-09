@@ -75,4 +75,7 @@ return array(
 	'journey_paragraph_4' => array( 'Our journey', 'Text 4: Turning business ideas into busine...', 'text', 'Turning business ideas into businesses that work.' ),
 	'journey_text_1' => array( 'Our journey', 'Text 1: Events', 'text', 'Events' ),
 	'journey_text_2' => array( 'Our journey', 'Text 2: Consultancy', 'text', 'Consultancy' ),
+	'hero_button_1_url' => array( 'Top banner', 'Button 1 address', 'url', '/founder/' ),
+	'hero_button_2_url' => array( 'Top banner', 'Button 2 address', 'url', '/contact/' ),
+	'founder_button_1_url' => array( 'Founder', 'Button 1 address', 'url', '/founder/' ),
 );

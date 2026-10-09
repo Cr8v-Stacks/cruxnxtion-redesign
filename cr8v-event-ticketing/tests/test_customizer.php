@@ -70,6 +70,8 @@ $indirect = array(
 	'addr_'        => 'crux_address(',
 	'bar_events_text' => 'crux_bar_text( "events" )', 'bar_dual_text' => 'crux_bar_text( "dual" )', 'bar_consult_text' => 'crux_bar_text( "consult" )',
 	'card_photo'   => 'crux_card_photo_url(',
+	'logo'         => 'crux_logo_url(',
+	'prefooter_bg' => 'crux_prefooter_bg_url(',
 );
 $dead = array();
 foreach ( $fields as $id => $f ) {
@@ -85,7 +87,9 @@ t( 'every field is used by the theme', ! $dead, implode( ',', $dead ) );
 echo "== 3. Every field changes the live page\n";
 $option  = 'theme_mods_' . get_option( 'stylesheet' );
 $backup  = get_option( $option );
-$photo   = (int) $wpdb->get_var( "SELECT ID FROM {$wpdb->posts} WHERE post_type='attachment' AND post_mime_type LIKE 'image/%' ORDER BY ID DESC LIMIT 1" );
+$photos  = array_map( 'intval', $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} WHERE post_type='attachment' AND post_mime_type LIKE 'image/%' ORDER BY ID DESC LIMIT 6" ) );
+$pi      = 0;
+$photo   = $photos ? $photos[0] : 0;
 $tokens  = array();
 $mods    = is_array( $backup ) ? $backup : array();
 foreach ( $fields as $id => $f ) {
@@ -93,7 +97,7 @@ foreach ( $fields as $id => $f ) {
 		case 'tel':   $raw = '+44 7' . str_pad( (string) abs( crc32( $id ) % 1000000000 ), 9, '0', STR_PAD_LEFT ); break;
 		case 'email': $raw = 'zz' . substr( md5( $id ), 0, 8 ) . '@example.test'; break;
 		case 'url':   $raw = 'https://example.test/zz-' . substr( md5( $id ), 0, 8 ); break;
-		case 'media': $raw = $photo; break;
+		case 'media': $raw = $photos[ $pi++ % count( $photos ) ]; break; // a different picture for each photo field
 		default:      $raw = 'ZZ ' . $id . ' ' . substr( md5( $id ), 0, 6 );
 	}
 	$clean = crux_sanitize_setting( $raw, (object) array( 'id' => 'crux_' . $id ) );
@@ -127,8 +131,8 @@ try {
 		'addr_line' => '/privacy-policy/', 'addr_city' => '/privacy-policy/', 'addr_country' => '/privacy-policy/',
 	);
 	foreach ( $fields as $id => $f ) {
-		if ( 'card_photo' === $id ) {
-			$needle = wp_get_attachment_image_url( $tokens[ $id ], 'large' );
+		if ( 'media' === $f['type'] ) {
+			$needle = in_array( $id, array( 'logo', 'prefooter_bg' ), true ) ? wp_get_attachment_url( $tokens[ $id ] ) : wp_get_attachment_image_url( $tokens[ $id ], 'large' );
 			t( 'edit "' . $f['label'] . '" -> it changes on the page', $photo && $needle && false !== strpos( $decoded['/'], $needle ) );
 			continue;
 		}

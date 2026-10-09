@@ -715,7 +715,7 @@ if ( ! defined( 'ABSPATH' ) ) {
       </div>
 
       <div style="display:flex; gap:14px; flex-wrap:wrap;">
-        <a href="<?php echo esc_url( home_url( '/contact/?type=events' ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:14.5px; padding:15px 28px; --sl:10px;" class="bx"<?php echo crux_edit_attr( 'founder', 'about_meet_the_team_hero_button_1' ); ?>><?php echo crux_h( 'founder', 'about_meet_the_team_hero_button_1' ); ?></a>
+        <a href="<?php echo crux_url( 'founder', 'about_meet_the_team_hero_button_1_url' ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:14.5px; padding:15px 28px; --sl:10px;" class="bx"<?php echo crux_edit_attr( 'founder', 'about_meet_the_team_hero_button_1' ); ?>><?php echo crux_h( 'founder', 'about_meet_the_team_hero_button_1' ); ?></a>
         <a href="<?php echo esc_url( crux_opt( 'calendly_url' ) ); ?>" target="_blank" rel="noopener" style="background:#8C7AE6; color:#10142E; font-weight:700; font-size:14.5px; padding:15px 28px; --sl:10px;" class="bx"<?php echo crux_edit_attr( 'founder', 'about_meet_the_team_hero_button_2' ); ?>><?php echo crux_h( 'founder', 'about_meet_the_team_hero_button_2' ); ?></a>
       </div>
     </div>

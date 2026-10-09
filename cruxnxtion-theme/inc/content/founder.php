@@ -57,4 +57,5 @@ return array(
 	'global_business_consultancy__text_9' => array( 'Business consultancy', 'Text 9: We build it/stock it/set up', 'text', 'We build it/stock it/set up' ),
 	'global_business_consultancy__text_10' => array( 'Business consultancy', 'Text 10: Events', 'text', 'Events' ),
 	'global_business_consultancy__text_11' => array( 'Business consultancy', 'Text 11: Consultancy', 'text', 'Consultancy' ),
+	'about_meet_the_team_hero_button_1_url' => array( 'Top banner', 'Button 1 address', 'url', '/contact/?type=events' ),
 );

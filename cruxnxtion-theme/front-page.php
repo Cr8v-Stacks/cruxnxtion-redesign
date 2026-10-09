@@ -686,8 +686,8 @@ if ( ! defined( 'ABSPATH' ) ) {
       <h1 class="bebas" style="font-size:52px; margin:0px 0px 18px 0px; color:#F4F5FA; line-height:0.95;"<?php echo crux_edit_attr( 'home', 'hero_heading_1' ); ?>><?php echo crux_rich( 'home', 'hero_heading_1' ); ?></h1>
       <p class="hero-desc" style="font-size:16px !important; line-height:1.65; color:#C5CADF; max-width:580px; margin:0px 0px 28px 0px;"<?php echo crux_edit_attr( 'home', 'hero_paragraph_1' ); ?>><?php echo crux_h( 'home', 'hero_paragraph_1' ); ?></p>
       <div style="display:flex; gap:16px; flex-wrap:wrap;">
-        <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:15px; padding:16px 30px; --sl:10px;" class="bx"<?php echo crux_edit_attr( 'home', 'hero_button_1' ); ?>><?php echo crux_h( 'home', 'hero_button_1' ); ?></a>
-        <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="background:#8C7AE6; color:#10142E; font-weight:700; font-size:15px; padding:16px 28px; --sl:10px;" class="bx"<?php echo crux_edit_attr( 'home', 'hero_button_2' ); ?>><?php echo crux_h( 'home', 'hero_button_2' ); ?></a>
+        <a href="<?php echo crux_url( 'home', 'hero_button_1_url' ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:15px; padding:16px 30px; --sl:10px;" class="bx"<?php echo crux_edit_attr( 'home', 'hero_button_1' ); ?>><?php echo crux_h( 'home', 'hero_button_1' ); ?></a>
+        <a href="<?php echo crux_url( 'home', 'hero_button_2_url' ); ?>" style="background:#8C7AE6; color:#10142E; font-weight:700; font-size:15px; padding:16px 28px; --sl:10px;" class="bx"<?php echo crux_edit_attr( 'home', 'hero_button_2' ); ?>><?php echo crux_h( 'home', 'hero_button_2' ); ?></a>
       </div>
     </div>
   </section>
@@ -708,7 +708,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     </div>
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;" class="reveal" data-m="stack">
       <p style="max-width:500px; font-size:13px; color:#8E96BB; margin:0px 0px 0px 0px;"<?php echo crux_edit_attr( 'home', 'services_paragraph_1' ); ?>><?php echo crux_h( 'home', 'services_paragraph_1' ); ?></p>
-      <a href="<?php echo esc_url( home_url( "/services/" ) ); ?>" style="font-weight:700; font-size:13px; color:#5B8DEF; border-bottom:1.5px solid #5B8DEF; padding-bottom:2px;"<?php echo crux_edit_attr( 'home', 'services_link_1' ); ?>><?php echo crux_h( 'home', 'services_link_1' ); ?></a>
+      <a href="<?php echo crux_url( 'home', 'services_link_1_url' ); ?>" style="font-weight:700; font-size:13px; color:#5B8DEF; border-bottom:1.5px solid #5B8DEF; padding-bottom:2px;"<?php echo crux_edit_attr( 'home', 'services_link_1' ); ?>><?php echo crux_h( 'home', 'services_link_1' ); ?></a>
     </div>
     <div style="border-top:1.5px solid #1E2B5E;" class="reveal">
 
@@ -770,7 +770,7 @@ if ( ! defined( 'ABSPATH' ) ) {
       <h2 class="bebas" style="font-size:34px; margin:0px 0px 0px 0px; color:#F4F5FA;"<?php echo crux_edit_attr( 'home', 'events_heading_1' ); ?>><?php echo crux_h( 'home', 'events_heading_1' ); ?></h2>
       <div style="text-align:right;">
         <p style="max-width:360px; font-size:13.5px; color:#A3A9C8; margin:0px 0px 8px 0px;"<?php echo crux_edit_attr( 'home', 'events_paragraph_1' ); ?>><?php echo crux_h( 'home', 'events_paragraph_1' ); ?></p>
-        <a href="<?php echo esc_url( home_url( "/events/" ) ); ?>" style="font-weight:700; font-size:13px; color:#5B8DEF; border-bottom:1.5px solid #5B8DEF; padding-bottom:2px;"<?php echo crux_edit_attr( 'home', 'events_link_1' ); ?>><?php echo crux_h( 'home', 'events_link_1' ); ?></a>
+        <a href="<?php echo crux_url( 'home', 'events_link_1_url' ); ?>" style="font-weight:700; font-size:13px; color:#5B8DEF; border-bottom:1.5px solid #5B8DEF; padding-bottom:2px;"<?php echo crux_edit_attr( 'home', 'events_link_1' ); ?>><?php echo crux_h( 'home', 'events_link_1' ); ?></a>
       </div>
     </div>
 
@@ -820,7 +820,7 @@ if ( ! defined( 'ABSPATH' ) ) {
           <div style="display:flex; align-items:center; gap:14px;"><span class="bebas" style="font-size:22px; color:#B7A6FF; width:32px;">03</span><span style="font-size:14.5px; font-weight:600; color:#F4F5FA;"<?php echo crux_edit_attr( 'home', 'also_from_crux_text_3' ); ?>><?php echo crux_h( 'home', 'also_from_crux_text_3' ); ?></span></div>
           <div style="display:flex; align-items:center; gap:14px;"><span class="bebas" style="font-size:22px; color:#B7A6FF; width:32px;">04</span><span style="font-size:14.5px; font-weight:600; color:#F4F5FA;"<?php echo crux_edit_attr( 'home', 'also_from_crux_text_4' ); ?>><?php echo crux_h( 'home', 'also_from_crux_text_4' ); ?></span></div>
         </div>
-        <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" style="background:#8C7AE6; color:#0A0F26; font-weight:700; font-size:15px; padding:16px 30px 16px 30px; display:inline-block; width:fit-content; --sl:10px;" class="bx"<?php echo crux_edit_attr( 'home', 'also_from_crux_button_1' ); ?>><?php echo crux_h( 'home', 'also_from_crux_button_1' ); ?></a>
+        <a href="<?php echo crux_url( 'home', 'also_from_crux_button_1_url' ); ?>" style="background:#8C7AE6; color:#0A0F26; font-weight:700; font-size:15px; padding:16px 30px 16px 30px; display:inline-block; width:fit-content; --sl:10px;" class="bx"<?php echo crux_edit_attr( 'home', 'also_from_crux_button_1' ); ?>><?php echo crux_h( 'home', 'also_from_crux_button_1' ); ?></a>
       </div>
       <div style="position:relative; overflow:hidden;" class="reveal" data-m="tile">
         <img src="<?php echo crux_img_url( 'home', 'also_from_crux_photo_1' ); ?>" alt="A Crux Nxtion Consultancy session" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"<?php echo crux_edit_attr( 'home', 'also_from_crux_photo_1' ); ?>>
@@ -840,7 +840,7 @@ if ( ! defined( 'ABSPATH' ) ) {
   <section id="gallery" style=" padding:30px 20px 44px 20px;">
     <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:30px;" class="reveal" data-m="stack">
       <div><span class="eyebrow"<?php echo crux_edit_attr( 'home', 'gallery_small_heading_1' ); ?>><?php echo crux_h( 'home', 'gallery_small_heading_1' ); ?></span><h2 class="bebas" style="font-size:40px; margin:12px 0px 0px 0px; color:#F4F5FA;"<?php echo crux_edit_attr( 'home', 'gallery_heading_1' ); ?>><?php echo crux_h( 'home', 'gallery_heading_1' ); ?></h2><p style="font-size:15px; color:#A3A9C8; max-width:520px; margin:12px 0px 0px 0px;"<?php echo crux_edit_attr( 'home', 'gallery_paragraph_1' ); ?>><?php echo crux_h( 'home', 'gallery_paragraph_1' ); ?></p></div>
-      <a href="<?php echo esc_url( home_url( "/gallery/" ) ); ?>" style="font-weight:700; font-size:13px; color:#5B8DEF; border-bottom:1.5px solid #5B8DEF; padding-bottom:2px; white-space:nowrap;"<?php echo crux_edit_attr( 'home', 'gallery_link_1' ); ?>><?php echo crux_h( 'home', 'gallery_link_1' ); ?></a>
+      <a href="<?php echo crux_url( 'home', 'gallery_link_1_url' ); ?>" style="font-weight:700; font-size:13px; color:#5B8DEF; border-bottom:1.5px solid #5B8DEF; padding-bottom:2px; white-space:nowrap;"<?php echo crux_edit_attr( 'home', 'gallery_link_1' ); ?>><?php echo crux_h( 'home', 'gallery_link_1' ); ?></a>
     </div>
     <div style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:34px 26px; align-items:start;" class="reveal" data-m="g2">
       <a href="#" style="display:flex; flex-direction:column; background:#111838; border:1.5px solid #1E2B5E; border-radius:12px; overflow:hidden; transform:rotate(-1deg);" class="reveal">
@@ -942,7 +942,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <span style="border:1.5px solid #2C3C78; color:#D5D9EA; font-weight:600; font-size:12.5px; padding:9px 18px;"<?php echo crux_edit_attr( 'home', 'founder_text_3' ); ?>><?php echo crux_h( 'home', 'founder_text_3' ); ?></span>
         <span style="border:1.5px solid #2C3C78; color:#D5D9EA; font-weight:600; font-size:12.5px; padding:9px 18px;"<?php echo crux_edit_attr( 'home', 'founder_text_4' ); ?>><?php echo crux_h( 'home', 'founder_text_4' ); ?></span>
       </div>
-      <a href="<?php echo esc_url( home_url( "/founder/" ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:14px; padding:15px 28px; --sl:10px;" class="bx"<?php echo crux_edit_attr( 'home', 'founder_button_1' ); ?>><?php echo crux_h( 'home', 'founder_button_1' ); ?></a>
+      <a href="<?php echo crux_url( 'home', 'founder_button_1_url' ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:14px; padding:15px 28px; --sl:10px;" class="bx"<?php echo crux_edit_attr( 'home', 'founder_button_1' ); ?>><?php echo crux_h( 'home', 'founder_button_1' ); ?></a>
     </div>
   </section>
 
@@ -951,7 +951,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div style="text-align:center; margin-bottom:46px;" class="reveal">
       <span class="eyebrow"<?php echo crux_edit_attr( 'home', 'faq_small_heading_1' ); ?>><?php echo crux_h( 'home', 'faq_small_heading_1' ); ?></span>
       <h2 class="bebas" style="font-size:56px; margin:14px 0 10px; color:#F4F5FA;"<?php echo crux_edit_attr( 'home', 'faq_heading_1' ); ?>><?php echo crux_h( 'home', 'faq_heading_1' ); ?></h2>
-      <p style="font-size:14px; color:#A3A9C8; margin:0;"><?php echo crux_h( 'home', 'faq_paragraph_1' ); ?> <a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="color:#5B8DEF; font-weight:700;"<?php echo crux_edit_attr( 'home', 'faq_link_1' ); ?>><?php echo crux_h( 'home', 'faq_link_1' ); ?></a></p>
+      <p style="font-size:14px; color:#A3A9C8; margin:0;"><?php echo crux_h( 'home', 'faq_paragraph_1' ); ?> <a href="<?php echo crux_url( 'home', 'faq_link_1_url' ); ?>" style="color:#5B8DEF; font-weight:700;"<?php echo crux_edit_attr( 'home', 'faq_link_1' ); ?>><?php echo crux_h( 'home', 'faq_link_1' ); ?></a></p>
     </div>
     <div style="max-width:960px; width:100%; margin:0 auto; display:flex; flex-direction:column; gap:14px;" class="reveal">
       <details style="background:#111838; border:1.5px solid #1E2B5E; border-radius:14px; padding:0 26px; transition:border-color .25s ease;">

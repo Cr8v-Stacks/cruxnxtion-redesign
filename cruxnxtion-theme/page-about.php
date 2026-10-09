@@ -701,7 +701,7 @@ if ( ! defined( 'ABSPATH' ) ) {
       <span class="eyebrow"<?php echo crux_edit_attr( 'about', 'hero_small_heading_1' ); ?>><?php echo crux_h( 'about', 'hero_small_heading_1' ); ?></span>
       <h1 class="bebas" style="font-size:40px; line-height:0.98; white-space:nowrap; margin:18px 0px 22px 0px; color:#10142E;"<?php echo crux_edit_attr( 'about', 'hero_heading_1' ); ?>><?php echo crux_rich( 'about', 'hero_heading_1' ); ?></h1>
       <p style="font-size:17px; line-height:1.7; color:#3A3F66; max-width:540px; margin:0px 0px 30px 0px;"<?php echo crux_edit_attr( 'about', 'hero_paragraph_1' ); ?>><?php echo crux_h( 'about', 'hero_paragraph_1' ); ?></p>
-      <div style="display:flex; gap:16px;"><a href="<?php echo esc_url( home_url( "/founder/" ) ); ?>" style="background:#8C7AE6; color:#10142E; font-weight:700; font-size:15px; padding:16px 30px 16px 30px; --sl:10px;" class="bx"<?php echo crux_edit_attr( 'about', 'hero_button_1' ); ?>><?php echo crux_h( 'about', 'hero_button_1' ); ?></a><a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="color:#10142E; font-weight:700; font-size:15px; padding:14.5px 28px 14.5px 28px; --sl:10px; --bc:#10142E;" class="bx"<?php echo crux_edit_attr( 'about', 'hero_button_2' ); ?>><?php echo crux_h( 'about', 'hero_button_2' ); ?></a></div>
+      <div style="display:flex; gap:16px;"><a href="<?php echo crux_url( 'about', 'hero_button_1_url' ); ?>" style="background:#8C7AE6; color:#10142E; font-weight:700; font-size:15px; padding:16px 30px 16px 30px; --sl:10px;" class="bx"<?php echo crux_edit_attr( 'about', 'hero_button_1' ); ?>><?php echo crux_h( 'about', 'hero_button_1' ); ?></a><a href="<?php echo crux_url( 'about', 'hero_button_2_url' ); ?>" style="color:#10142E; font-weight:700; font-size:15px; padding:14.5px 28px 14.5px 28px; --sl:10px; --bc:#10142E;" class="bx"<?php echo crux_edit_attr( 'about', 'hero_button_2' ); ?>><?php echo crux_h( 'about', 'hero_button_2' ); ?></a></div>
     </div>
     <div style="position:relative; height:640px;" class="reveal why-us-collage" data-m="tile collage">
       <img src="<?php echo crux_img_url( 'about', 'hero_photo_1' ); ?>" alt="" style="position:absolute; right:0; top:0; width:400px; height:500px; object-fit:cover; border-radius:26px;"<?php echo crux_edit_attr( 'about', 'hero_photo_1' ); ?>>
@@ -808,7 +808,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <span style="border:1.5px solid #2C3C78; color:#D5D9EA; font-weight:600; font-size:12.5px; padding:9px 18px;"<?php echo crux_edit_attr( 'about', 'founder_text_3' ); ?>><?php echo crux_h( 'about', 'founder_text_3' ); ?></span>
         <span style="border:1.5px solid #2C3C78; color:#D5D9EA; font-weight:600; font-size:12.5px; padding:9px 18px;"<?php echo crux_edit_attr( 'about', 'founder_text_4' ); ?>><?php echo crux_h( 'about', 'founder_text_4' ); ?></span>
       </div>
-      <a href="<?php echo esc_url( home_url( '/founder/' ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:14px; padding:15px 28px; --sl:10px;" class="bx"<?php echo crux_edit_attr( 'about', 'founder_button_1' ); ?>><?php echo crux_h( 'about', 'founder_button_1' ); ?></a>
+      <a href="<?php echo crux_url( 'about', 'founder_button_1_url' ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:14px; padding:15px 28px; --sl:10px;" class="bx"<?php echo crux_edit_attr( 'about', 'founder_button_1' ); ?>><?php echo crux_h( 'about', 'founder_button_1' ); ?></a>
     </div>
   </section>
 

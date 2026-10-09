@@ -101,6 +101,12 @@ foreach ( $pages as $page => $info ) {
 			$mods[ 'crux_c_' . $page . '_' . $key ] = $id;
 			continue;
 		}
+		if ( 'url' === $f[2] ) {
+			$u = 'https://example.test/zz-' . substr( md5( $page . $key ), 0, 8 );
+			$tokens[ $page ][ $key ] = array( $u, $u, 'url' );
+			$mods[ 'crux_c_' . $page . '_' . $key ] = $u;
+			continue;
+		}
 		$tok = 'ZZ' . substr( md5( $page . $key ), 0, 8 );
 		$val = ( 'rich' === $f[2] ) ? $tok . ' <strong>bold</strong> and <a href="https://example.test/x">link</a><br>next line' : $tok;
 		$tokens[ $page ][ $key ] = array( $tok, $val, $f[2] );
@@ -162,6 +168,10 @@ try {
 }
 t( 'a photo setting only ever holds a whole number', 0 === crux_sanitize_content( 'abc', (object) array( 'id' => 'crux_c_' . $photo_page . '_' . $photo_key ) ) );
 
+$url_key = ''; $url_page = '';
+foreach ( $pages as $pg => $inf ) { foreach ( crux_content_fields( $pg ) as $k => $f ) { if ( 'url' === $f[2] && ! $url_key ) { $url_page = $pg; $url_key = $k; } } }
+t( 'a button address refuses javascript: and data: links', '' === crux_sanitize_content( 'javascript:alert(1)', (object) array( 'id' => 'crux_c_' . $url_page . '_' . $url_key ) ) && '' === crux_sanitize_content( 'data:text/html;base64,AAAA', (object) array( 'id' => 'crux_c_' . $url_page . '_' . $url_key ) ) );
+t( 'a button address accepts a page on this site and a full https address', '/contact/' === crux_sanitize_content( '/contact/', (object) array( 'id' => 'crux_c_' . $url_page . '_' . $url_key ) ) && 'https://example.test/x' === crux_sanitize_content( 'https://example.test/x', (object) array( 'id' => 'crux_c_' . $url_page . '_' . $url_key ) ) );
 echo "== 4b. Pencils and instant preview
 ";
 $tpl_files = array(

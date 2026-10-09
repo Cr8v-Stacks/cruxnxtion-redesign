@@ -106,4 +106,12 @@ return array(
 	'faq_paragraph_6' => array( 'FAQ', 'Text 6: Yes. Event Marketing & Promotion c...', 'textarea', 'Yes. Event Marketing & Promotion covers social media campaigns, influencer partnerships, content marketing, SEO, listings, ticket sales via Eventbrite, and community engagement.' ),
 	'faq_text_1' => array( 'FAQ', 'Text 1: Events', 'text', 'Events' ),
 	'faq_text_2' => array( 'FAQ', 'Text 2: Consultancy', 'text', 'Consultancy' ),
+	'hero_button_1_url' => array( 'Top banner', 'Button 1 address', 'url', '/contact/?type=events' ),
+	'hero_button_2_url' => array( 'Top banner', 'Button 2 address', 'url', '/consultancy/' ),
+	'services_link_1_url' => array( 'Services list', 'Link 1 address', 'url', '/services/' ),
+	'events_link_1_url' => array( 'Events strip', 'Link 1 address', 'url', '/events/' ),
+	'also_from_crux_button_1_url' => array( 'Consultancy promo', 'Button 1 address', 'url', '/consultancy/' ),
+	'gallery_link_1_url' => array( 'Gallery strip', 'Link 1 address', 'url', '/gallery/' ),
+	'founder_button_1_url' => array( 'Founder and team', 'Button 1 address', 'url', '/founder/' ),
+	'faq_link_1_url' => array( 'FAQ', 'Link 1 address', 'url', '/contact/' ),
 );

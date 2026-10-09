@@ -167,4 +167,7 @@ return array(
 	'faq_paragraph_6' => array( 'FAQ', 'Text 6: Book a discovery call through our...', 'text', 'Book a discovery call through our contact page and tell us where you are stuck.' ),
 	'faq_text_1' => array( 'FAQ', 'Text 1: Events', 'text', 'Events' ),
 	'faq_text_2' => array( 'FAQ', 'Text 2: Consultancy', 'text', 'Consultancy' ),
+	'why_us_link_1_url' => array( 'Why us', 'Link 1 address', 'url', '/' ),
+	'meet_the_strategic_team_foun_button_1_url' => array( 'Team and founder', 'Button 1 address', 'url', '/founder/' ),
+	'faq_button_1_url' => array( 'FAQ', 'Button 1 address', 'url', '/contact/' ),
 );

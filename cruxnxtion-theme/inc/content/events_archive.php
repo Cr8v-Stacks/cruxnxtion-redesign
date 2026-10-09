@@ -44,4 +44,5 @@ return array(
 	'archive_button_1' => array( 'Past events', 'Button 1: Book Your Own Night', 'text', 'Book Your Own Night' ),
 	'archive_text_8' => array( 'Past events', 'Text 8: Events', 'text', 'Events' ),
 	'archive_text_9' => array( 'Past events', 'Text 9: Consultancy', 'text', 'Consultancy' ),
+	'archive_button_1_url' => array( 'Past events', 'Button 1 address', 'url', '/contact/' ),
 );

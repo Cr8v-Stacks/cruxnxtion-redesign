@@ -1166,7 +1166,7 @@ if ( ! defined( 'ABSPATH' ) ) {
       <h2 class="bebas" style="font-size:40px; margin:14px 0px 22px 0px; color:#10142E;"<?php echo crux_edit_attr( 'consultancy', 'why_us_heading_1' ); ?>><?php echo crux_h( 'consultancy', 'why_us_heading_1' ); ?></h2>
       <p style="font-size:15.5px; line-height:1.8; color:#3A3F66; margin:0px 0px 16px 0px;"<?php echo crux_edit_attr( 'consultancy', 'why_us_paragraph_1' ); ?>><?php echo crux_h( 'consultancy', 'why_us_paragraph_1' ); ?></p>
       <p style="font-size:15.5px; line-height:1.8; color:#3A3F66; margin:0px 0px 26px 0px;"<?php echo crux_edit_attr( 'consultancy', 'why_us_paragraph_2' ); ?>><?php echo crux_h( 'consultancy', 'why_us_paragraph_2' ); ?></p>
-      <a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="font-weight:700; font-size:14px; color:#6C58DB; border-bottom:1.5px solid #6C58DB; padding-bottom:2px;"<?php echo crux_edit_attr( 'consultancy', 'why_us_link_1' ); ?>><?php echo crux_h( 'consultancy', 'why_us_link_1' ); ?></a>
+      <a href="<?php echo crux_url( 'consultancy', 'why_us_link_1_url' ); ?>" style="font-weight:700; font-size:14px; color:#6C58DB; border-bottom:1.5px solid #6C58DB; padding-bottom:2px;"<?php echo crux_edit_attr( 'consultancy', 'why_us_link_1' ); ?>><?php echo crux_h( 'consultancy', 'why_us_link_1' ); ?></a>
     </div>
     <div style="position:relative; height:480px;" class="reveal why-us-collage" data-m="tile collage">
       <img class="tilt-straighten" src="<?php echo crux_img_url( 'consultancy', 'why_us_photo_1' ); ?>" alt="" style="--r:-6deg; transform:rotate(var(--r)); position:absolute; left:0; top:30px; width:250px; height:310px; object-fit:cover; border-radius:14px; border:2px solid #E1DEF3;"<?php echo crux_edit_attr( 'consultancy', 'why_us_photo_1' ); ?>>
@@ -1187,7 +1187,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <p style="font-size:15px; line-height:1.75; color:#3A3F66; margin:0 0 12px; max-width:700px;"<?php echo crux_edit_attr( 'consultancy', 'meet_the_strategic_team_foun_paragraph_1' ); ?>><?php echo crux_rich( 'consultancy', 'meet_the_strategic_team_foun_paragraph_1' ); ?></p>
         <p style="font-size:14.5px; line-height:1.7; color:#5A5F86; margin:0 0 24px; max-width:700px;"<?php echo crux_edit_attr( 'consultancy', 'meet_the_strategic_team_foun_paragraph_2' ); ?>><?php echo crux_h( 'consultancy', 'meet_the_strategic_team_foun_paragraph_2' ); ?></p>
         <div class="founder-cta-wrap" style="display:flex; align-items:center; gap:16px;">
-          <a href="<?php echo esc_url( home_url( "/founder/" ) ); ?>" style="background:#8C7AE6; color:#10142E !important; font-weight:700; font-size:14px; padding:15px 32px; display:inline-block; --sl:10px; text-decoration:none;" class="bx"<?php echo crux_edit_attr( 'consultancy', 'meet_the_strategic_team_foun_button_1' ); ?>><?php echo crux_h( 'consultancy', 'meet_the_strategic_team_foun_button_1' ); ?></a>
+          <a href="<?php echo crux_url( 'consultancy', 'meet_the_strategic_team_foun_button_1_url' ); ?>" style="background:#8C7AE6; color:#10142E !important; font-weight:700; font-size:14px; padding:15px 32px; display:inline-block; --sl:10px; text-decoration:none;" class="bx"<?php echo crux_edit_attr( 'consultancy', 'meet_the_strategic_team_foun_button_1' ); ?>><?php echo crux_h( 'consultancy', 'meet_the_strategic_team_foun_button_1' ); ?></a>
         </div>
       </div>
     </div>
@@ -1201,7 +1201,7 @@ if ( ! defined( 'ABSPATH' ) ) {
       <div style="position:absolute; left:0; right:0; bottom:0; padding:32px 32px 32px 32px;">
         <span class="eyebrow" style="color:#8C7AE6 !important;"<?php echo crux_edit_attr( 'consultancy', 'faq_small_heading_1' ); ?>><?php echo crux_h( 'consultancy', 'faq_small_heading_1' ); ?></span>
         <h2 class="bebas" style="font-size:34px; margin:10px 0px 14px 0px; color:#F2F1F8;"<?php echo crux_edit_attr( 'consultancy', 'faq_heading_1' ); ?>><?php echo crux_h( 'consultancy', 'faq_heading_1' ); ?></h2>
-        <a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="background:#8C7AE6; color:#10142E; font-weight:700; font-size:14px; padding:14px 26px 14px 26px; display:inline-block; --sl:10px;" class="bx"<?php echo crux_edit_attr( 'consultancy', 'faq_button_1' ); ?>><?php echo crux_h( 'consultancy', 'faq_button_1' ); ?></a>
+        <a href="<?php echo crux_url( 'consultancy', 'faq_button_1_url' ); ?>" style="background:#8C7AE6; color:#10142E; font-weight:700; font-size:14px; padding:14px 26px 14px 26px; display:inline-block; --sl:10px;" class="bx"<?php echo crux_edit_attr( 'consultancy', 'faq_button_1' ); ?>><?php echo crux_h( 'consultancy', 'faq_button_1' ); ?></a>
       </div>
     </div>
       <div style="display:flex; flex-direction:column; gap:12px; padding-top:6px;" class="reveal">

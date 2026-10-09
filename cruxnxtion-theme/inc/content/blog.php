@@ -37,4 +37,5 @@ return array(
 	'ticket_grid_button_1' => array( 'Post list', 'Button 1: Get In Touch', 'text', 'Get In Touch' ),
 	'ticket_grid_text_12' => array( 'Post list', 'Text 12: Events', 'text', 'Events' ),
 	'ticket_grid_text_13' => array( 'Post list', 'Text 13: Consultancy', 'text', 'Consultancy' ),
+	'ticket_grid_button_1_url' => array( 'Post list', 'Button 1 address', 'url', '/contact/' ),
 );
