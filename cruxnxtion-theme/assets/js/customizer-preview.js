@@ -88,4 +88,14 @@
 			} );
 		} );
 	} );
+
+	// Brand colours: set the CSS variable on the page the moment a colour changes.
+	( cfg.colours || [] ).forEach( function ( token ) {
+		api( 'crux_colour_' + token, function ( setting ) {
+			setting.bind( function ( value ) {
+				var root = document.documentElement.style;
+				if ( value ) { root.setProperty( '--crux-' + token, value ); } else { root.removeProperty( '--crux-' + token ); }
+			} );
+		} );
+	} );
 }( wp.customize ) );

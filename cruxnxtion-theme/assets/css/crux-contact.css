@@ -1,12 +1,12 @@
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&display=swap');
   * { box-sizing: border-box; }
-  body { margin: 0; font-family: 'Space Grotesk', system-ui, sans-serif; background:#FFFFFF; color:#10142E; }
+  body { margin: 0; font-family: 'Space Grotesk', system-ui, sans-serif; background:#FFFFFF; color:var(--crux-ink2,#10142E); }
   a { color: #FF2E3D; text-decoration: none; }
-  a:hover { color: #8C7AE6; }
+  a:hover { color: var(--crux-purple,#8C7AE6); }
   .bebas { font-family: 'Bebas Neue', 'Arial Narrow', sans-serif; letter-spacing: 0.5px; line-height: 0.9; text-transform: uppercase; }
   .eyebrow { font-weight: 600; letter-spacing: 3px; text-transform: uppercase; font-size: 11px; color: #FF2E3D; }
   .ticket-stub { position: relative; }
-  .ticket-stub::before, .ticket-stub::after { content: ''; position: absolute; right: -11px; width: 20px; height: 20px; border-radius: 50%; background: #10142E; z-index: 2; }
+  .ticket-stub::before, .ticket-stub::after { content: ''; position: absolute; right: -11px; width: 20px; height: 20px; border-radius: 50%; background: var(--crux-ink2,#10142E); z-index: 2; }
   .ticket-stub::before { top: -10px; }
   .ticket-stub::after { bottom: -10px; }
   @keyframes rc-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
@@ -60,8 +60,8 @@
   .float { animation: floaty 5s ease-in-out infinite; }
   .pulse-dot { animation: pulse 2s infinite; }
   a[style*="clip-path"]:active { transform: translateY(0) scale(.98); }
-  body { background:#FFFFFF; color:#10142E; }
-  .eyebrow { color:#6C58DB !important; }
+  body { background:#FFFFFF; color:var(--crux-ink2,#10142E); }
+  .eyebrow { color:var(--crux-violet,#6C58DB) !important; }
   .ticket-stub::before, .ticket-stub::after { background:#FFFFFF !important; }
 
   /* Slanted Architecture (.bx) */
@@ -128,26 +128,26 @@
   }
   .contact-tab-btn:hover {
     background: #E8E4F8 !important;
-    color: #10142E !important;
+    color: var(--crux-ink2,#10142E) !important;
     --bc: #C8BFF0 !important;
     transform: translateY(-2px) !important;
   }
   .contact-tab-btn[data-tab="events"].active {
-    background: #002671 !important;
+    background: var(--crux-navy,#002671) !important;
     color: #FFFFFF !important;
-    --bc: #002671 !important;
+    --bc: var(--crux-navy,#002671) !important;
     box-shadow: 0 4px 14px rgba(0, 38, 113, 0.28) !important;
   }
   .contact-tab-btn[data-tab="consultancy"].active {
-    background: #8C7AE6 !important;
-    color: #10142E !important;
-    --bc: #8C7AE6 !important;
+    background: var(--crux-purple,#8C7AE6) !important;
+    color: var(--crux-ink2,#10142E) !important;
+    --bc: var(--crux-purple,#8C7AE6) !important;
     box-shadow: 0 4px 14px rgba(140, 122, 230, 0.35) !important;
   }
   .contact-tab-btn[data-tab="partner"].active {
-    background: #BA0000 !important;
+    background: var(--crux-red,#BA0000) !important;
     color: #FFFFFF !important;
-    --bc: #BA0000 !important;
+    --bc: var(--crux-red,#BA0000) !important;
     box-shadow: 0 4px 14px rgba(186, 0, 0, 0.28) !important;
   }
 
@@ -177,7 +177,7 @@
   }
   .chip-btn:hover {
     background: #ECE9F7 !important;
-    color: #10142E !important;
+    color: var(--crux-ink2,#10142E) !important;
     --bc: #D2CBF2 !important;
     transform: translateY(-1.5px) !important;
   }
@@ -199,21 +199,21 @@
     display: inline-flex !important;
   }
   .chip-btn[data-cat="e"].selected {
-    background: #002671 !important;
+    background: var(--crux-navy,#002671) !important;
     color: #FFFFFF !important;
-    --bc: #002671 !important;
+    --bc: var(--crux-navy,#002671) !important;
     box-shadow: 0 3px 10px rgba(0, 38, 113, 0.25) !important;
   }
   .chip-btn[data-cat="c"].selected {
-    background: #8C7AE6 !important;
-    color: #10142E !important;
-    --bc: #8C7AE6 !important;
+    background: var(--crux-purple,#8C7AE6) !important;
+    color: var(--crux-ink2,#10142E) !important;
+    --bc: var(--crux-purple,#8C7AE6) !important;
     box-shadow: 0 3px 10px rgba(140, 122, 230, 0.3) !important;
   }
   .chip-btn[data-cat="p"].selected {
-    background: #BA0000 !important;
+    background: var(--crux-red,#BA0000) !important;
     color: #FFFFFF !important;
-    --bc: #BA0000 !important;
+    --bc: var(--crux-red,#BA0000) !important;
     box-shadow: 0 3px 10px rgba(186, 0, 0, 0.25) !important;
   }
 
@@ -241,7 +241,7 @@
   /* Form Inputs Focus & Error Shake */
   #crux-intake-form input:focus,
   #crux-intake-form textarea:focus {
-    border-color: #6C58DB !important;
+    border-color: var(--crux-violet,#6C58DB) !important;
     outline: none !important;
     box-shadow: 0 0 0 3px rgba(108, 88, 219, 0.15) !important;
   }
@@ -252,7 +252,7 @@
   }
   .input-error-shake {
     animation: inputShake 0.4s ease !important;
-    border-color: #E5383B !important;
+    border-color: var(--crux-crimson,#E5383B) !important;
     box-shadow: 0 0 0 3px rgba(229, 56, 59, 0.15) !important;
   }
 
@@ -270,7 +270,7 @@
   }
   .crux-spinner--dark {
     border-color: rgba(16, 20, 46, 0.25);
-    border-top-color: #10142E;
+    border-top-color: var(--crux-ink2,#10142E);
   }
 
   /* Modal Buttons */
@@ -344,7 +344,7 @@
   .mdrawer.is-open { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; transform: translateY(0) !important; }
   details.mdrawer-acc summary::-webkit-details-marker { display: none; }
   details.mdrawer-acc summary { list-style: none; }
-  details.mdrawer-acc[open] .acc-icon { transform: rotate(45deg); color: #BA0000 !important; }
+  details.mdrawer-acc[open] .acc-icon { transform: rotate(45deg); color: var(--crux-red,#BA0000) !important; }
   .mdrawer-body .msub { display: block; padding: 6px 0; font-size: 13.5px; text-decoration: none; border-bottom: 1px solid rgba(16,20,46,0.06); }
   .mdrawer-body .msub:last-child { border-bottom: none; }
   .mega-panel a.mrow:hover { transform: translateX(4px); background: rgba(140, 122, 230, 0.08) !important; }
@@ -526,6 +526,6 @@
   .crux-sw-pod { transition: transform .2s ease, box-shadow .2s ease; }
   .crux-sw-pod:hover { transform: translateY(-1px); }
   .crux-sw-tab--inactive-dark:hover { color: #FFFFFF !important; background: rgba(255,255,255,0.08) !important; }
-  .crux-sw-tab--inactive-light:hover { color: #10142E !important; background: rgba(108,88,219,0.12) !important; }
+  .crux-sw-tab--inactive-light:hover { color: var(--crux-ink2,#10142E) !important; background: rgba(108,88,219,0.12) !important; }
 
   

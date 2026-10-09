@@ -1,12 +1,12 @@
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&display=swap');
   * { box-sizing: border-box; }
-  body { margin: 0; font-family: 'Space Grotesk', system-ui, sans-serif; background:#FFFFFF; color:#10142E; }
+  body { margin: 0; font-family: 'Space Grotesk', system-ui, sans-serif; background:#FFFFFF; color:var(--crux-ink2,#10142E); }
   a { color: #FF2E3D; text-decoration: none; }
-  a:hover { color: #8C7AE6; }
+  a:hover { color: var(--crux-purple,#8C7AE6); }
   .bebas { font-family: 'Bebas Neue', 'Arial Narrow', sans-serif; letter-spacing: 0.5px; line-height: 0.9; text-transform: uppercase; }
   .eyebrow { font-weight: 600; letter-spacing: 3px; text-transform: uppercase; font-size: 11px; color: #FF2E3D; }
   .ticket-stub { position: relative; }
-  .ticket-stub::before, .ticket-stub::after { content: ''; position: absolute; right: -11px; width: 20px; height: 20px; border-radius: 50%; background: #10142E; z-index: 2; }
+  .ticket-stub::before, .ticket-stub::after { content: ''; position: absolute; right: -11px; width: 20px; height: 20px; border-radius: 50%; background: var(--crux-ink2,#10142E); z-index: 2; }
   .ticket-stub::before { top: -10px; }
   .ticket-stub::after { bottom: -10px; }
   @keyframes rc-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
@@ -49,8 +49,8 @@
   .float { animation: floaty 5s ease-in-out infinite; }
   .pulse-dot { animation: pulse 2s infinite; }
   a[style*="clip-path"]:active { transform: translateY(0) scale(.98); }
-  body { background:#FFFFFF; color:#10142E; }
-  .eyebrow { color:#6C58DB !important; }
+  body { background:#FFFFFF; color:var(--crux-ink2,#10142E); }
+  .eyebrow { color:var(--crux-violet,#6C58DB) !important; }
   .ticket-stub::before, .ticket-stub::after { background:#FFFFFF !important; }
 
     /* Services Dropdown (Focused Floating Card - Light Theme) */
@@ -68,7 +68,7 @@
   .mdrawer.is-open { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; transform: translateY(0) !important; }
   details.mdrawer-acc summary::-webkit-details-marker { display: none; }
   details.mdrawer-acc summary { list-style: none; }
-  details.mdrawer-acc[open] .acc-icon { transform: rotate(45deg); color: #BA0000 !important; }
+  details.mdrawer-acc[open] .acc-icon { transform: rotate(45deg); color: var(--crux-red,#BA0000) !important; }
   .mdrawer-body .msub { display: block; padding: 6px 0; font-size: 13.5px; text-decoration: none; border-bottom: 1px solid rgba(16,20,46,0.06); }
   .mdrawer-body .msub:last-child { border-bottom: none; }
   .cb { opacity:0; animation-duration:8s; animation-iteration-count:infinite; animation-timing-function:ease; animation-fill-mode:both; }
@@ -89,12 +89,12 @@
   @keyframes cdot { 0%,70%,100% { transform:translateY(0); opacity:.45; } 35% { transform:translateY(-4px); opacity:1; } }
   /* ---- motion ---- */
   @property --p { syntax:'<integer>'; inherits:false; initial-value:0; }
-  @keyframes apT4 { 0%,20% { background:transparent; border-color:#FF2E3D; } 28%,86% { background:#8C7AE6; border-color:#8C7AE6; } 94%,100% { background:transparent; border-color:#FF2E3D; } }
-  @keyframes apT5 { 0%,44% { background:transparent; border-color:#FF2E3D; } 52%,86% { background:#8C7AE6; border-color:#8C7AE6; } 94%,100% { background:transparent; border-color:#FF2E3D; } }
+  @keyframes apT4 { 0%,20% { background:transparent; border-color:#FF2E3D; } 28%,86% { background:var(--crux-purple,#8C7AE6); border-color:var(--crux-purple,#8C7AE6); } 94%,100% { background:transparent; border-color:#FF2E3D; } }
+  @keyframes apT5 { 0%,44% { background:transparent; border-color:#FF2E3D; } 52%,86% { background:var(--crux-purple,#8C7AE6); border-color:var(--crux-purple,#8C7AE6); } 94%,100% { background:transparent; border-color:#FF2E3D; } }
   @keyframes apBar { 0%,18% { width:55%; } 30% { width:78%; } 54% { width:100%; } 86% { width:100%; } 96%,100% { width:55%; } }
   .ap4 { animation:apT4 7s ease infinite; } .ap5 { animation:apT5 7s ease infinite; } .apbar { animation:apBar 7s ease infinite; }
   @keyframes opSweep { 0%,10% { background-size:0% 3px; } 45%,85% { background-size:100% 3px; } 100% { background-size:0% 3px; } }
-  .ophl { background-image:linear-gradient(#8C7AE6,#8C7AE6); background-repeat:no-repeat; background-position:0 100%; background-size:0% 3px; padding-bottom:3px; animation:opSweep 4.5s ease infinite; }
+  .ophl { background-image:linear-gradient(var(--crux-purple,#8C7AE6),var(--crux-purple,#8C7AE6)); background-repeat:no-repeat; background-position:0 100%; background-size:0% 3px; padding-bottom:3px; animation:opSweep 4.5s ease infinite; }
   @keyframes swUp { 0%,100% { transform:scaleY(1); } 30% { transform:scaleY(1.45); } 60% { transform:scaleY(1); } }
   .sw1, .sw2, .sw3 { transform-origin:bottom; animation:swUp 3.2s ease-in-out infinite; } .sw2 { animation-delay:.25s; } .sw3 { animation-delay:.5s; }
   @keyframes rmA { 0%,6% { transform:scaleX(0); } 26%,88% { transform:scaleX(1); } 100% { transform:scaleX(0); } }
@@ -188,7 +188,7 @@
     color: #FFFFFF !important;
   }
   .header-switcher--light a.crux-sw-inactive:hover {
-    color: #10142E !important;
+    color: var(--crux-ink2,#10142E) !important;
   }
 
   /* Rotating Rosette Badge Animation (Matching Red Cap Entertainment) */
@@ -254,11 +254,11 @@
     display: none;
   }
   details[open] {
-    border-color: #5B8DEF !important;
+    border-color: var(--crux-blue,#5B8DEF) !important;
   }
   details[open] .fq-plus {
     transform: rotate(45deg);
-    background: #BA0000 !important;
+    background: var(--crux-red,#BA0000) !important;
   }
 
   /* Subtle interactive feedback on touch devices */
@@ -295,7 +295,7 @@
     }
     .consultancy-panels-container .cpanel:hover {
       flex: 5 1 0 !important;
-      border-color: #8C7AE6 !important;
+      border-color: var(--crux-purple,#8C7AE6) !important;
     }
     .consultancy-panels-container .cpanel:hover .cpanel-label {
       display: none !important;
@@ -370,7 +370,7 @@
     box-shadow: 0 18px 40px rgba(16,20,46,0.18);
   }
   .opt2-card.after {
-    border: 2.5px solid #8C7AE6;
+    border: 2.5px solid var(--crux-purple,#8C7AE6);
     box-shadow: 0 16px 38px rgba(140,122,230,0.25);
     transform: rotate(1.8deg);
   }
@@ -379,8 +379,8 @@
     box-shadow: 0 20px 45px rgba(140,122,230,0.35);
   }
   .badge-blueprint {
-    background: #8C7AE6;
-    color: #10142E;
+    background: var(--crux-purple,#8C7AE6);
+    color: var(--crux-ink2,#10142E);
     padding: 10px 16px;
     border-radius: 10px;
     box-shadow: 0 10px 24px rgba(140,122,230,0.35);
@@ -807,6 +807,6 @@
   .crux-sw-pod { transition: transform .2s ease, box-shadow .2s ease; }
   .crux-sw-pod:hover { transform: translateY(-1px); }
   .crux-sw-tab--inactive-dark:hover { color: #FFFFFF !important; background: rgba(255,255,255,0.08) !important; }
-  .crux-sw-tab--inactive-light:hover { color: #10142E !important; background: rgba(108,88,219,0.12) !important; }
+  .crux-sw-tab--inactive-light:hover { color: var(--crux-ink2,#10142E) !important; background: rgba(108,88,219,0.12) !important; }
 
   

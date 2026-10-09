@@ -372,12 +372,12 @@ function crux_content_fields( $page ) {
  * design, **bold** and _italic_. Only fields whose original markup converts back exactly use it (type "styled").
  */
 function crux_rich_accent( $html ) {
-	return preg_match( '/<span style="color:\s*(#[0-9a-fA-F]{3,8});?">/', (string) $html, $m ) ? $m[1] : '';
+	return preg_match( '/<span style="color:\s*(var\(--crux-\w+,\s*#[0-9a-fA-F]{3,8}\)|#[0-9a-fA-F]{3,8});?">/', (string) $html, $m ) ? $m[1] : '';
 }
 
 function crux_rich_to_plain( $html ) {
 	$t = preg_replace( '#<br\s*/?>#i', "\n", (string) $html );
-	$t = preg_replace( '#<span style="color:\s*\#[0-9a-fA-F]{3,8};?">(.*?)</span>#s', '{{$1}}', $t );
+	$t = preg_replace( '#<span style="color:\s*(?:var\(--crux-\w+,\s*)?\#[0-9a-fA-F]{3,8}\)?;?">(.*?)</span>#s', '{{$1}}', $t );
 	$t = preg_replace( '#<(strong|b)>(.*?)</\1>#s', '**$2**', $t );
 	$t = preg_replace( '#<(em|i)>(.*?)</\1>#s', '_$2_', $t );
 	return html_entity_decode( $t, ENT_QUOTES | ENT_HTML5, 'UTF-8' );

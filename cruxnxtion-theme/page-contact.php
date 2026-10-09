@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
   <section style="min-height:860px; display:grid; grid-template-columns:1fr 1fr;">
     <div style="padding:80px 64px;" class="reveal">
       <span class="eyebrow"<?php echo crux_edit_attr( 'contact', 'contact_small_heading_1' ); ?>><?php echo crux_h( 'contact', 'contact_small_heading_1' ); ?></span>
-      <h1 class="bebas" style="font-size:72px; margin:14px 0 26px; color:#10142E;"<?php echo crux_edit_attr( 'contact', 'contact_heading_1' ); ?>><?php echo crux_h( 'contact', 'contact_heading_1' ); ?></h1>
+      <h1 class="bebas" style="font-size:72px; margin:14px 0 26px; color:var(--crux-ink2,#10142E);"<?php echo crux_edit_attr( 'contact', 'contact_heading_1' ); ?>><?php echo crux_h( 'contact', 'contact_heading_1' ); ?></h1>
       <!-- INTAKE TABS (Slanted .bx - Click multiple to brief all together) -->
       <div class="contact-mode-tabs" id="contact-mode-tabs" role="tablist">
         <button type="button" class="contact-tab-btn bx active" data-tab="events" role="tab" aria-selected="true"<?php echo crux_edit_attr( 'contact', 'contact_button_1' ); ?>><?php echo crux_h( 'contact', 'contact_button_1' ); ?></button>
@@ -34,14 +34,14 @@ if ( ! defined( 'ABSPATH' ) ) {
         
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;" data-m="g1">
           <div>
-            <input type="text" name="name" id="inp-name" required placeholder="Your full name *" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E; box-sizing:border-box;">
+            <input type="text" name="name" id="inp-name" required placeholder="Your full name *" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:var(--crux-ink2,#10142E); box-sizing:border-box;">
           </div>
           <div>
-            <input type="email" name="email" id="inp-email" required placeholder="Email address *" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E; box-sizing:border-box;">
+            <input type="email" name="email" id="inp-email" required placeholder="Email address *" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:var(--crux-ink2,#10142E); box-sizing:border-box;">
           </div>
         </div>
 
-        <input type="tel" name="phone" id="inp-phone" placeholder="Phone number (optional)" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E; box-sizing:border-box;">
+        <input type="tel" name="phone" id="inp-phone" placeholder="Phone number (optional)" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:var(--crux-ink2,#10142E); box-sizing:border-box;">
 
         <!-- Dynamic Service Chips Section -->
         <div>
@@ -78,50 +78,50 @@ if ( ! defined( 'ABSPATH' ) ) {
 
         <!-- Panel 1: Event Details -->
         <div id="panel-event-details" class="intake-panel" style="display:flex; flex-direction:column; gap:12px; padding:20px; border:1.5px solid #D6DDF3; clip-path:polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%); background:#F6F8FE;">
-          <span class="bx" style="display:inline-block; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#FFFFFF; background:#002671; padding:4px 12px; width:fit-content; --sl:5px;">About your event</span>
+          <span class="bx" style="display:inline-block; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#FFFFFF; background:var(--crux-navy,#002671); padding:4px 12px; width:fit-content; --sl:5px;">About your event</span>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;" data-m="g1">
-            <input type="text" name="ev_type" placeholder="Event type (wedding, gala, party...)" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E; box-sizing:border-box;">
-            <input type="text" name="ev_date" placeholder="Preferred date / month" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E; box-sizing:border-box;">
+            <input type="text" name="ev_type" placeholder="Event type (wedding, gala, party...)" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:var(--crux-ink2,#10142E); box-sizing:border-box;">
+            <input type="text" name="ev_date" placeholder="Preferred date / month" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:var(--crux-ink2,#10142E); box-sizing:border-box;">
           </div>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;" data-m="g1">
-            <input type="text" name="ev_guests" placeholder="Approx. number of guests" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E; box-sizing:border-box;">
-            <input type="text" name="ev_venue" placeholder="City or prospective venue" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E; box-sizing:border-box;">
+            <input type="text" name="ev_guests" placeholder="Approx. number of guests" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:var(--crux-ink2,#10142E); box-sizing:border-box;">
+            <input type="text" name="ev_venue" placeholder="City or prospective venue" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:var(--crux-ink2,#10142E); box-sizing:border-box;">
           </div>
         </div>
 
         <!-- Panel 2: Business Details -->
         <div id="panel-business-details" class="intake-panel" style="display:none; flex-direction:column; gap:12px; padding:20px; border:1.5px solid #E1DEF3; clip-path:polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%); background:#F7F5FE;">
-          <span class="bx" style="display:inline-block; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#10142E; background:#8C7AE6; padding:4px 12px; width:fit-content; --sl:5px;">About your business</span>
+          <span class="bx" style="display:inline-block; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--crux-ink2,#10142E); background:var(--crux-purple,#8C7AE6); padding:4px 12px; width:fit-content; --sl:5px;">About your business</span>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;" data-m="g1">
-            <input type="text" name="biz_name" placeholder="Business name (if trading)" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E; box-sizing:border-box;">
-            <input type="text" name="biz_stage" placeholder="Stage: idea / trading / scaling" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E; box-sizing:border-box;">
+            <input type="text" name="biz_name" placeholder="Business name (if trading)" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:var(--crux-ink2,#10142E); box-sizing:border-box;">
+            <input type="text" name="biz_stage" placeholder="Stage: idea / trading / scaling" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:var(--crux-ink2,#10142E); box-sizing:border-box;">
           </div>
         </div>
 
         <!-- Panel 3: Partnership Details -->
         <div id="panel-partner-details" class="intake-panel" style="display:none; flex-direction:column; gap:12px; padding:20px; border:1.5px solid #F5C6C6; clip-path:polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%); background:#FFF7F7;">
-          <span class="bx" style="display:inline-block; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#FFFFFF; background:#BA0000; padding:4px 12px; width:fit-content; --sl:5px;">Sponsorship &amp; Collaboration</span>
+          <span class="bx" style="display:inline-block; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#FFFFFF; background:var(--crux-red,#BA0000); padding:4px 12px; width:fit-content; --sl:5px;">Sponsorship &amp; Collaboration</span>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;" data-m="g1">
-            <input type="text" name="partner_company" placeholder="Brand / Organization name" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E; box-sizing:border-box;">
-            <input type="text" name="partner_interest" placeholder="Interest: Sponsor / Vendor / Co-Host" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E; box-sizing:border-box;">
+            <input type="text" name="partner_company" placeholder="Brand / Organization name" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:var(--crux-ink2,#10142E); box-sizing:border-box;">
+            <input type="text" name="partner_interest" placeholder="Interest: Sponsor / Vendor / Co-Host" style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:var(--crux-ink2,#10142E); box-sizing:border-box;">
           </div>
         </div>
 
-        <textarea name="message" id="inp-message" rows="4" placeholder="Tell us what you have in mind, where you are stuck, or what you would like to achieve." style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:#10142E; box-sizing:border-box;"></textarea>
+        <textarea name="message" id="inp-message" rows="4" placeholder="Tell us what you have in mind, where you are stuck, or what you would like to achieve." style="width:100%; font-family:'Space Grotesk',sans-serif; font-size:14px; padding:15px 18px; border:1.5px solid #E1DEF3; border-radius:12px; background:#FFFFFF; color:var(--crux-ink2,#10142E); box-sizing:border-box;"></textarea>
         
         <p id="route-note-label" class="routeNote" style="font-size:12.5px; color:#5A5F86; margin:0; line-height:1.5;">
           Direct connection: This goes straight to our events crew. We respond within 24 business hours.
         </p>
 
-        <button type="button" id="btn-submit-brief" style="display:flex; align-items:center; justify-content:center; text-align:center; background:#002671; color:#FFFFFF; font-weight:700; font-size:15px; padding:17px; margin-top:6px; --sl:10px; cursor:pointer; width:100%;" class="bx">Submit</button>
+        <button type="button" id="btn-submit-brief" style="display:flex; align-items:center; justify-content:center; text-align:center; background:var(--crux-navy,#002671); color:#FFFFFF; font-weight:700; font-size:15px; padding:17px; margin-top:6px; --sl:10px; cursor:pointer; width:100%;" class="bx">Submit</button>
       </form>
 
       <!-- CONTACT CONFIRMATION POPUP MODAL (Executive Dialog) -->
       <div id="contact-confirmation-modal" class="crux-modal-backdrop" style="display:none; position:fixed; inset:0; z-index:100000; background:rgba(10,15,38,0.85); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); align-items:center; justify-content:center; padding:20px; box-sizing:border-box;">
-        <div class="crux-modal-card" style="background:#FFFFFF; border:2px solid #002671; border-radius:18px; max-width:540px; width:100%; padding:44px 36px 40px; text-align:center; position:relative; box-shadow:0 30px 80px rgba(0,38,113,0.35); box-sizing:border-box;">
+        <div class="crux-modal-card" style="background:#FFFFFF; border:2px solid var(--crux-navy,#002671); border-radius:18px; max-width:540px; width:100%; padding:44px 36px 40px; text-align:center; position:relative; box-shadow:0 30px 80px rgba(0,38,113,0.35); box-sizing:border-box;">
           
           <!-- Close icon button -->
-          <button type="button" id="btn-modal-close" style="position:absolute; top:18px; right:18px; width:36px; height:36px; border-radius:50%; background:#F3F1FC; border:1px solid #D2CEEA; color:#10142E; font-size:22px; line-height:1; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:transform .2s ease, background .2s ease;" aria-label="Close dialog">&times;</button>
+          <button type="button" id="btn-modal-close" style="position:absolute; top:18px; right:18px; width:36px; height:36px; border-radius:50%; background:#F3F1FC; border:1px solid #D2CEEA; color:var(--crux-ink2,#10142E); font-size:22px; line-height:1; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:transform .2s ease, background .2s ease;" aria-label="Close dialog">&times;</button>
           
           <!-- Animated SVG Success Badge -->
           <div style="width:76px; height:76px; margin:0 auto 20px; display:flex; align-items:center; justify-content:center;">
@@ -131,16 +131,16 @@ if ( ! defined( 'ABSPATH' ) ) {
             </svg>
           </div>
 
-          <h2 class="bebas" style="font-size:42px; color:#10142E; margin:0 0 10px; letter-spacing:0.5px; line-height:0.95;"<?php echo crux_edit_attr( 'contact', 'contact_heading_2' ); ?>><?php echo crux_h( 'contact', 'contact_heading_2' ); ?></h2>
+          <h2 class="bebas" style="font-size:42px; color:var(--crux-ink2,#10142E); margin:0 0 10px; letter-spacing:0.5px; line-height:0.95;"<?php echo crux_edit_attr( 'contact', 'contact_heading_2' ); ?>><?php echo crux_h( 'contact', 'contact_heading_2' ); ?></h2>
           
-          <div id="confirm-summary-badge" class="bx" style="display:inline-block; background:#E8EFFD; --sl:6px; --bc:#C4D3F8; padding:8px 20px; font-size:12.5px; font-weight:700; color:#002671; margin-bottom:18px;"<?php echo crux_edit_attr( 'contact', 'contact_text_1' ); ?>><?php echo crux_h( 'contact', 'contact_text_1' ); ?></div>
+          <div id="confirm-summary-badge" class="bx" style="display:inline-block; background:#E8EFFD; --sl:6px; --bc:#C4D3F8; padding:8px 20px; font-size:12.5px; font-weight:700; color:var(--crux-navy,#002671); margin-bottom:18px;"<?php echo crux_edit_attr( 'contact', 'contact_text_1' ); ?>><?php echo crux_h( 'contact', 'contact_text_1' ); ?></div>
 
           <p id="confirm-msg-body" style="font-size:15px; line-height:1.65; color:#3A3F66; margin:0 0 28px;"<?php echo crux_edit_attr( 'contact', 'contact_paragraph_1' ); ?>><?php echo crux_h( 'contact', 'contact_paragraph_1' ); ?></p>
           
           <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
-            <a href="<?php echo esc_url( crux_opt( 'calendly_url' ) ); ?>" id="btn-modal-calendly" target="_blank" rel="noopener" style="display:none; background:#8C7AE6; color:#10142E !important; font-weight:700; font-size:13.5px; padding:13px 22px; --sl:8px; text-decoration:none;" class="bx"<?php echo crux_edit_attr( 'contact', 'contact_button_2' ); ?>><?php echo crux_h( 'contact', 'contact_button_2' ); ?></a>
-            <button type="button" id="btn-modal-done" style="background:#002671; color:#FFFFFF; font-weight:700; font-size:13.5px; padding:13px 26px; --sl:8px; cursor:pointer;" class="bx"<?php echo crux_edit_attr( 'contact', 'contact_button_3' ); ?>><?php echo crux_h( 'contact', 'contact_button_3' ); ?></button>
-            <button type="button" id="btn-modal-reset" style="background:#8C7AE6; color:#10142E; font-weight:700; font-size:13.5px; padding:13px 24px; --sl:8px; cursor:pointer;" class="bx"<?php echo crux_edit_attr( 'contact', 'contact_button_4' ); ?>><?php echo crux_h( 'contact', 'contact_button_4' ); ?></button>
+            <a href="<?php echo esc_url( crux_opt( 'calendly_url' ) ); ?>" id="btn-modal-calendly" target="_blank" rel="noopener" style="display:none; background:var(--crux-purple,#8C7AE6); color:var(--crux-ink2,#10142E) !important; font-weight:700; font-size:13.5px; padding:13px 22px; --sl:8px; text-decoration:none;" class="bx"<?php echo crux_edit_attr( 'contact', 'contact_button_2' ); ?>><?php echo crux_h( 'contact', 'contact_button_2' ); ?></a>
+            <button type="button" id="btn-modal-done" style="background:var(--crux-navy,#002671); color:#FFFFFF; font-weight:700; font-size:13.5px; padding:13px 26px; --sl:8px; cursor:pointer;" class="bx"<?php echo crux_edit_attr( 'contact', 'contact_button_3' ); ?>><?php echo crux_h( 'contact', 'contact_button_3' ); ?></button>
+            <button type="button" id="btn-modal-reset" style="background:var(--crux-purple,#8C7AE6); color:var(--crux-ink2,#10142E); font-weight:700; font-size:13.5px; padding:13px 24px; --sl:8px; cursor:pointer;" class="bx"<?php echo crux_edit_attr( 'contact', 'contact_button_4' ); ?>><?php echo crux_h( 'contact', 'contact_button_4' ); ?></button>
           </div>
 
         </div>
@@ -150,20 +150,20 @@ if ( ! defined( 'ABSPATH' ) ) {
       <img src="<?php echo crux_img_url( 'contact', 'contact_photo_1' ); ?>" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;" class="drift"<?php echo crux_edit_attr( 'contact', 'contact_photo_1' ); ?>>
       <div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(16,20,46,0.92) 0%, rgba(16,20,46,0.25) 70%);"></div>
       <div style="position:relative; height:100%; display:flex; flex-direction:column; justify-content:flex-end; padding:56px; gap:12px;">
-        <div style="display:flex; align-items:center; gap:12px; background:rgba(16,20,46,0.96) !important; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); padding:11px 22px 11px 12px; width:fit-content; --sl:6px; --bc:#3A3F72;" class="bx"><span style="width:32px; height:32px; border-radius:50%; background:#8C7AE6; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:#10142E;">✆</span><span style="font-size:13px; font-weight:600; color:#F2F1F8;"><?php echo esc_html( crux_opt( 'phone_events' ) ); ?></span></div><div style="display:flex; align-items:center; gap:12px; background:rgba(16,20,46,0.96) !important; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); padding:11px 22px 11px 12px; width:fit-content; --sl:6px; --bc:#3A3F72;" class="bx"><span style="width:32px; height:32px; border-radius:50%; background:#8C7AE6; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:#10142E;">✆</span><span style="font-size:13px; font-weight:600; color:#F2F1F8;"><?php echo esc_html( crux_opt( 'phone_consult' ) ); ?></span></div><div style="display:flex; align-items:center; gap:12px; background:rgba(16,20,46,0.96) !important; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); padding:11px 22px 11px 12px; width:fit-content; --sl:6px; --bc:#3A3F72;" class="bx"><span style="width:32px; height:32px; border-radius:50%; background:#8C7AE6; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:#10142E;">@</span><?php $c_mail = crux_opt( 'email' ); ?><a href="<?php echo esc_url( 'mailto:' . antispambot( $c_mail ) ); ?>" style="font-size:13px; font-weight:600; color:#F2F1F8; text-decoration:none;"><?php echo esc_html( antispambot( $c_mail ) ); ?></a></div><div style="display:flex; align-items:center; gap:12px; background:rgba(16,20,46,0.96) !important; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); padding:11px 22px 11px 12px; width:fit-content; --sl:6px; --bc:#3A3F72;" class="bx"><span style="width:32px; height:32px; border-radius:50%; background:#8C7AE6; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:#10142E;">●</span><span style="font-size:13px; font-weight:600; color:#F2F1F8;"><?php echo esc_html( crux_address( false ) ); ?></span></div>
-        <a href="#" style="color:#F2F1F8; font-weight:700; font-size:13px; border-bottom:1.5px solid #8C7AE6; padding-bottom:2px; width:fit-content; margin-top:6px;"<?php echo crux_edit_attr( 'contact', 'contact_link_1' ); ?>><?php echo crux_h( 'contact', 'contact_link_1' ); ?></a>
+        <div style="display:flex; align-items:center; gap:12px; background:rgba(16,20,46,0.96) !important; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); padding:11px 22px 11px 12px; width:fit-content; --sl:6px; --bc:#3A3F72;" class="bx"><span style="width:32px; height:32px; border-radius:50%; background:var(--crux-purple,#8C7AE6); display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:var(--crux-ink2,#10142E);">✆</span><span style="font-size:13px; font-weight:600; color:#F2F1F8;"><?php echo esc_html( crux_opt( 'phone_events' ) ); ?></span></div><div style="display:flex; align-items:center; gap:12px; background:rgba(16,20,46,0.96) !important; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); padding:11px 22px 11px 12px; width:fit-content; --sl:6px; --bc:#3A3F72;" class="bx"><span style="width:32px; height:32px; border-radius:50%; background:var(--crux-purple,#8C7AE6); display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:var(--crux-ink2,#10142E);">✆</span><span style="font-size:13px; font-weight:600; color:#F2F1F8;"><?php echo esc_html( crux_opt( 'phone_consult' ) ); ?></span></div><div style="display:flex; align-items:center; gap:12px; background:rgba(16,20,46,0.96) !important; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); padding:11px 22px 11px 12px; width:fit-content; --sl:6px; --bc:#3A3F72;" class="bx"><span style="width:32px; height:32px; border-radius:50%; background:var(--crux-purple,#8C7AE6); display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:var(--crux-ink2,#10142E);">@</span><?php $c_mail = crux_opt( 'email' ); ?><a href="<?php echo esc_url( 'mailto:' . antispambot( $c_mail ) ); ?>" style="font-size:13px; font-weight:600; color:#F2F1F8; text-decoration:none;"><?php echo esc_html( antispambot( $c_mail ) ); ?></a></div><div style="display:flex; align-items:center; gap:12px; background:rgba(16,20,46,0.96) !important; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); padding:11px 22px 11px 12px; width:fit-content; --sl:6px; --bc:#3A3F72;" class="bx"><span style="width:32px; height:32px; border-radius:50%; background:var(--crux-purple,#8C7AE6); display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:var(--crux-ink2,#10142E);">●</span><span style="font-size:13px; font-weight:600; color:#F2F1F8;"><?php echo esc_html( crux_address( false ) ); ?></span></div>
+        <a href="#" style="color:#F2F1F8; font-weight:700; font-size:13px; border-bottom:1.5px solid var(--crux-purple,#8C7AE6); padding-bottom:2px; width:fit-content; margin-top:6px;"<?php echo crux_edit_attr( 'contact', 'contact_link_1' ); ?>><?php echo crux_h( 'contact', 'contact_link_1' ); ?></a>
       </div>
     </div>
   </section>
 
   <!-- 2 NEXT -->
   <section style="min-height:640px; padding:100px 64px; background:#F3F1FC;">
-    <div style="text-align:center; margin-bottom:50px;" class="reveal"><span class="eyebrow"<?php echo crux_edit_attr( 'contact', 'next_small_heading_1' ); ?>><?php echo crux_h( 'contact', 'next_small_heading_1' ); ?></span><h2 class="bebas" style="font-size:56px; margin:12px 0 0; color:#10142E;"<?php echo crux_edit_attr( 'contact', 'next_heading_1' ); ?>><?php echo crux_h( 'contact', 'next_heading_1' ); ?></h2></div>
-    <div style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:20px;" class="reveal"><div class="bento-tile reveal" style="background:#FFFFFF; border:1.5px solid #E1DEF3; border-radius:22px; padding:34px 30px; min-height:240px; display:flex; flex-direction:column; justify-content:space-between;"><span class="bebas" style="font-size:64px; color:#6C58DB; line-height:0.9;">01</span><div><h3 class="bebas" style="font-size:30px; margin:0 0 8px; color:#10142E;"<?php echo crux_edit_attr( 'contact', 'next_heading_2' ); ?>><?php echo crux_h( 'contact', 'next_heading_2' ); ?></h3><p style="font-size:14px; line-height:1.65; color:#3A3F66; margin:0;"<?php echo crux_edit_attr( 'contact', 'next_paragraph_1' ); ?>><?php echo crux_h( 'contact', 'next_paragraph_1' ); ?></p></div></div><div class="bento-tile reveal" style="background:#FFFFFF; border:1.5px solid #E1DEF3; border-radius:22px; padding:34px 30px; min-height:240px; display:flex; flex-direction:column; justify-content:space-between;"><span class="bebas" style="font-size:64px; color:#6C58DB; line-height:0.9;">02</span><div><h3 class="bebas" style="font-size:30px; margin:0 0 8px; color:#10142E;"<?php echo crux_edit_attr( 'contact', 'next_heading_3' ); ?>><?php echo crux_h( 'contact', 'next_heading_3' ); ?></h3><p style="font-size:14px; line-height:1.65; color:#3A3F66; margin:0;"<?php echo crux_edit_attr( 'contact', 'next_paragraph_2' ); ?>><?php echo crux_h( 'contact', 'next_paragraph_2' ); ?></p></div></div><div class="bento-tile reveal" style="background:#FFFFFF; border:1.5px solid #E1DEF3; border-radius:22px; padding:34px 30px; min-height:240px; display:flex; flex-direction:column; justify-content:space-between;"><span class="bebas" style="font-size:64px; color:#6C58DB; line-height:0.9;">03</span><div><h3 class="bebas" style="font-size:30px; margin:0 0 8px; color:#10142E;"<?php echo crux_edit_attr( 'contact', 'next_heading_4' ); ?>><?php echo crux_h( 'contact', 'next_heading_4' ); ?></h3><p style="font-size:14px; line-height:1.65; color:#3A3F66; margin:0;"<?php echo crux_edit_attr( 'contact', 'next_paragraph_3' ); ?>><?php echo crux_h( 'contact', 'next_paragraph_3' ); ?></p></div></div></div>
+    <div style="text-align:center; margin-bottom:50px;" class="reveal"><span class="eyebrow"<?php echo crux_edit_attr( 'contact', 'next_small_heading_1' ); ?>><?php echo crux_h( 'contact', 'next_small_heading_1' ); ?></span><h2 class="bebas" style="font-size:56px; margin:12px 0 0; color:var(--crux-ink2,#10142E);"<?php echo crux_edit_attr( 'contact', 'next_heading_1' ); ?>><?php echo crux_h( 'contact', 'next_heading_1' ); ?></h2></div>
+    <div style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:20px;" class="reveal"><div class="bento-tile reveal" style="background:#FFFFFF; border:1.5px solid #E1DEF3; border-radius:22px; padding:34px 30px; min-height:240px; display:flex; flex-direction:column; justify-content:space-between;"><span class="bebas" style="font-size:64px; color:var(--crux-violet,#6C58DB); line-height:0.9;">01</span><div><h3 class="bebas" style="font-size:30px; margin:0 0 8px; color:var(--crux-ink2,#10142E);"<?php echo crux_edit_attr( 'contact', 'next_heading_2' ); ?>><?php echo crux_h( 'contact', 'next_heading_2' ); ?></h3><p style="font-size:14px; line-height:1.65; color:#3A3F66; margin:0;"<?php echo crux_edit_attr( 'contact', 'next_paragraph_1' ); ?>><?php echo crux_h( 'contact', 'next_paragraph_1' ); ?></p></div></div><div class="bento-tile reveal" style="background:#FFFFFF; border:1.5px solid #E1DEF3; border-radius:22px; padding:34px 30px; min-height:240px; display:flex; flex-direction:column; justify-content:space-between;"><span class="bebas" style="font-size:64px; color:var(--crux-violet,#6C58DB); line-height:0.9;">02</span><div><h3 class="bebas" style="font-size:30px; margin:0 0 8px; color:var(--crux-ink2,#10142E);"<?php echo crux_edit_attr( 'contact', 'next_heading_3' ); ?>><?php echo crux_h( 'contact', 'next_heading_3' ); ?></h3><p style="font-size:14px; line-height:1.65; color:#3A3F66; margin:0;"<?php echo crux_edit_attr( 'contact', 'next_paragraph_2' ); ?>><?php echo crux_h( 'contact', 'next_paragraph_2' ); ?></p></div></div><div class="bento-tile reveal" style="background:#FFFFFF; border:1.5px solid #E1DEF3; border-radius:22px; padding:34px 30px; min-height:240px; display:flex; flex-direction:column; justify-content:space-between;"><span class="bebas" style="font-size:64px; color:var(--crux-violet,#6C58DB); line-height:0.9;">03</span><div><h3 class="bebas" style="font-size:30px; margin:0 0 8px; color:var(--crux-ink2,#10142E);"<?php echo crux_edit_attr( 'contact', 'next_heading_4' ); ?>><?php echo crux_h( 'contact', 'next_heading_4' ); ?></h3><p style="font-size:14px; line-height:1.65; color:#3A3F66; margin:0;"<?php echo crux_edit_attr( 'contact', 'next_paragraph_3' ); ?>><?php echo crux_h( 'contact', 'next_paragraph_3' ); ?></p></div></div></div>
   </section>
 
 
-  <div style="background:#10142E;">
+  <div style="background:var(--crux-ink2,#10142E);">
   <?php get_template_part( 'parts/site-footer', null, array( 'skin' => 'light', 'prefooter' => 'events-light', 'wing' => 'events', 'pad' => '90px 24px 44px' ) ); ?>
   </div>
 
@@ -240,43 +240,43 @@ if ( ! defined( 'ABSPATH' ) ) {
       if (activeTabs.length === 3) {
         if (routeNote) routeNote.textContent = 'Direct connection: Your multi-wing brief will be transmitted directly to our events, business consultancy, and partnership teams. We respond within 24 business hours.';
         if (submitBtn) {
-          submitBtn.style.background = '#002671';
+          submitBtn.style.background = 'var(--crux-navy,#002671)';
           submitBtn.style.color = '#FFFFFF';
         }
       } else if (hasEvents && hasConsultancy) {
         if (routeNote) routeNote.textContent = 'Direct connection: This brief connects directly with both our events and business strategy leads. We respond within 24 business hours.';
         if (submitBtn) {
-          submitBtn.style.background = '#002671';
+          submitBtn.style.background = 'var(--crux-navy,#002671)';
           submitBtn.style.color = '#FFFFFF';
         }
       } else if (hasEvents && hasPartner) {
         if (routeNote) routeNote.textContent = 'Direct connection: This brief connects directly with our events and partnership leads. We respond within 24 business hours.';
         if (submitBtn) {
-          submitBtn.style.background = '#002671';
+          submitBtn.style.background = 'var(--crux-navy,#002671)';
           submitBtn.style.color = '#FFFFFF';
         }
       } else if (hasConsultancy && hasPartner) {
         if (routeNote) routeNote.textContent = 'Direct connection: This brief connects directly with our business consultancy and partnership leads. We respond within 24 business hours.';
         if (submitBtn) {
-          submitBtn.style.background = '#8C7AE6';
-          submitBtn.style.color = '#10142E';
+          submitBtn.style.background = 'var(--crux-purple,#8C7AE6)';
+          submitBtn.style.color = 'var(--crux-ink2,#10142E)';
         }
       } else if (hasEvents) {
         if (routeNote) routeNote.textContent = 'Direct connection: This goes straight to our events crew. We respond within 24 business hours.';
         if (submitBtn) {
-          submitBtn.style.background = '#002671';
+          submitBtn.style.background = 'var(--crux-navy,#002671)';
           submitBtn.style.color = '#FFFFFF';
         }
       } else if (hasConsultancy) {
         if (routeNote) routeNote.textContent = 'Direct connection: This goes straight to our consultancy & business advisory team. We respond within 24 business hours.';
         if (submitBtn) {
-          submitBtn.style.background = '#8C7AE6';
-          submitBtn.style.color = '#10142E';
+          submitBtn.style.background = 'var(--crux-purple,#8C7AE6)';
+          submitBtn.style.color = 'var(--crux-ink2,#10142E)';
         }
       } else if (hasPartner) {
         if (routeNote) routeNote.textContent = 'Direct connection: This goes straight to our executive partnerships & sponsorship team. We respond within 24 business hours.';
         if (submitBtn) {
-          submitBtn.style.background = '#BA0000';
+          submitBtn.style.background = 'var(--crux-red,#BA0000)';
           submitBtn.style.color = '#FFFFFF';
         }
       }
@@ -388,11 +388,11 @@ if ( ! defined( 'ABSPATH' ) ) {
       if (isError) {
         alertBox.style.background = '#FFF0F0';
         alertBox.style.border = '1.5px solid #E5383B';
-        alertBox.style.color = '#BA0000';
+        alertBox.style.color = 'var(--crux-red,#BA0000)';
       } else {
         alertBox.style.background = '#E8F8F0';
         alertBox.style.border = '1.5px solid #27AE60';
-        alertBox.style.color = '#10142E';
+        alertBox.style.color = 'var(--crux-ink2,#10142E)';
       }
       alertBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
@@ -473,36 +473,36 @@ if ( ! defined( 'ABSPATH' ) ) {
             if (activeTabs.length === 3) {
               confirmBadge.textContent = 'All Wings Brief (Events, Consultancy & Partnership)';
               confirmBadge.style.color = '#FFFFFF';
-              confirmBadge.style.background = '#002671';
-              confirmBadge.style.borderColor = '#002671';
+              confirmBadge.style.background = 'var(--crux-navy,#002671)';
+              confirmBadge.style.borderColor = 'var(--crux-navy,#002671)';
             } else if (activeTabs.length === 2) {
               if (activeTabs.indexOf('events') !== -1 && activeTabs.indexOf('consultancy') !== -1) {
                 confirmBadge.textContent = 'Events & Consultancy Brief';
                 confirmBadge.style.color = '#FFFFFF';
-                confirmBadge.style.background = '#002671';
+                confirmBadge.style.background = 'var(--crux-navy,#002671)';
               } else if (activeTabs.indexOf('events') !== -1 && activeTabs.indexOf('partner') !== -1) {
                 confirmBadge.textContent = 'Events & Partnership Brief';
                 confirmBadge.style.color = '#FFFFFF';
-                confirmBadge.style.background = '#002671';
+                confirmBadge.style.background = 'var(--crux-navy,#002671)';
               } else {
                 confirmBadge.textContent = 'Consultancy & Partnership Brief';
-                confirmBadge.style.color = '#10142E';
-                confirmBadge.style.background = '#8C7AE6';
+                confirmBadge.style.color = 'var(--crux-ink2,#10142E)';
+                confirmBadge.style.background = 'var(--crux-purple,#8C7AE6)';
               }
             } else if (activeTabs[0] === 'consultancy') {
               confirmBadge.textContent = 'Business Strategy Inquiry';
-              confirmBadge.style.color = '#10142E';
-              confirmBadge.style.background = '#8C7AE6';
+              confirmBadge.style.color = 'var(--crux-ink2,#10142E)';
+              confirmBadge.style.background = 'var(--crux-purple,#8C7AE6)';
               confirmBadge.style.borderColor = '#D5CEFA';
             } else if (activeTabs[0] === 'partner') {
               confirmBadge.textContent = 'Sponsorship & Partnership Inquiry';
               confirmBadge.style.color = '#FFFFFF';
-              confirmBadge.style.background = '#BA0000';
+              confirmBadge.style.background = 'var(--crux-red,#BA0000)';
               confirmBadge.style.borderColor = '#F5C6C6';
             } else {
               confirmBadge.textContent = 'Event Planning Inquiry';
               confirmBadge.style.color = '#FFFFFF';
-              confirmBadge.style.background = '#002671';
+              confirmBadge.style.background = 'var(--crux-navy,#002671)';
               confirmBadge.style.borderColor = '#C4D3F8';
             }
           }
@@ -607,9 +607,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <!-- BOTTOM STICKY CONSULTANCY BOOKING BUTTON -->
 <div class="contact-sticky-booking" id="contact-sticky-booking">
-  <div class="crux-sw-pod crux-sw-pod--light" style="pointer-events:auto; margin:0 auto; display:inline-flex; align-items:center; padding:1.5px; background:linear-gradient(135deg, #C4BAEE 0%, #8C7AE6 100%); clip-path:polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%); box-shadow:0 14px 36px rgba(16,20,46,0.28); filter:drop-shadow(0 6px 16px rgba(16,20,46,0.18));">
-    <div class="crux-sw-inner" style="display:inline-flex; align-items:center; background:#10142E; padding:4px; clip-path:polygon(7px 0, 100% 0, calc(100% - 7px) 100%, 0 100%);">
-      <a href="<?php echo esc_url( crux_opt( 'calendly_url' ) ); ?>" target="_blank" rel="noopener" class="contact-sticky-booking-btn" style="display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:11px 22px; font-family:'Space Grotesk',system-ui,sans-serif; font-size:13px; font-weight:700; letter-spacing:0.3px; text-transform:uppercase; text-decoration:none; line-height:1.2; background:#8C7AE6; color:#10142E; clip-path:polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%); box-shadow:0 2px 10px rgba(140,122,230,0.45); transition:all .2s ease;">
+  <div class="crux-sw-pod crux-sw-pod--light" style="pointer-events:auto; margin:0 auto; display:inline-flex; align-items:center; padding:1.5px; background:linear-gradient(135deg, #C4BAEE 0%, var(--crux-purple,#8C7AE6) 100%); clip-path:polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%); box-shadow:0 14px 36px rgba(16,20,46,0.28); filter:drop-shadow(0 6px 16px rgba(16,20,46,0.18));">
+    <div class="crux-sw-inner" style="display:inline-flex; align-items:center; background:var(--crux-ink2,#10142E); padding:4px; clip-path:polygon(7px 0, 100% 0, calc(100% - 7px) 100%, 0 100%);">
+      <a href="<?php echo esc_url( crux_opt( 'calendly_url' ) ); ?>" target="_blank" rel="noopener" class="contact-sticky-booking-btn" style="display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:11px 22px; font-family:'Space Grotesk',system-ui,sans-serif; font-size:13px; font-weight:700; letter-spacing:0.3px; text-transform:uppercase; text-decoration:none; line-height:1.2; background:var(--crux-purple,#8C7AE6); color:var(--crux-ink2,#10142E); clip-path:polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%); box-shadow:0 2px 10px rgba(140,122,230,0.45); transition:all .2s ease;">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10142E" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle; flex-shrink:0;">
           <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
           <line x1="16" y1="2" x2="16" y2="6"></line>

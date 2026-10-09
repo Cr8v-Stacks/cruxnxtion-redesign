@@ -153,7 +153,7 @@ add_action( 'customize_controls_enqueue_scripts', 'crux_customizer_scripts' );
 /** Pencils and instant text updates inside the preview. */
 function crux_customizer_preview_scripts() {
 	wp_enqueue_script( 'crux-customizer-preview', get_template_directory_uri() . '/assets/js/customizer-preview.js?cv=' . filemtime( get_template_directory() . '/assets/js/customizer-preview.js' ), array( 'customize-preview' ), null, true );
-	wp_localize_script( 'crux-customizer-preview', 'cruxPreview', array( 'live' => array_keys( crux_live_fields() ), 'page' => crux_current_page_key() ) );
+	wp_localize_script( 'crux-customizer-preview', 'cruxPreview', array( 'live' => array_keys( crux_live_fields() ), 'page' => crux_current_page_key(), 'colours' => array_keys( crux_colour_tokens() ) ) );
 }
 add_action(
 	'customize_preview_init',

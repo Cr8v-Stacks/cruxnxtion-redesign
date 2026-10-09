@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 return array(
 	'hero_small_heading_1' => array( 'Top banner', 'Label above heading 1: Cultural Live Event Production & B...', 'text', 'Cultural Live Event Production & Business Consultancy' ),
-	'hero_heading_1' => array( 'Top banner', 'Heading 1: WE PLAN IT. WE BOOK IT. WE RUN IT.', 'styled', 'WE PLAN IT.<br>WE BOOK IT.<br><span style="color:#E5383B;">WE RUN IT.</span>' ),
+	'hero_heading_1' => array( 'Top banner', 'Heading 1: WE PLAN IT. WE BOOK IT. WE RUN IT.', 'styled', 'WE PLAN IT.<br>WE BOOK IT.<br><span style="color:var(--crux-crimson,#E5383B);">WE RUN IT.</span>' ),
 	'hero_paragraph_1' => array( 'Top banner', 'Text 1: Crux Nxtion Events & Consultancy p...', 'textarea', 'Crux Nxtion Events & Consultancy plans, books, and executes the live gatherings people talk about for weeks, while delivering the strategic business solutions that scale the enterprises behind them — your singular crew from the first brief to the final execution.' ),
 	'hero_button_1' => array( 'Top banner', 'Button 1: Plan An Event →', 'text', 'Plan An Event →' ),
 	'hero_button_2' => array( 'Top banner', 'Button 2: Explore Consultancy →', 'text', 'Explore Consultancy →' ),

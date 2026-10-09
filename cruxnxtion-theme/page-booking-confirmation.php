@@ -200,7 +200,7 @@ if ( ( ! empty( $req_ticket_code ) && ! empty( $req_tix_secret ) ) || $staff_loo
   <title><?php esc_html_e( 'Booking Confirmation & Tickets — Crux Nxtion', 'cruxnxtion' ); ?></title>
   <?php wp_head(); ?>
 </head>
-<body <?php body_class(); ?> style="background:#0A0F26; margin:0; padding:0; color:#F4F5FA; font-family:'Space Grotesk', system-ui, sans-serif;">
+<body <?php body_class(); ?> style="background:var(--crux-ink,#0A0F26); margin:0; padding:0; color:var(--crux-text,#F4F5FA); font-family:'Space Grotesk', system-ui, sans-serif;">
 <?php wp_body_open(); ?>
 
 <style>
@@ -213,15 +213,15 @@ if ( ( ! empty( $req_ticket_code ) && ! empty( $req_tix_secret ) ) || $staff_loo
     padding: 0;
     width: 100% !important;
     max-width: 100vw !important;
-    background: #0A0F26;
-    color: #F4F5FA;
+    background: var(--crux-ink,#0A0F26);
+    color: var(--crux-text,#F4F5FA);
     overflow-x: hidden !important;
     box-sizing: border-box;
   }
-  a { color: #5B8DEF; text-decoration: none; }
-  a:hover { color: #BA0000; }
+  a { color: var(--crux-blue,#5B8DEF); text-decoration: none; }
+  a:hover { color: var(--crux-red,#BA0000); }
   .bebas { font-family: 'Bebas Neue', 'Arial Narrow', sans-serif; letter-spacing: 0.5px; line-height: 0.95; text-transform: uppercase; }
-  .eyebrow { font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-size: 11px; color: #5B8DEF; }
+  .eyebrow { font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-size: 11px; color: var(--crux-blue,#5B8DEF); }
 
   /* Slanted button token */
   .bx { position:relative; clip-path:polygon(var(--sl,10px) 0, 100% 0, calc(100% - var(--sl,10px)) 100%, 0 100%); border:0 !important; border-radius:0 !important; --bw:1.5px; text-align:center; transition:transform .2s ease, filter .2s ease; cursor:pointer; }
@@ -231,13 +231,13 @@ if ( ( ! empty( $req_ticket_code ) && ! empty( $req_tix_secret ) ) || $staff_loo
 
   /* Ticket notch stub */
   .ticket-stub { position: relative; }
-  .ticket-stub::before, .ticket-stub::after { content: ''; position: absolute; right: -11px; width: 20px; height: 20px; border-radius: 50%; background: #0A0F26; z-index: 2; }
+  .ticket-stub::before, .ticket-stub::after { content: ''; position: absolute; right: -11px; width: 20px; height: 20px; border-radius: 50%; background: var(--crux-ink,#0A0F26); z-index: 2; }
   .ticket-stub::before { top: -10px; }
   .ticket-stub::after { bottom: -10px; }
 
   /* Confirmation container */
   .conf-container { width: 100% !important; max-width: 900px; margin: 0 auto; padding: 40px 20px 80px; box-sizing: border-box; }
-  .conf-card { width: 100% !important; background: #111838; border: 1.5px solid #1E2B5E; border-radius: 16px; padding: 36px; margin-bottom: 30px; box-sizing: border-box; overflow-wrap: break-word; word-break: break-word; }
+  .conf-card { width: 100% !important; background: var(--crux-surface,#111838); border: 1.5px solid var(--crux-line,#1E2B5E); border-radius: 16px; padding: 36px; margin-bottom: 30px; box-sizing: border-box; overflow-wrap: break-word; word-break: break-word; }
 
   /* Mobile Responsive Optimization (<= 640px) */
   @media (max-width: 640px) {
@@ -287,7 +287,7 @@ if ( ( ! empty( $req_ticket_code ) && ! empty( $req_tix_secret ) ) || $staff_loo
       flex: 0 0 auto !important;
       width: 100% !important;
       border-left: 0 !important;
-      border-top: 1.5px dashed #1E2B5E !important;
+      border-top: 1.5px dashed var(--crux-line,#1E2B5E) !important;
       padding: 22px 14px !important;
       box-sizing: border-box !important;
       position: relative !important;
@@ -300,7 +300,7 @@ if ( ( ! empty( $req_ticket_code ) && ! empty( $req_tix_secret ) ) || $staff_loo
       width: 20px;
       height: 20px;
       border-radius: 50%;
-      background: #0A0F26;
+      background: var(--crux-ink,#0A0F26);
       z-index: 2;
     }
     .ticket-card .ticket-qr-area::before { left: -10px; }
@@ -331,9 +331,9 @@ if ( ( ! empty( $req_ticket_code ) && ! empty( $req_tix_secret ) ) || $staff_loo
 </style>
 
 <!-- Minimal Site Header -->
-<header style="background:rgba(10,15,38,0.92); border-bottom:1px solid #1E2B5E; padding:18px 24px; display:flex; align-items:center; justify-content:space-between; box-sizing:border-box; width:100%;" class="no-print">
+<header style="background:rgba(10,15,38,0.92); border-bottom:1px solid var(--crux-line,#1E2B5E); padding:18px 24px; display:flex; align-items:center; justify-content:space-between; box-sizing:border-box; width:100%;" class="no-print">
   <a href="<?php echo esc_url( home_url( '/' ) ); ?>" style="text-decoration:none;">
-    <span class="bebas" style="font-size:26px; color:#F4F5FA; letter-spacing:1px;">CRUX<span style="color:#5B8DEF;">NXTION</span></span>
+    <span class="bebas" style="font-size:26px; color:var(--crux-text,#F4F5FA); letter-spacing:1px;">CRUX<span style="color:var(--crux-blue,#5B8DEF);">NXTION</span></span>
   </a>
   <div style="display:flex; gap:20px; align-items:center;">
     <a href="<?php echo esc_url( home_url( '/events/' ) ); ?>" style="font-size:14px; font-weight:600; color:#D5D9EA;">&larr; <?php esc_html_e( 'All Events', 'cruxnxtion' ); ?></a>
@@ -380,8 +380,8 @@ if ( 'verify_ticket' === $view_mode ) :
 	<?php endif; ?>
 
 	<?php if ( current_user_can( 'edit_event_orders' ) ) : ?>
-		<div style="background:rgba(91,141,239,0.12); border:1px solid #1E2B5E; border-radius:8px; padding:12px 18px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;" class="no-print">
-			<span style="font-size:13px; color:#5B8DEF; font-weight:700;">
+		<div style="background:rgba(91,141,239,0.12); border:1px solid var(--crux-line,#1E2B5E); border-radius:8px; padding:12px 18px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;" class="no-print">
+			<span style="font-size:13px; color:var(--crux-blue,#5B8DEF); font-weight:700;">
 				✓ <?php esc_html_e( 'You are logged in as door staff.', 'cruxnxtion' ); ?>
 			</span>
 			<a href="<?php echo esc_url( $staff_landing_url ); ?>" style="font-size:13px; color:#D5D9EA; text-decoration:underline; font-weight:600;">
@@ -396,7 +396,7 @@ if ( 'verify_ticket' === $view_mode ) :
 				<div style="display:inline-block; width:80px; height:80px; border-radius:50%; background:rgba(220,53,69,0.2); border:2px solid #dc3545; line-height:80px; font-size:36px; margin-bottom:18px; color:#FF2E3D;">✕</div>
 				<div class="eyebrow" style="color:#FF2E3D; font-size:12px; letter-spacing:2px;"><?php esc_html_e( 'DO NOT ADMIT', 'cruxnxtion' ); ?></div>
 				<h1 class="bebas" style="font-size:42px; margin:10px 0; color:#FFFFFF;"><?php esc_html_e( 'TICKET NOT FOUND', 'cruxnxtion' ); ?></h1>
-				<div style="background:rgba(220,53,69,0.18); border-left:4px solid #dc3545; border-radius:6px; padding:14px 16px; margin:18px auto 24px; max-width:520px; text-align:left; font-size:14px; color:#F4F5FA; line-height:1.5;">
+				<div style="background:rgba(220,53,69,0.18); border-left:4px solid #dc3545; border-radius:6px; padding:14px 16px; margin:18px auto 24px; max-width:520px; text-align:left; font-size:14px; color:var(--crux-text,#F4F5FA); line-height:1.5;">
 					<strong style="color:#FF2E3D;"><?php esc_html_e( 'Reason:', 'cruxnxtion' ); ?></strong>
 					<?php
 					if ( '' !== $ticket_raw ) {
@@ -418,7 +418,7 @@ if ( 'verify_ticket' === $view_mode ) :
 				<div style="display:inline-block; width:80px; height:80px; border-radius:50%; background:rgba(220,53,69,0.2); border:2px solid #dc3545; line-height:80px; font-size:36px; margin-bottom:18px; color:#FF2E3D;">✕</div>
 				<div class="eyebrow" style="color:#FF2E3D; font-size:12px; letter-spacing:2px;"><?php esc_html_e( 'AUTHENTICATION FAILED', 'cruxnxtion' ); ?></div>
 				<h1 class="bebas" style="font-size:42px; margin:10px 0; color:#FFFFFF;"><?php esc_html_e( 'INVALID TICKET TOKEN', 'cruxnxtion' ); ?></h1>
-				<div style="background:rgba(220,53,69,0.18); border-left:4px solid #dc3545; border-radius:6px; padding:14px 16px; margin:18px auto 24px; max-width:520px; text-align:left; font-size:14px; color:#F4F5FA; line-height:1.5;">
+				<div style="background:rgba(220,53,69,0.18); border-left:4px solid #dc3545; border-radius:6px; padding:14px 16px; margin:18px auto 24px; max-width:520px; text-align:left; font-size:14px; color:var(--crux-text,#F4F5FA); line-height:1.5;">
 					<strong style="color:#FF2E3D;"><?php esc_html_e( 'Reason:', 'cruxnxtion' ); ?></strong>
 					<?php esc_html_e( 'The ticket cryptographic secret does not match. This ticket pass is invalid or has been tampered with.', 'cruxnxtion' ); ?>
 				</div>
@@ -433,7 +433,7 @@ if ( 'verify_ticket' === $view_mode ) :
 				<div style="display:inline-block; width:80px; height:80px; border-radius:50%; background:rgba(220,53,69,0.2); border:2px solid #dc3545; line-height:80px; font-size:36px; margin-bottom:18px;">⛔</div>
 				<div class="eyebrow" style="color:#dc3545; font-size:12px; letter-spacing:2px;"><?php esc_html_e( 'TICKET VOIDED', 'cruxnxtion' ); ?></div>
 				<h1 class="bebas" style="font-size:42px; margin:10px 0; color:#FFFFFF;"><?php esc_html_e( 'TICKET REFUNDED OR CANCELLED', 'cruxnxtion' ); ?></h1>
-				<div style="background:rgba(220,53,69,0.18); border-left:4px solid #dc3545; border-radius:6px; padding:14px 16px; margin:18px auto 24px; max-width:520px; text-align:left; font-size:14px; color:#F4F5FA; line-height:1.5;">
+				<div style="background:rgba(220,53,69,0.18); border-left:4px solid #dc3545; border-radius:6px; padding:14px 16px; margin:18px auto 24px; max-width:520px; text-align:left; font-size:14px; color:var(--crux-text,#F4F5FA); line-height:1.5;">
 					<strong style="color:#FF2E3D;"><?php esc_html_e( 'Reason:', 'cruxnxtion' ); ?></strong>
 					<?php esc_html_e( 'This ticket was refunded or voided. It is no longer valid for venue entry.', 'cruxnxtion' ); ?>
 				</div>
@@ -462,20 +462,20 @@ if ( 'verify_ticket' === $view_mode ) :
 					<?php esc_html_e( 'Scan next →', 'cruxnxtion' ); ?>
 				</a>
 
-				<div class="door-verify-box" style="background:#0D1330; border:1px solid #1E2B5E; border-radius:12px; padding:20px; max-width:520px; margin:0 auto 24px; text-align:left; box-sizing:border-box;">
-					<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid #1E2B5E; padding-bottom:10px;">
+				<div class="door-verify-box" style="background:#0D1330; border:1px solid var(--crux-line,#1E2B5E); border-radius:12px; padding:20px; max-width:520px; margin:0 auto 24px; text-align:left; box-sizing:border-box;">
+					<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid var(--crux-line,#1E2B5E); padding-bottom:10px;">
 						<span style="color:#7A82A8; font-size:13px;"><?php esc_html_e( 'Attendee Name:', 'cruxnxtion' ); ?></span>
 						<strong style="color:#FFFFFF; font-size:15px;"><?php echo esc_html( $attendee_display ); ?></strong>
 					</div>
-					<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid #1E2B5E; padding-bottom:10px;">
+					<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid var(--crux-line,#1E2B5E); padding-bottom:10px;">
 						<span style="color:#7A82A8; font-size:13px;"><?php esc_html_e( 'Ticket Tier:', 'cruxnxtion' ); ?></span>
-						<strong style="color:#5B8DEF; font-size:14px;"><?php echo esc_html( $tier_display ); ?></strong>
+						<strong style="color:var(--crux-blue,#5B8DEF); font-size:14px;"><?php echo esc_html( $tier_display ); ?></strong>
 					</div>
-					<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid #1E2B5E; padding-bottom:10px;">
+					<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid var(--crux-line,#1E2B5E); padding-bottom:10px;">
 						<span style="color:#7A82A8; font-size:13px;"><?php esc_html_e( 'Check-In Time:', 'cruxnxtion' ); ?></span>
 						<strong style="color:#28a745; font-size:14px;"><?php echo esc_html( $checkin_time_formatted ); ?></strong>
 					</div>
-					<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid #1E2B5E; padding-bottom:10px;">
+					<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid var(--crux-line,#1E2B5E); padding-bottom:10px;">
 						<span style="color:#7A82A8; font-size:13px;"><?php esc_html_e( 'Pass Code:', 'cruxnxtion' ); ?></span>
 						<code style="color:#FFFFFF; font-weight:700;"><?php echo esc_html( $req_ticket_code ); ?></code>
 					</div>
@@ -502,7 +502,7 @@ if ( 'verify_ticket' === $view_mode ) :
 					<?php echo esc_html( $v_event_title ); ?>
 				</div>
 
-				<div style="background:rgba(255,193,7,0.18); border-left:4px solid #ffc107; border-radius:6px; padding:14px 16px; margin:0 auto 20px; max-width:520px; text-align:left; font-size:14px; color:#F4F5FA; line-height:1.5;">
+				<div style="background:rgba(255,193,7,0.18); border-left:4px solid #ffc107; border-radius:6px; padding:14px 16px; margin:0 auto 20px; max-width:520px; text-align:left; font-size:14px; color:var(--crux-text,#F4F5FA); line-height:1.5;">
 					<strong style="color:#ffc107;"><?php esc_html_e( 'Reason:', 'cruxnxtion' ); ?></strong>
 					<?php
 					/* translators: %s: check-in timestamp */
@@ -511,25 +511,25 @@ if ( 'verify_ticket' === $view_mode ) :
 				</div>
 
 				<?php if ( current_user_can( 'edit_event_orders' ) ) : ?>
-					<a href="<?php echo esc_url( $staff_landing_url ); ?>" class="bx no-print" style="display:block; width:100%; max-width:400px; margin:0 auto 22px; background:#ffc107; color:#0A0F26; font-weight:700; font-size:16px; padding:16px 24px; min-height:48px; box-sizing:border-box; text-decoration:none; text-transform:uppercase; --sl:8px;">
+					<a href="<?php echo esc_url( $staff_landing_url ); ?>" class="bx no-print" style="display:block; width:100%; max-width:400px; margin:0 auto 22px; background:#ffc107; color:var(--crux-ink,#0A0F26); font-weight:700; font-size:16px; padding:16px 24px; min-height:48px; box-sizing:border-box; text-decoration:none; text-transform:uppercase; --sl:8px;">
 						<?php esc_html_e( 'Scan next →', 'cruxnxtion' ); ?>
 					</a>
 				<?php endif; ?>
 
-				<div class="door-verify-box" style="background:#0D1330; border:1px solid #1E2B5E; border-radius:12px; padding:20px; max-width:520px; margin:0 auto 24px; text-align:left; box-sizing:border-box;">
-					<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid #1E2B5E; padding-bottom:10px;">
+				<div class="door-verify-box" style="background:#0D1330; border:1px solid var(--crux-line,#1E2B5E); border-radius:12px; padding:20px; max-width:520px; margin:0 auto 24px; text-align:left; box-sizing:border-box;">
+					<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid var(--crux-line,#1E2B5E); padding-bottom:10px;">
 						<span style="color:#7A82A8; font-size:13px;"><?php esc_html_e( 'Attendee Name:', 'cruxnxtion' ); ?></span>
 						<strong style="color:#FFFFFF; font-size:15px;"><?php echo esc_html( $attendee_display ); ?></strong>
 					</div>
-					<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid #1E2B5E; padding-bottom:10px;">
+					<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid var(--crux-line,#1E2B5E); padding-bottom:10px;">
 						<span style="color:#7A82A8; font-size:13px;"><?php esc_html_e( 'Ticket Tier:', 'cruxnxtion' ); ?></span>
-						<strong style="color:#5B8DEF; font-size:14px;"><?php echo esc_html( $tier_display ); ?></strong>
+						<strong style="color:var(--crux-blue,#5B8DEF); font-size:14px;"><?php echo esc_html( $tier_display ); ?></strong>
 					</div>
-					<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid #1E2B5E; padding-bottom:10px;">
+					<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid var(--crux-line,#1E2B5E); padding-bottom:10px;">
 						<span style="color:#7A82A8; font-size:13px;"><?php esc_html_e( 'Checked In At:', 'cruxnxtion' ); ?></span>
 						<strong style="color:#ffc107; font-size:14px;"><?php echo esc_html( $checkin_time_formatted ); ?></strong>
 					</div>
-					<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid #1E2B5E; padding-bottom:10px;">
+					<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid var(--crux-line,#1E2B5E); padding-bottom:10px;">
 						<span style="color:#7A82A8; font-size:13px;"><?php esc_html_e( 'Pass Code:', 'cruxnxtion' ); ?></span>
 						<code style="color:#FFFFFF; font-weight:700;"><?php echo esc_html( $req_ticket_code ); ?></code>
 					</div>
@@ -553,16 +553,16 @@ if ( 'verify_ticket' === $view_mode ) :
 				<?php echo esc_html( $v_date_raw . ( $v_time ? ' • ' . $v_time : '' ) . ( $v_venue ? ' • ' . $v_venue : '' ) ); ?>
 			</div>
 
-			<div class="door-verify-box" style="background:#0D1330; border:1px solid #1E2B5E; border-radius:12px; padding:24px; max-width:520px; margin:0 auto 28px; text-align:left; box-sizing:border-box;">
-				<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid #1E2B5E; padding-bottom:10px;">
+			<div class="door-verify-box" style="background:#0D1330; border:1px solid var(--crux-line,#1E2B5E); border-radius:12px; padding:24px; max-width:520px; margin:0 auto 28px; text-align:left; box-sizing:border-box;">
+				<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid var(--crux-line,#1E2B5E); padding-bottom:10px;">
 					<span style="color:#7A82A8; font-size:13px;"><?php esc_html_e( 'Attendee Name:', 'cruxnxtion' ); ?></span>
 					<strong style="color:#FFFFFF;"><?php echo esc_html( $tix_record['attendee_name'] ?? 'Guest' ); ?></strong>
 				</div>
-				<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid #1E2B5E; padding-bottom:10px;">
+				<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid var(--crux-line,#1E2B5E); padding-bottom:10px;">
 					<span style="color:#7A82A8; font-size:13px;"><?php esc_html_e( 'Ticket Tier:', 'cruxnxtion' ); ?></span>
-					<strong style="color:#5B8DEF;"><?php echo esc_html( $tix_record['tier_name'] ?? 'General' ); ?></strong>
+					<strong style="color:var(--crux-blue,#5B8DEF);"><?php echo esc_html( $tix_record['tier_name'] ?? 'General' ); ?></strong>
 				</div>
-				<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid #1E2B5E; padding-bottom:10px;">
+				<div style="display:flex; justify-content:space-between; margin-bottom:12px; border-bottom:1px solid var(--crux-line,#1E2B5E); padding-bottom:10px;">
 					<span style="color:#7A82A8; font-size:13px;"><?php esc_html_e( 'Pass Code:', 'cruxnxtion' ); ?></span>
 					<code style="color:#FFFFFF; font-weight:700;"><?php echo esc_html( $req_ticket_code ); ?></code>
 				</div>
@@ -613,20 +613,20 @@ elseif ( 'bare_session' === $view_mode ) :
 ?>
 
 	<div class="conf-card" style="text-align:center;">
-		<div style="display:inline-block; width:64px; height:64px; border-radius:50%; background:rgba(91,141,239,0.15); border:2px solid #5B8DEF; line-height:64px; font-size:28px; margin-bottom:18px;">✓</div>
-		<div class="eyebrow" style="color:#5B8DEF;"><?php esc_html_e( 'PAYMENT RECEIVED', 'cruxnxtion' ); ?></div>
+		<div style="display:inline-block; width:64px; height:64px; border-radius:50%; background:rgba(91,141,239,0.15); border:2px solid var(--crux-blue,#5B8DEF); line-height:64px; font-size:28px; margin-bottom:18px;">✓</div>
+		<div class="eyebrow" style="color:var(--crux-blue,#5B8DEF);"><?php esc_html_e( 'PAYMENT RECEIVED', 'cruxnxtion' ); ?></div>
 		<h1 class="bebas" style="font-size:42px; margin:10px 0; color:#FFFFFF;"><?php esc_html_e( 'BOOKING CONFIRMED', 'cruxnxtion' ); ?></h1>
 		
 		<?php if ( $o_event ) : ?>
 			<h2 style="font-size:20px; font-weight:700; color:#D5D9EA; margin:0 0 18px 0;"><?php echo esc_html( $o_event->post_title ); ?></h2>
 		<?php endif; ?>
 
-		<div style="background:#0D1330; border:1px solid #1E2B5E; border-radius:12px; padding:24px; max-width:600px; margin:0 auto 28px; text-align:left;">
+		<div style="background:#0D1330; border:1px solid var(--crux-line,#1E2B5E); border-radius:12px; padding:24px; max-width:600px; margin:0 auto 28px; text-align:left;">
 			<div style="font-size:14.5px; line-height:1.7; color:#D5D9EA;">
-				<strong style="color:#5B8DEF; display:block; margin-bottom:6px;"><?php esc_html_e( 'SECURITY & TICKET DISPATCH NOTICE', 'cruxnxtion' ); ?></strong>
+				<strong style="color:var(--crux-blue,#5B8DEF); display:block; margin-bottom:6px;"><?php esc_html_e( 'SECURITY & TICKET DISPATCH NOTICE', 'cruxnxtion' ); ?></strong>
 				<?php esc_html_e( 'Your payment was confirmed. For your security and ticket protection, digital passes with scannable QR codes are never displayed directly on payment return links.', 'cruxnxtion' ); ?>
 			</div>
-			<div style="margin-top:16px; padding-top:14px; border-top:1px solid #1E2B5E; font-size:14px; color:#A3A9C8;">
+			<div style="margin-top:16px; padding-top:14px; border-top:1px solid var(--crux-line,#1E2B5E); font-size:14px; color:#A3A9C8;">
 				<?php if ( $masked_email ) : ?>
 					<?php echo sprintf( esc_html__( 'Your verified tickets and scannable QR passes have been sent to %s.', 'cruxnxtion' ), '<strong style="color:#FFFFFF;">' . esc_html( $masked_email ) . '</strong>' ); ?>
 				<?php else : ?>
@@ -638,11 +638,11 @@ elseif ( 'bare_session' === $view_mode ) :
 
 		<div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap;" class="no-print">
 			<?php if ( $o_ev_id ) : ?>
-				<a href="<?php echo esc_url( add_query_arg( array( 'cr8v_tix_download_ics' => '1', 'event_id' => $o_ev_id ), home_url( '/' ) ) ); ?>" class="bx" style="background:#002671; border:1px solid #5B8DEF; color:#FFFFFF; font-weight:700; font-size:14px; padding:14px 24px; --sl:8px;">
+				<a href="<?php echo esc_url( add_query_arg( array( 'cr8v_tix_download_ics' => '1', 'event_id' => $o_ev_id ), home_url( '/' ) ) ); ?>" class="bx" style="background:var(--crux-navy,#002671); border:1px solid var(--crux-blue,#5B8DEF); color:#FFFFFF; font-weight:700; font-size:14px; padding:14px 24px; --sl:8px;">
 					📅 <?php esc_html_e( 'Add to Calendar (.ics)', 'cruxnxtion' ); ?>
 				</a>
 			<?php endif; ?>
-			<a href="<?php echo esc_url( home_url( '/events/' ) ); ?>" class="bx" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:14px; padding:14px 24px; --sl:8px;">
+			<a href="<?php echo esc_url( home_url( '/events/' ) ); ?>" class="bx" style="background:var(--crux-red,#BA0000); color:#FFFFFF; font-weight:700; font-size:14px; padding:14px 24px; --sl:8px;">
 				<?php esc_html_e( 'Explore More Events →', 'cruxnxtion' ); ?>
 			</a>
 		</div>
@@ -686,7 +686,7 @@ elseif ( 'order_confirmed' === $view_mode && $order_post ) :
 					<?php esc_html_e( 'This order is not completed. Any held tickets have been released.', 'cruxnxtion' ); ?>
 				<?php endif; ?>
 			</p>
-			<a href="<?php echo esc_url( home_url( '/events/' ) ); ?>" class="bx" style="display:inline-block; background:#BA0000; color:#FFFFFF; font-weight:700; padding:12px 24px; --sl:8px;">
+			<a href="<?php echo esc_url( home_url( '/events/' ) ); ?>" class="bx" style="display:inline-block; background:var(--crux-red,#BA0000); color:#FFFFFF; font-weight:700; padding:12px 24px; --sl:8px;">
 				&larr; <?php esc_html_e( 'Return to Events', 'cruxnxtion' ); ?>
 			</a>
 		</div>
@@ -704,12 +704,12 @@ elseif ( 'order_confirmed' === $view_mode && $order_post ) :
 				</div>
 				<div style="text-align:right;" class="no-print">
 					<div style="font-size:12px; color:#7A82A8; text-transform:uppercase; letter-spacing:1px;"><?php esc_html_e( 'Order Reference', 'cruxnxtion' ); ?></div>
-					<div style="font-size:20px; font-weight:700; color:#5B8DEF; font-family:monospace;">#<?php echo esc_html( $order_ref ); ?></div>
+					<div style="font-size:20px; font-weight:700; color:var(--crux-blue,#5B8DEF); font-family:monospace;">#<?php echo esc_html( $order_ref ); ?></div>
 				</div>
 			</div>
 
 			<!-- Customer and Order summary bar -->
-			<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px; margin-top:24px; padding-top:20px; border-top:1px solid #1E2B5E; font-size:13.5px;">
+			<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px; margin-top:24px; padding-top:20px; border-top:1px solid var(--crux-line,#1E2B5E); font-size:13.5px;">
 				<div><span style="color:#7A82A8;"><?php esc_html_e( 'Primary Contact:', 'cruxnxtion' ); ?></span> <strong style="color:#FFFFFF;"><?php echo esc_html( $o_name ); ?></strong></div>
 				<div><span style="color:#7A82A8;"><?php esc_html_e( 'Email:', 'cruxnxtion' ); ?></span> <strong style="color:#FFFFFF;"><?php echo esc_html( $o_email ); ?></strong></div>
 				<div><span style="color:#7A82A8;"><?php esc_html_e( 'Total Paid:', 'cruxnxtion' ); ?></span> <strong style="color:#28a745;"><?php echo 0 === $o_total ? esc_html__( 'Free RSVP', 'cruxnxtion' ) : '£' . esc_html( number_format( $o_total / 100, 2 ) ); ?></strong></div>
@@ -718,11 +718,11 @@ elseif ( 'order_confirmed' === $view_mode && $order_post ) :
 			<!-- Action Toolbar -->
 			<div class="conf-actions no-print" style="display:flex; gap:12px; margin-top:24px; flex-wrap:wrap;">
 				<?php if ( $o_ev_id ) : ?>
-					<a href="<?php echo esc_url( add_query_arg( array( 'cr8v_tix_download_ics' => '1', 'event_id' => $o_ev_id ), home_url( '/' ) ) ); ?>" class="bx" style="background:#002671; border:1px solid #5B8DEF; color:#FFFFFF; font-weight:700; font-size:13.5px; padding:12px 20px; --sl:8px;">
+					<a href="<?php echo esc_url( add_query_arg( array( 'cr8v_tix_download_ics' => '1', 'event_id' => $o_ev_id ), home_url( '/' ) ) ); ?>" class="bx" style="background:var(--crux-navy,#002671); border:1px solid var(--crux-blue,#5B8DEF); color:#FFFFFF; font-weight:700; font-size:13.5px; padding:12px 20px; --sl:8px;">
 						📅 <?php esc_html_e( 'Add to Calendar (.ics)', 'cruxnxtion' ); ?>
 					</a>
 				<?php endif; ?>
-				<button type="button" onclick="window.print()" class="bx" style="background:#1E2B5E; color:#FFFFFF; font-weight:700; font-size:13.5px; padding:12px 20px; --sl:8px;">
+				<button type="button" onclick="window.print()" class="bx" style="background:var(--crux-line,#1E2B5E); color:#FFFFFF; font-weight:700; font-size:13.5px; padding:12px 20px; --sl:8px;">
 					🖶 <?php esc_html_e( 'Print Ticket Passes', 'cruxnxtion' ); ?>
 				</button>
 			</div>
@@ -741,17 +741,17 @@ elseif ( 'order_confirmed' === $view_mode && $order_post ) :
 					$is_void  = ! empty( $tix['void'] );
 					$is_in    = ! empty( $tix['checked_in'] );
 				?>
-				<div class="ticket-card" style="display:flex; background:#111838; border:1.5px solid #1E2B5E; border-radius:12px; overflow:hidden; min-height:180px;">
+				<div class="ticket-card" style="display:flex; background:var(--crux-surface,#111838); border:1.5px solid var(--crux-line,#1E2B5E); border-radius:12px; overflow:hidden; min-height:180px;">
 					<!-- Notch Stub -->
-					<div class="ticket-stub" style="flex:0 0 100px; background:#002671; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:12px; text-align:center;">
-						<span style="font-size:10px; font-weight:800; letter-spacing:1px; color:#5B8DEF; text-transform:uppercase;"><?php esc_html_e( 'PASS', 'cruxnxtion' ); ?></span>
+					<div class="ticket-stub" style="flex:0 0 100px; background:var(--crux-navy,#002671); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:12px; text-align:center;">
+						<span style="font-size:10px; font-weight:800; letter-spacing:1px; color:var(--crux-blue,#5B8DEF); text-transform:uppercase;"><?php esc_html_e( 'PASS', 'cruxnxtion' ); ?></span>
 						<span class="bebas" style="font-size:32px; color:#FFFFFF; line-height:1; margin:6px 0;"><?php echo esc_html( '#' . ( $idx + 1 ) ); ?></span>
 						<span style="font-size:9px; color:#A3A9C8; font-family:monospace;"><?php echo esc_html( substr( $t_code, 4, 6 ) ); ?></span>
 					</div>
 
 					<!-- Details -->
 					<div class="ticket-details" style="flex:1; padding:24px 28px; display:flex; flex-direction:column; justify-content:center; min-width:0;">
-						<div style="font-size:11px; font-weight:700; color:#5B8DEF; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;"><?php echo esc_html( $t_tier ); ?></div>
+						<div style="font-size:11px; font-weight:700; color:var(--crux-blue,#5B8DEF); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;"><?php echo esc_html( $t_tier ); ?></div>
 						<h3 style="font-size:22px; margin:0 0 8px 0; color:#FFFFFF; font-weight:700;"><?php echo esc_html( $t_guest ); ?></h3>
 						<div style="font-size:13px; color:#A3A9C8; font-family:monospace; margin-bottom:12px;">
 							<?php esc_html_e( 'Ticket Code:', 'cruxnxtion' ); ?> <strong style="color:#FFFFFF;"><?php echo esc_html( $t_code ); ?></strong>
@@ -768,11 +768,11 @@ elseif ( 'order_confirmed' === $view_mode && $order_post ) :
 					</div>
 
 					<!-- QR Code Area -->
-					<div class="ticket-qr-area" style="flex:0 0 180px; padding:20px; display:flex; flex-direction:column; align-items:center; justify-content:center; border-left:1.5px dashed #1E2B5E; background:#0D1330;">
+					<div class="ticket-qr-area" style="flex:0 0 180px; padding:20px; display:flex; flex-direction:column; align-items:center; justify-content:center; border-left:1.5px dashed var(--crux-line,#1E2B5E); background:#0D1330;">
 						<?php if ( function_exists( 'cr8v_tix_render_svg_qr' ) ) : ?>
 							<?php echo cr8v_tix_render_svg_qr( $t_qr_url, 130 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 						<?php endif; ?>
-						<a href="<?php echo esc_url( $t_qr_url ); ?>" style="font-size:10px; color:#5B8DEF; margin-top:8px; text-transform:uppercase; letter-spacing:0.5px; font-weight:700;" class="no-print" target="_blank" rel="noopener">
+						<a href="<?php echo esc_url( $t_qr_url ); ?>" style="font-size:10px; color:var(--crux-blue,#5B8DEF); margin-top:8px; text-transform:uppercase; letter-spacing:0.5px; font-weight:700;" class="no-print" target="_blank" rel="noopener">
 							<?php esc_html_e( 'Verify Link →', 'cruxnxtion' ); ?>
 						</a>
 					</div>
@@ -794,11 +794,11 @@ else :
 		$current_staff = wp_get_current_user();
 	?>
 		<!-- Staff Door Check-In Control Center -->
-		<div class="conf-card" style="text-align:left; border:2px solid #5B8DEF; background:#0D163F; padding:32px;">
-			<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; border-bottom:1px solid #1E2B5E; padding-bottom:16px; margin-bottom:20px;">
+		<div class="conf-card" style="text-align:left; border:2px solid var(--crux-blue,#5B8DEF); background:#0D163F; padding:32px;">
+			<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; border-bottom:1px solid var(--crux-line,#1E2B5E); padding-bottom:16px; margin-bottom:20px;">
 				<div style="display:flex; align-items:center; gap:10px;">
 					<span style="display:inline-block; width:12px; height:12px; border-radius:50%; background:#28a745; box-shadow:0 0 8px #28a745;"></span>
-					<span style="font-size:12.5px; font-weight:700; color:#5B8DEF; text-transform:uppercase; letter-spacing:1.5px;">
+					<span style="font-size:12.5px; font-weight:700; color:var(--crux-blue,#5B8DEF); text-transform:uppercase; letter-spacing:1.5px;">
 						<?php esc_html_e( 'Door Check-In Active', 'cruxnxtion' ); ?>
 					</span>
 				</div>
@@ -808,7 +808,7 @@ else :
 				</div>
 			</div>
 
-			<div style="background:rgba(91,141,239,0.12); border-left:4px solid #5B8DEF; padding:16px 20px; margin-bottom:28px; border-radius:4px;">
+			<div style="background:rgba(91,141,239,0.12); border-left:4px solid var(--crux-blue,#5B8DEF); padding:16px 20px; margin-bottom:28px; border-radius:4px;">
 				<h2 style="font-size:18px; margin:0 0 6px 0; color:#FFFFFF; font-weight:700;">
 					<?php esc_html_e( 'You are logged in as door staff.', 'cruxnxtion' ); ?>
 				</h2>
@@ -822,8 +822,8 @@ else :
 					<?php esc_html_e( 'Manual Ticket Code Lookup:', 'cruxnxtion' ); ?>
 				</label>
 				<div style="display:flex; flex-direction:column; gap:12px; width:100%;">
-					<input type="text" id="cr8v_staff_tix_input" name="cr8v_ticket" placeholder="TIX-XXXXXXXXXXXX" required style="width:100%; min-height:48px; height:52px; padding:12px 16px; background:#0A0F26; border:1.5px solid #1E2B5E; border-radius:6px; color:#FFFFFF; font-family:monospace; font-size:16px; font-weight:600; text-transform:uppercase; box-sizing:border-box;" autocomplete="off" autocorrect="off" autocapitalize="characters" inputmode="text" spellcheck="false">
-					<button type="submit" class="bx" style="width:100%; min-height:48px; display:block; background:#002671; border:1px solid #5B8DEF; color:#FFFFFF; font-weight:700; font-size:15px; padding:14px 24px; --sl:8px; box-sizing:border-box;">
+					<input type="text" id="cr8v_staff_tix_input" name="cr8v_ticket" placeholder="TIX-XXXXXXXXXXXX" required style="width:100%; min-height:48px; height:52px; padding:12px 16px; background:var(--crux-ink,#0A0F26); border:1.5px solid var(--crux-line,#1E2B5E); border-radius:6px; color:#FFFFFF; font-family:monospace; font-size:16px; font-weight:600; text-transform:uppercase; box-sizing:border-box;" autocomplete="off" autocorrect="off" autocapitalize="characters" inputmode="text" spellcheck="false">
+					<button type="submit" class="bx" style="width:100%; min-height:48px; display:block; background:var(--crux-navy,#002671); border:1px solid var(--crux-blue,#5B8DEF); color:#FFFFFF; font-weight:700; font-size:15px; padding:14px 24px; --sl:8px; box-sizing:border-box;">
 						<?php esc_html_e( 'Look Up Ticket →', 'cruxnxtion' ); ?>
 					</button>
 				</div>
@@ -836,7 +836,7 @@ else :
 			<p style="font-size:15px; color:#A3A9C8; max-width:550px; margin:0 auto 28px; line-height:1.6;">
 				<?php esc_html_e( 'No booking reference was provided. If you recently purchased tickets, please check the link sent to your confirmation email or browse upcoming events below.', 'cruxnxtion' ); ?>
 			</p>
-			<a href="<?php echo esc_url( home_url( '/events/' ) ); ?>" class="bx" style="display:inline-block; background:#BA0000; color:#FFFFFF; font-weight:700; font-size:14.5px; padding:15px 32px; --sl:10px;">
+			<a href="<?php echo esc_url( home_url( '/events/' ) ); ?>" class="bx" style="display:inline-block; background:var(--crux-red,#BA0000); color:#FFFFFF; font-weight:700; font-size:14.5px; padding:15px 32px; --sl:10px;">
 				<?php esc_html_e( 'Explore All Events →', 'cruxnxtion' ); ?>
 			</a>
 		</div>
@@ -846,7 +846,7 @@ else :
 
 </main>
 
-<footer style="background:#0A0F26; border-top:1px solid #1E2B5E; padding:32px 24px; text-align:center; font-size:13px; color:#7A82A8; box-sizing:border-box; width:100%;" class="no-print">
+<footer style="background:var(--crux-ink,#0A0F26); border-top:1px solid var(--crux-line,#1E2B5E); padding:32px 24px; text-align:center; font-size:13px; color:#7A82A8; box-sizing:border-box; width:100%;" class="no-print">
   &copy; <?php echo esc_html( gmdate( 'Y' ) ); ?> Crux Nxtion Events &bull; Sheffield &amp; London, United Kingdom &bull; All Rights Reserved
 </footer>
 

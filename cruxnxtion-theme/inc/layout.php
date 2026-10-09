@@ -20,10 +20,10 @@ function crux_nav_style( $skin, $key, $active ) {
 	$dark = ( 'dark' === $skin );
 	$base = 'font-size:14px; font-weight:600; letter-spacing:0.2px;';
 	if ( $key === $active ) {
-		$accent = $dark ? '#5B8DEF' : '#6C58DB';
+		$accent = $dark ? 'var(--crux-blue,#5B8DEF)' : 'var(--crux-violet,#6C58DB)';
 		return 'color:' . $accent . '; ' . $base . ' border-bottom:1.5px solid ' . $accent . ';';
 	}
-	return 'color:' . ( $dark ? '#F4F5FA' : '#10142E' ) . '; ' . $base;
+	return 'color:' . ( $dark ? 'var(--crux-text,#F4F5FA)' : 'var(--crux-ink2,#10142E)' ) . '; ' . $base;
 }
 
 /**
@@ -32,7 +32,7 @@ function crux_nav_style( $skin, $key, $active ) {
 function crux_footer_palette( $skin ) {
 	if ( 'light' === $skin ) {
 		return array(
-			'bg'     => '#10142E',
+			'bg'     => 'var(--crux-ink2,#10142E)',
 			'hi'     => '#F2F1F8',
 			'mid'    => '#B9AFF0',
 			'lo'     => '#2A2F5C',
@@ -43,10 +43,10 @@ function crux_footer_palette( $skin ) {
 		);
 	}
 	return array(
-		'bg'     => '#0A0F26',
-		'hi'     => '#F4F5FA',
+		'bg'     => 'var(--crux-ink,#0A0F26)',
+		'hi'     => 'var(--crux-text,#F4F5FA)',
 		'mid'    => '#A9C0F5',
-		'lo'     => '#1E2B5E',
+		'lo'     => 'var(--crux-line,#1E2B5E)',
 		'nav'    => '#A3A9C8',
 		'soc_bg' => 'rgba(244,245,250,0.05)',
 		'soc_bc' => 'rgba(244,245,250,0.12)',
@@ -73,8 +73,8 @@ function crux_link_attrs( $link ) {
  */
 function crux_prefooter_button( $btn ) {
 	$style = 'red' === $btn['tone']
-		? 'background:#BA0000; color:#FFFFFF; font-weight:700; font-size:15px; padding:17px 32px; --sl:10px;'
-		: 'background:#8C7AE6; color:#10142E !important; font-weight:700; font-size:15px; padding:17px 32px; --sl:10px;';
+		? 'background:var(--crux-red,#BA0000); color:#FFFFFF; font-weight:700; font-size:15px; padding:17px 32px; --sl:10px;'
+		: 'background:var(--crux-purple,#8C7AE6); color:var(--crux-ink2,#10142E) !important; font-weight:700; font-size:15px; padding:17px 32px; --sl:10px;';
 	return '<a ' . crux_link_attrs( $btn['link'] ) . ' style="' . $style . '"' . ( ! empty( $btn['edit'] ) ? crux_edit_attr_opt( $btn['edit'] ) : '' ) . ' class="bx">' . esc_html( $btn['text'] ) . '</a>';
 }
 

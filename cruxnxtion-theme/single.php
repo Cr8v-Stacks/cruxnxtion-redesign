@@ -28,20 +28,20 @@ $crux_more     = new WP_Query(
 	)
 );
 crux_use_page_css( 'dark' );
-get_header( null, array( 'body_bg' => '#0A0F26', 'root_bg' => '#0A0F26', 'skin' => 'dark', 'nav' => 'events', 'wing' => 'events', 'active' => 'blog' ) );
+get_header( null, array( 'body_bg' => 'var(--crux-ink,#0A0F26)', 'root_bg' => 'var(--crux-ink,#0A0F26)', 'skin' => 'dark', 'nav' => 'events', 'wing' => 'events', 'active' => 'blog' ) );
 ?>
 
   <!-- BREADCRUMB -->
-  <div style=" padding:20px 20px 0px 20px;"><span style="font-size:13px; color:#7A82A8;"><a href="<?php echo crux_url( 'single_post', 'breadcrumb_link_1_url' ); ?>" style="color:#7A82A8;"<?php echo crux_edit_attr( 'single_post', 'breadcrumb_link_1' ); ?>><?php echo crux_h( 'single_post', 'breadcrumb_link_1' ); ?></a> / <a href="<?php echo crux_url( 'single_post', 'breadcrumb_link_2_url' ); ?>" style="color:#7A82A8;"<?php echo crux_edit_attr( 'single_post', 'breadcrumb_link_2' ); ?>><?php echo crux_h( 'single_post', 'breadcrumb_link_2' ); ?></a> / <span style="color:#F4F5FA; font-weight:600;"><?php echo esc_html( get_the_title() ); ?></span></span></div>
+  <div style=" padding:20px 20px 0px 20px;"><span style="font-size:13px; color:#7A82A8;"><a href="<?php echo crux_url( 'single_post', 'breadcrumb_link_1_url' ); ?>" style="color:#7A82A8;"<?php echo crux_edit_attr( 'single_post', 'breadcrumb_link_1' ); ?>><?php echo crux_h( 'single_post', 'breadcrumb_link_1' ); ?></a> / <a href="<?php echo crux_url( 'single_post', 'breadcrumb_link_2_url' ); ?>" style="color:#7A82A8;"<?php echo crux_edit_attr( 'single_post', 'breadcrumb_link_2' ); ?>><?php echo crux_h( 'single_post', 'breadcrumb_link_2' ); ?></a> / <span style="color:var(--crux-text,#F4F5FA); font-weight:600;"><?php echo esc_html( get_the_title() ); ?></span></span></div>
 
   <!-- ARTICLE HEADER -->
   <section style=" padding:40px 20px 30px 20px; max-width:1000px;">
     <span class="eyebrow"><?php echo esc_html( strtoupper( $crux_category ) ); ?></span>
-    <h1 class="bebas" style="font-size:40px; margin:14px 0px 18px 0px; color:#F4F5FA; line-height:0.95;"><?php echo esc_html( get_the_title() ); ?></h1>
+    <h1 class="bebas" style="font-size:40px; margin:14px 0px 18px 0px; color:var(--crux-text,#F4F5FA); line-height:0.95;"><?php echo esc_html( get_the_title() ); ?></h1>
     <p style="font-size:13px; color:#A3A9C8; margin:0px;" class="reveal"><?php echo esc_html( get_the_author_meta( 'display_name', $crux_author ) ); ?> &nbsp;·&nbsp; <?php echo esc_html( get_the_date() ); ?> &nbsp;·&nbsp; <?php echo esc_html( crux_read_minutes( get_the_content() ) ); ?> min read</p>
   </section>
   <?php if ( $crux_hero ) : ?>
-  <section style=" margin:0px 20px 0px 20px; height:420px; overflow:hidden; border-radius:16px; border:1.5px solid #1E2B5E;"><img src="<?php echo esc_url( $crux_hero ); ?>" alt="<?php echo esc_attr( get_the_title() ); ?>" style="width:100%; height:100%; object-fit:cover;"></section>
+  <section style=" margin:0px 20px 0px 20px; height:420px; overflow:hidden; border-radius:16px; border:1.5px solid var(--crux-line,#1E2B5E);"><img src="<?php echo esc_url( $crux_hero ); ?>" alt="<?php echo esc_attr( get_the_title() ); ?>" style="width:100%; height:100%; object-fit:cover;"></section>
   <?php endif; ?>
 
   <!-- ARTICLE -->
@@ -75,14 +75,14 @@ get_header( null, array( 'body_bg' => '#0A0F26', 'root_bg' => '#0A0F26', 'skin' 
       }
       ?>
     </div>
-    <div style="background:#111838; border:1.5px solid #1E2B5E; border-radius:16px; padding:28px;" class="reveal">
+    <div style="background:var(--crux-surface,#111838); border:1.5px solid var(--crux-line,#1E2B5E); border-radius:16px; padding:28px;" class="reveal">
       <span class="eyebrow"<?php echo crux_edit_attr( 'single_post', 'article_small_heading_1' ); ?>><?php echo crux_h( 'single_post', 'article_small_heading_1' ); ?></span>
       <?php
       while ( $crux_more->have_posts() ) :
 	      $crux_more->the_post();
       ?>
-      <a href="<?php echo esc_url( get_permalink() ); ?>" style="display:block; padding:16px 0; border-bottom:1px solid #1E2B5E; color:#F4F5FA;">
-        <span style="font-size:11px; letter-spacing:1.5px; color:#5B8DEF; font-weight:700;"><?php echo esc_html( strtoupper( crux_post_category_name() ) ); ?></span>
+      <a href="<?php echo esc_url( get_permalink() ); ?>" style="display:block; padding:16px 0; border-bottom:1px solid var(--crux-line,#1E2B5E); color:var(--crux-text,#F4F5FA);">
+        <span style="font-size:11px; letter-spacing:1.5px; color:var(--crux-blue,#5B8DEF); font-weight:700;"><?php echo esc_html( strtoupper( crux_post_category_name() ) ); ?></span>
         <span style="display:block; font-size:15px; font-weight:700; margin-top:6px;"><?php echo esc_html( get_the_title() ); ?></span>
       </a>
       <?php

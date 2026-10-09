@@ -84,14 +84,14 @@ if ( ! defined( 'ABSPATH' ) ) {
   .crux-sw-pod { transition: transform .2s ease, box-shadow .2s ease; }
   .crux-sw-pod:hover { transform: translateY(-1px); }
   .crux-sw-tab--inactive-dark:hover { color: #FFFFFF !important; background: rgba(255,255,255,0.08) !important; }
-  .crux-sw-tab--inactive-light:hover { color: #10142E !important; background: rgba(108,88,219,0.12) !important; }
+  .crux-sw-tab--inactive-light:hover { color: var(--crux-ink2,#10142E) !important; background: rgba(108,88,219,0.12) !important; }
 
   </style>
 </head>
-<body <?php body_class(); ?> style="background:#0A0F26; margin:0; padding:0;">
+<body <?php body_class(); ?> style="background:var(--crux-ink,#0A0F26); margin:0; padding:0;">
 <?php wp_body_open(); ?>
 
-<div style="width:100%; max-width:100%; margin:0; background:#0A0F26; overflow-x:clip;" data-m="root">
+<div style="width:100%; max-width:100%; margin:0; background:var(--crux-ink,#0A0F26); overflow-x:clip;" data-m="root">
 
   <?php get_template_part( 'parts/site-header', null, array( 'skin' => 'dark', 'nav' => 'events', 'wing' => 'events', 'active' => '' ) ); ?>
 
@@ -99,7 +99,7 @@ if ( ! defined( 'ABSPATH' ) ) {
   <main style="max-width:960px; margin:0 auto; padding:60px 20px 80px;">
     <?php while ( have_posts() ) : the_post(); ?>
       <span class="eyebrow" style="display:block; margin-bottom:12px;">Crux Nxtion</span>
-      <h1 class="bebas" style="font-size: clamp(38px, 6vw, 64px); line-height: 1; color: #F4F5FA; margin: 0 0 28px;"><?php the_title(); ?></h1>
+      <h1 class="bebas" style="font-size: clamp(38px, 6vw, 64px); line-height: 1; color: var(--crux-text,#F4F5FA); margin: 0 0 28px;"><?php the_title(); ?></h1>
       <div class="page-content-wrapper" style="font-size: 16px; line-height: 1.8; color: #C5CADF;">
         <?php the_content(); ?>
       </div>
@@ -107,7 +107,7 @@ if ( ! defined( 'ABSPATH' ) ) {
   </main>
 
   <!-- COLOSSAL FOOTER -->
-  <footer style="background:#0A0F26; padding:44px 24px; text-align:center; border-top:1px solid #1E2B5E;">
+  <footer style="background:var(--crux-ink,#0A0F26); padding:44px 24px; text-align:center; border-top:1px solid var(--crux-line,#1E2B5E);">
     <div style="display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:32px; margin-bottom:24px;">
       <a href="<?php echo esc_url( home_url( '/' ) ); ?>" style="font-size:14px; color:#A3A9C8;">Home</a>
       <a href="<?php echo esc_url( home_url( '/services/' ) ); ?>" style="font-size:14px; color:#A3A9C8;">Services</a>

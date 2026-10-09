@@ -21,6 +21,7 @@ require_once get_template_directory() . '/inc/blog-seeder.php';
 require_once get_template_directory() . '/inc/blog.php';
 require_once get_template_directory() . '/inc/seo.php';
 require_once get_template_directory() . '/inc/customizer.php';
+require_once get_template_directory() . '/inc/customizer-colours.php';
 // Events are edited in the shared plugin's Studio box (one place per field), so the default editor and Excerpt box are hidden.
 add_filter( 'cr8v_events_hide_default_editor', '__return_true' );
 // Crux keeps its own web addresses (/event/<name>/, and /events/ is an ordinary page), and keeps its own enquiry form and admin.
@@ -265,8 +266,8 @@ if ( ! function_exists( 'crux_ajax_submit_inquiry' ) ) {
 		@wp_mail( $admin_recipient, $subject, $body, $headers );
 
 		$client_subject = 'Crux Nxtion — We have received your brief';
-		$client_body = '<div style="font-family:sans-serif; max-width:600px; margin:0 auto; padding:24px; color:#10142E;">';
-		$client_body .= '<h1 style="color:#002671;">CRUX NXTION</h1>';
+		$client_body = '<div style="font-family:sans-serif; max-width:600px; margin:0 auto; padding:24px; color:var(--crux-ink2,#10142E);">';
+		$client_body .= '<h1 style="color:var(--crux-navy,#002671);">CRUX NXTION</h1>';
 		$client_body .= '<p>Hello ' . esc_html( $name ) . ',</p>';
 		$client_body .= '<p>Thank you for reaching out. We have received your brief and our team will review the details and come back to you within 24 business hours.</p>';
 		$client_body .= '<p style="color:#5A5F86; font-size:13px;">Crux Nxtion • ' . esc_html( crux_address( false ) ) . ' • ' . esc_html( crux_opt( 'email' ) ) . '</p>';

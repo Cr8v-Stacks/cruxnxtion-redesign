@@ -132,7 +132,7 @@ function crux_nav_services_label( $surface, $nav, $wing ) {
 }
 
 function crux_drawer_link_style( $skin ) {
-	return 'dark' === $skin ? 'color:#F4F5FA; border-bottom:1px solid #1E2B5E;' : 'color:#10142E; border-bottom:1px solid #E1DEF3;';
+	return 'dark' === $skin ? 'color:var(--crux-text,#F4F5FA); border-bottom:1px solid var(--crux-line,#1E2B5E);' : 'color:var(--crux-ink2,#10142E); border-bottom:1px solid #E1DEF3;';
 }
 
 /** Print the links before ('before') or after ('after') the Services dropdown. */

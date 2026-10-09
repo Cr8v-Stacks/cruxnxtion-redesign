@@ -32,6 +32,8 @@ def normalise(html):
     html = re.sub(r'(_wpnonce=)[0-9a-f]+', r'\1X', html)
     # antispambot() writes each e-mail address with a different random mix of entities on every request.
     html = re.sub(r'&#(\d+);', lambda m: chr(int(m.group(1))), html)
+    # Brand colours became var(--crux-token,#hex) design tokens; the fallback is the original colour.
+    html = re.sub(r'var\(--crux-\w+,\s*(#[0-9A-Fa-f]{6})\)', r'\1', html)
     return html
 
 

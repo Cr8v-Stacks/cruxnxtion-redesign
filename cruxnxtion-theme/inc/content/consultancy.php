@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 return array(
 	'page_small_heading_1' => array( 'Top banner', 'Label above heading 1: Crux Nxtion Consultancy • Sheffiel...', 'text', 'Crux Nxtion Consultancy • Sheffield & UK-Wide' ),
 	'page_heading_1' => array( 'Top banner', 'Heading 1: YOU\'VE GOT THE IDEA. LET\'S BUILD T...', 'rich', '<span class="consultancy-hero-main" style="display:block; font-size:clamp(40px, 4.6vw, 56px); line-height:0.92;">YOU\'VE GOT THE IDEA.</span>
-        <span class="consultancy-hero-sub" style="display:block; font-size:clamp(70px, 9.2vw, 104px); line-height:0.92; color:#6C58DB; margin-top:4px;">LET\'S BUILD THE BUSINESS.</span>' ),
+        <span class="consultancy-hero-sub" style="display:block; font-size:clamp(70px, 9.2vw, 104px); line-height:0.92; color:var(--crux-violet,#6C58DB); margin-top:4px;">LET\'S BUILD THE BUSINESS.</span>' ),
 	'page_paragraph_1' => array( 'Top banner', 'Text 1: Whether you\'re starting from scrat...', 'textarea', 'Whether you\'re starting from scratch, trying to grow, or just need a clearer direction — sit down with us. We\'ll talk it through, then turn it into a plan you can actually follow.' ),
 	'page_button_1' => array( 'Top banner', 'Button 1: Book A Discovery Call', 'text', 'Book A Discovery Call' ),
 	'page_button_2' => array( 'Top banner', 'Button 2: See How We Work', 'text', 'See How We Work' ),
@@ -117,7 +117,7 @@ return array(
 	'what_you_walk_away_with_paragraph_2' => array( 'What you walk away with', 'Text 2: A prioritised checklist with owner...', 'textarea', 'A prioritised checklist with owners and dates — what to do this month, and what comes next.' ),
 	'what_you_walk_away_with_text_7' => array( 'What you walk away with', 'Text 7: YOU GET: A PLAN TO FOLLOW', 'text', 'YOU GET: A PLAN TO FOLLOW' ),
 	'what_you_walk_away_with_text_8' => array( 'What you walk away with', 'Text 8: One-page strategy', 'text', 'One-page strategy' ),
-	'what_you_walk_away_with_paragraph_3' => array( 'What you walk away with', 'Text 3: WHO YOU SERVE. WHAT YOU SELL. HOW...', 'styled', 'WHO YOU SERVE. WHAT YOU SELL. <span class="ophl" style="color:#8C7AE6;">HOW YOU WIN.</span>' ),
+	'what_you_walk_away_with_paragraph_3' => array( 'What you walk away with', 'Text 3: WHO YOU SERVE. WHAT YOU SELL. HOW...', 'styled', 'WHO YOU SERVE. WHAT YOU SELL. <span class="ophl" style="color:var(--crux-purple,#8C7AE6);">HOW YOU WIN.</span>' ),
 	'what_you_walk_away_with_heading_3' => array( 'What you walk away with', 'Heading 3: THE ONE-PAGER', 'text', 'THE ONE-PAGER' ),
 	'what_you_walk_away_with_paragraph_4' => array( 'What you walk away with', 'Text 4: Your strategy on a single page, so...', 'text', 'Your strategy on a single page, so anyone on your team can explain it.' ),
 	'what_you_walk_away_with_text_9' => array( 'What you walk away with', 'Text 9: YOU GET: CLARITY', 'text', 'YOU GET: CLARITY' ),

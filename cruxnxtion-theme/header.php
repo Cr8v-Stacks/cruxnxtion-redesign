@@ -16,8 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 $crux_h = wp_parse_args(
 	isset( $args ) ? $args : array(),
 	array(
-		'body_bg' => '#0A0F26',
-		'root_bg' => '#0A0F26',
+		'body_bg' => 'var(--crux-ink,#0A0F26)',
+		'root_bg' => 'var(--crux-ink,#0A0F26)',
 		'skin'    => 'dark',
 		'nav'     => 'events',
 		'wing'    => 'events',

@@ -9,12 +9,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 ?>
-<?php crux_use_page_css( 'dark' ); get_header( null, array( 'body_bg' => '#0A0F26', 'root_bg' => '#0A0F26', 'skin' => 'dark', 'nav' => 'events', 'wing' => 'events', 'active' => 'blog' ) ); ?>
+<?php crux_use_page_css( 'dark' ); get_header( null, array( 'body_bg' => 'var(--crux-ink,#0A0F26)', 'root_bg' => 'var(--crux-ink,#0A0F26)', 'skin' => 'dark', 'nav' => 'events', 'wing' => 'events', 'active' => 'blog' ) ); ?>
 
   <!-- PAGE HEADING -->
   <section style=" padding:44px 20px 20px 20px;">
     <span class="eyebrow"<?php echo crux_edit_attr( 'blog', 'page_heading_small_heading_1' ); ?>><?php echo crux_h( 'blog', 'page_heading_small_heading_1' ); ?></span>
-    <h1 class="bebas" style="font-size:44px; margin:14px 0px 14px 0px; color:#F4F5FA;"<?php echo crux_edit_attr( 'blog', 'page_heading_heading_1' ); ?>><?php echo crux_h( 'blog', 'page_heading_heading_1' ); ?></h1>
+    <h1 class="bebas" style="font-size:44px; margin:14px 0px 14px 0px; color:var(--crux-text,#F4F5FA);"<?php echo crux_edit_attr( 'blog', 'page_heading_heading_1' ); ?>><?php echo crux_h( 'blog', 'page_heading_heading_1' ); ?></h1>
     <p style="font-size:15px; color:#A3A9C8; max-width:540px; margin:0px 0px 0px 0px;" class="reveal"<?php echo crux_edit_attr( 'blog', 'page_heading_paragraph_1' ); ?>><?php echo crux_h( 'blog', 'page_heading_paragraph_1' ); ?></p>
   </section>
 
