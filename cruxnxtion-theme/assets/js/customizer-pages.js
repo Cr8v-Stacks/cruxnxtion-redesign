@@ -59,7 +59,15 @@
 		} ).always( function () { loading[ page ] = false; } );
 	}
 
+	// A pencil clicked in the preview asks for its field; page fields may still be arriving, so try a few times.
+	function focusControl( id, tries ) {
+		var control = api.control( id );
+		if ( control ) { control.focus(); return; }
+		if ( tries < 10 ) { setTimeout( function () { focusControl( id, tries + 1 ); }, 400 ); }
+	}
+
 	api.bind( 'ready', function () {
+		api.previewer.bind( 'crux-focus', function ( id ) { focusControl( id, 0 ); } );
 		api.previewer.previewUrl.bind( function ( url ) { load( pageFor( url ) ); } );
 		load( pageFor( api.previewer.previewUrl.get() ) );
 	} );

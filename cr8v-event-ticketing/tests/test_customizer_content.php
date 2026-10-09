@@ -162,6 +162,46 @@ try {
 }
 t( 'a photo setting only ever holds a whole number', 0 === crux_sanitize_content( 'abc', (object) array( 'id' => 'crux_c_' . $photo_page . '_' . $photo_key ) ) );
 
+echo "== 4b. Pencils and instant preview
+";
+$tpl_files = array(
+	'home' => 'front-page.php', 'about' => 'page-about.php', 'services' => 'page-services.php', 'services_consultancy' => 'page-services-consultancy.php',
+	'consultancy' => 'page-consultancy.php', 'founder' => 'page-founder.php', 'faq' => 'page-faq.php', 'gallery' => 'page-gallery.php',
+	'sponsors' => 'page-sponsors.php', 'events' => 'page-events.php', 'events_archive' => 'page-events-archive.php', 'blog' => 'home.php', 'contact' => 'page-contact.php',
+);
+$bad_marks = array(); $unmarked = 0; $total_fields = 0; $live_bad = array();
+foreach ( $pages as $page => $info ) {
+	$code   = file_get_contents( get_template_directory() . '/' . $tpl_files[ $page ] );
+	$fields = crux_content_fields( $page );
+	preg_match_all( "/crux_edit_attr\( '" . $page . "', '(\w+)' \)/", $code, $mm );
+	$marked = array_unique( $mm[1] );
+	foreach ( $marked as $k ) { if ( ! isset( $fields[ $k ] ) ) { $bad_marks[] = "$page.$k"; } }
+	foreach ( $fields as $k => $f ) { $total_fields++; if ( ! in_array( $k, $marked, true ) ) { $unmarked++; } }
+	$live_file = get_template_directory() . '/inc/content/live/' . $page . '.php';
+	$live      = file_exists( $live_file ) ? (array) include $live_file : array();
+	foreach ( $live as $k ) { if ( ! isset( $fields[ $k ] ) || ! in_array( $fields[ $k ][2], array( 'text', 'textarea' ), true ) || ! isset( crux_live_fields()[ $page . '.' . $k ] ) ) { $live_bad[] = "$page.$k"; } }
+}
+t( 'every pencil marker points at a real field', ! $bad_marks, implode( ',', array_slice( $bad_marks, 0, 6 ) ) );
+t( 'at least 85% of all fields have a pencil on their page (' . ( $total_fields - $unmarked ) . ' of ' . $total_fields . ')', ( $total_fields - $unmarked ) / $total_fields >= 0.85 );
+t( 'only plain text fields update instantly', ! $live_bad, implode( ',', array_slice( $live_bad, 0, 6 ) ) );
+$wp_customize2 = new WP_Customize_Manager();
+do_action( 'customize_register', $wp_customize2 );
+$trans_ok = true;
+foreach ( crux_live_fields() as $pk => $_ ) { list( $pg, $kk ) = explode( '.', $pk, 2 ); $st = $wp_customize2->get_setting( 'crux_c_' . $pg . '_' . $kk ); if ( ! $st || 'postMessage' !== $st->transport ) { $trans_ok = false; } }
+t( 'instant-update fields use the postMessage transport and the rest reload the preview', $trans_ok && 'refresh' === $wp_customize2->get_setting( 'crux_c_home_hero_heading_1' )->transport );
+$pc = file_get_contents( get_template_directory() . '/parts/site-header.php' ) . file_get_contents( get_template_directory() . '/parts/site-footer.php' ) . file_get_contents( get_template_directory() . '/inc/layout.php' );
+preg_match_all( "/crux_edit_attr_opt\( '(\w+)' \)/", $pc, $om );
+$opt_bad = array(); foreach ( array_unique( $om[1] ) as $o ) { if ( ! isset( crux_customizer_fields()[ $o ] ) ) { $opt_bad[] = $o; } }
+t( 'site-wide pencil markers (' . count( array_unique( $om[1] ) ) . ') all point at real settings', ! $opt_bad && count( array_unique( $om[1] ) ) >= 15, implode( ',', $opt_bad ) );
+t( 'the public site prints no pencil attributes', '' === crux_edit_attr( 'home', 'hero_heading_1' ) && '' === crux_edit_attr_opt( 'email' ) );
+$titles_ok = true;
+$pgt = crux_content_pages();
+foreach ( $pgt as $pg => $inf ) { if ( false !== stripos( $inf[0], 'wording' ) || false !== stripos( $inf[0], ' page' ) ) { $titles_ok = false; } }
+$secs_ok = true;
+foreach ( $pages as $pg => $inf ) { foreach ( crux_content_fields( $pg ) as $k => $f ) { if ( preg_match( '/^[a-z ]+$/', $f[0] ) || false !== strpos( $f[0], ' / ' ) || '' === trim( $f[0] ) || 'Page' === $f[0] ) { $secs_ok = false; echo "      section name: $pg {$f[0]}
+"; break; } } }
+t( 'page names and section names are readable (no "wording", no raw template comments)', $titles_ok && $secs_ok );
+
 echo "== 5. The site's own settings are untouched\n";
 t( 'saved theme settings are exactly as before the test', get_option( $option ) === $backup );
 

@@ -7,12 +7,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 return array(
-	'archive_photo_1' => array( 'Archive', 'Archive: photo 1 (Becoming Mr &amp; Mrs Crux Pt.3)', 'media', '2f9f2834d9f0829e887b03bccc208656' ),
-	'archive_photo_2' => array( 'Archive', 'Archive: photo 2 (LASGIDI Mainland Party)', 'media', 'a15ea8703f82f1d0f8577325e8d85a3b' ),
-	'archive_photo_3' => array( 'Archive', 'Archive: photo 3 (Ankara Festival)', 'media', '11316a3d9c4317e3d5b7f755df227497' ),
-	'archive_photo_4' => array( 'Archive', 'Archive: photo 4 (Dance OUT 2023)', 'media', '1d5292715423e2e83b56b3330a94b3b8' ),
-	'archive_photo_5' => array( 'Archive', 'Archive: photo 5 (YAGI Awards)', 'media', 'fa3286e8f930ebdb28b28c54198542fa' ),
-	'archive_photo_6' => array( 'Archive', 'Archive: photo 6 (Millennials vs Gen Z)', 'media', '317371ca97a92f79584d7ff4bae33069' ),
-	'archive_photo_7' => array( 'Archive', 'Archive: photo 7 (The Wedding Party)', 'media', '53df70ef86c4b1d32979af070d98a399' ),
-	'archive_photo_8' => array( 'Archive', 'Archive: photo 8 (Crux Nxtion Hangout Out)', 'media', '352a5c10108a75b7cb713fd1433b8b36' ),
+	'archive_photo_1' => array( 'Past events', 'Photo 1: Becoming Mr &amp; Mrs Crux Pt.3', 'media', '2f9f2834d9f0829e887b03bccc208656' ),
+	'archive_photo_2' => array( 'Past events', 'Photo 2: LASGIDI Mainland Party', 'media', 'a15ea8703f82f1d0f8577325e8d85a3b' ),
+	'archive_photo_3' => array( 'Past events', 'Photo 3: Ankara Festival', 'media', '11316a3d9c4317e3d5b7f755df227497' ),
+	'archive_photo_4' => array( 'Past events', 'Photo 4: Dance OUT 2023', 'media', '1d5292715423e2e83b56b3330a94b3b8' ),
+	'archive_photo_5' => array( 'Past events', 'Photo 5: YAGI Awards', 'media', 'fa3286e8f930ebdb28b28c54198542fa' ),
+	'archive_photo_6' => array( 'Past events', 'Photo 6: Millennials vs Gen Z', 'media', '317371ca97a92f79584d7ff4bae33069' ),
+	'archive_photo_7' => array( 'Past events', 'Photo 7: The Wedding Party', 'media', '53df70ef86c4b1d32979af070d98a399' ),
+	'archive_photo_8' => array( 'Past events', 'Photo 8: Crux Nxtion Hangout Out', 'media', '352a5c10108a75b7cb713fd1433b8b36' ),
 );

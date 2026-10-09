@@ -7,5 +7,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 return array(
-	'about_meet_the_team_hero_photo_1' => array( 'About / Meet The Team Hero', 'About / Meet The Team Hero: photo 1 (Olabamidele \'Bambad\' Badmos)', 'media', 'a67d85c16f6df90ab7a657160bee9088' ),
+	'about_meet_the_team_hero_photo_1' => array( 'Top banner', 'Photo 1: Olabamidele \'Bambad\' Badmos', 'media', 'a67d85c16f6df90ab7a657160bee9088' ),
 );

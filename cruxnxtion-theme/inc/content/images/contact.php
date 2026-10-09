@@ -7,5 +7,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 return array(
-	'contact_photo_1' => array( 'Contact', 'Contact: photo 1', 'media', '4170d6b6009c07e37d83bae48a68917b' ),
+	'contact_photo_1' => array( 'Contact page', 'Photo 1', 'media', '4170d6b6009c07e37d83bae48a68917b' ),
 );

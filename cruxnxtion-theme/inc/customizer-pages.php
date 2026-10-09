@@ -24,7 +24,7 @@ function crux_customize_register_content( $wp_customize ) {
 					'type'              => 'theme_mod',
 					'capability'        => 'edit_theme_options',
 					'sanitize_callback' => 'crux_sanitize_content',
-					'transport'         => 'refresh',
+					'transport'         => isset( crux_live_fields()[ $page . '.' . $key ] ) ? 'postMessage' : 'refresh',
 				)
 			);
 		}
@@ -42,9 +42,9 @@ function crux_register_page_controls( $wp_customize, $page ) {
 	$wp_customize->add_panel(
 		'crux_page_' . $page,
 		array(
-			'title'       => $pages[ $page ][0] . ' wording',
-			'description' => __( 'The words and photos on this page. Change a field and the preview reloads. Layout and events are managed elsewhere.', 'cruxnxtion' ),
-			'priority'    => 40,
+			'title'       => sprintf( __( 'This page: %s', 'cruxnxtion' ), $pages[ $page ][0] ),
+			'description' => __( 'The words and photos of the page shown on the right. Open a section, or hover over the page and click a pencil to jump to the matching field. Layout and events are managed elsewhere.', 'cruxnxtion' ),
+			'priority'    => 31,
 		)
 	);
 	$sections = array();
@@ -59,7 +59,12 @@ function crux_register_page_controls( $wp_customize, $page ) {
 				new WP_Customize_Media_Control(
 					$wp_customize,
 					'crux_c_' . $page . '_' . $key,
-					array( 'label' => $f[1], 'section' => $sid, 'mime_type' => 'image' )
+					array(
+						'label'       => $f[1],
+						'section'     => $sid,
+						'mime_type'   => 'image',
+						'description' => '<span class="crux-orig-photo" style="display:block;margin-top:6px;"><em>' . esc_html__( 'Photo on the page now (the original until you choose another):', 'cruxnxtion' ) . '</em><img src="' . esc_url( crux_get_blob_url( $f[3] ) ) . '" alt="" style="display:block;max-width:100%;height:auto;margin-top:6px;border:1px solid #c3c4c7;border-radius:3px;"></span>',
+					)
 				)
 			);
 			continue;
@@ -140,6 +145,18 @@ function crux_customizer_scripts() {
 	);
 }
 add_action( 'customize_controls_enqueue_scripts', 'crux_customizer_scripts' );
+
+/** Pencils and instant text updates inside the preview. */
+function crux_customizer_preview_scripts() {
+	wp_enqueue_script( 'crux-customizer-preview', get_template_directory_uri() . '/assets/js/customizer-preview.js', array( 'customize-preview' ), CRUX_THEME_VERSION, true );
+	wp_localize_script( 'crux-customizer-preview', 'cruxPreview', array( 'live' => array_keys( crux_live_fields() ) ) );
+}
+add_action(
+	'customize_preview_init',
+	function () {
+		add_action( 'wp_enqueue_scripts', 'crux_customizer_preview_scripts' );
+	}
+);
 
 /**
  * This theme has no widget areas, so the Customizer does not need its block-based widget editor. Turning it off stops

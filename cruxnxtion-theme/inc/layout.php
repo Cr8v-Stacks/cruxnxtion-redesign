@@ -75,7 +75,7 @@ function crux_prefooter_button( $btn ) {
 	$style = 'red' === $btn['tone']
 		? 'background:#BA0000; color:#FFFFFF; font-weight:700; font-size:15px; padding:17px 32px; --sl:10px;'
 		: 'background:#8C7AE6; color:#10142E !important; font-weight:700; font-size:15px; padding:17px 32px; --sl:10px;';
-	return '<a ' . crux_link_attrs( $btn['link'] ) . ' style="' . $style . '" class="bx">' . esc_html( $btn['text'] ) . '</a>';
+	return '<a ' . crux_link_attrs( $btn['link'] ) . ' style="' . $style . '"' . ( ! empty( $btn['edit'] ) ? crux_edit_attr_opt( $btn['edit'] ) : '' ) . ' class="bx">' . esc_html( $btn['text'] ) . '</a>';
 }
 
 /**
@@ -86,8 +86,9 @@ function crux_prefooter_data( $key ) {
 	$events   = array(
 		'title'      => crux_opt( 'pf_events_title' ),
 		'desc'       => crux_opt( 'pf_events_desc' ),
-		'btn1'       => array( 'text' => crux_opt( 'pf_events_btn1' ), 'link' => array( 'in' => '/contact/?type=events' ), 'tone' => 'red' ),
-		'btn2'       => array( 'text' => crux_opt( 'pf_events_btn2' ), 'link' => array( 'in' => '/contact/?type=consultancy' ), 'tone' => 'purple' ),
+		'ids'        => array( 'title' => 'pf_events_title', 'desc' => 'pf_events_desc' ),
+		'btn1'       => array( 'edit' => 'pf_events_btn1', 'text' => crux_opt( 'pf_events_btn1' ), 'link' => array( 'in' => '/contact/?type=events' ), 'tone' => 'red' ),
+		'btn2'       => array( 'edit' => 'pf_events_btn2', 'text' => crux_opt( 'pf_events_btn2' ), 'link' => array( 'in' => '/contact/?type=consultancy' ), 'tone' => 'purple' ),
 		'badge_img'  => 'events',
 		'badge_link' => array( 'in' => '/contact/?type=events' ),
 		'aria'       => 'Plan An Event',
@@ -111,8 +112,9 @@ function crux_prefooter_data( $key ) {
 			return array(
 				'title'      => crux_opt( 'pf_consult_title' ),
 				'desc'       => crux_opt( 'pf_consult_desc' ),
-				'btn1'       => array( 'text' => crux_opt( 'pf_consult_btn1' ), 'link' => array( 'out' => $calendly ), 'tone' => 'purple' ),
-				'btn2'       => array( 'text' => crux_opt( 'pf_consult_btn2' ), 'link' => array( 'in' => '/' ), 'tone' => 'red' ),
+				'ids'        => array( 'title' => 'pf_consult_title', 'desc' => 'pf_consult_desc' ),
+				'btn1'       => array( 'edit' => 'pf_consult_btn1', 'text' => crux_opt( 'pf_consult_btn1' ), 'link' => array( 'out' => $calendly ), 'tone' => 'purple' ),
+				'btn2'       => array( 'edit' => 'pf_consult_btn2', 'text' => crux_opt( 'pf_consult_btn2' ), 'link' => array( 'in' => '/' ), 'tone' => 'red' ),
 				'badge_img'  => 'consultancy',
 				'badge_link' => array( 'out' => $calendly ),
 				'aria'       => 'Book A Discovery Call',

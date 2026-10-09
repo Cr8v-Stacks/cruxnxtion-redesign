@@ -7,10 +7,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 return array(
-	'ticket_grid_photo_1' => array( 'Ticket Grid', 'Ticket Grid: photo 1', 'media', 'b094675514894aa0d8e7dd735d187b22' ),
-	'ticket_grid_photo_2' => array( 'Ticket Grid', 'Ticket Grid: photo 2', 'media', 'feb81852032e2798160126ebf0d3c7f6' ),
-	'ticket_grid_photo_3' => array( 'Ticket Grid', 'Ticket Grid: photo 3', 'media', '2fe0208788cf2d50763c85dd2a44de66' ),
-	'ticket_grid_photo_4' => array( 'Ticket Grid', 'Ticket Grid: photo 4', 'media', '1d5292715423e2e83b56b3330a94b3b8' ),
-	'ticket_grid_photo_5' => array( 'Ticket Grid', 'Ticket Grid: photo 5', 'media', 'c5afda4fc4e4d4b0682377d6eb272c90' ),
-	'ticket_grid_photo_6' => array( 'Ticket Grid', 'Ticket Grid: photo 6', 'media', '99a3c292f4b3a38d253144801b4a9ae3' ),
+	'ticket_grid_photo_1' => array( 'Post list', 'Photo 1', 'media', 'b094675514894aa0d8e7dd735d187b22' ),
+	'ticket_grid_photo_2' => array( 'Post list', 'Photo 2', 'media', 'feb81852032e2798160126ebf0d3c7f6' ),
+	'ticket_grid_photo_3' => array( 'Post list', 'Photo 3', 'media', '2fe0208788cf2d50763c85dd2a44de66' ),
+	'ticket_grid_photo_4' => array( 'Post list', 'Photo 4', 'media', '1d5292715423e2e83b56b3330a94b3b8' ),
+	'ticket_grid_photo_5' => array( 'Post list', 'Photo 5', 'media', 'c5afda4fc4e4d4b0682377d6eb272c90' ),
+	'ticket_grid_photo_6' => array( 'Post list', 'Photo 6', 'media', '99a3c292f4b3a38d253144801b4a9ae3' ),
 );

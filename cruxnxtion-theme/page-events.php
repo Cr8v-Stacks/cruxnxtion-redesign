@@ -677,9 +677,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
   <!-- PAGE HEADING -->
   <section style=" padding:44px 20px 20px 20px;">
-    <span class="eyebrow"><?php echo crux_h( 'events', 'page_heading_small_heading_1' ); ?></span>
-    <h1 class="bebas" style="font-size:44px; margin:14px 0px 14px 0px; color:#F4F5FA;"><?php echo crux_h( 'events', 'page_heading_heading_1' ); ?></h1>
-    <p style="font-size:15px; color:#A3A9C8; max-width:560px; margin:0px 0px 0px 0px;" class="reveal"><?php echo crux_h( 'events', 'page_heading_paragraph_1' ); ?></p>
+    <span class="eyebrow"<?php echo crux_edit_attr( 'events', 'page_heading_small_heading_1' ); ?>><?php echo crux_h( 'events', 'page_heading_small_heading_1' ); ?></span>
+    <h1 class="bebas" style="font-size:44px; margin:14px 0px 14px 0px; color:#F4F5FA;"<?php echo crux_edit_attr( 'events', 'page_heading_heading_1' ); ?>><?php echo crux_h( 'events', 'page_heading_heading_1' ); ?></h1>
+    <p style="font-size:15px; color:#A3A9C8; max-width:560px; margin:0px 0px 0px 0px;" class="reveal"<?php echo crux_edit_attr( 'events', 'page_heading_paragraph_1' ); ?>><?php echo crux_h( 'events', 'page_heading_paragraph_1' ); ?></p>
   </section>
 
   <!-- TICKET GRID -->
@@ -705,16 +705,16 @@ if ( ! defined( 'ABSPATH' ) ) {
             <span class="eyebrow" style="color:#5B8DEF;"><?php echo esc_html( $e_item['category'] ); ?></span>
             <h3 style="font-size:19px; margin:8px 0px 4px 0px; font-weight:700; color:#FFFFFF;"><?php echo esc_html( $e_item['short_title'] ); ?></h3>
             <p style="font-size:12.5px; color:#C5CFF5; margin:0px 0px 10px 0px;"><?php echo esc_html( $sub_meta ); ?></p>
-            <span style="font-weight:700; font-size:12.5px; color:#5B8DEF; border-bottom:1.5px solid #5B8DEF; padding-bottom:2px;"><?php echo crux_h( 'events', 'ticket_grid_text_1' ); ?></span>
+            <span style="font-weight:700; font-size:12.5px; color:#5B8DEF; border-bottom:1.5px solid #5B8DEF; padding-bottom:2px;"<?php echo crux_edit_attr( 'events', 'ticket_grid_text_1' ); ?>><?php echo crux_h( 'events', 'ticket_grid_text_1' ); ?></span>
           </div>
         </div>
       </a>
       <?php endforeach; ?>
       <div style="display:flex; flex-direction:column; justify-content:center; background:#111838; border:1.5px solid #1E2B5E; border-radius:12px; padding:32px 30px 32px 30px;">
-        <span class="eyebrow"><?php echo crux_h( 'events', 'ticket_grid_small_heading_1' ); ?></span>
-        <h3 class="bebas" style="font-size:30px; margin:10px 0px 8px 0px; color:#F4F5FA;"><?php echo crux_h( 'events', 'ticket_grid_heading_1' ); ?></h3>
-        <p style="font-size:13px; line-height:1.6; color:#A3A9C8; margin:0px 0px 18px 0px;"><?php echo crux_h( 'events', 'ticket_grid_paragraph_1' ); ?></p>
-        <a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:13.5px; padding:14px 26px 14px 26px; width:fit-content; --sl:10px;" class="bx"><?php echo crux_h( 'events', 'ticket_grid_button_1' ); ?></a>
+        <span class="eyebrow"<?php echo crux_edit_attr( 'events', 'ticket_grid_small_heading_1' ); ?>><?php echo crux_h( 'events', 'ticket_grid_small_heading_1' ); ?></span>
+        <h3 class="bebas" style="font-size:30px; margin:10px 0px 8px 0px; color:#F4F5FA;"<?php echo crux_edit_attr( 'events', 'ticket_grid_heading_1' ); ?>><?php echo crux_h( 'events', 'ticket_grid_heading_1' ); ?></h3>
+        <p style="font-size:13px; line-height:1.6; color:#A3A9C8; margin:0px 0px 18px 0px;"<?php echo crux_edit_attr( 'events', 'ticket_grid_paragraph_1' ); ?>><?php echo crux_h( 'events', 'ticket_grid_paragraph_1' ); ?></p>
+        <a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:13.5px; padding:14px 26px 14px 26px; width:fit-content; --sl:10px;" class="bx"<?php echo crux_edit_attr( 'events', 'ticket_grid_button_1' ); ?>><?php echo crux_h( 'events', 'ticket_grid_button_1' ); ?></a>
       </div>
     </div>
   </section>
@@ -725,10 +725,10 @@ if ( ! defined( 'ABSPATH' ) ) {
   <div class="crux-sw-pod crux-sw-pod--dark" style="pointer-events:auto; display:inline-flex; align-items:center; padding:1.5px; background:linear-gradient(135deg, #2A3F7A 0%, #15224A 100%); clip-path:polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%); box-shadow:0 14px 36px rgba(0,0,0,0.65); filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4));">
     <div class="crux-sw-inner" style="display:inline-flex; align-items:center; background:#020512; padding:4px; gap:4px; clip-path:polygon(7px 0, 100% 0, calc(100% - 7px) 100%, 0 100%);">
       <a href="<?php echo esc_url( home_url( "/" ) ); ?>" class="crux-sw-tab crux-sw-tab--active-events" style="display:inline-flex; align-items:center; justify-content:center; padding:11px 22px; min-width:140px; font-size:13px; font-weight:700; letter-spacing:0.3px; text-transform:uppercase; text-decoration:none; line-height:1.2; background:#1E48B0; color:#FFFFFF; clip-path:polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%); box-shadow:0 2px 8px rgba(30,72,176,0.5);">
-        <span><?php echo crux_h( 'events', 'ticket_grid_text_2' ); ?></span>
+        <span<?php echo crux_edit_attr( 'events', 'ticket_grid_text_2' ); ?>><?php echo crux_h( 'events', 'ticket_grid_text_2' ); ?></span>
       </a>
       <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" class="crux-sw-tab crux-sw-tab--inactive-dark" style="display:inline-flex; align-items:center; justify-content:center; padding:11px 22px; min-width:140px; font-size:13px; font-weight:600; letter-spacing:0.3px; text-transform:uppercase; text-decoration:none; line-height:1.2; background:transparent; color:#8E96BB; clip-path:polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%); transition:all .2s ease;">
-        <span><?php echo crux_h( 'events', 'ticket_grid_text_3' ); ?></span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:6px; display:inline-block; vertical-align:middle;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        <span<?php echo crux_edit_attr( 'events', 'ticket_grid_text_3' ); ?>><?php echo crux_h( 'events', 'ticket_grid_text_3' ); ?></span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:6px; display:inline-block; vertical-align:middle;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
       </a>
     </div>
   </div>

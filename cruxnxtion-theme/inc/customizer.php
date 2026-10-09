@@ -24,8 +24,8 @@ function crux_customizer_sections() {
 		'contact'    => array( 'Contact details', 'Phone numbers, e-mail, address and booking and social links used across the site.' ),
 		'bar'        => array( 'Announcement bar', 'The thin bar above the header. {year} and {next_year} are replaced by the current and next year.' ),
 		'header'     => array( 'Header buttons & menu card', 'The call-to-action button in the header and the "Not sure which?" card in the Services menu.' ),
-		'prefooter'  => array( 'Pre-footer band (events pages)', 'The big "Got a date?" band above the footer on the events and information pages.' ),
-		'prefooter2' => array( 'Pre-footer band (consultancy)', 'The same band on the consultancy home page.' ),
+		'prefooter'  => array( 'Call-to-action band above the footer (events pages)', 'The big "Got a date, or just a direction?" band above the footer on the events and information pages.' ),
+		'prefooter2' => array( 'Call-to-action band above the footer (consultancy home)', 'The same band on the consultancy home page.' ),
 		'footer'     => array( 'Footer', 'The large brand name and the line at the very bottom.' ),
 	);
 }
@@ -128,9 +128,9 @@ function crux_customize_register( $wp_customize ) {
 	$wp_customize->add_panel(
 		'crux_site',
 		array(
-			'title'       => __( 'Crux Nxtion: site-wide settings', 'cruxnxtion' ),
-			'description' => __( 'Things that appear on every page. Events, tickets and enquiries have their own menus in the admin sidebar. Fonts, colours and layout are fixed on purpose to keep the brand consistent.', 'cruxnxtion' ),
-			'priority'    => 30,
+			'title'       => __( 'Site-wide: contact, header & footer', 'cruxnxtion' ),
+			'description' => __( 'Things that appear on every page: contact details, the announcement bar, header buttons, the call-to-action band and the footer. To edit the words and photos of the page you are looking at, open "This page" below. Events, tickets and enquiries have their own menus in the admin sidebar.', 'cruxnxtion' ),
+			'priority'    => 32,
 		)
 	);
 	$priority = 1;
@@ -181,6 +181,38 @@ function crux_customize_register( $wp_customize ) {
 	}
 }
 add_action( 'customize_register', 'crux_customize_register' );
+
+/* ---- Visual editing: pencils in the preview ----------------------------------------------------------------------- */
+
+/**
+ * Marks an element as belonging to a page field. Prints nothing on the public site; inside the Customizer preview it prints
+ * data-crux-edit="page.key", which the preview script turns into a pencil that jumps to the field.
+ */
+function crux_edit_attr( $page, $key ) {
+	return is_customize_preview() ? ' data-crux-edit="' . esc_attr( $page . '.' . $key ) . '"' : '';
+}
+
+/** Same for a site-wide field (contact details, announcement bar, footer and so on). */
+function crux_edit_attr_opt( $id ) {
+	return is_customize_preview() ? ' data-crux-edit="' . esc_attr( 'opt.' . $id ) . '"' : '';
+}
+
+/** Page text fields that update instantly while typing: array of 'page.key'. */
+function crux_live_fields() {
+	static $live = null;
+	if ( null === $live ) {
+		$live = array();
+		foreach ( array_keys( crux_content_pages() ) as $page ) {
+			$file = get_template_directory() . '/inc/content/live/' . $page . '.php';
+			if ( file_exists( $file ) ) {
+				foreach ( (array) include $file as $key ) {
+					$live[ $page . '.' . $key ] = true;
+				}
+			}
+		}
+	}
+	return $live;
+}
 
 /* ---- Output helpers used by the templates and parts ---------------------------------------------------------------- */
 
@@ -233,19 +265,19 @@ function crux_card_photo_url() {
  */
 function crux_content_pages() {
 	return array(
-		'home'                 => array( 'Home page', 'front' ),
-		'about'                => array( 'About page', 'about' ),
-		'services'             => array( 'Event services page', 'services' ),
-		'services_consultancy' => array( 'Consultancy services page', 'services-consultancy' ),
-		'consultancy'          => array( 'Consultancy home page', 'consultancy' ),
-		'founder'              => array( 'Founder page', 'founder' ),
-		'faq'                  => array( 'FAQ page', 'faq' ),
-		'gallery'              => array( 'Gallery page', 'gallery' ),
-		'sponsors'             => array( 'Sponsors page', 'sponsors' ),
-		'events'               => array( 'Events page', 'events' ),
-		'events_archive'       => array( 'Past events page', 'past-events' ),
-		'blog'                 => array( 'Blog page', 'blog' ),
-		'contact'              => array( 'Contact page', 'contact' ),
+		'home'                 => array( 'Home', 'front' ),
+		'about'                => array( 'About', 'about' ),
+		'services'             => array( 'Event services', 'services' ),
+		'services_consultancy' => array( 'Consultancy services', 'services-consultancy' ),
+		'consultancy'          => array( 'Consultancy home', 'consultancy' ),
+		'founder'              => array( 'Founder', 'founder' ),
+		'faq'                  => array( 'FAQ', 'faq' ),
+		'gallery'              => array( 'Gallery', 'gallery' ),
+		'sponsors'             => array( 'Sponsors', 'sponsors' ),
+		'events'               => array( 'Events', 'events' ),
+		'events_archive'       => array( 'Past events', 'past-events' ),
+		'blog'                 => array( 'Blog', 'blog' ),
+		'contact'              => array( 'Contact', 'contact' ),
 	);
 }
 

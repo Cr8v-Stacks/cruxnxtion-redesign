@@ -23,7 +23,7 @@ if ( 'dark' === $crux_skin ) :
 ?><!-- SHOUT-OUT BAR -->
   <div class="top-shoutout-bar" style="background:#002671; padding:10px 20px 10px 20px; display:flex; align-items:center; justify-content:center; gap:10px;">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3 11l18-7-7 18-2-8-9-3z" stroke="#FFFFFF" stroke-width="1.8" stroke-linejoin="round"></path></svg>
-    <span style="font-size:12.5px; font-weight:700; color:#FFFFFF; letter-spacing:0.3px;"><?php echo esc_html( crux_bar_text( "events" ) ); ?> <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="color:#FFFFFF; font-weight:800; border-bottom:1px solid #FFFFFF;"><?php echo esc_html( crux_opt( "bar_events_link" ) ); ?></a></span>
+    <span style="font-size:12.5px; font-weight:700; color:#FFFFFF; letter-spacing:0.3px;"<?php echo crux_edit_attr_opt( 'bar_events_text' ); ?>><?php echo esc_html( crux_bar_text( "events" ) ); ?> <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="color:#FFFFFF; font-weight:800; border-bottom:1px solid #FFFFFF;"<?php echo crux_edit_attr_opt( 'bar_events_link' ); ?>><?php echo esc_html( crux_opt( "bar_events_link" ) ); ?></a></span>
   </div>
 
   <!-- HEADER -->
@@ -120,11 +120,11 @@ if ( 'dark' === $crux_skin ) :
             </div>
             <!-- Column 3: NOT SURE WHICH? Photo Card -->
             <div style="position:relative; border-radius:14px; overflow:hidden; min-height:240px; display:flex; flex-direction:column; justify-content:flex-end;">
-              <img src="<?php echo esc_url( crux_card_photo_url() ); ?>" alt="Crux Nxtion Founder Bambad" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 20%;">
+              <img<?php echo crux_edit_attr_opt( 'card_photo' ); ?> src="<?php echo esc_url( crux_card_photo_url() ); ?>" alt="Crux Nxtion Founder Bambad" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 20%;">
               <div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(10,15,38,0.95) 0%, rgba(10,15,38,0.3) 70%);"></div>
               <div style="position:relative; z-index:1; padding:20px;">
-                <span class="bebas" style="font-size:24px; color:#FFFFFF; display:block; margin-bottom:8px;"><?php echo esc_html( crux_opt( "card_title" ) ); ?></span>
-                <a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="display:inline-block; background:#BA0000; color:#FFFFFF; font-weight:700; font-size:13px; padding:10px 18px; --sl:8px; text-decoration:none;" class="bx"><?php echo esc_html( crux_opt( "card_button" ) ); ?> &rarr;</a>
+                <span class="bebas" style="font-size:24px; color:#FFFFFF; display:block; margin-bottom:8px;"<?php echo crux_edit_attr_opt( 'card_title' ); ?>><?php echo esc_html( crux_opt( "card_title" ) ); ?></span>
+                <a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="display:inline-block; background:#BA0000; color:#FFFFFF; font-weight:700; font-size:13px; padding:10px 18px; --sl:8px; text-decoration:none;" class="bx"<?php echo crux_edit_attr_opt( 'card_button' ); ?>><?php echo esc_html( crux_opt( "card_button" ) ); ?> &rarr;</a>
               </div>
             </div>
           </div>
@@ -143,7 +143,7 @@ if ( 'dark' === $crux_skin ) :
           <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" class="crux-sw-tab crux-sw-tab--inactive-dark" style="display:inline-flex; align-items:center; justify-content:center; padding:7px 18px; font-size:12px; font-weight:600; letter-spacing:0.3px; text-transform:uppercase; text-decoration:none; line-height:1.2; background:transparent; color:#8E96BB; clip-path:polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%); transition:all .2s ease;">Consultancy</a>
         </div>
       </div>
-      <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:13px; padding:12px 22px; --sl:8px;" class="bx"><?php echo esc_html( crux_opt( "cta_events_text" ) ); ?></a>
+      <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:13px; padding:12px 22px; --sl:8px;" class="bx"<?php echo crux_edit_attr_opt( 'cta_events_text' ); ?>><?php echo esc_html( crux_opt( "cta_events_text" ) ); ?></a>
     </div>
     <button type="button" class="crux-mnav-btn" id="crux-mnav-toggle" aria-label="Open navigation menu" aria-expanded="false" style="display:none; background:transparent; border:none; padding:10px; cursor:pointer; flex-direction:column; gap:5px; color:#F4F5FA;">
       <i style="display:block; width:24px; height:2px; background:currentColor;"></i>
@@ -214,8 +214,8 @@ if ( 'dark' === $crux_skin ) :
 
       <!-- Dual Action CTAs -->
       <div style="display:flex; flex-direction:column; gap:10px; margin-top:24px;">
-        <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="display:block; text-align:center; background:#BA0000; color:#FFFFFF; font-weight:700; font-size:14px; padding:15px 20px; --sl:8px; text-decoration:none;" class="bx"><?php echo esc_html( crux_opt( "cta_events_text" ) ); ?> &rarr;</a>
-        <a href="<?php echo esc_url( crux_opt( "calendly_url" ) ); ?>" target="_blank" rel="noopener" style="display:block; text-align:center; background:#8C7AE6; color:#10142E; font-weight:700; font-size:14px; padding:15px 20px; --sl:8px; text-decoration:none;" class="bx"><?php echo esc_html( crux_opt( "cta_consult_text" ) ); ?> (Calendly) &rarr;</a>
+        <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="display:block; text-align:center; background:#BA0000; color:#FFFFFF; font-weight:700; font-size:14px; padding:15px 20px; --sl:8px; text-decoration:none;" class="bx"<?php echo crux_edit_attr_opt( 'cta_events_text' ); ?>><?php echo esc_html( crux_opt( "cta_events_text" ) ); ?> &rarr;</a>
+        <a href="<?php echo esc_url( crux_opt( "calendly_url" ) ); ?>" target="_blank" rel="noopener" style="display:block; text-align:center; background:#8C7AE6; color:#10142E; font-weight:700; font-size:14px; padding:15px 20px; --sl:8px; text-decoration:none;" class="bx"<?php echo crux_edit_attr_opt( 'cta_consult_text' ); ?>><?php echo esc_html( crux_opt( "cta_consult_text" ) ); ?> (Calendly) &rarr;</a>
       </div>
 
       <!-- Contact & Direct Telephony -->
@@ -234,8 +234,8 @@ if ( 'dark' === $crux_skin ) :
   </div>
 <?php else : ?><!-- SHOUT-OUT BAR -->
   <div class="top-shoutout-bar" style="background:#8C7AE6; padding:10px 20px 10px 20px; display:flex; align-items:center; justify-content:center;">
-<?php if ( "consultancy" === $crux_wing ) : ?>    <span style="font-size:12.5px; font-weight:700; color:#10142E; letter-spacing:0.3px;"><?php echo esc_html( crux_bar_text( "consult" ) ); ?> <a href="<?php echo esc_url( home_url( "/contact/?type=consultancy" ) ); ?>" style="color:#10142E; font-weight:800; border-bottom:1px solid #10142E;"><?php echo esc_html( crux_opt( "bar_consult_link" ) ); ?></a></span>
-<?php else : ?>    <span style="font-size:12.5px; font-weight:700; color:#10142E; letter-spacing:0.3px;"><?php echo esc_html( crux_bar_text( "dual" ) ); ?> <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="color:#10142E; font-weight:800; border-bottom:1px solid #10142E;"><?php echo esc_html( crux_opt( "bar_dual_link" ) ); ?></a></span>
+<?php if ( "consultancy" === $crux_wing ) : ?>    <span style="font-size:12.5px; font-weight:700; color:#10142E; letter-spacing:0.3px;"<?php echo crux_edit_attr_opt( 'bar_consult_text' ); ?>><?php echo esc_html( crux_bar_text( "consult" ) ); ?> <a href="<?php echo esc_url( home_url( "/contact/?type=consultancy" ) ); ?>" style="color:#10142E; font-weight:800; border-bottom:1px solid #10142E;"<?php echo crux_edit_attr_opt( 'bar_consult_link' ); ?>><?php echo esc_html( crux_opt( "bar_consult_link" ) ); ?></a></span>
+<?php else : ?>    <span style="font-size:12.5px; font-weight:700; color:#10142E; letter-spacing:0.3px;"<?php echo crux_edit_attr_opt( 'bar_dual_text' ); ?>><?php echo esc_html( crux_bar_text( "dual" ) ); ?> <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="color:#10142E; font-weight:800; border-bottom:1px solid #10142E;"<?php echo crux_edit_attr_opt( 'bar_dual_link' ); ?>><?php echo esc_html( crux_opt( "bar_dual_link" ) ); ?></a></span>
 <?php endif; ?>
   </div>
   <!-- HEADER -->
@@ -336,11 +336,11 @@ if ( 'dark' === $crux_skin ) :
             </div>
             <!-- Column 3: NOT SURE WHICH? Photo Card -->
             <div style="position:relative; border-radius:14px; overflow:hidden; min-height:240px; display:flex; flex-direction:column; justify-content:flex-end;">
-              <img src="<?php echo esc_url( crux_card_photo_url() ); ?>" alt="Crux Nxtion Founder Bambad" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 20%;">
+              <img<?php echo crux_edit_attr_opt( 'card_photo' ); ?> src="<?php echo esc_url( crux_card_photo_url() ); ?>" alt="Crux Nxtion Founder Bambad" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 20%;">
               <div style="position:absolute; inset:0; background:linear-gradient(0deg, rgba(16,20,46,0.95) 0%, rgba(16,20,46,0.3) 70%);"></div>
               <div style="position:relative; z-index:1; padding:20px;">
-                <span class="bebas" style="font-size:24px; color:#FFFFFF; display:block; margin-bottom:8px;"><?php echo esc_html( crux_opt( "card_title" ) ); ?></span>
-                <a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="display:inline-block; background:#8C7AE6; color:#10142E; font-weight:700; font-size:13px; padding:10px 18px; --sl:8px; text-decoration:none;" class="bx"><?php echo esc_html( crux_opt( "card_button" ) ); ?> &rarr;</a>
+                <span class="bebas" style="font-size:24px; color:#FFFFFF; display:block; margin-bottom:8px;"<?php echo crux_edit_attr_opt( 'card_title' ); ?>><?php echo esc_html( crux_opt( "card_title" ) ); ?></span>
+                <a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="display:inline-block; background:#8C7AE6; color:#10142E; font-weight:700; font-size:13px; padding:10px 18px; --sl:8px; text-decoration:none;" class="bx"<?php echo crux_edit_attr_opt( 'card_button' ); ?>><?php echo esc_html( crux_opt( "card_button" ) ); ?> &rarr;</a>
               </div>
             </div>
           </div>
@@ -364,8 +364,8 @@ if ( 'dark' === $crux_skin ) :
 <?php endif; ?>
         </div>
       </div>
-<?php if ( "consultancy" === $crux_wing ) : ?>      <a href="<?php echo esc_url( crux_opt( "calendly_url" ) ); ?>" target="_blank" rel="noopener" style="background:#8C7AE6; color:#10142E !important; font-weight:700; font-size:13px; padding:12px 22px; --sl:8px;" class="bx"><?php echo esc_html( crux_opt( "cta_consult_text" ) ); ?></a>
-<?php else : ?>      <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:13px; padding:12px 22px; --sl:8px;" class="bx"><?php echo esc_html( crux_opt( "cta_events_text" ) ); ?></a>
+<?php if ( "consultancy" === $crux_wing ) : ?>      <a href="<?php echo esc_url( crux_opt( "calendly_url" ) ); ?>" target="_blank" rel="noopener" style="background:#8C7AE6; color:#10142E !important; font-weight:700; font-size:13px; padding:12px 22px; --sl:8px;" class="bx"<?php echo crux_edit_attr_opt( 'cta_consult_text' ); ?>><?php echo esc_html( crux_opt( "cta_consult_text" ) ); ?></a>
+<?php else : ?>      <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="background:#BA0000; color:#FFFFFF; font-weight:700; font-size:13px; padding:12px 22px; --sl:8px;" class="bx"<?php echo crux_edit_attr_opt( 'cta_events_text' ); ?>><?php echo esc_html( crux_opt( "cta_events_text" ) ); ?></a>
 <?php endif; ?>
     </div>
     <button type="button" class="crux-mnav-btn" id="crux-mnav-toggle" aria-label="Open navigation menu" aria-expanded="false" style="display:none; background:transparent; border:none; padding:10px; cursor:pointer; flex-direction:column; gap:5px; color:#10142E;">
@@ -443,8 +443,8 @@ if ( 'dark' === $crux_skin ) :
 
       <!-- Dual Action CTAs -->
       <div style="display:flex; flex-direction:column; gap:10px; margin-top:24px;">
-        <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="display:block; text-align:center; background:#BA0000; color:#FFFFFF; font-weight:700; font-size:14px; padding:15px 20px; --sl:8px; text-decoration:none;" class="bx"><?php echo esc_html( crux_opt( "cta_events_text" ) ); ?> &rarr;</a>
-        <a href="<?php echo esc_url( crux_opt( "calendly_url" ) ); ?>" target="_blank" rel="noopener" style="display:block; text-align:center; background:#8C7AE6; color:#10142E; font-weight:700; font-size:14px; padding:15px 20px; --sl:8px; text-decoration:none;" class="bx"><?php echo esc_html( crux_opt( "cta_consult_text" ) ); ?> (Calendly) &rarr;</a>
+        <a href="<?php echo esc_url( home_url( "/contact/?type=events" ) ); ?>" style="display:block; text-align:center; background:#BA0000; color:#FFFFFF; font-weight:700; font-size:14px; padding:15px 20px; --sl:8px; text-decoration:none;" class="bx"<?php echo crux_edit_attr_opt( 'cta_events_text' ); ?>><?php echo esc_html( crux_opt( "cta_events_text" ) ); ?> &rarr;</a>
+        <a href="<?php echo esc_url( crux_opt( "calendly_url" ) ); ?>" target="_blank" rel="noopener" style="display:block; text-align:center; background:#8C7AE6; color:#10142E; font-weight:700; font-size:14px; padding:15px 20px; --sl:8px; text-decoration:none;" class="bx"<?php echo crux_edit_attr_opt( 'cta_consult_text' ); ?>><?php echo esc_html( crux_opt( "cta_consult_text" ) ); ?> (Calendly) &rarr;</a>
       </div>
 
       <!-- Contact & Direct Telephony -->
