@@ -68,6 +68,12 @@
 
 	api.bind( 'ready', function () {
 		api.previewer.bind( 'crux-focus', function ( id ) { focusControl( id, 0 ); } );
+		api.previewer.bind( 'crux-page', function ( page ) { load( page ); } );
+		// The preview may have announced its page before this panel was ready: ask again, now and once it reports ready.
+		function askPage() { try { api.previewer.send( 'crux-request-page' ); } catch ( e ) {} }
+		api.previewer.bind( 'ready', askPage );
+		askPage();
+		setTimeout( askPage, 2500 );
 		api.previewer.previewUrl.bind( function ( url ) { load( pageFor( url ) ); } );
 		load( pageFor( api.previewer.previewUrl.get() ) );
 	} );

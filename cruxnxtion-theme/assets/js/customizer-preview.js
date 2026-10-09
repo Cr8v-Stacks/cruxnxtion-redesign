@@ -72,6 +72,13 @@
 		if ( current ) { api.preview.send( 'crux-focus', controlId( current.getAttribute( 'data-crux-edit' ) ) ); }
 	} );
 
+	// Tell the Customizer which page this is, so its panel is loaded even for pages without a fixed address (events, posts, 404).
+	function tellPage() { api.preview.send( 'crux-page', cfg.page || '' ); }
+	api.bind( 'preview-ready', function () {
+		api.preview.bind( 'active', tellPage );
+		api.preview.bind( 'crux-request-page', tellPage );
+	} );
+
 	// Instant text updates.
 	( cfg.live || [] ).forEach( function ( entry ) {
 		api( 'crux_c_' + entry.replace( '.', '_' ), function ( setting ) {

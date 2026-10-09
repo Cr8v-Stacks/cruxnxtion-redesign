@@ -127,13 +127,16 @@ add_action( 'wp_ajax_crux_page_controls', 'crux_ajax_page_controls' );
 function crux_page_url_map() {
 	$map = array();
 	foreach ( crux_content_pages() as $page => $info ) {
-		$map[ ( 'front' === $info[1] ) ? '/' : '/' . $info[1] . '/' ] = $page;
+		if ( ':' !== substr( $info[1], 0, 1 ) ) {
+			$map[ ( 'front' === $info[1] ) ? '/' : '/' . $info[1] . '/' ] = $page;
+		}
 	}
 	return $map;
 }
 
 function crux_customizer_scripts() {
-	wp_enqueue_script( 'crux-customizer-pages', get_template_directory_uri() . '/assets/js/customizer-pages.js', array( 'customize-controls' ), CRUX_THEME_VERSION, true );
+	// The file's own change time is part of the address: something on this site strips the usual ?ver= from script addresses, which left browsers running stale copies.
+	wp_enqueue_script( 'crux-customizer-pages', get_template_directory_uri() . '/assets/js/customizer-pages.js?cv=' . filemtime( get_template_directory() . '/assets/js/customizer-pages.js' ), array( 'customize-controls' ), null, true );
 	wp_localize_script(
 		'crux-customizer-pages',
 		'cruxPages',
@@ -149,8 +152,8 @@ add_action( 'customize_controls_enqueue_scripts', 'crux_customizer_scripts' );
 
 /** Pencils and instant text updates inside the preview. */
 function crux_customizer_preview_scripts() {
-	wp_enqueue_script( 'crux-customizer-preview', get_template_directory_uri() . '/assets/js/customizer-preview.js', array( 'customize-preview' ), CRUX_THEME_VERSION, true );
-	wp_localize_script( 'crux-customizer-preview', 'cruxPreview', array( 'live' => array_keys( crux_live_fields() ) ) );
+	wp_enqueue_script( 'crux-customizer-preview', get_template_directory_uri() . '/assets/js/customizer-preview.js?cv=' . filemtime( get_template_directory() . '/assets/js/customizer-preview.js' ), array( 'customize-preview' ), null, true );
+	wp_localize_script( 'crux-customizer-preview', 'cruxPreview', array( 'live' => array_keys( crux_live_fields() ), 'page' => crux_current_page_key() ) );
 }
 add_action(
 	'customize_preview_init',

@@ -700,7 +700,7 @@ if ( ! $ev_data ) {
   <?php get_template_part( 'parts/site-header', null, array( 'skin' => 'dark', 'nav' => 'events', 'wing' => 'events', 'active' => 'events' ) ); ?>
 
   <!-- BREADCRUMB -->
-  <div style=" padding:20px 20px 0px 20px;"><span style="font-size:13px; color:#7A82A8;"><a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="color:#7A82A8;">Home</a> / <a href="<?php echo esc_url( home_url( "/events/" ) ); ?>" style="color:#7A82A8;">Events</a> / <span style="color:#F4F5FA; font-weight:600;"><?php echo esc_html( $ev_data["short_title"] ); ?></span></span></div>
+  <div style=" padding:20px 20px 0px 20px;"><span style="font-size:13px; color:#7A82A8;"><a href="<?php echo crux_url( 'single_event', 'breadcrumb_link_1_url' ); ?>" style="color:#7A82A8;"<?php echo crux_edit_attr( 'single_event', 'breadcrumb_link_1' ); ?>><?php echo crux_h( 'single_event', 'breadcrumb_link_1' ); ?></a> / <a href="<?php echo crux_url( 'single_event', 'breadcrumb_link_2_url' ); ?>" style="color:#7A82A8;"<?php echo crux_edit_attr( 'single_event', 'breadcrumb_link_2' ); ?>><?php echo crux_h( 'single_event', 'breadcrumb_link_2' ); ?></a> / <span style="color:#F4F5FA; font-weight:600;"><?php echo esc_html( $ev_data["short_title"] ); ?></span></span></div>
 
   <!-- HERO BANNER -->
   <section style="position:relative; margin:24px 20px 0px 20px; overflow:hidden; height:460px; clip-path:polygon(0 0,100% 0,100% 94%,0 100%); border:1.5px solid #1E2B5E;">
@@ -713,10 +713,10 @@ if ( ! $ev_data ) {
   <!-- EVENT DETAILS -->
   <section style="min-height:560px; padding:56px 20px 56px 20px; display:grid; grid-template-columns:1.6fr 1fr; gap:56px; align-items:start;" data-m="g1 nomin">
     <div class="reveal">
-      <h2 class="bebas" style="font-size:32px; margin:0px 0px 16px 0px; color:#F4F5FA;">ABOUT THIS EVENT</h2>
+      <h2 class="bebas" style="font-size:32px; margin:0px 0px 16px 0px; color:#F4F5FA;"<?php echo crux_edit_attr( 'single_event', 'event_details_heading_1' ); ?>><?php echo crux_h( 'single_event', 'event_details_heading_1' ); ?></h2>
       <?php if ( ! empty( $ev_data['desc_1'] ) ) : ?><p style="font-size:15px; line-height:1.8; color:#B4BCDD; margin:0px 0px 20px 0px;"><?php echo esc_html( $ev_data['desc_1'] ); ?></p><?php endif; ?>
       <?php if ( ! empty( $ev_data['desc_2'] ) ) : ?><p style="font-size:15px; line-height:1.8; color:#B4BCDD; margin:0px 0px 32px 0px;"><?php echo esc_html( $ev_data['desc_2'] ); ?></p><?php endif; ?>
-      <h3 style="font-size:16px; margin:0px 0px 14px 0px; font-weight:700; color:#F4F5FA;">From The Gallery</h3>
+      <h3 style="font-size:16px; margin:0px 0px 14px 0px; font-weight:700; color:#F4F5FA;"<?php echo crux_edit_attr( 'single_event', 'event_details_heading_2' ); ?>><?php echo crux_h( 'single_event', 'event_details_heading_2' ); ?></h3>
       <div style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:14px;" data-m="g1">
         <?php foreach ( $ev_data['gallery_urls'] as $g_url ) : ?>
         <img src="<?php echo esc_url( $g_url ); ?>" alt="" style="width:100%; height:170px; object-fit:cover; border-radius:10px; border:1.5px solid #1E2B5E;" class="reveal">
@@ -753,15 +753,15 @@ if ( ! $ev_data ) {
           <?php esc_html_e( 'Reserve Your Spot', 'cruxnxtion' ); ?>
         </button>
       <?php else : ?>
-        <a href="<?php echo !empty($ev_data['eventbrite']) ? esc_url($ev_data['eventbrite']) : esc_url( home_url('/contact/') ); ?>" style="display:block; text-align:center; background:#BA0000; color:#FFFFFF; font-weight:700; font-size:15px; padding:16px 16px 16px 16px; margin-bottom:12px; --sl:10px;" class="bx" <?php echo !empty($ev_data['eventbrite']) ? 'target="_blank" rel="noopener"' : ''; ?>>Reserve Your Spot</a>
+        <a href="<?php echo !empty($ev_data['eventbrite']) ? esc_url($ev_data['eventbrite']) : esc_url( home_url('/contact/') ); ?>" style="display:block; text-align:center; background:#BA0000; color:#FFFFFF; font-weight:700; font-size:15px; padding:16px 16px 16px 16px; margin-bottom:12px; --sl:10px;" class="bx" <?php echo !empty($ev_data['eventbrite']) ? 'target="_blank" rel="noopener"' : ''; ?><?php echo crux_edit_attr( 'single_event', 'event_details_button_1' ); ?>><?php echo crux_h( 'single_event', 'event_details_button_1' ); ?></a>
       <?php endif; ?>
-      <a href="<?php echo esc_url( home_url( "/contact/" ) ); ?>" style="display:block; text-align:center; color:#F4F5FA; font-weight:700; font-size:14px; padding:14px 14px 14px 14px; --sl:10px; --bc:#F4F5FA;" class="bx">Ask A Question</a>
+      <a href="<?php echo crux_url( 'single_event', 'event_details_button_2_url' ); ?>" style="display:block; text-align:center; color:#F4F5FA; font-weight:700; font-size:14px; padding:14px 14px 14px 14px; --sl:10px; --bc:#F4F5FA;" class="bx"<?php echo crux_edit_attr( 'single_event', 'event_details_button_2' ); ?>><?php echo crux_h( 'single_event', 'event_details_button_2' ); ?></a>
     </div>
   </section>
 
   <!-- YOU MIGHT ALSO LIKE -->
   <section style=" padding:20px 20px 44px 20px;">
-    <h2 class="bebas reveal" style="font-size:36px; margin:0px 0px 28px 0px; color:#F4F5FA;">YOU MIGHT ALSO LIKE</h2>
+    <h2 class="bebas reveal" style="font-size:36px; margin:0px 0px 28px 0px; color:#F4F5FA;"<?php echo crux_edit_attr( 'single_event', 'you_might_also_like_heading_1' ); ?>><?php echo crux_h( 'single_event', 'you_might_also_like_heading_1' ); ?></h2>
     <div style="display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:24px;" class="reveal" data-m="g1">
       <?php
       $rendered_count = 0;
@@ -788,10 +788,10 @@ if ( ! $ev_data ) {
   <div class="crux-sw-pod crux-sw-pod--dark" style="pointer-events:auto; display:inline-flex; align-items:center; padding:1.5px; background:linear-gradient(135deg, #2A3F7A 0%, #15224A 100%); clip-path:polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%); box-shadow:0 14px 36px rgba(0,0,0,0.65); filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4));">
     <div class="crux-sw-inner" style="display:inline-flex; align-items:center; background:#020512; padding:4px; gap:4px; clip-path:polygon(7px 0, 100% 0, calc(100% - 7px) 100%, 0 100%);">
       <a href="<?php echo esc_url( home_url( "/" ) ); ?>" class="crux-sw-tab crux-sw-tab--active-events" style="display:inline-flex; align-items:center; justify-content:center; padding:11px 22px; min-width:140px; font-size:13px; font-weight:700; letter-spacing:0.3px; text-transform:uppercase; text-decoration:none; line-height:1.2; background:#1E48B0; color:#FFFFFF; clip-path:polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%); box-shadow:0 2px 8px rgba(30,72,176,0.5);">
-        <span>Events</span>
+        <span<?php echo crux_edit_attr( 'single_event', 'you_might_also_like_text_1' ); ?>><?php echo crux_h( 'single_event', 'you_might_also_like_text_1' ); ?></span>
       </a>
       <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" class="crux-sw-tab crux-sw-tab--inactive-dark" style="display:inline-flex; align-items:center; justify-content:center; padding:11px 22px; min-width:140px; font-size:13px; font-weight:600; letter-spacing:0.3px; text-transform:uppercase; text-decoration:none; line-height:1.2; background:transparent; color:#8E96BB; clip-path:polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%); transition:all .2s ease;">
-        <span>Consultancy</span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:6px; display:inline-block; vertical-align:middle;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        <span<?php echo crux_edit_attr( 'single_event', 'you_might_also_like_text_2' ); ?>><?php echo crux_h( 'single_event', 'you_might_also_like_text_2' ); ?></span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:6px; display:inline-block; vertical-align:middle;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
       </a>
     </div>
   </div>

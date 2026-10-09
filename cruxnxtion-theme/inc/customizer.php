@@ -311,7 +311,38 @@ function crux_content_pages() {
 		'events_archive'       => array( 'Past events', 'past-events' ),
 		'blog'                 => array( 'Blog', 'blog' ),
 		'contact'              => array( 'Contact', 'contact' ),
+		'privacy'              => array( 'Privacy policy', 'privacy-policy' ),
+		'terms'                => array( 'Terms & conditions', 'terms-conditions' ),
+		'cookies'              => array( 'Cookie policy', 'cookie-policy' ),
+		'not_found'            => array( 'Error 404 (not found)', ':404' ),
+		'single_event'         => array( 'Single event (all events)', ':event' ),
+		'single_post'          => array( 'Single blog post (all posts)', ':post' ),
 	);
+}
+
+/** Key of the page being shown (for the Customizer preview), or '' when it has no editable wording. */
+function crux_current_page_key() {
+	if ( is_404() ) {
+		return 'not_found';
+	}
+	if ( is_singular( 'event' ) ) {
+		return 'single_event';
+	}
+	if ( is_singular( 'post' ) ) {
+		return 'single_post';
+	}
+	if ( is_front_page() ) {
+		return 'home';
+	}
+	if ( is_home() ) {
+		return 'blog';
+	}
+	foreach ( crux_content_pages() as $key => $info ) {
+		if ( ':' !== substr( $info[1], 0, 1 ) && 'front' !== $info[1] && is_page( $info[1] ) ) {
+			return $key;
+		}
+	}
+	return '';
 }
 
 /** Fields of one page: key => array( region, label, type, original wording ). */

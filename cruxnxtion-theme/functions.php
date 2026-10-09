@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CRUX_THEME_VERSION', '1.5.4' );
+define( 'CRUX_THEME_VERSION', '1.5.6' );
 
 // Include Core Theme Engines
 require_once get_template_directory() . '/inc/prevent-errors.php';

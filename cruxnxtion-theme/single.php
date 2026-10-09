@@ -785,7 +785,7 @@ if ( isset( $blog_catalog[ $current_slug ] ) ) {
   <?php get_template_part( 'parts/site-header', null, array( 'skin' => 'dark', 'nav' => 'events', 'wing' => 'events', 'active' => 'blog' ) ); ?>
 
   <!-- BREADCRUMB -->
-  <div style=" padding:20px 20px 0px 20px;"><span style="font-size:13px; color:#7A82A8;"><a href="<?php echo esc_url( home_url( "/" ) ); ?>" style="color:#7A82A8;">Home</a> / <a href="<?php echo esc_url( home_url( "/blog/" ) ); ?>" style="color:#7A82A8;">Blog</a> / <span style="color:#F4F5FA; font-weight:600;"><?php echo esc_html( $post_data["title"] ); ?></span></span></div>
+  <div style=" padding:20px 20px 0px 20px;"><span style="font-size:13px; color:#7A82A8;"><a href="<?php echo crux_url( 'single_post', 'breadcrumb_link_1_url' ); ?>" style="color:#7A82A8;"<?php echo crux_edit_attr( 'single_post', 'breadcrumb_link_1' ); ?>><?php echo crux_h( 'single_post', 'breadcrumb_link_1' ); ?></a> / <a href="<?php echo crux_url( 'single_post', 'breadcrumb_link_2_url' ); ?>" style="color:#7A82A8;"<?php echo crux_edit_attr( 'single_post', 'breadcrumb_link_2' ); ?>><?php echo crux_h( 'single_post', 'breadcrumb_link_2' ); ?></a> / <span style="color:#F4F5FA; font-weight:600;"><?php echo esc_html( $post_data["title"] ); ?></span></span></div>
 
   <!-- ARTICLE HEADER -->
   <section style=" padding:40px 20px 30px 20px; max-width:1000px;">
@@ -811,7 +811,7 @@ if ( isset( $blog_catalog[ $current_slug ] ) ) {
       <?php endif; ?>
     </div>
     <div style="background:#111838; border:1.5px solid #1E2B5E; border-radius:16px; padding:28px;" class="reveal">
-      <span class="eyebrow">Recent Posts</span>
+      <span class="eyebrow"<?php echo crux_edit_attr( 'single_post', 'article_small_heading_1' ); ?>><?php echo crux_h( 'single_post', 'article_small_heading_1' ); ?></span>
       <?php foreach ( $blog_catalog as $bslug => $bitem ) :
           if ( $bslug === $current_slug ) continue;
       ?>
@@ -829,10 +829,10 @@ if ( isset( $blog_catalog[ $current_slug ] ) ) {
   <div class="crux-sw-pod crux-sw-pod--dark" style="pointer-events:auto; display:inline-flex; align-items:center; padding:1.5px; background:linear-gradient(135deg, #2A3F7A 0%, #15224A 100%); clip-path:polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%); box-shadow:0 14px 36px rgba(0,0,0,0.65); filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4));">
     <div class="crux-sw-inner" style="display:inline-flex; align-items:center; background:#020512; padding:4px; gap:4px; clip-path:polygon(7px 0, 100% 0, calc(100% - 7px) 100%, 0 100%);">
       <a href="<?php echo esc_url( home_url( "/" ) ); ?>" class="crux-sw-tab crux-sw-tab--active-events" style="display:inline-flex; align-items:center; justify-content:center; padding:11px 22px; min-width:140px; font-size:13px; font-weight:700; letter-spacing:0.3px; text-transform:uppercase; text-decoration:none; line-height:1.2; background:#1E48B0; color:#FFFFFF; clip-path:polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%); box-shadow:0 2px 8px rgba(30,72,176,0.5);">
-        <span>Events</span>
+        <span<?php echo crux_edit_attr( 'single_post', 'article_text_1' ); ?>><?php echo crux_h( 'single_post', 'article_text_1' ); ?></span>
       </a>
       <a href="<?php echo esc_url( home_url( "/consultancy/" ) ); ?>" class="crux-sw-tab crux-sw-tab--inactive-dark" style="display:inline-flex; align-items:center; justify-content:center; padding:11px 22px; min-width:140px; font-size:13px; font-weight:600; letter-spacing:0.3px; text-transform:uppercase; text-decoration:none; line-height:1.2; background:transparent; color:#8E96BB; clip-path:polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%); transition:all .2s ease;">
-        <span>Consultancy</span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:6px; display:inline-block; vertical-align:middle;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        <span<?php echo crux_edit_attr( 'single_post', 'article_text_2' ); ?>><?php echo crux_h( 'single_post', 'article_text_2' ); ?></span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:6px; display:inline-block; vertical-align:middle;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
       </a>
     </div>
   </div>

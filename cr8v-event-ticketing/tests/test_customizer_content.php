@@ -32,7 +32,11 @@ $urls = array(
 	'home' => '/', 'about' => '/about/', 'services' => '/services/', 'services_consultancy' => '/services-consultancy/', 'consultancy' => '/consultancy/',
 	'founder' => '/founder/', 'faq' => '/faq/', 'gallery' => '/gallery/', 'sponsors' => '/sponsors/', 'events' => '/events/',
 	'events_archive' => '/past-events/', 'blog' => '/blog/', 'contact' => '/contact/',
+	'privacy' => '/privacy-policy/', 'terms' => '/terms-conditions/', 'cookies' => '/cookie-policy/', 'not_found' => '/this-page-does-not-exist/',
+	'single_event' => '/event/ankara-festival/',
 );
+$first_post = get_posts( array( 'post_type' => 'post', 'post_status' => 'publish', 'numberposts' => 1 ) );
+$urls['single_post'] = $first_post ? wp_make_link_relative( get_permalink( $first_post[0] ) ) : '/';
 $pages  = crux_content_pages();
 // Two runs at the same time would overwrite each other's saved settings: wait for the other run to finish.
 global $wpdb;
@@ -196,6 +200,8 @@ $tpl_files = array(
 	'home' => 'front-page.php', 'about' => 'page-about.php', 'services' => 'page-services.php', 'services_consultancy' => 'page-services-consultancy.php',
 	'consultancy' => 'page-consultancy.php', 'founder' => 'page-founder.php', 'faq' => 'page-faq.php', 'gallery' => 'page-gallery.php',
 	'sponsors' => 'page-sponsors.php', 'events' => 'page-events.php', 'events_archive' => 'page-events-archive.php', 'blog' => 'home.php', 'contact' => 'page-contact.php',
+	'privacy' => 'page-privacy-policy.php', 'terms' => 'page-terms-conditions.php', 'cookies' => 'page-cookie-policy.php', 'not_found' => '404.php',
+	'single_event' => 'single-event.php', 'single_post' => 'single.php',
 );
 $bad_marks = array(); $unmarked = 0; $total_fields = 0; $live_bad = array();
 foreach ( $pages as $page => $info ) {
