@@ -78,6 +78,14 @@ function crux_legacy_url_redirects() {
 		'business-audit-and-advisory'                  => '/services-consultancy/',
 	);
 
+	if ( preg_match( '#^blog/(?!page/)([^/]+)$#i', $path, $bm ) ) {
+		$legacy_post = get_page_by_path( sanitize_title( $bm[1] ), OBJECT, 'post' );
+		if ( $legacy_post && 'publish' === $legacy_post->post_status ) {
+			wp_safe_redirect( get_permalink( $legacy_post ), 301 );
+			exit;
+		}
+	}
+
 	if ( isset( $redirect_map[ $path ] ) ) {
 		wp_safe_redirect( home_url( $redirect_map[ $path ] ), 301 );
 		exit;
@@ -132,18 +140,9 @@ function crux_virtual_template_fallback( $template ) {
 		return $template;
 	}
 
-	// 2B. Blog single post wildcard routing (/blog/slug/)
-	if ( preg_match( '#^blog/(.+)$#i', $slug ) ) {
-		$candidate = locate_template( array( 'single.php' ) );
-		if ( $candidate ) {
-			global $wp_query;
-			$wp_query->is_404 = false;
-			$wp_query->is_single = true;
-			$wp_query->is_singular = true;
-			status_header( 200 );
-			return $candidate;
-		}
-	}
+	// 2B. (Removed) /blog/<slug>/ used to be forced onto single.php whatever the address, which broke /blog/page/2/ and
+	// showed placeholder text for unknown addresses. Old /blog/<slug>/ links to a real post now redirect to it (see
+	// crux_legacy_url_redirects); everything else under /blog/ is left to WordPress.
 
 	// 2C. Static page templates
 	$slug_template_map = array(
@@ -245,16 +244,6 @@ function crux_custom_document_title( $title_parts ) {
 		} else {
 			$t = ucwords( str_replace( array( '-', '_' ), ' ', $em[1] ) ) . ' — Crux Nxtion';
 		}
-		if ( is_array( $title_parts ) ) {
-			$title_parts['title'] = $t;
-			return $title_parts;
-		}
-		return $t;
-	}
-
-	if ( preg_match( '#^blog/(.+)$#i', $slug, $bm ) ) {
-		$raw_title = ucwords( str_replace( array( '-', '_' ), ' ', $bm[1] ) );
-		$t = $raw_title . ' — Journal — Crux Nxtion';
 		if ( is_array( $title_parts ) ) {
 			$title_parts['title'] = $t;
 			return $title_parts;

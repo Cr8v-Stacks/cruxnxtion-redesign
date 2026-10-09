@@ -17,6 +17,9 @@ require_once get_template_directory() . '/inc/event-engine.php';
 require_once get_template_directory() . '/inc/event-seeder.php';
 require_once get_template_directory() . '/inc/layout.php';
 require_once get_template_directory() . '/inc/navigation.php';
+require_once get_template_directory() . '/inc/blog-seeder.php';
+require_once get_template_directory() . '/inc/blog.php';
+require_once get_template_directory() . '/inc/seo.php';
 require_once get_template_directory() . '/inc/customizer.php';
 // Events are edited in the shared plugin's Studio box (one place per field), so the default editor and Excerpt box are hidden.
 add_filter( 'cr8v_events_hide_default_editor', '__return_true' );

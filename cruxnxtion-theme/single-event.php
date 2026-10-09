@@ -92,6 +92,7 @@ if ( ! $ev_data ) {
         <a href="<?php echo !empty($ev_data['eventbrite']) ? esc_url($ev_data['eventbrite']) : esc_url( home_url('/contact/') ); ?>" style="display:block; text-align:center; background:#BA0000; color:#FFFFFF; font-weight:700; font-size:15px; padding:16px 16px 16px 16px; margin-bottom:12px; --sl:10px;" class="bx" <?php echo !empty($ev_data['eventbrite']) ? 'target="_blank" rel="noopener"' : ''; ?><?php echo crux_edit_attr( 'single_event', 'event_details_button_1' ); ?>><?php echo crux_h( 'single_event', 'event_details_button_1' ); ?></a>
       <?php endif; ?>
       <a href="<?php echo crux_url( 'single_event', 'event_details_button_2_url' ); ?>" style="display:block; text-align:center; color:#F4F5FA; font-weight:700; font-size:14px; padding:14px 14px 14px 14px; --sl:10px; --bc:#F4F5FA;" class="bx"<?php echo crux_edit_attr( 'single_event', 'event_details_button_2' ); ?>><?php echo crux_h( 'single_event', 'event_details_button_2' ); ?></a>
+      <?php crux_share_bar( get_permalink( $ev_data['id'] ), get_the_title( $ev_data['id'] ) ); ?>
     </div>
   </section>
 

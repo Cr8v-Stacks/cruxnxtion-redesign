@@ -44,6 +44,10 @@ def loose(html):
     # is extracted), so compare pages with neither.
     html = re.sub(r"<style>\s*@import url\(['\"]?https://fonts\.googleapis\.com.*?</style>", '', html, count=1, flags=re.S)
     html = re.sub(r"<link[^>]*id=['\"]crux-page-css-css['\"][^>]*>", '', html)
+    # Search and share meta (description, Open Graph, Twitter Card, JSON-LD) was added later, and the event and post pages got a share bar.
+    html = re.sub(r"<meta (?:name|property)=['\"](?:description|og:[a-z_:]+|twitter:[a-z_:]+)['\"][^>]*>", '', html)
+    html = re.sub(r"<script type=['\"]application/ld\+json['\"]>.*?</script>", '', html, flags=re.S)
+    html = re.sub(r"<div class=['\"]crux-share['\"].*?</script>", '', html, flags=re.S)
     html = re.sub(r'\s+', ' ', html)
     return re.sub(r'>\s+<', '><', html).strip()
 
@@ -77,10 +81,18 @@ def compare(a, b):
     same = diff = 0
     for f in sorted(os.listdir(a)):
         pa, pb = os.path.join(a, f), os.path.join(b, f)
+        if LOOSE and f.startswith('how_ai_can_help') and not os.path.exists(pb):
+            print('SKIP %-40s (the first post in the list is now a different post)' % f)
+            same += 1
+            continue
         if not os.path.exists(pb):
             print('MISSING in B:', f); diff += 1; continue
         fn = loose if LOOSE else (lambda v: v)
         x, y = fn(normalise(open(pa, encoding='utf-8', newline='').read())), fn(normalise(open(pb, encoding='utf-8', newline='').read()))
+        if LOOSE and (f == 'blog.html' or f.startswith('how_ai_can_help')):  # real posts replaced the fixed blog tiles and the placeholder article, on purpose
+            print('SKIP %-40s (changed on purpose: real blog posts)' % f)
+            same += 1
+            continue
         if LOOSE and f == 'sample_page.html':  # generic page: its own announcement text was unified
             cut = lambda v: re.sub(r'<!-- SHOUT-OUT BAR -->.*?<header', '<header', v, flags=re.S)
             x, y = cut(x), cut(y)

@@ -646,3 +646,74 @@
   .crux-sw-tab--inactive-light:hover { color: #10142E !important; background: rgba(108,88,219,0.12) !important; }
 
   
+
+  /* ---- Blog, archives, comments (added with the real-post templates) ---- */
+  .crux-prose { color:#B4BCDD; font-size:16px; line-height:1.85; }
+  .crux-prose > :first-child { margin-top:0; }
+  .crux-prose h2, .crux-prose h3, .crux-prose h4 { font-family:'Bebas Neue','Arial Narrow',sans-serif; color:#F4F5FA; line-height:1.05; margin:34px 0 10px; letter-spacing:0.5px; }
+  .crux-prose h2 { font-size:34px; }
+  .crux-prose h3 { font-size:26px; }
+  .crux-prose h4 { font-size:20px; }
+  .crux-prose p { margin:0 0 20px; }
+  .crux-prose a { color:#5B8DEF; text-decoration:underline; text-underline-offset:3px; }
+  .crux-prose ul, .crux-prose ol { margin:0 0 22px 22px; padding:0; }
+  .crux-prose li { margin:0 0 8px; }
+  .crux-prose blockquote { border-left:4px solid #5B8DEF; margin:34px 0; padding:6px 0 6px 24px; }
+  .crux-prose blockquote p { font-family:'Bebas Neue','Arial Narrow',sans-serif; font-size:30px; line-height:1.15; color:#F4F5FA; margin:0; }
+  .crux-prose img, .crux-prose video, .crux-prose iframe { max-width:100%; height:auto; border-radius:12px; }
+  .crux-prose figure { margin:28px 0; }
+  .crux-prose figcaption { font-size:13px; color:#7A82A8; margin-top:8px; }
+  .crux-prose table { width:100%; border-collapse:collapse; margin:0 0 24px; font-size:14px; }
+  .crux-prose th, .crux-prose td { border:1px solid #1E2B5E; padding:10px 12px; text-align:left; }
+  .crux-prose th { background:#111838; color:#F4F5FA; }
+  .crux-prose pre, .crux-prose code { background:#111838; border:1px solid #1E2B5E; border-radius:8px; color:#C5CFF5; font-size:14px; }
+  .crux-prose pre { padding:16px; overflow:auto; }
+  .crux-prose code { padding:2px 6px; }
+  .crux-prose hr { border:0; border-top:1px solid #1E2B5E; margin:34px 0; }
+  .crux-prose .alignleft { float:left; margin:6px 22px 14px 0; }
+  .crux-prose .alignright { float:right; margin:6px 0 14px 22px; }
+  .crux-prose .aligncenter { display:block; margin-left:auto; margin-right:auto; }
+  .crux-tags { display:flex; flex-wrap:wrap; gap:8px; margin:26px 0 0; }
+  .crux-tags a { font-size:12px; font-weight:700; letter-spacing:0.8px; color:#A9C0F5; border:1.5px solid #1E2B5E; border-radius:999px; padding:6px 14px; text-decoration:none; }
+  .crux-tags a:hover { border-color:#5B8DEF; color:#F4F5FA; }
+  .crux-share { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin:30px 0 0; padding:18px 0; border-top:1px solid #1E2B5E; border-bottom:1px solid #1E2B5E; }
+  .crux-share__label { font-size:12px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#7A82A8; margin-right:6px; }
+  .crux-share a, .crux-share button { font:inherit; font-size:13px; font-weight:700; color:#F4F5FA; background:#111838; border:1.5px solid #1E2B5E; border-radius:999px; padding:8px 16px; cursor:pointer; text-decoration:none; }
+  .crux-share a:hover, .crux-share button:hover { border-color:#5B8DEF; }
+  .crux-author { display:flex; gap:18px; align-items:flex-start; background:#111838; border:1.5px solid #1E2B5E; border-radius:16px; padding:22px; margin:30px 0 0; }
+  .crux-author img { border-radius:50%; flex:0 0 auto; }
+  .crux-author h3 { margin:0 0 6px; font-size:16px; color:#F4F5FA; }
+  .crux-author p { margin:0; font-size:14px; line-height:1.7; color:#A3A9C8; }
+  .crux-postnav { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:30px 0 0; }
+  .crux-postnav a { display:block; background:#111838; border:1.5px solid #1E2B5E; border-radius:12px; padding:16px 18px; color:#F4F5FA; text-decoration:none; }
+  .crux-postnav a:hover { border-color:#5B8DEF; }
+  .crux-postnav small { display:block; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:#5B8DEF; font-weight:700; margin-bottom:6px; }
+  .crux-postnav .next { text-align:right; grid-column:2; }
+  .crux-pagination { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:36px 0 0; }
+  .crux-pagination .page-numbers { min-width:40px; text-align:center; padding:10px 14px; border:1.5px solid #1E2B5E; border-radius:10px; color:#F4F5FA; text-decoration:none; font-weight:700; font-size:14px; }
+  .crux-pagination .page-numbers.current, .crux-pagination .page-numbers:hover { background:#002671; border-color:#5B8DEF; }
+  .crux-pagination .dots { border-color:transparent; }
+  .crux-searchform { display:flex; gap:10px; max-width:560px; margin:22px 0 0; }
+  .crux-searchform input[type=search] { flex:1; background:#111838; border:1.5px solid #1E2B5E; border-radius:10px; color:#F4F5FA; padding:14px 16px; font:inherit; font-size:15px; }
+  .crux-searchform button { background:#BA0000; color:#fff; border:0; border-radius:10px; padding:0 22px; font:inherit; font-weight:700; cursor:pointer; }
+  .crux-comments { margin:40px 0 0; }
+  .crux-comments h2 { font-family:'Bebas Neue','Arial Narrow',sans-serif; color:#F4F5FA; font-size:30px; margin:0 0 18px; }
+  .crux-comments ol { list-style:none; margin:0; padding:0; }
+  .crux-comments .comment-body { background:#111838; border:1.5px solid #1E2B5E; border-radius:14px; padding:18px 20px; margin:0 0 14px; color:#B4BCDD; font-size:15px; line-height:1.7; }
+  .crux-comments .children { margin:0 0 0 24px; padding:0; }
+  .crux-comments .comment-author { display:flex; align-items:center; gap:10px; color:#F4F5FA; font-weight:700; }
+  .crux-comments .comment-author img { border-radius:50%; }
+  .crux-comments .comment-metadata { font-size:12px; color:#7A82A8; margin:4px 0 10px; }
+  .crux-comments .comment-metadata a { color:#7A82A8; }
+  .crux-comments .reply a { font-size:12px; font-weight:700; color:#5B8DEF; }
+  .crux-comments .comment-respond { margin-top:26px; }
+  .crux-comments input[type=text], .crux-comments input[type=email], .crux-comments input[type=url], .crux-comments textarea { width:100%; box-sizing:border-box; background:#111838; border:1.5px solid #1E2B5E; border-radius:10px; color:#F4F5FA; padding:12px 14px; font:inherit; font-size:15px; margin:4px 0 14px; }
+  .crux-comments label { font-size:13px; color:#A3A9C8; }
+  .crux-comments .submit { background:#BA0000; color:#fff; border:0; border-radius:10px; padding:13px 26px; font:inherit; font-weight:700; cursor:pointer; }
+  .crux-comments .comment-notes, .crux-comments .logged-in-as { font-size:13px; color:#7A82A8; }
+  .crux-comments a { color:#5B8DEF; }
+  @media (max-width: 900px) {
+    .crux-postnav { grid-template-columns:1fr; }
+    .crux-postnav .next { grid-column:1; text-align:left; }
+    .crux-author { flex-direction:column; }
+  }

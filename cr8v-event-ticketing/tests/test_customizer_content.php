@@ -24,6 +24,8 @@ function http_get( $path ) {
 	$body = @file_get_contents( 'http://dev-playground.local' . $path, false, $ctx );
 	return false === $body ? '' : $body;
 }
+// Wording that only shows in an empty state (no posts, no results) is checked through the function that prints it.
+$empty_state = array( 'blog.post_list_text_2', 'archive.heading_text_1', 'search.heading_text_1' );
 function decoded( $html ) {
 	return html_entity_decode( $html, ENT_QUOTES | ENT_HTML5, 'UTF-8' );
 }
@@ -33,7 +35,7 @@ $urls = array(
 	'founder' => '/founder/', 'faq' => '/faq/', 'gallery' => '/gallery/', 'sponsors' => '/sponsors/', 'events' => '/events/',
 	'events_archive' => '/past-events/', 'blog' => '/blog/', 'contact' => '/contact/',
 	'privacy' => '/privacy-policy/', 'terms' => '/terms-conditions/', 'cookies' => '/cookie-policy/', 'not_found' => '/this-page-does-not-exist/',
-	'single_event' => '/event/ankara-festival/',
+	'single_event' => '/event/ankara-festival/', 'archive' => '/category/event-recap/', 'search' => '/?s=zzqqxxnothingmatches',
 );
 $first_post = get_posts( array( 'post_type' => 'post', 'post_status' => 'publish', 'numberposts' => 1 ) );
 $urls['single_post'] = $first_post ? wp_make_link_relative( get_permalink( $first_post[0] ) ) : '/';
@@ -127,6 +129,10 @@ try {
 		$missing = array();
 		$markup  = 0;
 		foreach ( $tokens[ $page ] as $key => $row ) {
+			if ( in_array( "$page.$key", $empty_state, true ) ) {
+				if ( false === strpos( crux_h( $page, $key ), $row[0] ) ) { $missing[] = $key; }
+				continue;
+			}
 			if ( false === strpos( $dec, $row[0] ) ) { $missing[] = $key; }
 			elseif ( 'rich' === $row[2] && false !== strpos( $html, $row[0] . ' <strong>bold</strong> and <a href="https://example.test/x">link</a><br>next line' ) ) { $markup++; }
 			elseif ( 'styled' === $row[2] && false !== strpos( $html, $row[0] . ' <strong>bold</strong> and ' ) && false !== strpos( $html, '<br>next line' ) ) { $markup++; }
@@ -201,8 +207,10 @@ $tpl_files = array(
 	'consultancy' => 'page-consultancy.php', 'founder' => 'page-founder.php', 'faq' => 'page-faq.php', 'gallery' => 'page-gallery.php',
 	'sponsors' => 'page-sponsors.php', 'events' => 'page-events.php', 'events_archive' => 'page-events-archive.php', 'blog' => 'home.php', 'contact' => 'page-contact.php',
 	'privacy' => 'page-privacy-policy.php', 'terms' => 'page-terms-conditions.php', 'cookies' => 'page-cookie-policy.php', 'not_found' => '404.php',
-	'single_event' => 'single-event.php', 'single_post' => 'single.php',
+	'single_event' => 'single-event.php', 'single_post' => 'single.php', 'archive' => 'archive.php', 'search' => 'search.php',
 );
+// Wording that only shows in an empty state (no posts, no results) is checked through the function that prints it.
+$empty_state = array( 'blog.post_list_text_2', 'archive.heading_text_1', 'search.heading_text_1' );
 $bad_marks = array(); $unmarked = 0; $total_fields = 0; $live_bad = array();
 foreach ( $pages as $page => $info ) {
 	$code   = file_get_contents( get_template_directory() . '/' . $tpl_files[ $page ] );

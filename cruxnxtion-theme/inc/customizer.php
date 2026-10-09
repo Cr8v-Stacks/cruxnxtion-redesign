@@ -317,6 +317,8 @@ function crux_content_pages() {
 		'not_found'            => array( 'Error 404 (not found)', ':404' ),
 		'single_event'         => array( 'Single event (all events)', ':event' ),
 		'single_post'          => array( 'Single blog post (all posts)', ':post' ),
+		'archive'              => array( 'Archives (category, tag, author, date)', ':archive' ),
+		'search'               => array( 'Search results', ':search' ),
 	);
 }
 
@@ -330,6 +332,12 @@ function crux_current_page_key() {
 	}
 	if ( is_singular( 'post' ) ) {
 		return 'single_post';
+	}
+	if ( is_search() ) {
+		return 'search';
+	}
+	if ( is_archive() && ! is_post_type_archive() ) {
+		return 'archive';
 	}
 	if ( is_front_page() ) {
 		return 'home';
