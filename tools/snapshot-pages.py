@@ -40,6 +40,10 @@ def loose(html):
     Customizer phase C0 unifications (announcement bar class and padding, generic page announcement text)."""
     html = html.replace(' class="top-shoutout-bar"', '').replace('padding:10px 64px;', 'padding:10px 20px 10px 20px;')
     html = htmllib.unescape(html)   # &rarr; and the character it stands for are the same text
+    # The page stylesheet moved from an inline <style> in each template to an enqueued file (its content is proven equal when it
+    # is extracted), so compare pages with neither.
+    html = re.sub(r"<style>\s*@import url\(['\"]?https://fonts\.googleapis\.com.*?</style>", '', html, count=1, flags=re.S)
+    html = re.sub(r"<link[^>]*id=['\"]crux-page-css-css['\"][^>]*>", '', html)
     html = re.sub(r'\s+', ' ', html)
     return re.sub(r'>\s+<', '><', html).strip()
 

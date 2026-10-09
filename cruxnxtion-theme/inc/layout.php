@@ -123,3 +123,25 @@ function crux_prefooter_data( $key ) {
 	}
 	return $events;
 }
+
+/* ---- Page stylesheets -------------------------------------------------------------------------------------------------- */
+
+/**
+ * Choose the stylesheet of the page before get_header(): dark, home, light, consultancy, contact, legal or faq. Each is the
+ * stylesheet that used to be printed inside every template. It loads after the theme's and the plugins' styles, where the
+ * inline copy used to sit, so nothing is overridden differently.
+ */
+function crux_use_page_css( $family ) {
+	$GLOBALS['crux_page_css_family'] = preg_replace( '/[^a-z]/', '', (string) $family );
+}
+
+function crux_enqueue_page_css() {
+	$family = isset( $GLOBALS['crux_page_css_family'] ) ? $GLOBALS['crux_page_css_family'] : '';
+	$file   = get_template_directory() . '/assets/css/crux-' . $family . '.css';
+	if ( '' === $family || ! file_exists( $file ) ) {
+		return;
+	}
+	// The file's change time is part of the address: this site strips ?ver= from addresses, which left browsers on stale copies.
+	wp_enqueue_style( 'crux-page-css', get_template_directory_uri() . '/assets/css/crux-' . $family . '.css?cv=' . filemtime( $file ), array( 'crux-style' ), null );
+}
+add_action( 'wp_enqueue_scripts', 'crux_enqueue_page_css', 999 );
