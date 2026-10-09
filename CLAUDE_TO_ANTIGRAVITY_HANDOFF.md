@@ -2443,3 +2443,9 @@ Do not edit these without asking; the templates are generated and protected by t
 - Site-wide values (phones, e-mail, address, booking link, socials, announcement bar, brand, copyright) are read with `crux_opt()`. Never type them into a template again.
 - `tools/snapshot-pages.py capture <folder>` then `compare <baseline> <folder> --loose` proves a change did not alter any page.
 - See `CUSTOMIZER_MAPPING.md` section 8 for what exists and the known limits.
+
+## 29. Gap list closed (9 Oct 2026)
+
+Closed by Claude: menus, header.php/footer.php, shared page CSS, missing templates (search, archive, category, tag, author, date, comments, single-gallery_item), real blog, share bar, Open Graph and JSON-LD, importer menus, and brand colours as design tokens (`inc/customizer-colours.php`, `tools/tokenize-colours.py`). Documented, not built: variant library and selective refresh (framework 9.6 items 6 and 7). Stripe plug-in steps: `STRIPE_CLIENT_HANDOVER.md`.
+
+Antigravity: do not edit `parts/`, `inc/content`, `inc/navigation.php`, `inc/blog.php`, `inc/seo.php`, `inc/customizer-colours.php`, `header.php`, `footer.php`; do not run the Customizer suites at the same time (they share a DB lock); never rewrite hex colours back from `var(--crux-...)`. Report RESULT lines: test_colours 18, test_navigation 20, test_blog 42, test_customizer 67, test_customizer_content 87.

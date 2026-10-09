@@ -25,6 +25,7 @@ $f = @('-d',"extension_dir=$ext",'-d','extension=mysqli','-d','extension=mbstrin
 & $php @f -d allow_url_fopen=1 -d memory_limit=512M cr8v-event-ticketing\tests\test_customizer_content.php   # expect: RESULT: 87 passed, 0 failed  (wording of 21 pages, photos, button addresses and friendly formatting of 13 pages; panels load on demand; pencils; every field changes the live page)
 & $php @f -d allow_url_fopen=1 cr8v-event-ticketing\tests\test_navigation.php           # expect: RESULT: 20 passed, 0 failed  (WordPress menus drive header, drawer and footer; importer creates them)
 & $php @f -d allow_url_fopen=1 cr8v-event-ticketing\tests\test_blog.php                 # expect: RESULT: 42 passed, 0 failed  (real posts: single, list, archives, search, comments, share and structured data, gallery photo page)
+& $php @f -d allow_url_fopen=1 cr8v-event-ticketing	ests	est_colours.php               # expect: RESULT: 18 passed, 0 failed  (brand colour design tokens and Customizer controls)
 & $php cr8v-event-ticketing\tests\test_repo_hygiene.php                  # expect: RESULT: scanned N files, 0 problem(s)   (no WordPress needed)
 ```
 

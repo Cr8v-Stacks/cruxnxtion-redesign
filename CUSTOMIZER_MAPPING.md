@@ -761,3 +761,5 @@ How to add or change fields:
 3. Run `test_customizer.php` and `test_customizer_content.php`; they fail if a field is not used, not registered, or does not change its page.
 
 Not verified: how the Customizer feels in a real browser (its page loads for an administrator with all panels and no PHP warnings; the pane could not sign in), and the live client site.
+
+Update 9 Oct 2026: Customizer > Site-wide > Brand colours (11 colour tokens, instant preview) added. Stylesheets and inline styles use var(--crux-token, original hex).
